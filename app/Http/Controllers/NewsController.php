@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NewsRequest;
 use App\Models\Category;
+use App\Models\Company;
 use App\Models\Field;
 use App\Models\News;
+use App\Models\NewsHistory;
 use App\Models\Video;
 use App\Models\Profile;
 use App\Traits\StorageImageTrait;
@@ -17,39 +20,49 @@ class NewsController extends Controller
     private $category;
     private $video;
     private $profile;
+    private $company;
 
-    public function __construct(News $news, Category $category, Video $video, Profile $profile)
+    public function __construct(News $news, Category $category, Video $video, Profile $profile, Company $company)
     {
         $this->news     = $news;
         $this->category = $category;
         $this->video    = $video;
         $this->profile  = $profile;
+        $this->company  = $company;
     }
 
     public function index()
     {
-        $news = $this->news->where('idcongty', auth()->user()->idcongty)
-                           ->orderBy('id', 'desc')
-                           ->paginate(10);
-        return view('news.index', compact('news'));
+        $news = $this->news->all();
+
+        return view('admin.news.index', compact('news'));
     }
 
     public function add()
     {
         $categories = $this->category->all();
-        return view('news.add', compact('categories'));
+
+        $companies = $this->company->all();
+
+        return view('admin.news.add', compact('categories', 'companies'));
     }
 
-    public function store(Request $request)
+    public function store(NewsRequest $request)
     {
+        $loaitintuc = 0;
+
+        if ($request->loaitintuc) {
+            $loaitintuc = 1;
+        }
+
         $dataNews = [
             'idchuyenmuc'   => $request->idchuyenmuc,
-            'idcongty'      => auth()->user()->idcongty,
+            'idcongty'      => $request->idcongty,
             'idtaikhoan'    => auth()->id(),
             'tieudetintuc'  => $request->tieudetintuc,
             'tomtattintuc'  => $request->tomtattintuc,
             'noidungtintuc' => $request->noidungtintuc,
-            'loaitintuc'    => $request->loaitintuc,
+            'loaitintuc'    => $loaitintuc,
         ];
 
         $dataImageUpload = $this->StorageUploadImage($request, 'hinhanhtintuc', 'news/image');
@@ -80,9 +93,12 @@ class NewsController extends Controller
     public function edit($id)
     {
         $news       = $this->news->find($id);
+
         $categories = $this->category->all();
+
         $videos     = $this->video->where('idtintuc', $id)->get();
-        return view('news.edit', compact('news', 'categories', 'videos'));
+
+        return view('admin.news.edit', compact('news', 'categories', 'videos'));
     }
 
     public function update(Request $request, $id)
@@ -128,7 +144,8 @@ class NewsController extends Controller
     public function delete($id)
     {
         $this->news->find($id)->delete();
-        return view('news.index');
+
+        return view('admin.news.index');
     }
 
     public function update_duyet(Request $request)

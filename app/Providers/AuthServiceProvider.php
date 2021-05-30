@@ -26,7 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('is-admin', function($user){
-            if($user->loaitaikhoan == 1 || $user->loaitaikhoan == 2)
+            if($user->loaitaikhoan == 2)
             {
                 return true;
             }

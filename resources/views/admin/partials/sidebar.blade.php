@@ -70,6 +70,42 @@
                         </p>
                     </a>
                 </li>
+
+
+                <li class="nav-item">
+                    <a href="{{route('admin.storage.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-warehouse"></i>
+                        <p>
+                            Kho
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('news.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-newspaper"></i>
+                        <p>
+                            Tin tức
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('admin.productcategory.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-list"></i>
+                        <p>
+                            Loại sản phẩm
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.product.index') }}" class="nav-link">
+                        <i class="nav-icon fab fa-product-hunt"></i>
+                        <p>
+                            Sản phẩm
+                        </p>
+                    </a>
+                </li>
+
+
                 <li class="nav-item">
                     <a href="{{route('account.index')}}" class="nav-link">
                         <i class="nav-icon fas fa-user"></i>
@@ -96,6 +132,7 @@
                 </li>
                 @endif
                 <!-- /.Admin's Module -->
+
                 <!-- Company's Module -->
                 @if( auth()->user()->loaitaikhoan == 1 )
                     @if ( auth()->user()->idcongty != null && session()->get('info')['name'] != null)

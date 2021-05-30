@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Điện thoại *</label>
+                            <label>Điện thoại</label>
                             <input type="text" class="form-control @error('dienthoaiso') is-invalid @enderror"
                                     name="dienthoaiso" value="{{$department->dienthoaiso}}">
                             @error('dienthoaiso')
@@ -59,7 +59,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Fax *</label>
+                            <label>Fax</label>
                             <input type="text" class="form-control @error('faxso') is-invalid @enderror"
                                     name="faxso" value="{{$department->faxso}}">
                             @error('faxso')

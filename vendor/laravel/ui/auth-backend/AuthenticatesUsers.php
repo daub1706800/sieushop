@@ -164,6 +164,10 @@ trait AuthenticatesUsers
         }
 
         session()->put('info', $info);
+
+        if ($user->loaitaikhoan == 2) {
+            return redirect()->route('admin.home');
+        }
     }
 
     /**

@@ -6,7 +6,7 @@ use App\Http\Requests\StorageRequest;
 use App\Models\Storage;
 use Illuminate\Http\Request;
 
-class StorageController extends Controller
+class AdminStorageController extends Controller
 {
     private $storage;
 
@@ -17,14 +17,10 @@ class StorageController extends Controller
 
     public function index()
     {
-        $storages = $this->storage->where('idcongty', auth()->user()->idcongty)->get();
-        return view('admin.storage.index', compact('storages'));
-    }
+        $storages = $this->storage->all();
 
-    // public function add()
-    // {
-    //     return view('admin.storage.add');
-    // }
+        return view('admin.admin-storage.index', compact('storages'));
+    }
 
     public function store(StorageRequest $request)
     {
@@ -41,13 +37,14 @@ class StorageController extends Controller
 
         $this->storage->create($data);
 
-        return redirect()->route('storage.index');
+        return redirect()->route('admin.storage.index');
     }
 
     public function edit($id)
     {
         $storage = $this->storage->find($id);
-        return view('admin.storage.edit', compact('storage'));
+
+        return view('admin.admin-storage.edit', compact('storage'));
     }
 
     public function update(StorageRequest $request, $id)
@@ -63,12 +60,13 @@ class StorageController extends Controller
 
         $this->storage->find($id)->update($data);
 
-        return redirect()->route('storage.index');
+        return redirect()->route('admin.storage.index');
     }
 
     public function delete($id)
     {
         $this->storage->find($id)->delete();
-        return redirect()->route('storage.index');
+
+        return redirect()->route('admin.storage.index');
     }
 }

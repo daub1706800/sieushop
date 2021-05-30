@@ -65,298 +65,521 @@ Route::prefix('admin')->group(function () {
     Route::get('/', function () {
         return view('admin.home');
     })->middleware(['auth', 'verified'])->name('admin.home');
+
     /* Module Sở ngành */
     Route::prefix('department')->group(function () {
         Route::get('/', [
             'as'   => 'department.index',
             'uses' => 'App\Http\Controllers\DepartmentController@index',
-            'middleware' => 'can:department-list'
+            'middleware' => 'can:is-admin'
         ]);
         Route::post('/store', [
             'as'   => 'department.store',
             'uses' => 'App\Http\Controllers\DepartmentController@store',
-            'middleware' => 'can:department-add'
+            'middleware' => 'can:is-admin'
         ]);
         Route::get('/edit/{id}', [
             'as'   => 'department.edit',
             'uses' => 'App\Http\Controllers\DepartmentController@edit',
-            'middleware' => 'can:department-view'
+            'middleware' => 'can:is-admin'
         ]);
         Route::post('/update/{id}', [
             'as'   => 'department.update',
             'uses' => 'App\Http\Controllers\DepartmentController@update',
-            'middleware' => 'can:department-update'
+            'middleware' => 'can:is-admin'
         ]);
         Route::get('/delete/{id}', [
             'as'   => 'department.delete',
             'uses' => 'App\Http\Controllers\DepartmentController@delete',
-            'middleware' => 'can:department-delete'
+            'middleware' => 'can:is-admin'
         ]);
     });
+
     /* Module Lĩnh vực */
     Route::prefix('field')->group(function () {
         Route::get('/', [
             'as'   => 'field.index',
             'uses' => 'App\Http\Controllers\FieldController@index',
-            'middleware' => 'can:field-list'
+            'middleware' => 'can:is-admin'
         ]);
         Route::post('/store', [
             'as'   => 'field.store',
             'uses' => 'App\Http\Controllers\FieldController@store',
-            'middleware' => 'can:field-add'
+            'middleware' => 'can:is-admin'
         ]);
         Route::get('/edit/{id}', [
             'as'   => 'field.edit',
             'uses' => 'App\Http\Controllers\FieldController@edit',
-            'middleware' => 'can:field-view'
+            'middleware' => 'can:is-admin'
         ]);
         Route::post('/update/{id}', [
             'as'   => 'field.update',
             'uses' => 'App\Http\Controllers\FieldController@update',
-            'middleware' => 'can:field-update'
+            'middleware' => 'can:is-admin'
         ]);
         Route::get('/delete/{id}', [
             'as'   => 'field.delete',
             'uses' => 'App\Http\Controllers\FieldController@delete',
-            'middleware' => 'can:field-delete'
+            'middleware' => 'can:is-admin'
         ]);
     });
+
     /* Module Chuyên mục */
     Route::prefix('category')->group(function () {
         Route::get('/', [
             'as'   => 'category.index',
             'uses' => 'App\Http\Controllers\CategoryController@index',
-            'middleware' => 'can:category-list'
+            'middleware' => 'can:is-admin'
         ]);
         Route::post('/store', [
             'as'   => 'category.store',
             'uses' => 'App\Http\Controllers\CategoryController@store',
-            'middleware' => 'can:category-add'
+            'middleware' => 'can:is-admin'
         ]);
         Route::get('/edit/{id}', [
             'as'   => 'category.edit',
             'uses' => 'App\Http\Controllers\CategoryController@edit',
-            'middleware' => 'can:category-view'
+            'middleware' => 'can:is-admin'
         ]);
         Route::post('/update/{id}', [
             'as'   => 'category.update',
             'uses' => 'App\Http\Controllers\CategoryController@update',
-            'middleware' => 'can:category-update'
+            'middleware' => 'can:is-admin'
         ]);
         Route::get('/delete/{id}', [
             'as'   => 'category.delete',
             'uses' => 'App\Http\Controllers\CategoryController@delete',
-            'middleware' => 'can:category-delete'
+            'middleware' => 'can:is-admin'
         ]);
     });
+
     /* Module Công ty */
     Route::prefix('company')->group(function () {
         Route::get('/', [
             'as'   => 'company.index',
             'uses' => 'App\Http\Controllers\CompanyController@index',
+            'middleware' => 'can:is-admin'
         ]);
         Route::get('/edit/{id}', [
             'as'   => 'company.edit',
             'uses' => 'App\Http\Controllers\CompanyController@edit',
+            'middleware' => 'can:is-admin'
         ]);
         Route::post('/update/{id}', [
             'as'   => 'company.update',
             'uses' => 'App\Http\Controllers\CompanyController@update',
+            'middleware' => 'can:is-admin'
         ]);
         Route::get('/delete/{id}', [
             'as'   => 'company.delete',
             'uses' => 'App\Http\Controllers\CompanyController@delete',
+            'middleware' => 'can:is-admin'
         ]);
     });
-    /* Module Tài khoản */
-    Route::prefix('account')->group(function () {
-        Route::get('/', [
-            'as'   => 'account.index',
-            'uses' => 'App\Http\Controllers\AccountController@index',
-        ]);
-        Route::post('/store', [
-            'as'   => 'account.store',
-            'uses' => 'App\Http\Controllers\AccountController@store',
-        ]);
-        Route::get('/edit/{id}', [
-            'as'   => 'account.edit',
-            'uses' => 'App\Http\Controllers\AccountController@edit',
-        ]);
-        Route::post('/update/{id}', [
-            'as'   => 'account.update',
-            'uses' => 'App\Http\Controllers\AccountController@update',
-        ]);
-        Route::get('/delete/{id}', [
-            'as'   => 'account.delete',
-            'uses' => 'App\Http\Controllers\AccountController@delete',
-        ]);
-        Route::get('/random-password', [
-            'as'   => 'account.random-password',
-            'uses' => 'App\Http\Controllers\AccountController@random_password',
-        ]);
-    });
-    /* Module Vai trò */
-    Route::prefix('role')->group(function () {
-        Route::get('/', [
-            'as'   => 'role.index',
-            'uses' => 'App\Http\Controllers\RoleController@index',
-        ]);
-        Route::post('/store', [
-            'as'   => 'role.store',
-            'uses' => 'App\Http\Controllers\RoleController@store',
-        ]);
-        Route::get('/edit/{id}', [
-            'as'   => 'role.edit',
-            'uses' => 'App\Http\Controllers\RoleController@edit',
-        ]);
-        Route::post('/update/{id}', [
-            'as'   => 'role.update',
-            'uses' => 'App\Http\Controllers\RoleController@update',
-        ]);
-        Route::get('/delete/{id}', [
-            'as'   => 'role.delete',
-            'uses' => 'App\Http\Controllers\RoleController@delete',
-        ]);
-    });
-    /* Module Quyền */
-    Route::prefix('permission')->group(function () {
-        Route::get('/add', [
-            'as'   => 'permission.add',
-            'uses' => 'App\Http\Controllers\PermissionController@add',
-            'middleware' => 'can:permission-list'
-        ]);
-        Route::post('/store', [
-            'as'   => 'permission.store',
-            'uses' => 'App\Http\Controllers\PermissionController@store',
-            'middleware' => 'can:permission-add'
-        ]);
-        Route::get('/delete/{id}', [
-            'as'   => 'permission.delete',
-            'uses' => 'App\Http\Controllers\PermissionController@delete',
-            'middleware' => 'can:permission-delete'
-        ]);
-        Route::get('/change-status-on', [
-            'as'   => 'permission.change-status-on',
-            'uses' => 'App\Http\Controllers\PermissionController@change_status_on',
-        ]);
-        Route::get('/change-status-off', [
-            'as'   => 'permission.change-status-off',
-            'uses' => 'App\Http\Controllers\PermissionController@change_status_off',
-        ]);
-        Route::get('/check-permission-checked', [
-            'as'   => 'permission.check-permission-checked',
-            'uses' => 'App\Http\Controllers\PermissionController@check_permission_checked',
-        ]);
-        Route::post('/update', [
-            'as'   => 'permission.update',
-            'uses' => 'App\Http\Controllers\PermissionController@update',
-            'middleware' => 'can:permission-update'
-        ]);
-        Route::get('/check-permission', [
-            'as'   => 'permission.check-permission',
-            'uses' => 'App\Http\Controllers\PermissionController@check_permission',
-        ]);
-    });
+
     /* Module Tin tức */
     Route::prefix('news')->group(function () {
         Route::get('/', [
             'as'   => 'news.index',
             'uses' => 'App\Http\Controllers\NewsController@index',
+            'middleware' => 'can:is-admin'
         ]);
         Route::get('/add', [
             'as'   => 'news.add',
             'uses' => 'App\Http\Controllers\NewsController@add',
+            'middleware' => 'can:is-admin'
         ]);
         Route::post('/store', [
             'as'   => 'news.store',
             'uses' => 'App\Http\Controllers\NewsController@store',
+            'middleware' => 'can:is-admin'
         ]);
         Route::get('/edit/{id}', [
             'as'   => 'news.edit',
             'uses' => 'App\Http\Controllers\NewsController@edit',
+            'middleware' => 'can:is-admin'
         ]);
         Route::post('/update/{id}', [
             'as'   => 'news.update',
             'uses' => 'App\Http\Controllers\NewsController@update',
+            'middleware' => 'can:is-admin'
         ]);
         Route::get('/delete/{id}', [
             'as'   => 'news.delete',
             'uses' => 'App\Http\Controllers\NewsController@delete',
+            'middleware' => 'can:is-admin'
         ]);
         Route::get('/update-duyet', [
             'as'   => 'news.update-duyet',
             'uses' => 'App\Http\Controllers\NewsController@update_duyet',
+            'middleware' => 'can:is-admin'
         ]);
         Route::get('/update-xuatban', [
             'as'   => 'news.update-xuatban',
             'uses' => 'App\Http\Controllers\NewsController@update_xuatban',
+            'middleware' => 'can:is-admin'
         ]);
     });
-    /* Module Tin tức 2*/
-    Route::prefix('tintuc')->group(function () {
-        Route::get('/Tintuc', [
+
+    /* Module Kho */
+    Route::prefix('storages')->group(function () {
+        Route::get('/', [
+            'as'   => 'admin.storage.index',
+            'uses' => 'App\Http\Controllers\AdminStorageController@index',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::post('/store', [
+            'as'   => 'admin.storage.store',
+            'uses' => 'App\Http\Controllers\AdminStorageController@store',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::get('/edit/{id}', [
+            'as'   => 'admin.storage.edit',
+            'uses' => 'App\Http\Controllers\AdminStorageController@edit',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::post('/update/{id}', [
+            'as'   => 'admin.storage.update',
+            'uses' => 'App\Http\Controllers\AdminStorageController@update',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::get('/delete/{id}', [
+            'as'   => 'admin.storage.delete',
+            'uses' => 'App\Http\Controllers\AdminStorageController@delete',
+            'middleware' => 'can:is-admin'
+        ]);
+    });
+
+    /* Module Loại sản phẩm */
+    Route::prefix('productcategory')->group(function () {
+        Route::get('/', [
+            'as'   => 'admin.productcategory.index',
+            'uses' => 'App\Http\Controllers\AdminProductCategoryController@index',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::post('/store', [
+            'as'   => 'admin.productcategory.store',
+            'uses' => 'App\Http\Controllers\AdminProductCategoryController@store',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::get('/edit/{id}', [
+            'as'   => 'admin.productcategory.edit',
+            'uses' => 'App\Http\Controllers\AdminProductCategoryController@edit',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::post('/update/{id}', [
+            'as'   => 'admin.productcategory.update',
+            'uses' => 'App\Http\Controllers\AdminProductCategoryController@update',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::get('/delete/{id}', [
+            'as'   => 'admin.productcategory.delete',
+            'uses' => 'App\Http\Controllers\AdminProductCategoryController@delete',
+            'middleware' => 'can:is-admin'
+        ]);
+    });
+
+    /* Module Sản phẩm */
+    Route::prefix('product')->group(function () {
+        Route::get('/', [
+            'as'   => 'admin.product.index',
+            'uses' => 'App\Http\Controllers\AdminProductController@index',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::get('/add', [
+            'as'   => 'admin.product.add',
+            'uses' => 'App\Http\Controllers\AdminProductController@add',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::post('/store', [
+            'as'   => 'admin.product.store',
+            'uses' => 'App\Http\Controllers\AdminProductController@store',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::get('/edit/{id}', [
+            'as'   => 'admin.product.edit',
+            'uses' => 'App\Http\Controllers\AdminProductController@edit',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::post('/update/{id}', [
+            'as'   => 'admin.product.update',
+            'uses' => 'App\Http\Controllers\AdminProductController@update',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::get('/delete/{id}', [
+            'as'   => 'admin.product.delete',
+            'uses' => 'App\Http\Controllers\AdminProductController@delete',
+            'middleware' => 'can:is-admin'
+        ]);
+        // Stage
+        Route::get('/stage/{product_id}', [
+            'as'   => 'stage.index',
+            'uses' => 'App\Http\Controllers\StageController@index',
+            // 'middleware' => 'can:product-list'
+        ]);
+        Route::post('/stage/{product_id}', [
+            'as'   => 'stage.store',
+            'uses' => 'App\Http\Controllers\StageController@store',
+        ]);
+        Route::get('/stage/edit/{id}', [
+            'as'   => 'stage.edit',
+            'uses' => 'App\Http\Controllers\StageController@edit',
+            // 'middleware' => 'can:product-view'
+        ]);
+        Route::post('/stage/update/{id}', [
+            'as'   => 'stage.update',
+            'uses' => 'App\Http\Controllers\StageController@update',
+            // 'middleware' => 'can:product-update'
+        ]);
+        Route::get('/stage/delete/{id}', [
+            'as'   => 'stage.delete',
+            'uses' => 'App\Http\Controllers\StageController@delete',
+            // 'middleware' => 'can:product-delete'
+        ]);
+        Route::get('/stage/stage-info/{stage_id}/{product_id}', [
+            'as'   => 'stage-info.index',
+            'uses' => 'App\Http\Controllers\StageController@stage_info_index',
+            // 'middleware' => 'can:product-list'
+        ]);
+        Route::get('/stage/stage-info/add/{stage_id}/{product_id}', [
+            'as'   => 'stage-info.add',
+            'uses' => 'App\Http\Controllers\StageController@stage_info_add',
+            // 'middleware' => 'can:product-add'
+        ]);
+        Route::post('/stage/store-info/store/{stage_id}/{product_id}', [
+            'as'   => 'stage-info.store',
+            'uses' => 'App\Http\Controllers\StageController@stage_info_store',
+        ]);
+        Route::get('/stage/stage-info/edit/{stageInfo_id}/{stage_id}/{product_id}', [
+            'as'   => 'stage-info.edit',
+            'uses' => 'App\Http\Controllers\StageController@stage_info_edit',
+        ]);
+        Route::post('/stage/stage-info/update/{stageInfo_id}/{stage_id}/{product_id}', [
+            'as'   => 'stage-info.update',
+            'uses' => 'App\Http\Controllers\StageController@stage_info_update',
+        ]);
+        Route::get('/stage/stage-info/delete/{stageInfo_id}/{stage_id}/{product_id}', [
+            'as'   => 'stage-info.delete',
+            'uses' => 'App\Http\Controllers\StageController@stage_info_delete',
+        ]);
+        Route::get('/stage/ajax/count-stage-info', [
+            'as' => 'stage-info.count',
+            'uses' => 'App\Http\Controllers\StageController@stage_info_count',
+        ]);
+        Route::get('/stage/ajax/render-stage-info', [
+            'as' => 'stage-info.render',
+            'uses' => 'App\Http\Controllers\StageController@stage_info_render',
+        ]);
+        Route::get('/stage/ajax/render-add-stage-info', [
+            'as' => 'stage-info.render-add',
+            'uses' => 'App\Http\Controllers\StageController@stage_info_render_add',
+        ]);
+    });
+
+    /* Module Tài khoản */
+    Route::prefix('account')->group(function () {
+        Route::get('/', [
+            'as'   => 'account.index',
+            'uses' => 'App\Http\Controllers\AccountController@index',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::post('/store', [
+            'as'   => 'account.store',
+            'uses' => 'App\Http\Controllers\AccountController@store',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::get('/edit/{id}', [
+            'as'   => 'account.edit',
+            'uses' => 'App\Http\Controllers\AccountController@edit',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::post('/update/{id}', [
+            'as'   => 'account.update',
+            'uses' => 'App\Http\Controllers\AccountController@update',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::get('/delete/{id}', [
+            'as'   => 'account.delete',
+            'uses' => 'App\Http\Controllers\AccountController@delete',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::get('/random-password', [
+            'as'   => 'account.random-password',
+            'uses' => 'App\Http\Controllers\AccountController@random_password',
+            'middleware' => 'can:is-admin'
+        ]);
+    });
+
+    /* Module Vai trò */
+    Route::prefix('role')->group(function () {
+        Route::get('/', [
+            'as'   => 'role.index',
+            'uses' => 'App\Http\Controllers\RoleController@index',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::post('/store', [
+            'as'   => 'role.store',
+            'uses' => 'App\Http\Controllers\RoleController@store',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::get('/edit/{id}', [
+            'as'   => 'role.edit',
+            'uses' => 'App\Http\Controllers\RoleController@edit',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::post('/update/{id}', [
+            'as'   => 'role.update',
+            'uses' => 'App\Http\Controllers\RoleController@update',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::get('/delete/{id}', [
+            'as'   => 'role.delete',
+            'uses' => 'App\Http\Controllers\RoleController@delete',
+            'middleware' => 'can:is-admin'
+        ]);
+    });
+
+    /* Module Quyền */
+    Route::prefix('permission')->group(function () {
+        Route::get('/add', [
+            'as'   => 'permission.add',
+            'uses' => 'App\Http\Controllers\PermissionController@add',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::post('/store', [
+            'as'   => 'permission.store',
+            'uses' => 'App\Http\Controllers\PermissionController@store',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::get('/delete/{id}', [
+            'as'   => 'permission.delete',
+            'uses' => 'App\Http\Controllers\PermissionController@delete',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::get('/change-status-on', [
+            'as'   => 'permission.change-status-on',
+            'uses' => 'App\Http\Controllers\PermissionController@change_status_on',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::get('/change-status-off', [
+            'as'   => 'permission.change-status-off',
+            'uses' => 'App\Http\Controllers\PermissionController@change_status_off',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::get('/check-permission-checked', [
+            'as'   => 'permission.check-permission-checked',
+            'uses' => 'App\Http\Controllers\PermissionController@check_permission_checked',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::post('/update', [
+            'as'   => 'permission.update',
+            'uses' => 'App\Http\Controllers\PermissionController@update',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::get('/check-permission', [
+            'as'   => 'permission.check-permission',
+            'uses' => 'App\Http\Controllers\PermissionController@check_permission',
+            'middleware' => 'can:is-admin'
+        ]);
+    });
+});
+
+Route::prefix('dasboard')->group(function() {
+    Route::get('/', function () {
+        return view('admin.home');
+    })->middleware(['auth', 'verified'])->name('dasboard.home');
+
+    /* Module Công ty */
+    Route::prefix('company')->group(function() {
+        Route::get('/', [
+            'as'   => 'profile.company.index',
+            'uses' => 'App\Http\Controllers\ProfileController@index_company',
+        ]);
+        Route::get('/create', [
+            'as'   => 'profile.company.create',
+            'uses' => 'App\Http\Controllers\ProfileController@create_company',
+        ]);
+        Route::post('/store', [
+            'as'   => 'profile.company.store',
+            'uses' => 'App\Http\Controllers\ProfileController@store_company',
+        ]);
+        Route::post('/update/{id}', [
+            'as'   => 'profile.company.update',
+            'uses' => 'App\Http\Controllers\ProfileController@update_company',
+            'middleware' => 'can:company-update'
+        ]);
+        Route::get('/delete/{id}', [
+            'as'   => 'profile.company.delete',
+            'uses' => 'App\Http\Controllers\ProfileController@delete_company',
+            'middleware' => 'can:company-delete'
+        ]);
+    });
+
+    /* Module Tin tức */
+    Route::prefix('news')->group(function () {
+        Route::get('/', [
             'as' => 'tintuc.Tintuc',
             'uses' => 'App\Http\Controllers\TintucController@printTintuc',
             'middleware' => 'can:news-list'
         ]);
-        Route::get('/viewhistoryTintuc/{id}', [
+        Route::get('/history/{id}', [
             'as' => 'tintuc.viewhistoryTintuc',
             'uses' => 'App\Http\Controllers\TintucController@viewhistoryTintuc',
             'middleware' => 'can:news-list'
         ]);
-        Route::get('/addtintuc', [
+        Route::get('/add-news', [
             'as' => 'tintuc.addTintuc',
             'uses' => 'App\Http\Controllers\TintucController@addTintuc',
             'middleware' => 'can:news-add'
         ]);
-        Route::post('/doaddtintuc', [
+        Route::post('/add-news', [
             'as' => 'tintuc.doaddTintuc',
             'uses' => 'App\Http\Controllers\TintucController@doaddTintuc',
         ]);
-        Route::get('/deleteTintuc/{id}', [
+        Route::get('/delete-news/{id}', [
             'as' => 'tintuc.deleteTintuc',
             'uses' => 'App\Http\Controllers\TintucController@deleteTintuc',
             'middleware' => 'can:news-delete'
 
         ]);
-        Route::get('/detailTintuc/{id}', [
+        Route::get('/edit/{id}', [
             'as' => 'tintuc.detailTintuc',
             'uses' => 'App\Http\Controllers\TintucController@detailTintuc',
             'middleware' => 'can:news-view'
         ]);
-        Route::post('/editTintuc', [
+        Route::post('/edit', [
             'as' => 'tintuc.editTintuc',
             'uses' => 'App\Http\Controllers\TintucController@editTintuc',
             'middleware' => 'can:news-update'
         ]);
-        Route::get('/deleteVideo/{id}', [
+        Route::get('/delete-video/{id}', [
             'as' => 'tintuc.deleteVideo',
             'uses' => 'App\Http\Controllers\TintucController@deleteVideo',
             'middleware' => 'can:news-delete'
         ]);
-        Route::post('/addVideo', [
+        Route::post('/add-video', [
             'as' => 'tintuc.addVideo',
             'uses' => 'App\Http\Controllers\TintucController@addVideo',
             'middleware' => 'can:news-update'
         ]);
-        Route::get('/acceptTintuc/{id}', [
+        Route::get('/accept-news/{id}', [
             'as' => 'tintuc.acceptTintuc',
             'uses' => 'App\Http\Controllers\TintucController@acceptTintuc',
             'middleware' => 'can:news-browse'
         ]);
-        Route::get('/postTintuc/{id}', [
+        Route::get('/post-news/{id}', [
             'as' => 'tintuc.postTintuc',
             'uses' => 'App\Http\Controllers\TintucController@postTintuc',
             'middleware' => 'can:news-publish'
         ]);
-        Route::get('/removeTintuc', [
+        Route::get('/remove-news', [
             'as' => 'tintuc.removeTintuc',
             'uses' => 'App\Http\Controllers\TintucController@removeTintuc',
         ]);
     });
-    /* Module Thông tin tài khoản */
+
+    /* Module Thông tin */
     Route::prefix('profile')->group(function () {
-        // Profile
         Route::get('/', [
             'as'   => 'profile.index',
             'uses' => 'App\Http\Controllers\ProfileController@index',
@@ -373,86 +596,70 @@ Route::prefix('admin')->group(function () {
             'as'   => 'profile.update',
             'uses' => 'App\Http\Controllers\ProfileController@update',
         ]);
-        // Company
-        Route::get('/company', [
-            'as'   => 'profile.company.index',
-            'uses' => 'App\Http\Controllers\ProfileController@index_company',
-        ]);
-        Route::get('/company/create', [
-            'as'   => 'profile.company.create',
-            'uses' => 'App\Http\Controllers\ProfileController@create_company',
-        ]);
-        Route::post('/company/store', [
-            'as'   => 'profile.company.store',
-            'uses' => 'App\Http\Controllers\ProfileController@store_company',
-        ]);
-        Route::post('/company/update/{id}', [
-            'as'   => 'profile.company.update',
-            'uses' => 'App\Http\Controllers\ProfileController@update_company',
-            'middleware' => 'can:company-update'
-        ]);
-        Route::get('/company/delete/{id}', [
-            'as'   => 'profile.company.delete',
-            'uses' => 'App\Http\Controllers\ProfileController@delete_company',
-            'middleware' => 'can:company-delete'
-        ]);
-        // Account
-        Route::get('/account', [
+    });
+
+    /* Module Tài khoản */
+    Route::prefix('account')->group(function () {
+        Route::get('/', [
             'as'   => 'profile.account.index',
             'uses' => 'App\Http\Controllers\ProfileController@index_account',
             'middleware' => 'can:account-list'
         ]);
-        Route::post('/account/store', [
+        Route::post('/store', [
             'as'   => 'profile.account.store',
             'uses' => 'App\Http\Controllers\ProfileController@store_account',
             'middleware' => 'can:account-add'
         ]);
-        Route::get('/account/edit/{id}', [
+        Route::get('/edit/{id}', [
             'as'   => 'profile.account.edit',
             'uses' => 'App\Http\Controllers\ProfileController@edit_account',
             'middleware' => 'can:account-view'
         ]);
-        Route::post('/account/update/{id}', [
+        Route::post('/update/{id}', [
             'as'   => 'profile.account.update',
             'uses' => 'App\Http\Controllers\ProfileController@update_account',
             'middleware' => 'can:account-update'
         ]);
-        Route::get('/account/delete/{id}', [
+        Route::get('/delete/{id}', [
             'as'   => 'profile.account.delete',
             'uses' => 'App\Http\Controllers\ProfileController@delete_account',
             'middleware' => 'can:account-delete'
         ]);
-        Route::get('/account/random-password', [
+        Route::get('/random-password', [
             'as'   => 'profile.account.random-password',
             'uses' => 'App\Http\Controllers\ProfileController@random_password',
         ]);
-        // Role
-        Route::get('/role', [
+    });
+
+    /* Module Vai trò */
+    Route::prefix('role')->group(function () {
+        Route::get('/', [
             'as'   => 'profile.role.index',
             'uses' => 'App\Http\Controllers\ProfileController@index_role',
             'middleware' => 'can:role-list'
         ]);
-        Route::post('/role/store', [
+        Route::post('/store', [
             'as'   => 'profile.role.store',
             'uses' => 'App\Http\Controllers\ProfileController@store_role',
             'middleware' => 'can:role-add'
         ]);
-        Route::get('/role/edit/{id}', [
+        Route::get('/edit/{id}', [
             'as'   => 'profile.role.edit',
             'uses' => 'App\Http\Controllers\ProfileController@edit_role',
             'middleware' => 'can:role-view'
         ]);
-        Route::post('/role/update/{id}', [
+        Route::post('/update/{id}', [
             'as'   => 'profile.role.update',
             'uses' => 'App\Http\Controllers\ProfileController@update_role',
             'middleware' => 'can:role-update'
         ]);
-        Route::get('/role/delete/{id}', [
+        Route::get('/delete/{id}', [
             'as'   => 'profile.role.delete',
             'uses' => 'App\Http\Controllers\ProfileController@delete_role',
             'middleware' => 'can:role-delete'
         ]);
     });
+
     /* Module Kho */
     Route::prefix('storages')->group(function () {
         Route::get('/', [
@@ -481,6 +688,7 @@ Route::prefix('admin')->group(function () {
             'middleware' => 'can:storage-delete'
         ]);
     });
+
     /* Module Loại sản phẩm */
     Route::prefix('productcategory')->group(function () {
         Route::get('/', [
@@ -509,6 +717,7 @@ Route::prefix('admin')->group(function () {
             'middleware' => 'can:procat-delete'
         ]);
     });
+
     /* Module Sản phẩm */
     Route::prefix('product')->group(function () {
         Route::get('/', [
@@ -605,4 +814,7 @@ Route::prefix('admin')->group(function () {
         ]);
     });
 });
+
+
+
 

@@ -35,4 +35,9 @@ class Product extends Model
     {
         return $this->hasMany(Stage::class, 'idsanpham', 'id');
     }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'idcongty', 'id');
+    }
 }

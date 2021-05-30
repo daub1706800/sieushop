@@ -175,7 +175,7 @@
                         </li>
                         @elseif (auth()->user()->idcongty != null)
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.home') }}">Trang quản lý</a>
+                            <a class="nav-link" href="{{ route('dasboard.home') }}">Trang quản lý</a>
                         </li>
                         @endif
                     @endif

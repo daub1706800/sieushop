@@ -15,4 +15,9 @@ class Storage extends Model
     {
         return $this->hasMany(Product::class, 'idkho', 'id');
     }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'idcongty', 'id');
+    }
 }

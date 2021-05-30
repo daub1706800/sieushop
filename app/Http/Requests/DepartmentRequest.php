@@ -27,8 +27,8 @@ class DepartmentRequest extends FormRequest
             'tenso' => 'bail|required|max:255',
             'diachiso' => 'bail|required|max:255',
             'emailso' => 'bail|required|email:rfc,dns|max:255',
-            'dienthoaiso' => 'bail|required|digits:10',
-            'faxso' => 'bail|required|digits:10',
+            'dienthoaiso' => 'nullable|digits:10',
+            'faxso' => 'nullable|digits:10',
             'webso' => 'bail|required|url|max:255',
         ];
     }
@@ -43,9 +43,7 @@ class DepartmentRequest extends FormRequest
             'emailso.required' => 'Email không được để trống',
             'emailso.email' => 'Email không hợp lệ',
             'emailso.max' => 'Email không được vượt quá 255 ký tự',
-            'dienthoaiso.required' => 'Điện thoại không được để trống',
-            'dienthoaiso.required' => 'Điện thoại phải là kiểu số và có 10 ký tự',
-            'faxso.required' => 'Fax không được để trống',
+            'dienthoaiso.digits' => 'Điện thoại phải là kiểu số và có 10 ký tự',
             'faxso.digits' => 'Fax phải là kiểu số và có 10 ký tự',
             'webso.required' => 'Website không được bỏ trống',
             'webso.url' => 'Website không hợp lệ',

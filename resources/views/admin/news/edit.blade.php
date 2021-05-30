@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('admin.layouts.admin')
 
 @section('title')
     <title>Tin tức | Chỉnh sửa</title>
@@ -7,7 +7,7 @@
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    @include('partials.content-header', ['name' => 'CHỈNH SỬA', 'key' => 'TIN TỨC'])
+    @include('admin.partials.content-header', ['name' => 'CHỈNH SỬA', 'key' => 'TIN TỨC'])
     <!-- /.content-header -->
 
     <!-- Main content -->

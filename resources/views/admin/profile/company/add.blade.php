@@ -66,7 +66,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-12">
-                                        <label class="labels">Điện thoại *</label>
+                                        <label class="labels">Điện thoại</label>
                                         <input type="text" class="form-control @error('dienthoaicongty') is-invalid @enderror"
                                                 placeholder="Nhập số điện thoại" name="dienthoaicongty"
                                                 value="{{ old('dienthoaicongty') }}">
@@ -75,7 +75,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-12">
-                                        <label class="labels">Fax *</label>
+                                        <label class="labels">Fax</label>
                                         <input type="text" class="form-control @error('faxcongty') is-invalid @enderror"
                                                 placeholder="Nhập số fax" name="faxcongty"
                                                 value="{{ old('faxcongty') }}">
