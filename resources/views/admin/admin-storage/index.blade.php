@@ -4,6 +4,8 @@
     <title>Kho | Danh sách</title>
 @endsection
 @section('css')
+    <!-- include select2 css -->
+    <link rel="stylesheet" href="{{asset('vendor/css/select2.css')}}">
     <style>
         .alert-custom{
             margin-top: 5px;
@@ -88,9 +90,21 @@
                 <div class="col-md-12">
                     <h4><b>Thêm kho</b></h4><hr>
                 </div>
-                <form action="{{route('storage.store')}}" method="post">
+                <form action="{{route('admin.storage.store')}}" method="post">
                     @csrf
                     <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Công ty *</label>
+                            <select class="form-control company-selected @error('idcongty') is-invalid @enderror" name="idcongty">
+                                <option value=""></option>
+                                @foreach($companies as $company)
+                                    <option value="{{$company->id}}">{{$company->tencongty}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @error('idcongty')
+                        <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                        @enderror
                         <div class="form-group">
                             <label>Tên kho *</label>
                             <input type="text" class="form-control @error('tenkho') is-invalid @enderror"
@@ -166,13 +180,27 @@
 </div>
 @endsection
 @section('js')
+    <!-- include select2 js -->
+    <script src="{{ asset('vendor/js/select2.js') }}"></script>
     <script>
         $(document).ready(function(){
-            var error = $('.alert-custom').html();
-            if(error != null)
-            {
-                $('#btn-modal-click').click();
-            }
+            $(function(){
+                var error = $('.alert-custom').html();
+                if(error != null)
+                {
+                    $('#btn-modal-click').click();
+                }
+            });
+
+            $(function(){
+                $(".company-selected").select2({
+                    tags: false,
+                    placeholder : 'Chọn công ty',
+                    theme: "classic",
+                    width: "100%"
+                });
+            });
         });
     </script>
 @endsection
+

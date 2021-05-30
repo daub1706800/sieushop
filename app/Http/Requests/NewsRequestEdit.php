@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class NewsRequest extends FormRequest
+class NewsRequestEdit extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,9 +26,9 @@ class NewsRequest extends FormRequest
         return [
             'idchuyenmuc' => 'required|exists:chuyenmuc,id',
             'idcongty' => 'required|exists:congty,id',
-            'hinhanhtintuc' => 'required|mimes:jpeg,jpg,png|max:2000',
-            'videotintuc' => 'required',
-            // 'videotintuc.*' => 'mimes:mp4|max:20000',
+            'hinhanhtintuc' => 'nullable|mimes:jpeg,jpg,png|max:2000',
+            'videotintuc' => 'nullable',
+            'videotintuc.*' => 'mimes:mp4|max:20000',
             'tieudetintuc' => 'required|min:10|max:255',
             'tomtattintuc' => 'required|min:10|max:1000',
             'noidungtintuc' => 'required|min:10',
@@ -42,11 +42,9 @@ class NewsRequest extends FormRequest
             'idchuyenmuc.exists' => 'Chuyên mục không tồn tại',
             'idcongty.required' => 'Công ty không được để trống',
             'idcongty.exists' => 'Chuyên mục không tồn tại',
-            'hinhanhtintuc.required' => 'Hình ảnh không được để trống',
             'hinhanhtintuc.mimes' => 'Hình ảnh phải là .jpg, .jpeg, .png',
             'hinhanhtintuc.max' => 'Kích thước hình ảnh không vượt quá 2MB',
-            'videotintuc.required' => 'Video không được để trống',
-            // 'videotintuc.*.mimes' => 'Video phải là .avi, .mp4, .mpeg, .mov',
+            'videotintuc.*.mimes' => 'Video phải là .avi, .mp4, .mpeg, .mov',
             'videotintuc.*.max' => 'Kích thước video không vượt quá 20MB',
             'tieudetintuc.required' => 'Tiêu đề không được để trống',
             'tieudetintuc.min' => 'Tiêu đề không được ít hơn 10 ký tự',

@@ -2,30 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminProductCategoryRequest;
 use App\Http\Requests\ProductCategoryRequest;
+use App\Models\Company;
+use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 
 class AdminProductCategoryController extends Controller
 {
     private $productcategory;
+    private $company;
+    private $product;
 
-    public function __construct(ProductCategory $productcategory)
+    public function __construct(ProductCategory $productcategory, Company $company, Product $product)
     {
         $this->productcategory = $productcategory;
+        $this->company = $company;
+        $this->product = $product;
     }
 
     public function index()
     {
         $productcategories = $this->productcategory->all();
 
-        return view('admin.admin-product-category.index', compact('productcategories'));
+        $companies = $this->company->all();
+
+        return view('admin.admin-product-category.index', compact('productcategories', 'companies'));
     }
 
-    public function store(ProductCategoryRequest $request)
+    public function store(AdminProductCategoryRequest $request)
     {
         $data = [
-            'idcongty'        => auth()->user()->idcongty,
+            'idcongty'        => $request->idcongty,
             'tenloaisanpham'  => $request->tenloaisanpham,
             'motaloaisanpham' => $request->motaloaisanpham,
         ];
@@ -39,12 +48,15 @@ class AdminProductCategoryController extends Controller
     {
         $productcategory = $this->productcategory->find($id);
 
-        return view('admin.admin-product-category.edit', compact('productcategory'));
+        $companies = $this->company->all();
+
+        return view('admin.admin-product-category.edit', compact('productcategory', 'companies'));
     }
 
-    public function update(ProductCategoryRequest $request, $id)
+    public function update(AdminProductCategoryRequest $request, $id)
     {
         $data = [
+            'idcongty'        => $request->idcongty,
             'tenloaisanpham'  => $request->tenloaisanpham,
             'motaloaisanpham' => $request->motaloaisanpham,
         ];

@@ -4,6 +4,8 @@
     <title>Loại sản phẩm | Danh sách</title>
 @endsection
 @section('css')
+    <!-- include select2 css -->
+    <link rel="stylesheet" href="{{asset('vendor/css/select2.css')}}">
     <style>
         .alert-custom{
             margin-top: 5px;
@@ -84,6 +86,18 @@
                     @csrf
                     <div class="col-md-12">
                         <div class="form-group">
+                            <label>Công ty *</label>
+                            <select class="form-control company-selected @error('idcongty') is-invalid @enderror" name="idcongty">
+                                <option value=""></option>
+                                @foreach($companies as $company)
+                                    <option value="{{$company->id}}">{{$company->tencongty}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @error('idcongty')
+                        <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                        @enderror
+                        <div class="form-group">
                             <label>Tên loại sản phẩm *</label>
                             <input type="text" class="form-control @error('tenloaisanpham') is-invalid @enderror"
                                     name="tenloaisanpham" placeholder="Tên loại sản phẩm" value="{{ old('tenloaisanpham') }}">
@@ -113,13 +127,26 @@
 </div>
 @endsection
 @section('js')
+    <!-- include select2 js -->
+    <script src="{{ asset('vendor/js/select2.js') }}"></script>
     <script>
         $(document).ready(function(){
-            var error = $('.alert-custom').html();
-            if(error != null)
-            {
-                $('#btn-modal-click').click();
-            }
+            $(function(){
+                var error = $('.alert-custom').html();
+                if(error != null)
+                {
+                    $('#btn-modal-click').click();
+                }
+            });
+
+            $(function(){
+                $(".company-selected").select2({
+                    tags: false,
+                    placeholder : 'Chọn công ty',
+                    theme: "classic",
+                    width: "100%"
+                });
+            });
         });
     </script>
 @endsection

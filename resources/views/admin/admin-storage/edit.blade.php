@@ -4,6 +4,8 @@
     <title>Kho | Chỉnh sửa</title>
 @endsection
 @section('css')
+    <!-- include select2 css -->
+    <link rel="stylesheet" href="{{asset('vendor/css/select2.css')}}">
     <style>
         .alert-custom{
             margin-top: 5px;
@@ -25,6 +27,11 @@
                 <form action="{{route('admin.storage.update', ['id' => $storage->id]) }}" method="post">
                     @csrf
                     <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Công ty *</label>
+                            <input type="text" class="form-control" value="{{$storage->company->tencongty}}" readonly>
+                            <input type="hidden" name="idcongty" value="{{$storage->idcongty}}">
+                        </div>
                         <div class="form-group">
                             <label>Tên kho *</label>
                             <input type="text" name="tenkho"
@@ -100,4 +107,20 @@
     </div>
     <!-- /.content -->
 </div>
+@endsection
+@section('js')
+    <!-- include select2 js -->
+    <script src="{{ asset('vendor/js/select2.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            $(function(){
+                $(".company-selected").select2({
+                    tags: false,
+                    placeholder : 'Chọn công ty',
+                    theme: "classic",
+                    width: "100%"
+                });
+            });
+        });
+    </script>
 @endsection

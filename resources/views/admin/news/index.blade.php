@@ -40,8 +40,8 @@
                                 </thead>
                                 <tbody>
                                     @foreach($news as $key => $item)
-                                    <tr class="item-news1" data-url="{{ route('news.edit', ['id'=>$item->id]) }}">
-                                        <th scope="row">{{$key+1}}</th>
+                                    <tr>
+                                        <th scope="row">{{ $item->id }}</th>
                                         <td>{{ $item->profile->tenthanhvien .' '. $item->profile->hothanhvien }}</td>
                                         <td>{{ $item->category->tenchuyenmuc }}</td>
                                         <td>{{ $item->tieudetintuc }}</td>
@@ -49,15 +49,17 @@
                                         <td>{{ $item->ngaydangtintuc }}</td>
                                         <td>{{ $item->company->tencongty }}</td>
                                         <td style="width:120px;">
-                                            @if ($item->duyettintuc == 0)
-                                            <a href="">Chờ duyệt</a>
-                                            @elseif ($item->duyettintuc == 1)
-                                            <a href="">Chờ xuất bản</a>
-                                            @elseif ($item->lydogo == 1)
-                                            <a href="">Đã gỡ/Chờ duyệt</a>
+                                            @if ($item->duyettintuc == 0 && $item->xuatbantintuc == 0 && $item->lydogo == 0)
+                                            <a href="{{ route('news.update-duyet', ['id' => $item->id]) }}">Chờ duyệt</a>
+                                            @endif
+                                            @if ($item->xuatbantintuc == 0 && $item->duyettintuc == 1)
+                                            <a href="{{ route('news.update-xuatban', ['id' => $item->id]) }}">Chờ xuất bản</a>
+                                            @endif
+                                            @if ($item->lydogo == 1)
+                                            <a href="{{ route('news.update-duyet', ['id' => $item->id]) }}">Đã gỡ/Chờ duyệt</a>
                                             @endif
                                             @if (!$item->newshistory->isEmpty())
-                                                <br><a href="">Lịch sử tin tức</a>
+                                                <br><a href="{{ route('news.history', ['id' => $item->id]) }}">Lịch sử tin tức</a>
                                             @endif
                                         </td>
                                         <td>
@@ -65,9 +67,9 @@
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('news.edit', ['id'=>$item->id]) }}">Chỉnh sửa</a>
+                                                    <a class="dropdown-item" href="{{ route('news.edit', ['id' => $item->id]) }}">Chỉnh sửa</a>
                                                     @if ($item->xuatbantintuc == 0)
-                                                    <a class="dropdown-item" href="{{ route('news.delete', ['id'=>$item->id]) }}">Xóa</a>
+                                                    <a class="dropdown-item" href="{{ route('news.delete', ['id' => $item->id]) }}">Xóa</a>
                                                     @endif
                                                 </div>
                                             </div>

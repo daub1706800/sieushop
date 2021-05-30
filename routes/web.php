@@ -209,14 +209,24 @@ Route::prefix('admin')->group(function () {
             'uses' => 'App\Http\Controllers\NewsController@delete',
             'middleware' => 'can:is-admin'
         ]);
-        Route::get('/update-duyet', [
+        Route::get('/duyet/{id}', [
             'as'   => 'news.update-duyet',
             'uses' => 'App\Http\Controllers\NewsController@update_duyet',
             'middleware' => 'can:is-admin'
         ]);
-        Route::get('/update-xuatban', [
+        Route::get('/xuatban/{id}', [
             'as'   => 'news.update-xuatban',
             'uses' => 'App\Http\Controllers\NewsController@update_xuatban',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::get('/history/{id}', [
+            'as'   => 'news.history',
+            'uses' => 'App\Http\Controllers\NewsController@history',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::get('/remove/{id}', [
+            'as'   => 'news.remove',
+            'uses' => 'App\Http\Controllers\NewsController@remove',
             'middleware' => 'can:is-admin'
         ]);
     });

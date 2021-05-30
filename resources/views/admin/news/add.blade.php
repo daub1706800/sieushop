@@ -37,7 +37,6 @@
                         </ul>
                     </div>
                 @endif
-
                     <form action="{{route('news.store')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\NewsRequest;
+use App\Http\Requests\NewsRequestEdit;
 use App\Models\Category;
 use App\Models\Company;
 use App\Models\Field;
@@ -12,6 +13,7 @@ use App\Models\Video;
 use App\Models\Profile;
 use App\Traits\StorageImageTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class NewsController extends Controller
 {
@@ -21,14 +23,16 @@ class NewsController extends Controller
     private $video;
     private $profile;
     private $company;
+    private $newshistory;
 
-    public function __construct(News $news, Category $category, Video $video, Profile $profile, Company $company)
+    public function __construct(News $news, Category $category, Video $video, Profile $profile, Company $company, NewsHistory $newshistory)
     {
-        $this->news     = $news;
+        $this->news = $news;
         $this->category = $category;
-        $this->video    = $video;
-        $this->profile  = $profile;
-        $this->company  = $company;
+        $this->video = $video;
+        $this->profile = $profile;
+        $this->company = $company;
+        $this->newshistory = $newshistory;
     }
 
     public function index()
@@ -92,16 +96,18 @@ class NewsController extends Controller
 
     public function edit($id)
     {
-        $news       = $this->news->find($id);
+        $news = $this->news->find($id);
 
         $categories = $this->category->all();
 
-        $videos     = $this->video->where('idtintuc', $id)->get();
+        $videos = $this->video->where('idtintuc', $id)->get();
 
-        return view('admin.news.edit', compact('news', 'categories', 'videos'));
+        $companies = $this->company->all();
+
+        return view('admin.news.edit', compact('news', 'categories', 'videos', 'companies'));
     }
 
-    public function update(Request $request, $id)
+    public function update(NewsRequestEdit $request, $id)
     {
         $dataNews = [
             'idchuyenmuc'   => $request->idchuyenmuc,
@@ -138,32 +144,62 @@ class NewsController extends Controller
             }
         }
 
-        return redirect()->route('news.edit', ['id' => $id]);
+        return redirect()->route('news.index');
     }
 
     public function delete($id)
     {
         $this->news->find($id)->delete();
 
-        return view('admin.news.index');
+        return redirect()->route('news.index');
     }
 
-    public function update_duyet(Request $request)
+    public function update_duyet($id)
     {
-        $this->news->find($request->id)->update([
+        $this->news->find($id)->update([
             'duyettintuc' => 1,
+            'lydogo' => 0,
         ]);
 
-        // return response([
-        //     'code' => 200,
-        //     'message' => 'success'
-        // ], 200);
+        return redirect()->route('news.index');
     }
 
-    public function update_xuatban(Request $request)
+    public function update_xuatban($id)
     {
-        $this->news->find($request->id)->update([
+        $this->news->find($id)->update([
             'xuatbantintuc' => 1,
         ]);
+
+        return redirect()->route('news.index');
+    }
+
+    public function history($id)
+    {
+        $newshistories = $this->newshistory->where('idtintuc', $id)->get();
+
+        return view('admin.news.history', compact('newshistories'));
+    }
+
+    public function remove(Request $request, $id)
+    {
+        $request->validate([
+            'lydogo' => 'required|min:5|max:255'
+        ], [
+            'lydogo.required' => 'Lý do gỡ không được để trống',
+            'lydogo.min' => 'Lý do gỡ không được ít hơn 10 ký tự',
+            'lydogo.max' => 'Lý do gỡ không được vượt quá 255 ký tự',
+        ]);
+
+        $this->newshistory->create([
+            'idtintuc' => $id,
+            'lydogo' => $request->lydogo,
+        ]);
+
+        $this->news->find($id)->update([
+            'duyettintuc' => 0,
+            'xuatbantintuc' => 0,
+        ]);
+
+        return redirect()->route('news.index');
     }
 }

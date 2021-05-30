@@ -2,30 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminStorageRequest;
 use App\Http\Requests\StorageRequest;
+use App\Models\Company;
 use App\Models\Storage;
 use Illuminate\Http\Request;
 
 class AdminStorageController extends Controller
 {
     private $storage;
+    private $company;
 
-    public function __construct(Storage $storage)
+    public function __construct(Storage $storage, Company $company)
     {
         $this->storage = $storage;
+        $this->company = $company;
     }
 
     public function index()
     {
         $storages = $this->storage->all();
 
-        return view('admin.admin-storage.index', compact('storages'));
+        $companies = $this->company->all();
+
+        return view('admin.admin-storage.index', compact('storages', 'companies'));
     }
 
-    public function store(StorageRequest $request)
+    public function store(AdminStorageRequest $request)
     {
         $data = [
-            'idcongty'      => auth()->user()->idcongty,
+            'idcongty'      => $request->idcongty,
             'idtaikhoan'    => auth()->id(),
             'tenkho'        => $request->tenkho,
             'diachikho'     => $request->diachikho,
@@ -44,12 +50,15 @@ class AdminStorageController extends Controller
     {
         $storage = $this->storage->find($id);
 
-        return view('admin.admin-storage.edit', compact('storage'));
+        $companies = $this->company->all();
+
+        return view('admin.admin-storage.edit', compact('storage', 'companies'));
     }
 
-    public function update(StorageRequest $request, $id)
+    public function update(AdminStorageRequest $request, $id)
     {
         $data = [
+            'idcongty'      => $request->idcongty,
             'tenkho'        => $request->tenkho,
             'diachikho'     => $request->diachikho,
             'taitrongkho'   => $request->taitrongkho,

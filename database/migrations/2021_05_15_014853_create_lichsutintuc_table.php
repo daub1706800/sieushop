@@ -17,7 +17,7 @@ class CreateLichsutintucTable extends Migration
             $table->id();
             $table->bigInteger('idtintuc');
             $table->string('lydogo');
-            $table->datetime('thoigian');
+            $table->timestamp('thoigian')->useCurrent();
             $table->timestamps();
         });
     }
