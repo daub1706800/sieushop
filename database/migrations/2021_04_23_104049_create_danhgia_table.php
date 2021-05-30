@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+
+class CreateDanhgiaTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('danhgia', function (Blueprint $table) {
+            $table->id();
+            $table->bigInteger('idtaikhoan');
+            $table->bigInteger('idsanpham');
+            $table->timestamp('thoigiandanhgia')->useCurrent();
+            $table->integer('saodanhgia');
+            $table->text('noidungdanhgia');
+            $table->integer('trangthaidanhgia')->default('0');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('danhgia');
+    }
+}
