@@ -176,6 +176,13 @@ class ProfileController extends Controller
             'idcongty' => $idcongty,
         ]);
 
+        $role = $this->role->where('loaivaitro', 2)->first();
+
+        DB::table('taikhoan_vaitro')->insert([
+            'idtaikhoan' => auth()->id(),
+            'idvaitro' => $role->id,
+        ]);
+
         return redirect()->route('profile.index');
     }
 

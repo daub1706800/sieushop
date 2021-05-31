@@ -30,7 +30,7 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-md-7">
-                                        <label class="labels">Công ty / Doanh nghiệp *</label>
+                                        <label>Công ty / Doanh nghiệp *</label>
                                         <input type="text" class="form-control @error('tencongty') is-invalid @enderror"
                                                 placeholder="Nhập tên công ty / doanh nghiệp" name="tencongty"
                                                 value="{{ old('tencongty') }}">
@@ -39,7 +39,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-5">
-                                        <label class="labels">Ngày thành lập *</label>
+                                        <label>Ngày thành lập *</label>
                                         <input type="text" class="form-control @error('ngaythanhlapcongty') is-invalid @enderror"
                                                 placeholder="YYYY-MM-DD" name="ngaythanhlapcongty"
                                                 value="{{ old('ngaythanhlapcongty') }}">
@@ -48,7 +48,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-12">
-                                        <label class="labels">Địa chỉ *</label>
+                                        <label >Địa chỉ *</label>
                                         <input type="text" class="form-control @error('diachicongty') is-invalid @enderror"
                                                 placeholder="Nhập địa chỉ" name="diachicongty"
                                                 value="{{ old('diachicongty') }}">
@@ -57,7 +57,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-12">
-                                        <label class="labels">Email *</label>
+                                        <label >Email *</label>
                                         <input type="email" class="form-control @error('emailcongty') is-invalid @enderror"
                                                 placeholder="Nhập email" name="emailcongty"
                                                 value="{{ old('emailcongty') }}">
@@ -66,7 +66,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-12">
-                                        <label class="labels">Điện thoại</label>
+                                        <label >Điện thoại</label>
                                         <input type="text" class="form-control @error('dienthoaicongty') is-invalid @enderror"
                                                 placeholder="Nhập số điện thoại" name="dienthoaicongty"
                                                 value="{{ old('dienthoaicongty') }}">
@@ -75,7 +75,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-12">
-                                        <label class="labels">Fax</label>
+                                        <label >Fax</label>
                                         <input type="text" class="form-control @error('faxcongty') is-invalid @enderror"
                                                 placeholder="Nhập số fax" name="faxcongty"
                                                 value="{{ old('faxcongty') }}">
@@ -84,7 +84,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-12">
-                                        <label class="labels">Website *</label>
+                                        <label>Website * (https:// hoặc http://)</label>
                                         <input type="text" class="form-control @error('webcongty') is-invalid @enderror"
                                                 placeholder="Nhập website" name="webcongty"
                                                 value="{{ old('webcongty') }}">
@@ -95,7 +95,7 @@
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-md-6">
-                                        <label class="labels">Sở / Ngành *</label>
+                                        <label>Sở / Ngành *</label>
                                         <select class="form-control @error('idso') is-invalid @enderror" name="idso">
                                             <option value="">Chọn Sở/Ngành</option>
                                             @foreach($departments as $department)
@@ -107,7 +107,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="labels">Lĩnh vực *</label>
+                                        <label>Lĩnh vực *</label>
                                         <select class="form-control @error('idlinhvuc') is-invalid @enderror" name="idlinhvuc">
                                             <option value="">Chọn lĩnh vực</option>
                                             @foreach($fields as $field)
@@ -127,7 +127,7 @@
                         <div class="col-md-4">
                             <div class="p-3 py-5 mt-md-5">
                                 <div class="form-group col-md-12">
-                                    <label class="labels">Số đăng ký kinh doanh *</label>
+                                    <label>Số đăng ký kinh doanh *</label>
                                     <input type="text" class="form-control @error('sdkkdcongty') is-invalid @enderror"
                                             placeholder="Nhập số đăng ký" name="sdkkdcongty"
                                             value="{{ old('sdkkdcongty') }}">
@@ -136,7 +136,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label class="labels">Ngày cấp đăng ký kinh doanh *</label>
+                                    <label>Ngày cấp đăng ký kinh doanh *</label>
                                     <input type="text" class="form-control @error('ngaycapdkkdcongty') is-invalid @enderror"
                                             placeholder="YYYY-MM-DD" name="ngaycapdkkdcongty"
                                             value="{{ old('ngaycapdkkdcongty') }}">
@@ -145,7 +145,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label class="labels">Nơi cấp *</label>
+                                    <label>Nơi cấp *</label>
                                     <input type="text" class="form-control @error('noicapdkkdcongty') is-invalid @enderror"
                                             placeholder="Nhập nơi cấp" name="noicapdkkdcongty"
                                             value="{{ old('noicapdkkdcongty') }}">
@@ -154,7 +154,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label class="labels">Mã số thuế *</label>
+                                    <label>Mã số thuế *</label>
                                     <input type="text" class="form-control @error('masothuecongty') is-invalid @enderror"
                                             placeholder="Nhập mã số thuế" name="masothuecongty"
                                             value="{{ old('masothuecongty') }}">

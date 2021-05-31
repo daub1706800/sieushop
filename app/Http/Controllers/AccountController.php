@@ -6,6 +6,7 @@ use App\Http\Requests\AccountRequest;
 use App\Models\User;
 use App\Models\Profile;
 use App\Models\Role;
+use Carbon\Carbon;
 // use PHPUnit\Exception;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -116,7 +117,18 @@ class AccountController extends Controller
     public function random_password()
     {
         $password = Str::random(10);
-        
+
         return response()->json($password);
+    }
+
+    public function verify($id)
+    {
+        $verified = Carbon::now();
+
+        $this->user->find($id)->update([
+            'email_verified_at' => $verified
+        ]);
+
+        return redirect()->route('account.index');
     }
 }

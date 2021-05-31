@@ -54,10 +54,12 @@
                                         <p>- {{ $user_role->motavaitro }}</p>
                                         @endforeach
                                     </td>
-                                    @if ($user->idcongty)
+                                    @if ($user->idcongty && $user->loaitaikhoan != 2)
                                     <td>{{ $user->company->tencongty }}</td>
-                                    @else
+                                    @elseif ($user->loaitaikhoan == 2)
                                     <td>Hệ thống</td>
+                                    @else
+                                    <td>Người dùng</td>
                                     @endif
                                     <td>
                                         <div class="btn-group">
@@ -68,6 +70,9 @@
                                                 @if($user->storage->isEmpty() && $user->stage->isEmpty() && $user->product->isEmpty()
                                                     && $user->news->isEmpty() && !empty($user->idcongty))
                                                 <a class="dropdown-item" href="{{ route('account.delete', ['id' => $user->id]) }}">Xóa</a>
+                                                @endif
+                                                @if(!$user->email_verified_at)
+                                                <a class="dropdown-item" href="{{ route('account.verify', ['id' => $user->id]) }}">Xác nhận tài khoản</a>
                                                 @endif
                                             </div>
                                         </div>

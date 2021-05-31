@@ -12,6 +12,7 @@ use App\Models\NewsHistory;
 use App\Models\Video;
 use App\Models\Profile;
 use App\Traits\StorageImageTrait;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -201,5 +202,25 @@ class NewsController extends Controller
         ]);
 
         return redirect()->route('news.index');
+    }
+
+    public function view(Request $request)
+    {
+        $news = $this->news->find($request->idNews);
+
+        $category = $this->category->where('id', $news->idchuyenmuc)->first();
+
+        $author = $this->profile->where('idtaikhoan', $news->idtaikhoan)->first();
+
+        $ngaydang = Carbon::createFromFormat('Y-m-d', $news->ngaydangtintuc)->format('d-m-Y');
+
+        $array = [
+            'news' => $news,
+            'author' => $author->hothanhvien . ' ' . $author->tenthanhvien,
+            'category' => $category->tenchuyenmuc,
+            'ngaydang' => $ngaydang
+        ];
+
+        return response()->json($array);
     }
 }

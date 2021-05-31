@@ -28,6 +28,15 @@
         <div class="container-fluid">
         <div class="row">
                 <div class="col-md-12">
+                    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
                     <form action="{{route('news.update', ['id' => $news->id]) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
@@ -103,23 +112,37 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="form-group text-center">
+                            <input type="checkbox" name="loaitintuc" value="1" {{ $news->loaitintuc == 1 ? "checked" : "" }}>
+                            <label>Tin nổi bật</label>
+                        </div>
+                        <div class="text-center">
+                            @if ($news->duyettintuc == 0 && $news->xuatbantintuc == 0 && $news->lydogo == 0)
+                            <a href="{{ route('news.update-duyet', ['id' => $news->id]) }}" class="btn btn-primary mb-5">Duyệt</a>
+                            @endif
+                            @if ($news->xuatbantintuc == 0 && $news->duyettintuc == 1)
+                            <a href="{{ route('news.update-xuatban', ['id' => $news->id]) }}" class="btn btn-primary mb-5">Xuất bản</a>
+                            @endif
+
+                            <button type="submit" class="btn btn-primary mb-5">Cập nhật</button>
+                        </div>
+                    </form>
+                    @if ($news->xuatbantintuc == 1)
+                    <hr>
+                    <form action="{{ route('news.remove', ['id' => $news->id]) }}">
                         <div class="form-group col-md-6">
-                            <label>Lý do gỡ</label>
+                            <label>Lý do thu hồi</label>
                             <input type="text" name="lydogo" class="form-control @error('lydogo') is-invalid @enderror"
                                     placeholder="Ví dụ: Thông tin sai">
                             @error('lydogo')
                             <div class="alert alert-danger alert-custom">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group text-center">
-                            <input type="checkbox" name="loaitintuc" value="1" {{ $news->loaitintuc == 1 ? "checked" : "" }}>
-                            <label>Tin nổi bật</label>
-                        </div>
-                        <div class="text-center">
-                            <a href="{{ route('news.remove', ['id' => $news->id]) }}" class="btn btn-warning mb-5">Gỡ tin</a>
-                            <button type="submit" class="btn btn-primary mb-5">Cập nhật</button>
+                        <div class="col-md-6 text-center">
+                            <button type="submit" class="btn btn-primary mb-5">Thu hồi</button>
                         </div>
                     </form>
+                    @endif
                 </div>
             </div>
             <!-- /.row -->
@@ -145,7 +168,15 @@
                 codemirror: { // codemirror options
                     theme: 'monokai'
                 },
-                placeholder: "Nhập nội dung tóm tắt"
+                placeholder: "Nhập nội dung tóm tắt",
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['view', ['help']]
+                ]
             });
         });
 
@@ -158,7 +189,16 @@
                 codemirror: { // codemirror options
                     theme: 'monokai'
                 },
-                placeholder: "Nhập nội dung chính"
+                placeholder: "Nhập nội dung chính",
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['help']]
+                ]
             });
         });
 
