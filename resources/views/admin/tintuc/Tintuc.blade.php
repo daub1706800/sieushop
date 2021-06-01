@@ -24,8 +24,8 @@
             <div class="row">
 
 
-
-
+                
+                
 
 
                 <div class="col-sm-12">
@@ -40,27 +40,27 @@
                             <tr role="row">
                                 <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending">No.</th>
                                 <!-- <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" >Công ty</th> -->
-                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" >Người đăng</th>
-                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" >Chuyên mục</th>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" >Tiêu đề tin tức</th>
-                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" >Tin nổi bật</th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" >Chuyên mục</th>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" >Ngày đăng tin tức</th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" >Người đăng</th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" >Tin nổi bật</th>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" >Xuất bản</th>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" >Mở rộng</th>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" >Trạng thái</th>
                             </tr>
                         </thead>
                         <tbody>
-
+                            
                             @foreach ($data as $key => $row)
                                 <tr class="odd">
                                     <td class="dtr-control sorting_1" tabindex="0">{{$key+1}}</td>
                                     <!-- <td>{{$row->tencongty}}</td> -->
-                                    <td>{{$row->hothanhvien}} {{$row->tenthanhvien}}</td>
+                                    <td><a style="color:black;" href="{{route('tintuc.viewTintuc',['id'=>$row->id])}}">{{$row->tieudetintuc}}</a></td>
                                     <td>{{$row->tenchuyenmuc}}</td>
-                                    <td>{{$row->tieudetintuc}}</td>
-                                    <td>{{$row->loaitintuc}}</td>
                                     <td>{{$row->ngaydangtintuc}}</td>
+                                    <td>{{$row->hothanhvien}} {{$row->tenthanhvien}}</td>
+                                    <td>{{$row->loaitintuc}}</td>
                                     <td>{{$row->ago}}</td>
                                     <td>
                                         <div class="btn-group">
@@ -68,33 +68,34 @@
                                                     aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" href="{{route('tintuc.detailTintuc',['id'=>$row->id])}}">Chi tiết</a>
-                                                <a onclick="return confirm('Bạn chắc chắn muốn xóa ?')" class="dropdown-item" href="{{route('tintuc.deleteTintuc',['id'=>$row->id])}}">Xóa tin tức</a>
+                                                @if($row->xuatbantintuc==0)
+                                                    <a onclick="return confirm('Bạn chắc chắn muốn xóa ?')" class="dropdown-item" href="{{route('tintuc.deleteTintuc',['id'=>$row->id])}}">Xóa tin tức</a>
+                                                @endif
                                             </div>
                                         </div>
                                     </td>
 
                                     <td>
                                         @if ( $row->duyettintuc === 0 && $row->xuatbantintuc === 0 && $row->lydogo === 0)
-                                        <a style="color:blue; font-weight:bold;" href="{{route('tintuc.acceptTintuc',['id'=>$row->id])}}">Chờ Duyệt</a>
+                                        <p style="color:blue; font-weight:bold;">Chờ Duyệt</p>
                                         @endif
                                         @if ( $row->duyettintuc === 1 && $row->xuatbantintuc === 0 && $row->lydogo === 0)
-                                        <a style="color:blue; font-weight:bold;" href="{{route('tintuc.postTintuc',['id'=>$row->id])}}">Chờ Xuất bản</a>
+                                        <p style="color:blue; font-weight:bold;">Chờ Xuất bản</p>
                                         @endif
                                         @if ( $row->duyettintuc === 1 && $row->xuatbantintuc === 1 && $row->lydogo === 0)
-                                        <p style="color:green;">Tin đã được đăng</p>
+                                        <p style="color:green; font-weight:bold;">Tin đã được đăng</p>
                                         @endif
                                         @if ( $row->duyettintuc === 0 && $row->xuatbantintuc === 0 && $row->lydogo === 1)
-                                        <a style="color:orange; font-weight:bold;" href="{{route('tintuc.acceptTintuc',['id'=>$row->id])}}">Đã gỡ / Chờ Duyệt</a>
-                                        <br>
+                                        <p style="color:orange; font-weight:bold;">Chờ Duyệt</p>
                                         <a style="color:red;" href="{{route('tintuc.viewhistoryTintuc',['id'=>$row->id])}}">Xem lịch sử tin</a>
                                         @endif
                                         @if ( $row->duyettintuc === 1 && $row->xuatbantintuc === 0 && $row->lydogo === 1)
-                                        <a style="color:orange; font-weight:bold;" href="{{route('tintuc.postTintuc',['id'=>$row->id])}}">Chờ Xuất bản</a>
+                                        <a style="color:orange; font-weight:bold;">Chờ Xuất bản</a>
                                         <br>
                                         <a style="color:red;" href="{{route('tintuc.viewhistoryTintuc',['id'=>$row->id])}}">Xem lịch sử tin</a>
                                         @endif
                                         @if ( $row->duyettintuc === 1 && $row->xuatbantintuc === 1 && $row->lydogo === 1)
-                                        <p style="color:green;">Tin đã được đăng</p>
+                                        <p style="color:green; font-weight:bold;">Tin đã được đăng</p>
                                         <a style="color:red;" href="{{route('tintuc.viewhistoryTintuc',['id'=>$row->id])}}">Xem lịch sử tin</a>
                                         @endif
                                     </td>
@@ -112,7 +113,7 @@
                                     </td> -->
 
                                 </tr>
-
+                                
                             @endforeach
                         </tbody>
                     </table>

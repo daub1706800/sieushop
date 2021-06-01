@@ -599,6 +599,11 @@ Route::prefix('/')->group(function () {
                 'as' => 'tintuc.removeTintuc',
                 'uses' => 'App\Http\Controllers\TintucController@removeTintuc',
             ]);
+            Route::get('/view/{id}', [
+                'as' => 'tintuc.viewTintuc',
+                'uses' => 'App\Http\Controllers\TintucController@viewTintuc',
+                'middleware' => 'can:news-view'
+            ]);
         });
 
         /* Module Thông tin */

@@ -1,28 +1,3 @@
-@extends('admin.layouts.admin')
-
-@section('title')
-    <title>Tin tức | Danh sách</title>
-@endsection
-
-@section('css')
-    <style>
-        .flex{
-            width: 500px;
-        }
-    </style>
-@endsection
-
-@section('content')
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    @include('admin.partials.content-header', ['name' => 'DANH SÁCH', 'key' => 'TIN TỨC'])
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-
                 <div class="col-md-12">
 
                     <div class="col-md-12 mb-4 text-right">
@@ -42,6 +17,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">STT</th>
+                                <th scope="col">Chuyên mục</th>
                                 <th scope="col">Tiêu đề tin tức</th>
                                 <th scope="col">Tin nổi bật</th>
                                 <th scope="col">Ngày đăng tin tức</th>
@@ -56,6 +32,7 @@
 
                                 <tr>
                                     <th scope="row">{{$key+1}}</th>
+                                    <td>{{$row->tenchuyenmuc}}</td>
                                     <td>{{$row->tieudetintuc}}</td>
                                     <td>{{$row->loaitintuc}}</td>
                                     <td>{{$row->ngaydangtintuc}}</td>
@@ -96,11 +73,10 @@
                     </table>
 
                 </div>
-                
-            </div>
-            <!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content -->
-</div>
-@endsection
+
+
+
+
+                <div class="col-md-12">
+                    {{ $data->links() }}
+                </div>

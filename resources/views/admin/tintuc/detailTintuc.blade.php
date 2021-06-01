@@ -123,6 +123,33 @@
                         <button type="submit" class="btn btn-primary">Gỡ tin tức</button>
                     </form>
                 @endif
+                <div class="col-sm-10">
+                    <br><br><br><br><br><br>
+                    @if ( $data->duyettintuc === 0 && $data->xuatbantintuc === 0 && $data->lydogo === 0)
+                    <a style="color:blue; font-weight:bold;" href="{{route('tintuc.acceptTintuc',['id'=>$data->id])}}">Chờ Duyệt</a>
+                    @endif
+                    @if ( $data->duyettintuc === 1 && $data->xuatbantintuc === 0 && $data->lydogo === 0)
+                    <a style="color:blue; font-weight:bold;" href="{{route('tintuc.postTintuc',['id'=>$data->id])}}">Chờ Xuất bản</a>
+                    @endif
+                    @if ( $data->duyettintuc === 1 && $data->xuatbantintuc === 1 && $data->lydogo === 0)
+                    <p style="color:green; font-weight:bold;">Tin đã được đăng</p>
+                    @endif
+                    @if ( $data->duyettintuc === 0 && $data->xuatbantintuc === 0 && $data->lydogo === 1)
+                    <a style="color:orange; font-weight:bold;" href="{{route('tintuc.acceptTintuc',['id'=>$data->id])}}">Chờ Duyệt</a>
+                    <br>
+                    <a style="color:red;" href="{{route('tintuc.viewhistoryTintuc',['id'=>$data->id])}}">Xem lịch sử tin</a>
+                    @endif
+                    @if ( $data->duyettintuc === 1 && $data->xuatbantintuc === 0 && $data->lydogo === 1)
+                    <a style="color:orange; font-weight:bold;" href="{{route('tintuc.postTintuc',['id'=>$data->id])}}">Chờ Xuất bản</a>
+                    <br>
+                    <a style="color:red;" href="{{route('tintuc.viewhistoryTintuc',['id'=>$data->id])}}">Xem lịch sử tin</a>
+                    @endif
+                    @if ( $data->duyettintuc === 1 && $data->xuatbantintuc === 1 && $data->lydogo === 1)
+                    <p style="color:green; font-weight:bold;">Tin đã được đăng</p>
+                    <a style="color:red;" href="{{route('tintuc.viewhistoryTintuc',['id'=>$data->id])}}">Xem lịch sử tin</a>
+                    @endif
+                </div>
+                
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->

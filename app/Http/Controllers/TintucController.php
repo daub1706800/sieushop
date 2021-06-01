@@ -37,11 +37,17 @@ class TintucController extends Controller{
                     ->Join('congty', 'tintuc.idcongty', '=', 'congty.id')
                     ->select('tintuc.*','chuyenmuc.tenchuyenmuc','congty.tencongty','thongtin.hothanhvien','thongtin.tenthanhvien')
                     ->get();
-
         foreach($data as $row){
-            $date = Carbon::create($row->updated_at);
-            $now = Carbon::now();
-            $row->ago = $date->diffForHumans($now);// them 1 truong du lieu trong 1 dong(row) cua data
+            $xuatban = $row->updated_at;
+            if($xuatban==null){
+                $xuatban = "";
+                $row->ago = $xuatban;
+            }
+            else{
+                $date = Carbon::create($xuatban);
+                $now = Carbon::now();
+                $row->ago = $date->diffForHumans($now);// them 1 truong du lieu trong 1 dong(row) cua data
+            }
         }
         return view('admin.tintuc.Tintuc', compact('data'));
     }
@@ -72,7 +78,7 @@ class TintucController extends Controller{
                     ->Join('congty', 'tintuc.idcongty', '=', 'congty.id')
                     ->select('tintuc.*','chuyenmuc.tenchuyenmuc','congty.tencongty')
                     ->paginate(10);
-            return view('admin.tintuc.searchTintuc', compact('data'));
+            return view('admin.tintuc.searchTintuc', compact('data')); 
         }
     }
 
@@ -137,6 +143,14 @@ class TintucController extends Controller{
         $data2 = DB::table('video')->where('idtintuc',$id)->get();
         $data3 = DB::table('chuyenmuc')->get();
         return view('admin.tintuc.detailTintuc', compact('data','data2','data3'));
+    }
+
+    public function viewTintuc($id)
+    {
+        $data = DB::table('tintuc')->where('id',$id)->first();
+        $data2 = DB::table('video')->where('idtintuc',$id)->get();
+        $data3 = DB::table('chuyenmuc')->get();
+        return view('admin.tintuc.viewTintuc', compact('data','data2','data3'));
     }
 
     public function editTintuc(Request $request)
@@ -226,6 +240,7 @@ class TintucController extends Controller{
         $data['duyettintuc'] = 0;
         $data['xuatbantintuc'] = 0;
         $data['lydogo'] = 1;
+        $data['updated_at'] = null;
         DB::table('tintuc')->where('id',$request->id)->update($data);
         $data2 = array();
         $data2['idtintuc'] = $request->id;
