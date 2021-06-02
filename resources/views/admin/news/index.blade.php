@@ -24,7 +24,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <a href="{{ route('news.add') }}" class="btn btn-primary float-right m-2">Thêm tin tức</a>
+                    <a href="{{ route('news.add') }}" class="btn btn-primary float-right m-2"><i class="fas fa-plus"></i></a></a>
                 </div>
                 <div class="col-md-12">
                     <div class="card">

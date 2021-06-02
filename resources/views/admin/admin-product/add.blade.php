@@ -30,6 +30,19 @@
                         @csrf
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label>Công ty *</label>
+                                <select class="form-control company-selected @error('idcongty') is-invalid @enderror"
+                                        name="idcongty">
+                                    <option value="">Chọn công ty</option>
+                                    @foreach($companies as $company)
+                                    <option value="{{ $company->id }}">{{ $company->tencongty }}</option>
+                                    @endforeach
+                                </select>
+                                @error('idcongty')
+                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
                                 <label>Tên sản phẩm *</label>
                                 <input  type="text" class="form-control @error('tensanpham') is-invalid @enderror"
                                         name="tensanpham" placeholder="Tên sản phẩm"
@@ -178,13 +191,22 @@
                     codemirror: { // codemirror options
                         theme: 'monokai'
                     },
-                    placeholder: "Nhập mô tả cho công việc"
+                    placeholder: "Nhập mô tả cho công việc",
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        // ['insert', ['link', 'picture', 'video']],
+                        ['view', ['help']]
+                    ]
                 });
             });
             $(function(){
                 $(".storage-selected").select2({
                     tags: false,
-                    placeholder : 'Chọn vai trò',
+                    placeholder : 'Chọn kho',
                     theme: "classic",
                     width: "100%"
                 });
@@ -192,9 +214,35 @@
             $(function(){
                 $(".productcategories-selected").select2({
                     tags: false,
-                    placeholder : 'Chọn vai trò',
+                    placeholder : 'Chọn loại sản phẩm',
                     theme: "classic",
                     width: "100%"
+                });
+            });
+            $(function(){
+                $(".company-selected").select2({
+                    tags: false,
+                    placeholder : 'Chọn công ty',
+                    theme: "classic",
+                    width: "100%"
+                });
+            });
+
+            $(document).on('change', '.company-selected', function() {
+                var idCompany = $(this).val();
+                // console.log(idCompany);
+                $.ajax({
+                    url : "{{ route('admin.product.input-change') }}",
+                    type: "post",
+                    data: {
+                        'idCompany':idCompany,
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    success:function(data) {
+                        // console.log(data);
+                        $('.storage-selected').html(data.storage);
+                        $('.productcategories-selected').html(data.productcategory);
+                    }
                 });
             });
         });

@@ -24,7 +24,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <a style="width:44px" href="" class="btn btn-primary float-right m-2">
+                    <a style="width:44px" href="{{ route('admin.product.add') }}" class="btn btn-primary float-right m-2">
                         <i class="fas fa-plus"></i></a>
                 </div>
                 <div class="col-md-12">

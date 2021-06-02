@@ -182,13 +182,11 @@ class NewsController extends Controller
 
         $output = '';
 
-        foreach ($newshistories as $key => $value) {
+        foreach ($newshistories as $value) {
+
             $date = Carbon::createFromFormat('Y-m-d H:i:s', $value->thoigian)->format('H:i:s d-m-Y');
 
-            $output += '<div class="row">
-                            <p>Vào lúc '.$date.'</p>
-                            <p class="pl-2">--- '.$value->lydogo.'</p>
-                        </div>';
+            $output .= '<div class="row"><p>Vào lúc '.$date.'</p><p class="pl-2">--- '.$value->lydogo.'</p></div>';
         }
 
         return response()->json([

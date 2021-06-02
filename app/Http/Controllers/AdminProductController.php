@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Models\Company;
 use App\Models\Field;
 use App\Models\Image;
 use App\Models\Product;
@@ -21,13 +22,15 @@ class AdminProductController extends Controller
     private $field;
     private $storage;
     private $productcategory;
+    private $company;
 
-    public function __construct(Product $product, Field $field, Storage $storage, ProductCategory $productcategory)
+    public function __construct(Product $product, Field $field, Storage $storage, ProductCategory $productcategory, Company $company)
     {
         $this->product         = $product;
         $this->field           = $field;
         $this->storage         = $storage;
         $this->productcategory = $productcategory;
+        $this->company = $company;
     }
 
     public function index()
@@ -41,11 +44,37 @@ class AdminProductController extends Controller
     {
         $fields = $this->field->all();
 
-        $storages = $this->storage->where('idcongty', auth()->user()->idcongty)
-                                            ->get();
-        $productcategories = $this->productcategory->where('idcongty', auth()->user()->idcongty)
-                                                   ->get();
-        return view('admin.admin-product.add', compact('fields', 'storages', 'productcategories'));
+        $companies = $this->company->all();
+
+        $storages = $this->storage->where('idcongty', auth()->user()->idcongty)->get();
+
+        $productcategories = $this->productcategory->where('idcongty', auth()->user()->idcongty)->get();
+
+        return view('admin.admin-product.add', compact('fields', 'storages', 'productcategories', 'companies'));
+    }
+
+    public function input_change(Request $request)
+    {
+        $storages = $this->storage->where('idcongty', $request->idCompany)->get();
+
+        $storageSelect = '<option value="">Chọn kho</option>';
+
+        foreach ($storages as $storage) {
+            $storageSelect .= '<option value="'.$storage->id.'">'.$storage->tenkho.'</option>';
+        }
+
+        $productcategories = $this->productcategory->where('idcongty', $request->idCompany)->get();
+
+        $productcategorySelect = '<option value="">Chọn loại sản phẩm</option>';
+
+        foreach ($productcategories as $productcategory) {
+            $productcategorySelect .= '<option value="'.$productcategory->id.'">'.$productcategory->tenloaisanpham.'</option>';
+        }
+
+        return response()->json([
+            'storage' => $storageSelect,
+            'productcategory' => $productcategorySelect
+        ]);
     }
 
     public function store(ProductRequest $request)
@@ -56,7 +85,7 @@ class AdminProductController extends Controller
 
             $data = [
                 'idloaisanpham'    => $request->idloaisanpham,
-                'idcongty'         => auth()->user()->idcongty,
+                'idcongty'         => $request->idcongty,
                 'idtaikhoan'       => auth()->id(),
                 'idkho'            => $request->idkho,
                 'tensanpham'       => $request->tensanpham,
