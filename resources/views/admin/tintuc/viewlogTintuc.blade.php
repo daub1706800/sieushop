@@ -15,7 +15,7 @@
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    @include('admin.partials.content-header', ['name' => 'LÝ DO GỠ', 'key' => 'TIN TỨC'])
+    @include('admin.partials.content-header', ['name' => 'DUYỆT / XUẤT BẢN', 'key' => 'TIN TỨC'])
     <!-- /.content-header -->
 
     <!-- Main content -->
@@ -28,9 +28,9 @@
                             <tr>
                                 <th scope="col">STT</th>
                                 <th scope="col">Tiêu đề tin tức</th>
-                                <th scope="col">Người gỡ</th>
-                                <th scope="col">Lý do gỡ tin</th>
-                                <th scope="col">Thời gian gỡ tin</th>
+                                <th scope="col">Người duyệt/ xuất bản</th>
+                                <th scope="col">Nội dung đánh giá</th>
+                                <th scope="col">Thời gian xử lý</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,7 +40,7 @@
                                 <th scope="row">{{$key+1}}</th>
                                 <td>{{$row->tieudetintuc}}</td>
                                 <td>{{$row->hothanhvien}} {{$row->tenthanhvien}}</td>
-                                <td>{{$row->lydogo}}</td>
+                                <td>{{$row->noidungdanhgia}}</td>
                                 <td>{{$row->thoigian}}</td>
                             </tr>
                             @endforeach

@@ -464,6 +464,7 @@ Route::prefix('admin')->group(function () {
             'middleware' => 'can:is-admin'
         ]);
     });
+<<<<<<< HEAD
 
     /* Module Quyền */
     Route::prefix('permission')->group(function () {
@@ -544,6 +545,41 @@ Route::prefix('dasboard')->group(function() {
             'middleware' => 'can:company-delete'
         ]);
     });
+=======
+// });
+
+// Route::middleware(['verify' => true])->group(function() {
+    Route::prefix('dasboard')->group(function() {
+        Route::get('/', function () {
+            return view('admin.home');
+        })->middleware(['auth', 'verified'])->name('dasboard.home');
+
+        /* Module Công ty */
+        Route::prefix('company')->group(function() {
+            Route::get('/', [
+                'as'   => 'profile.company.index',
+                'uses' => 'App\Http\Controllers\ProfileController@index_company',
+            ]);
+            Route::get('/create', [
+                'as'   => 'profile.company.create',
+                'uses' => 'App\Http\Controllers\ProfileController@create_company',
+            ]);
+            Route::post('/store', [
+                'as'   => 'profile.company.store',
+                'uses' => 'App\Http\Controllers\ProfileController@store_company',
+            ]);
+            Route::post('/update/{id}', [
+                'as'   => 'profile.company.update',
+                'uses' => 'App\Http\Controllers\ProfileController@update_company',
+                'middleware' => 'can:company-update'
+            ]);
+            Route::get('/delete/{id}', [
+                'as'   => 'profile.company.delete',
+                'uses' => 'App\Http\Controllers\ProfileController@delete_company',
+                'middleware' => 'can:company-delete'
+            ]);
+        });
+>>>>>>> 566606fa3adf829af2f22b6645801bdf23182b5c
 
     /* Module Tin tức */
     Route::prefix('news')->group(function () {
@@ -557,6 +593,14 @@ Route::prefix('dasboard')->group(function() {
             'uses' => 'App\Http\Controllers\TintucController@viewhistoryTintuc',
             'middleware' => 'can:news-list'
         ]);
+<<<<<<< HEAD
+=======
+        Route::get('/log/{id}', [
+            'as' => 'tintuc.viewlogTintuc',
+            'uses' => 'App\Http\Controllers\TintucController@viewlogTintuc',
+            'middleware' => 'can:news-list'
+        ]);
+>>>>>>> 566606fa3adf829af2f22b6645801bdf23182b5c
         Route::get('/add-news', [
             'as' => 'tintuc.addTintuc',
             'uses' => 'App\Http\Controllers\TintucController@addTintuc',
@@ -592,12 +636,20 @@ Route::prefix('dasboard')->group(function() {
             'uses' => 'App\Http\Controllers\TintucController@addVideo',
             'middleware' => 'can:news-update'
         ]);
+<<<<<<< HEAD
         Route::get('/accept-news/{id}', [
+=======
+        Route::get('/accept-news', [
+>>>>>>> 566606fa3adf829af2f22b6645801bdf23182b5c
             'as' => 'tintuc.acceptTintuc',
             'uses' => 'App\Http\Controllers\TintucController@acceptTintuc',
             'middleware' => 'can:news-browse'
         ]);
+<<<<<<< HEAD
         Route::get('/post-news/{id}', [
+=======
+        Route::get('/post-news', [
+>>>>>>> 566606fa3adf829af2f22b6645801bdf23182b5c
             'as' => 'tintuc.postTintuc',
             'uses' => 'App\Http\Controllers\TintucController@postTintuc',
             'middleware' => 'can:news-publish'
@@ -606,6 +658,7 @@ Route::prefix('dasboard')->group(function() {
             'as' => 'tintuc.removeTintuc',
             'uses' => 'App\Http\Controllers\TintucController@removeTintuc',
         ]);
+<<<<<<< HEAD
         Route::post('/view', [
             'as'   => 'tintuc.view',
             'uses' => 'App\Http\Controllers\NewsController@view',
@@ -663,6 +716,250 @@ Route::prefix('dasboard')->group(function() {
             'as'   => 'profile.account.random-password',
             'uses' => 'App\Http\Controllers\ProfileController@random_password',
         ]);
+=======
+        Route::get('/view/{id}', [
+            'as' => 'tintuc.viewTintuc',
+            'uses' => 'App\Http\Controllers\TintucController@viewTintuc',
+            'middleware' => 'can:news-view'
+        ]);
+    });
+
+        /* Module Thông tin */
+        Route::prefix('profile')->group(function () {
+            Route::get('/', [
+                'as'   => 'profile.index',
+                'uses' => 'App\Http\Controllers\ProfileController@index',
+            ]);
+            Route::post('/change/{id}', [
+                'as'   => 'profile.change',
+                'uses' => 'App\Http\Controllers\ProfileController@changeAvatar',
+            ]);
+            Route::get('/edit/{id}', [
+                'as'   => 'profile.edit',
+                'uses' => 'App\Http\Controllers\ProfileController@edit',
+            ]);
+            Route::post('/update/{id}', [
+                'as'   => 'profile.update',
+                'uses' => 'App\Http\Controllers\ProfileController@update',
+            ]);
+        });
+
+        /* Module Tài khoản */
+        Route::prefix('account')->group(function () {
+            Route::get('/', [
+                'as'   => 'profile.account.index',
+                'uses' => 'App\Http\Controllers\ProfileController@index_account',
+                'middleware' => 'can:account-list'
+            ]);
+            Route::post('/store', [
+                'as'   => 'profile.account.store',
+                'uses' => 'App\Http\Controllers\ProfileController@store_account',
+                'middleware' => 'can:account-add'
+            ]);
+            Route::get('/edit/{id}', [
+                'as'   => 'profile.account.edit',
+                'uses' => 'App\Http\Controllers\ProfileController@edit_account',
+                'middleware' => 'can:account-view'
+            ]);
+            Route::post('/update/{id}', [
+                'as'   => 'profile.account.update',
+                'uses' => 'App\Http\Controllers\ProfileController@update_account',
+                'middleware' => 'can:account-update'
+            ]);
+            Route::get('/delete/{id}', [
+                'as'   => 'profile.account.delete',
+                'uses' => 'App\Http\Controllers\ProfileController@delete_account',
+                'middleware' => 'can:account-delete'
+            ]);
+            Route::get('/random-password', [
+                'as'   => 'profile.account.random-password',
+                'uses' => 'App\Http\Controllers\ProfileController@random_password',
+            ]);
+        });
+
+        /* Module Vai trò */
+        Route::prefix('role')->group(function () {
+            Route::get('/', [
+                'as'   => 'profile.role.index',
+                'uses' => 'App\Http\Controllers\ProfileController@index_role',
+                'middleware' => 'can:role-list'
+            ]);
+            Route::post('/store', [
+                'as'   => 'profile.role.store',
+                'uses' => 'App\Http\Controllers\ProfileController@store_role',
+                'middleware' => 'can:role-add'
+            ]);
+            Route::get('/edit/{id}', [
+                'as'   => 'profile.role.edit',
+                'uses' => 'App\Http\Controllers\ProfileController@edit_role',
+                'middleware' => 'can:role-view'
+            ]);
+            Route::post('/update/{id}', [
+                'as'   => 'profile.role.update',
+                'uses' => 'App\Http\Controllers\ProfileController@update_role',
+                'middleware' => 'can:role-update'
+            ]);
+            Route::get('/delete/{id}', [
+                'as'   => 'profile.role.delete',
+                'uses' => 'App\Http\Controllers\ProfileController@delete_role',
+                'middleware' => 'can:role-delete'
+            ]);
+        });
+
+        /* Module Kho */
+        Route::prefix('storages')->group(function () {
+            Route::get('/', [
+                'as'   => 'storage.index',
+                'uses' => 'App\Http\Controllers\StorageController@index',
+                'middleware' => 'can:storage-list'
+            ]);
+            Route::post('/store', [
+                'as'   => 'storage.store',
+                'uses' => 'App\Http\Controllers\StorageController@store',
+                'middleware' => 'can:storage-add'
+            ]);
+            Route::get('/edit/{id}', [
+                'as'   => 'storage.edit',
+                'uses' => 'App\Http\Controllers\StorageController@edit',
+                'middleware' => 'can:storage-view'
+            ]);
+            Route::post('/update/{id}', [
+                'as'   => 'storage.update',
+                'uses' => 'App\Http\Controllers\StorageController@update',
+                'middleware' => 'can:storage-update'
+            ]);
+            Route::get('/delete/{id}', [
+                'as'   => 'storage.delete',
+                'uses' => 'App\Http\Controllers\StorageController@delete',
+                'middleware' => 'can:storage-delete'
+            ]);
+        });
+
+        /* Module Loại sản phẩm */
+        Route::prefix('productcategory')->group(function () {
+            Route::get('/', [
+                'as'   => 'productcategory.index',
+                'uses' => 'App\Http\Controllers\ProductCategoryController@index',
+                'middleware' => 'can:procat-list'
+            ]);
+            Route::post('/store', [
+                'as'   => 'productcategory.store',
+                'uses' => 'App\Http\Controllers\ProductCategoryController@store',
+                'middleware' => 'can:procat-add'
+            ]);
+            Route::get('/edit/{id}', [
+                'as'   => 'productcategory.edit',
+                'uses' => 'App\Http\Controllers\ProductCategoryController@edit',
+                'middleware' => 'can:procat-view'
+            ]);
+            Route::post('/update/{id}', [
+                'as'   => 'productcategory.update',
+                'uses' => 'App\Http\Controllers\ProductCategoryController@update',
+                'middleware' => 'can:procat-update'
+            ]);
+            Route::get('/delete/{id}', [
+                'as'   => 'productcategory.delete',
+                'uses' => 'App\Http\Controllers\ProductCategoryController@delete',
+                'middleware' => 'can:procat-delete'
+            ]);
+        });
+
+        /* Module Sản phẩm */
+        Route::prefix('product')->group(function () {
+            Route::get('/', [
+                'as'   => 'product.index',
+                'uses' => 'App\Http\Controllers\ProductController@index',
+                'middleware' => 'can:product-list'
+            ]);
+            Route::get('/add', [
+                'as'   => 'product.add',
+                'uses' => 'App\Http\Controllers\ProductController@add',
+                'middleware' => 'can:product-add'
+            ]);
+            Route::post('/store', [
+                'as'   => 'product.store',
+                'uses' => 'App\Http\Controllers\ProductController@store',
+            ]);
+            Route::get('/edit/{id}', [
+                'as'   => 'product.edit',
+                'uses' => 'App\Http\Controllers\ProductController@edit',
+                'middleware' => 'can:product-view'
+            ]);
+            Route::post('/update/{id}', [
+                'as'   => 'product.update',
+                'uses' => 'App\Http\Controllers\ProductController@update',
+                'middleware' => 'can:product-update'
+            ]);
+            Route::get('/delete/{id}', [
+                'as'   => 'product.delete',
+                'uses' => 'App\Http\Controllers\ProductController@delete',
+                'middleware' => 'can:product-delete'
+            ]);
+            // Stage
+            Route::get('/stage/{product_id}', [
+                'as'   => 'stage.index',
+                'uses' => 'App\Http\Controllers\StageController@index',
+                // 'middleware' => 'can:product-list'
+            ]);
+            Route::post('/stage/{product_id}', [
+                'as'   => 'stage.store',
+                'uses' => 'App\Http\Controllers\StageController@store',
+            ]);
+            Route::get('/stage/edit/{id}', [
+                'as'   => 'stage.edit',
+                'uses' => 'App\Http\Controllers\StageController@edit',
+                // 'middleware' => 'can:product-view'
+            ]);
+            Route::post('/stage/update/{id}', [
+                'as'   => 'stage.update',
+                'uses' => 'App\Http\Controllers\StageController@update',
+                // 'middleware' => 'can:product-update'
+            ]);
+            Route::get('/stage/delete/{id}', [
+                'as'   => 'stage.delete',
+                'uses' => 'App\Http\Controllers\StageController@delete',
+                // 'middleware' => 'can:product-delete'
+            ]);
+            Route::get('/stage/stage-info/{stage_id}/{product_id}', [
+                'as'   => 'stage-info.index',
+                'uses' => 'App\Http\Controllers\StageController@stage_info_index',
+                // 'middleware' => 'can:product-list'
+            ]);
+            Route::get('/stage/stage-info/add/{stage_id}/{product_id}', [
+                'as'   => 'stage-info.add',
+                'uses' => 'App\Http\Controllers\StageController@stage_info_add',
+                // 'middleware' => 'can:product-add'
+            ]);
+            Route::post('/stage/store-info/store/{stage_id}/{product_id}', [
+                'as'   => 'stage-info.store',
+                'uses' => 'App\Http\Controllers\StageController@stage_info_store',
+            ]);
+            Route::get('/stage/stage-info/edit/{stageInfo_id}/{stage_id}/{product_id}', [
+                'as'   => 'stage-info.edit',
+                'uses' => 'App\Http\Controllers\StageController@stage_info_edit',
+            ]);
+            Route::post('/stage/stage-info/update/{stageInfo_id}/{stage_id}/{product_id}', [
+                'as'   => 'stage-info.update',
+                'uses' => 'App\Http\Controllers\StageController@stage_info_update',
+            ]);
+            Route::get('/stage/stage-info/delete/{stageInfo_id}/{stage_id}/{product_id}', [
+                'as'   => 'stage-info.delete',
+                'uses' => 'App\Http\Controllers\StageController@stage_info_delete',
+            ]);
+            Route::get('/stage/ajax/count-stage-info', [
+                'as' => 'stage-info.count',
+                'uses' => 'App\Http\Controllers\StageController@stage_info_count',
+            ]);
+            Route::get('/stage/ajax/render-stage-info', [
+                'as' => 'stage-info.render',
+                'uses' => 'App\Http\Controllers\StageController@stage_info_render',
+            ]);
+            Route::get('/stage/ajax/render-add-stage-info', [
+                'as' => 'stage-info.render-add',
+                'uses' => 'App\Http\Controllers\StageController@stage_info_render_add',
+            ]);
+        });
+>>>>>>> 566606fa3adf829af2f22b6645801bdf23182b5c
     });
 
     /* Module Vai trò */
