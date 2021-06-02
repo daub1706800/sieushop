@@ -115,7 +115,7 @@
                                 <input type="checkbox" name="loaitintuc" value="1">
                                 <label>Tin nổi bật</label>
                             </div>
-                            <button type="submit" class="btn btn-primary mb-5">Thêm tin tức</button>
+                            <button type="submit" class="btn btn-primary mb-5">Lưu</button>
                         </div>
                     </form>
                 </div>

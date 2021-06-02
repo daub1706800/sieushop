@@ -3,12 +3,14 @@
 @section('title')
     <title>Tin tức | Thêm mới</title>
 @endsection
+
 @section('css')
     <!-- include summernote css -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <!-- include select2 css -->
     <link rel="stylesheet" href="{{asset('vendor/css/select2.css')}}">
 @endsection
+
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -56,7 +58,7 @@
                         </div>
                         <div class="form-group">
                             <label>Tóm tắt tin tức *</label>
-                            <input type="text" class="form-control" name="tomtattintuc" placeholder="" required>
+                            <textarea class="form-control summernote-tomtat" name="tomtattintuc" ></textarea>
                         </div>
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="exampleCheck1" name="tinnoibat" value="1">
@@ -64,9 +66,9 @@
                         </div>
                         <div class="form-group">
                             <label>Nội dung chính*</label>
-                            <textarea class="form-control summernote" name="noidungtintuc" ></textarea>
+                            <textarea class="form-control summernote-noidung" name="noidungtintuc" ></textarea>
                         </div>
-                        <button style="margin-left: 45%" type="submit" class="btn btn-primary mb-5">Thêm tin tức</button>
+                        <button style="margin-left: 45%" type="submit" class="btn btn-primary mb-5">Lưu</button>
                     </form>
                 </div>
             </div>
@@ -84,17 +86,47 @@
     <script>
         $(document).ready(function() {
             $(function(){
-                $('.summernote').summernote({
-                    height: 400,                // set editor height
-                    minHeight: 400,             // set minimum height of editor
-                    maxHeight: 400,             // set maximum height of editor
-                    focus: false,                  // set focus to editable area after initializing summernote
-                    codemirror: { // codemirror options
-                        theme: 'monokai'
-                    },
-                    placeholder: "Nhập nội dung chính"
-                });
+            $('.summernote-tomtat').summernote({
+                height: 200,                // set editor height
+                minHeight: 200,             // set minimum height of editor
+                maxHeight: 200,             // set maximum height of editor
+                focus: false,                  // set focus to editable area after initializing summernote
+                codemirror: { // codemirror options
+                    theme: 'monokai'
+                },
+                placeholder: "Nhập nội dung tóm tắt",
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['view', ['help']]
+                ]
             });
+        });
+
+        $(function(){
+            $('.summernote-noidung').summernote({
+                height: 400,                // set editor height
+                minHeight: 400,             // set minimum height of editor
+                maxHeight: 400,             // set maximum height of editor
+                focus: false,                  // set focus to editable area after initializing summernote
+                codemirror: { // codemirror options
+                    theme: 'monokai'
+                },
+                placeholder: "Nhập nội dung chính",
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['help']]
+                ]
+            });
+        });
             $(function(){
                 $(".category-selected").select2({
                     tags: false,

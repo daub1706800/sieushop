@@ -25,15 +25,6 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-<<<<<<< HEAD
-=======
-
-
-                
-                
-
-
->>>>>>> 566606fa3adf829af2f22b6645801bdf23182b5c
                 <div class="col-sm-12">
                     <div class="col-md-12 mb-4 text-right">
                         <a style="width:44px" class="btn btn-primary" href="{{route('tintuc.addTintuc')}}">
@@ -55,7 +46,6 @@
                             </tr>
                         </thead>
                         <tbody>
-<<<<<<< HEAD
                             @foreach ($data as $key => $row)
                                 <tr class="odd">
                                     <td class="dtr-control sorting_1" tabindex="0">{{$key+1}}</td>
@@ -67,15 +57,6 @@
                                             data-id="{{ $row->id }}">{{$row->tieudetintuc}}</a>
                                     </td>
                                     <td>{{$row->loaitintuc}}</td>
-=======
-                            
-                            @foreach ($data as $key => $row)
-                                <tr class="odd">
-                                    <td class="dtr-control sorting_1" tabindex="0">{{$key+1}}</td>
-                                    <!-- <td>{{$row->tencongty}}</td> -->
-                                    <td><a style="color:black;" href="{{route('tintuc.viewTintuc',['id'=>$row->id])}}">{{$row->tieudetintuc}}</a></td>
-                                    <td>{{$row->tenchuyenmuc}}</td>
->>>>>>> 566606fa3adf829af2f22b6645801bdf23182b5c
                                     <td>{{$row->ngaydangtintuc}}</td>
                                     <td>{{$row->hothanhvien}} {{$row->tenthanhvien}}</td>
                                     <td>{{$row->loaitintuc}}</td>
@@ -131,10 +112,6 @@
                                         @endif
                                     </td> -->
                                 </tr>
-<<<<<<< HEAD
-=======
-                                
->>>>>>> 566606fa3adf829af2f22b6645801bdf23182b5c
                             @endforeach
                         </tbody>
                     </table>

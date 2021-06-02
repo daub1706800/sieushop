@@ -124,7 +124,7 @@
                             <a href="{{ route('news.update-xuatban', ['id' => $news->id]) }}" class="btn btn-primary mb-5">Xuất bản</a>
                             @endif
 
-                            <button type="submit" class="btn btn-primary mb-5">Cập nhật</button>
+                            <button type="submit" class="btn btn-primary mb-5">Lưu chỉnh sửa</button>
                         </div>
                     </form>
                     @if ($news->xuatbantintuc == 1)

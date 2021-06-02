@@ -151,7 +151,7 @@
                             </div>
                         </div>
                         <div class="text-center mb-4">
-                            <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
                         </div>
                     </form>
                 </div>

@@ -4,6 +4,13 @@
     <title>Tin tức | Nội dung</title>
 @endsection
 
+@section('css')
+    <!-- include summernote css -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <!-- include select2 css -->
+    <link rel="stylesheet" href="{{asset('vendor/css/select2.css')}}">
+@endsection
+
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -44,11 +51,11 @@
                         </div>
                         <div class="form-group">
                             <label>Tóm tắt tin tức *</label>
-                            <input type="text" class="form-control" name="tomtattintuc" value="{{$data->tomtattintuc}}" required>
+                            <textarea class="form-control summernote-tomtat" name="tomtattintuc">{!!$data->noidungtintuc!!}</textarea>
                         </div>
                         <div class="form-group">
                             <label>Nội dung chính*</label>
-                            <textarea class="form-control my-editor" name="noidungtintuc" rows="20" >{!!$data->noidungtintuc!!}</textarea>
+                            <textarea class="form-control summernote-noidung" name="noidungtintuc">{!!$data->noidungtintuc!!}</textarea>
                         </div>
                         @if($data->loaitintuc === 1)
                         <div class="form-check">
@@ -62,7 +69,7 @@
                         </div>
                         @endif
                         @if($data->xuatbantintuc === 0)
-                            <button style="margin-left: 45%" type="submit" class="btn btn-primary mb-5">Chỉnh sửa tin tức</button>
+                            <button style="margin-left: 45%" type="submit" class="btn btn-primary mb-5">Lưu chỉnh sửa</button>
                         @endif
                     </form>
                 </div>
@@ -148,10 +155,10 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Xuất bản tin tức</button>
                     </form>
-                @endif  
+                @endif
 
-                
-                
+
+
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -161,43 +168,52 @@
 @endsection
 
 @section('js')
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"></script>
+    <!-- include summernote js -->
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <!-- include select2 js -->
+    <script src="{{ asset('vendor/js/select2.js') }}"></script>
     <script>
-        var editor_config = {
-            path_absolute : "/",
-            selector: 'textarea.my-editor',
-            relative_urls: false,
-            plugins: [
-                "advlist autolink lists link image charmap print preview hr anchor pagebreak",
-                "searchreplace wordcount visualblocks visualchars code fullscreen",
-                "insertdatetime media nonbreaking save table directionality",
-                "emoticons template paste textpattern"
-            ],
-            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
-            file_picker_callback : function(callback, value, meta) {
-                var x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
-                var y = window.innerHeight|| document.documentElement.clientHeight|| document.getElementsByTagName('body')[0].clientHeight;
+        $(function(){
+            $('.summernote-tomtat').summernote({
+                height: 200,                // set editor height
+                minHeight: 200,             // set minimum height of editor
+                maxHeight: 200,             // set maximum height of editor
+                focus: false,                  // set focus to editable area after initializing summernote
+                codemirror: { // codemirror options
+                    theme: 'monokai'
+                },
+                placeholder: "Nhập nội dung tóm tắt",
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['view', ['help']]
+                ]
+            });
+        });
 
-                var cmsURL = editor_config.path_absolute + 'filemanager?editor=' + meta.fieldname;
-                if (meta.filetype == 'image') {
-                    cmsURL = cmsURL + "&type=Images";
-                } else {
-                    cmsURL = cmsURL + "&type=Files";
-                }
-
-                tinyMCE.activeEditor.windowManager.openUrl({
-                    url : cmsURL,
-                    title : 'Filemanager',
-                    width : x * 0.8,
-                    height : y * 0.8,
-                    resizable : "yes",
-                    close_previous : "no",
-                    onMessage: (api, message) => {
-                        callback(message.content);
-                    }
-                });
-            }
-        };
-        tinymce.init(editor_config);
+        $(function(){
+            $('.summernote-noidung').summernote({
+                height: 400,                // set editor height
+                minHeight: 400,             // set minimum height of editor
+                maxHeight: 400,             // set maximum height of editor
+                focus: false,                  // set focus to editable area after initializing summernote
+                codemirror: { // codemirror options
+                    theme: 'monokai'
+                },
+                placeholder: "Nhập nội dung chính",
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['help']]
+                ]
+            });
+        });
     </script>
 @endsection
