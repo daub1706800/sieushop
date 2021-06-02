@@ -145,6 +145,10 @@ class ProfileController extends Controller
 
     public function create_company()
     {
+        if (!auth()->user()->email_verified_at) {
+            return redirect()->route('dasboard.verify');
+        }
+
         $fields = $this->field->all();
 
         $departments = $this->department->all();

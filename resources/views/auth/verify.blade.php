@@ -1,6 +1,26 @@
-@extends('layouts.app')
+{{-- @extends('frontend.layouts.master')
 
-@section('content')
+@section('content') --}}
+<html>
+<head>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    @yield('title')
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="{{ asset('TemplateTechBlog/images/favicon.ico') }}" type="image/x-icon"/>
+    <link rel="apple-touch-icon" href="{{ asset('TemplateTechBlog/images/apple-touch-icon.png') }}">
+    <!-- Design fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('TemplateTechBlog/css/bootstrap.css') }}" rel="stylesheet">
+</head>
+<body>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -25,4 +45,7 @@
         </div>
     </div>
 </div>
-@endsection
+<script src="{{ asset('TemplateTechBlog/js/bootstrap.min.js') }}"></script>
+</body>
+</html>
+{{-- @endsection --}}

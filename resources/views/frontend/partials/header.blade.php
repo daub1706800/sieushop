@@ -167,7 +167,7 @@
                     @if (auth()->user())
                         @if (auth()->user()->loaitaikhoan == 2)
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.home') }}">Trang quản lý</a>
+                            <a class="nav-link" href="{{ route('admin.home') }}">Administrator</a>
                         </li>
                         @elseif (auth()->user()->idcongty == null)
                         <li class="nav-item">
@@ -182,11 +182,14 @@
                 </ul>
                 <ul class="navbar-nav">
                     @if (auth()->id())
-                    <li><a class="nav-link" href="{{ route('logout') }}"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Đăng xuất</a></li>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
+                    <li class="nav-item">
+                        <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Đăng xuất
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </li>
                     @else
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('register') }}">Đăng ký</a>
@@ -201,3 +204,7 @@
     </div><!-- end container-fluid -->
 </header>
 <!-- end market-header -->
+
+
+
+

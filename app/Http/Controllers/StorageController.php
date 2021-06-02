@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorageRequest;
+use App\Models\Profile;
 use App\Models\Storage;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class StorageController extends Controller
 {
     private $storage;
+    private $profile;
 
-    public function __construct(Storage $storage)
+    public function __construct(Storage $storage, Profile $profile)
     {
         $this->storage = $storage;
+        $this->profile = $profile;
     }
 
     public function index()
@@ -70,5 +74,23 @@ class StorageController extends Controller
     {
         $this->storage->find($id)->delete();
         return redirect()->route('storage.index');
+    }
+
+    public function view(Request $request)
+    {
+        $storage = $this->storage->find($request->idStorage);
+
+        $company = $storage->company->tencongty;
+
+        $profile = $this->profile->where('idtaikhoan', auth()->id())->first();
+
+        $date = Carbon::createFromFormat('Y-m-d H:i:s',$storage->created_at)->format('d-m-Y');
+
+        return response()->json([
+            'storage' => $storage,
+            'company' => $company,
+            'author' => $profile->hothanhvien . ' ' . $profile->tenthanhvien,
+            'date' => $date
+        ]);
     }
 }

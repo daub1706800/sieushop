@@ -67,10 +67,38 @@ trait RegistersUsers
     {
         Profile::create(['idtaikhoan' => $user->id]);
 
-        // $role = Role::where('loaivaitro', 2)->first();
+        if(empty($user->profile->hinhanhthanhvien))
+        {
+            // Sex == Nam
+            if($user->profile->gioitinhthanhvien == 1)
+            {
+                $image = "adminLTE/dist/img/avatar.png";
+            }
+            // Sex == Nữ
+            elseif($user->profile->gioitinhthanhvien == 2)
+            {
+                $image = "adminLTE/dist/img/avatar2.png";
+            }
+            // Sex == Khác
+            else
+            {
+                $image = "adminLTE/dist/img/AdminLTELogo.png";
+            }
+            $info = [
+                'ho' => $user->profile->hothanhvien,
+                'name' => $user->profile->tenthanhvien,
+                'image' => $image,
+            ];
+        }
+        else
+        {
+            $info = [
+                'ho' => $user->profile->hothanhvien,
+                'name' => $user->profile->tenthanhvien,
+                'image' => $user->profile->hinhanhthanhvien,
+            ];
+        }
 
-        // $user->roles()->attach($role->id);
-
-        return view('auth.login');
+        session()->put('info', $info);
     }
 }

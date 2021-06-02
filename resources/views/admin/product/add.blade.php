@@ -178,7 +178,16 @@
                     codemirror: { // codemirror options
                         theme: 'monokai'
                     },
-                    placeholder: "Nhập mô tả cho công việc"
+                    placeholder: "Nhập mô tả cho công việc",
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        // ['insert', ['link', 'picture', 'video']],
+                        ['view', ['help']]
+                    ]
                 });
             });
             $(function(){

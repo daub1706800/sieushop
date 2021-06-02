@@ -211,24 +211,6 @@
             });
 
             $(function(){
-                $(".field-selected").select2({
-                    tags: false,
-                    theme: "classic",
-                    width: "100%",
-                    // multiple: true
-                })
-            });
-
-            $(function(){
-                $(".department-selected").select2({
-                    tags: false,
-                    theme: "classic",
-                    width: "100%",
-                    // multiple: true
-                })
-            });
-
-            $(function(){
                 var date_input=$('input[name="ngaycapdkkdcongty"]'); //our date input has the name "date"
                 var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
                 var options={
@@ -238,6 +220,24 @@
                     autoclose: true,
                 };
                 date_input.datepicker(options);
+            });
+
+            $(function(){
+                $(".field-selected").select2({
+                    tags: false,
+                    theme: "classic",
+                    width: "100%",
+                    // multiple: true
+                });
+            });
+
+            $(function(){
+                $(".department-selected").select2({
+                    tags: false,
+                    theme: "classic",
+                    width: "100%",
+                    // multiple: true
+                });
             });
         });
     </script>

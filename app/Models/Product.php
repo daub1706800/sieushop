@@ -40,4 +40,9 @@ class Product extends Model
     {
         return $this->belongsTo(Company::class, 'idcongty', 'id');
     }
+
+    public function profile()
+    {
+        return $this->belongsTo(Profile::class, 'idtaikhoan', 'idtaikhoan');
+    }
 }

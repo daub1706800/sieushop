@@ -9,6 +9,7 @@ use App\Models\Storage;
 use App\Models\Image;
 use App\Models\ProductCategory;
 use App\Traits\StorageImageTrait;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Milon\Barcode\Facades\DNS1DFacade;
 use Illuminate\Support\Facades\DB;
@@ -35,7 +36,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = $this->product->where('idcongty', auth()->user()->idcongty)->get();
-        
+
         return view('admin.product.index', compact('products'));
     }
 
@@ -178,5 +179,29 @@ class ProductController extends Controller
         $this->product->find($id)->delete();
 
         return back();
+    }
+
+    public function view(Request $request)
+    {
+        $product = $this->product->find($request->idProduct);
+
+        $company = $product->company->tencongty;
+
+        $storage = $product->storage->tenkho;
+
+        $profile = $product->profile->hothanhvien . ' ' . $product->profile->tenthanhvien;
+
+        $productcategory = $product->productcategory->tenloaisanpham;
+
+        $date = Carbon::createFromFormat('Y-m-d H:i:s', $product->created_at)->format('d-m-Y');
+
+        return response()->json([
+            'product' => $product,
+            'date' =>$date,
+            'company' => $company,
+            'storage' => $storage,
+            'profile' => $profile,
+            'productcategory' => $productcategory
+        ]);
     }
 }

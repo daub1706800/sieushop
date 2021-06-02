@@ -143,7 +143,16 @@
                     codemirror: { // codemirror options
                         theme: 'monokai'
                     },
-                    placeholder: "Nhập nội dung tóm tắt"
+                    placeholder: "Nhập nội dung tóm tắt",
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        // ['insert', ['link', 'picture', 'video']],
+                        ['view', ['help']]
+                    ]
                 });
             });
 
@@ -156,7 +165,16 @@
                     codemirror: { // codemirror options
                         theme: 'monokai'
                     },
-                    placeholder: "Nhập nội dung chính"
+                    placeholder: "Nhập nội dung chính",
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture', 'video']],
+                        ['view', ['help']]
+                    ]
                 });
             });
 

@@ -64,14 +64,16 @@
                                             @if ($item->xuatbantintuc == 0 && $item->duyettintuc == 1)
                                             <p>Chờ xuất bản</p>
                                             @endif
-                                            @if ($item->xuatbantintuc == 1)
+                                            @if ($item->xuatbantintuc == 1 && $item->lydogo == 0)
                                             <p>Đã xuất bản</p>
                                             @endif
-                                            @if ($item->lydogo == 1)
+                                            @if ($item->xuatbantintuc == 1 && $item->lydogo == 1)
                                             <p>Được thu hồi</p>
                                             @endif
                                             @if (!$item->newshistory->isEmpty())
-                                                <a href="{{ route('news.history', ['id' => $item->id]) }}">Lịch sử tin tức</a>
+                                                <a href="" class="viewhistory"
+                                                    data-toggle="modal" data-target="#exampleModal2"
+                                                    data-id="{{ $item->id }}">Lịch sử tin tức</a>
                                             @endif
                                         </td>
                                         <td>
@@ -100,7 +102,7 @@
     <!-- /.content -->
 </div>
 
-<!-- Modal -->
+<!-- Modal1 -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
@@ -137,6 +139,34 @@
         </div>
     </div>
 </div>
+
+<!-- Modal2 -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-md-4">
+                    <h5 class="modal-title tieudeNews" id="exampleModalLongTitle"
+                        style="font-size: 18px; font-weight: bold; color: red"></h5>
+                </div>
+                <div class="col-md-4 offset-md-4 text-right">
+                    <p class="modal-title ngaydang"
+                        style="font-size: 15px;"></p>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12 show-history">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12 text-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js')
@@ -147,7 +177,7 @@
                 window.location = url;
             });
 
-            $(document).on('click', '.tieudetintuc', function(e) {
+            $(document).on('click', '.tieudetintuc', function() {
                 var idNews = $(this).data('id');
                 $.ajax({
                     url : "{{ route('news.view') }}",
@@ -157,7 +187,7 @@
                         "_token": "{{ csrf_token() }}"
                     },
                     success:function(data) {
-                        console.log(data);
+                        // console.log(data);
                         $('.chuyenmuc').html(data.category);
                         $('.ngaydang').html('Đăng ngày ' + data.ngaydang);
                         $('.tieude').html(data.news.tieudetintuc);
@@ -165,6 +195,23 @@
                         $('.hinhanh').attr('src',data.news.hinhanhtintuc);
                         $('.noidung').html(data.news.noidungtintuc);
                         $('.tacgia').html(data.author);
+                    }
+                });
+            });
+
+            $(document).on('click', '.viewhistory', function() {
+                var idNews = $(this).data('id');
+                $.ajax({
+                    url : "{{ route('news.history') }}",
+                    type : "post",
+                    data : {
+                        "idNews":idNews,
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    success:function(data) {
+                        // console.log(data);
+                        $('.tieudeNews').text(data.news);
+                        $('.show-history').html(data.output);
                     }
                 });
             });

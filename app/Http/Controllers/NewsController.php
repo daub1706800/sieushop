@@ -174,11 +174,27 @@ class NewsController extends Controller
         return redirect()->route('news.index');
     }
 
-    public function history($id)
+    public function history(Request $request)
     {
-        $newshistories = $this->newshistory->where('idtintuc', $id)->get();
+        $newshistories = $this->newshistory->where('idtintuc', $request->idNews)->get();
 
-        return view('admin.news.history', compact('newshistories'));
+        $news = $this->news->where('id', $request->idNews)->first();
+
+        $output = '';
+
+        foreach ($newshistories as $key => $value) {
+            $date = Carbon::createFromFormat('Y-m-d H:i:s', $value->thoigian)->format('H:i:s d-m-Y');
+
+            $output += '<div class="row">
+                            <p>Vào lúc '.$date.'</p>
+                            <p class="pl-2">--- '.$value->lydogo.'</p>
+                        </div>';
+        }
+
+        return response()->json([
+            'output' => $output,
+            'news' => $news->tieudetintuc
+        ]);
     }
 
     public function remove(Request $request, $id)
@@ -212,7 +228,7 @@ class NewsController extends Controller
 
         $author = $this->profile->where('idtaikhoan', $news->idtaikhoan)->first();
 
-        $ngaydang = Carbon::createFromFormat('Y-m-d', $news->ngaydangtintuc)->format('d-m-Y');
+        $ngaydang = Carbon::createFromFormat('Y-m-d H:i:s', $news->ngaydangtintuc)->format('d-m-Y');
 
         $array = [
             'news' => $news,

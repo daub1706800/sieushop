@@ -130,7 +130,10 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-        // Nếu hinhanhthanhvien == Null
+        if ($user->loaitaikhoan == 2) {
+            return redirect()->route('admin.home');
+        }
+        
         if(empty($user->profile->hinhanhthanhvien))
         {
             // Sex == Nam
@@ -149,25 +152,23 @@ trait AuthenticatesUsers
                 $image = "adminLTE/dist/img/AdminLTELogo.png";
             }
             $info = [
-                'ho'       => $user->profile->hothanhvien,
-                'name'     => $user->profile->tenthanhvien,
-                'image'    => $image,
+                'ho' => $user->profile->hothanhvien,
+                'name' => $user->profile->tenthanhvien,
+                'image' => $image,
             ];
         }
         else
         {
             $info = [
-                'ho'       => $user->profile->hothanhvien,
-                'name'     => $user->profile->tenthanhvien,
-                'image'    => $user->profile->hinhanhthanhvien,
+                'ho' => $user->profile->hothanhvien,
+                'name' => $user->profile->tenthanhvien,
+                'image' => $user->profile->hinhanhthanhvien,
             ];
         }
 
         session()->put('info', $info);
 
-        if ($user->loaitaikhoan == 2) {
-            return redirect()->route('admin.home');
-        }
+
     }
 
     /**

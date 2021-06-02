@@ -8,6 +8,9 @@ use Session;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 Use Alert;
+use App\Models\Category;
+use App\Models\News;
+use App\Models\Profile;
 use Carbon\Carbon;
 use App\Traits\StorageImageTrait;
 use App\Models\Video;
@@ -16,18 +19,23 @@ class TintucController extends Controller{
 
     use StorageImageTrait;
 
+    private $news;
+    private $category;
+    private $profile;
+
+    public function __construct(News $news, Category $category, Profile $profile)
+    {
+        $this->news = $news;
+        $this->category = $category;
+        $this->profile = $profile;
+    }
+
     public function home(){
         return view('tintuc/home');
     }
 
     public function printTintuc()
     {
-        // Carbon::setLocale('vi'); // hiển thị ngôn ngữ tiếng việt.
-        // $dt = Carbon::create(2021, 2, 18, 14, 40, 16);
-        // $dt2 = Carbon::create(2018, 10, 18, 13, 40, 16);
-        // $now = Carbon::now();
-        // echo $dt->diffForHumans($now); //12 phút trước
-        // echo $dt2->diffForHumans($now); //1 giờ trước
         Carbon::setLocale('vi');
         $data = DB::table('tintuc')
                     ->where('idcongty',auth()->user()->idcongty)
@@ -45,18 +53,6 @@ class TintucController extends Controller{
         }
         return view('admin.tintuc.Tintuc', compact('data'));
     }
-
-    // public function printTintuc()
-    // {
-    //     $data = DB::table('tintuc')
-    //                 ->where('idcongty',auth()->user()->idcongty)
-    //                 ->orderBy('id', 'desc')
-    //                 ->Join('chuyenmuc', 'tintuc.idchuyenmuc', '=', 'chuyenmuc.id')
-    //                 ->Join('congty', 'tintuc.idcongty', '=', 'congty.id')
-    //                 ->select('tintuc.*','chuyenmuc.tenchuyenmuc','congty.tencongty')
-    //                 ->paginate(10);
-    //     return view('tintuc.Tintuc', compact('data'));
-    // }
 
     public function searchTintuc(Request $request){
         $tukhoa = $request->tukhoa;
