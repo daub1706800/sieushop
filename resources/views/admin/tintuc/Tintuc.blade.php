@@ -68,8 +68,14 @@
                                                     aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" href="{{route('tintuc.detailTintuc',['id'=>$row->id])}}">Chi tiết</a>
-                                                @if($row->xuatbantintuc==0)
-                                                    <a onclick="return confirm('Bạn chắc chắn muốn xóa ?')" class="dropdown-item" href="{{route('tintuc.deleteTintuc',['id'=>$row->id])}}">Xóa tin tức</a>
+                                                @if( $row->xuatbantintuc === 0)
+                                                    <a class="dropdown-item" onclick="return confirm('Bạn chắc chắn muốn xóa ?')" class="dropdown-item" href="{{route('tintuc.deleteTintuc',['id'=>$row->id])}}">Xóa tin tức</a>
+                                                @endif
+                                                @if( $row->duyettintuc === 1 || $row->xuatbantintuc === 1 ||$row->lydogo === 1)
+                                                    <a class="dropdown-item" style="color:red;" href="{{route('tintuc.viewlogTintuc',['id'=>$row->id])}}">Xem duyệt/ xuất bản</a>
+                                                @endif
+                                                @if ( $row->lydogo === 1)
+                                                    <a class="dropdown-item" style="color:red;" href="{{route('tintuc.viewhistoryTintuc',['id'=>$row->id])}}">Xem lịch sử gỡ tin</a>
                                                 @endif
                                             </div>
                                         </div>
@@ -86,17 +92,14 @@
                                         <p style="color:green; font-weight:bold;">Tin đã được đăng</p>
                                         @endif
                                         @if ( $row->duyettintuc === 0 && $row->xuatbantintuc === 0 && $row->lydogo === 1)
-                                        <p style="color:orange; font-weight:bold;">Chờ Duyệt</p>
-                                        <a style="color:red;" href="{{route('tintuc.viewhistoryTintuc',['id'=>$row->id])}}">Xem lịch sử tin</a>
+                                        <p style="color:red; font-weight:bold;">Chờ Duyệt</p>
                                         @endif
                                         @if ( $row->duyettintuc === 1 && $row->xuatbantintuc === 0 && $row->lydogo === 1)
-                                        <a style="color:orange; font-weight:bold;">Chờ Xuất bản</a>
+                                        <a style="color:red; font-weight:bold;">Chờ Xuất bản</a>
                                         <br>
-                                        <a style="color:red;" href="{{route('tintuc.viewhistoryTintuc',['id'=>$row->id])}}">Xem lịch sử tin</a>
                                         @endif
                                         @if ( $row->duyettintuc === 1 && $row->xuatbantintuc === 1 && $row->lydogo === 1)
-                                        <p style="color:green; font-weight:bold;">Tin đã được đăng</p>
-                                        <a style="color:red;" href="{{route('tintuc.viewhistoryTintuc',['id'=>$row->id])}}">Xem lịch sử tin</a>
+                                        <p style="color:orange; font-weight:bold;">Tin đã được đăng</p>
                                         @endif
                                     </td>
 

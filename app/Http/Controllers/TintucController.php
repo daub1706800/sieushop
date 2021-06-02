@@ -33,7 +33,7 @@ class TintucController extends Controller{
                     ->where('idcongty',auth()->user()->idcongty)
                     ->orderBy('id', 'desc')
                     ->Join('chuyenmuc', 'tintuc.idchuyenmuc', '=', 'chuyenmuc.id')
-                    ->Join('thongtin', 'tintuc.idtaikhoan', '=', 'thongtin.id')
+                    ->Join('thongtin', 'tintuc.idtaikhoan', '=', 'thongtin.idtaikhoan')
                     ->Join('congty', 'tintuc.idcongty', '=', 'congty.id')
                     ->select('tintuc.*','chuyenmuc.tenchuyenmuc','congty.tencongty','thongtin.hothanhvien','thongtin.tenthanhvien')
                     ->get();
@@ -84,8 +84,24 @@ class TintucController extends Controller{
 
     public function viewhistoryTintuc($id)
     {
-        $data = DB::table('lichsutintuc')->where('idtintuc',$id)->get();
+        $data = DB::table('lichsutintuc')
+        ->where('idtintuc',$id)
+        ->Join('tintuc', 'lichsutintuc.idtintuc', '=', 'tintuc.id')
+        ->Join('thongtin', 'lichsutintuc.idtaikhoan', '=', 'thongtin.idtaikhoan')
+        ->select('lichsutintuc.*','tintuc.tieudetintuc','thongtin.hothanhvien', 'thongtin.tenthanhvien')
+        ->get();
         return view('admin.tintuc.viewhistoryTintuc',compact('data'));
+    }
+
+    public function viewlogTintuc($id)
+    {
+        $data = DB::table('logtintuc')
+        ->where('idtintuc',$id)
+        ->Join('tintuc', 'logtintuc.idtintuc', '=', 'tintuc.id')
+        ->Join('thongtin', 'logtintuc.idtaikhoan', '=', 'thongtin.idtaikhoan')
+        ->select('logtintuc.*','tintuc.tieudetintuc','thongtin.hothanhvien', 'thongtin.tenthanhvien')
+        ->get();
+        return view('admin.tintuc.viewlogTintuc',compact('data'));
     }
 
     public function addTintuc()
@@ -141,7 +157,7 @@ class TintucController extends Controller{
     {
         $data = DB::table('tintuc')->where('id',$id)->first();
         $data2 = DB::table('video')->where('idtintuc',$id)->get();
-        $data3 = DB::table('chuyenmuc')->get();
+        $data3 = auth()->user()->id;
         return view('admin.tintuc.detailTintuc', compact('data','data2','data3'));
     }
 
@@ -217,20 +233,38 @@ class TintucController extends Controller{
         return back();
     }
 
-    public function acceptTintuc($id)
+    public function acceptTintuc(Request $request)
     {
+        $id = $request->id;
+        $idtaikhoandanhgia = $request->idtaikhoandanhgia;
+        $noidungdanhgia = $request->noidungdanhgia;
         $data = array();
         $data['duyettintuc'] = '1';
         DB::table('tintuc')->where('id',$id)->update($data);
+        $data2 = array();
+        $data2['idtintuc'] = $id;
+        $data2['idtaikhoan'] = $idtaikhoandanhgia;
+        $data2['noidungdanhgia'] = "Duyệt tin: $noidungdanhgia";
+        $data2['thoigian'] = date('Y-m-d H:i:s');
+        DB::table('logtintuc')->insert($data2);
         return back();
     }
 
-    public function postTintuc($id)
+    public function postTintuc(Request $request)
     {
+        $id = $request->id;
+        $idtaikhoandanhgia = $request->idtaikhoandanhgia;
+        $noidungdanhgia = $request->noidungdanhgia;
         $data = array();
         $data['xuatbantintuc'] = '1';
         $data['updated_at'] = date('Y-m-d H:i:s');
         DB::table('tintuc')->where('id',$id)->update($data);
+        $data2 = array();
+        $data2['idtintuc'] = $id;
+        $data2['idtaikhoan'] = $idtaikhoandanhgia;
+        $data2['noidungdanhgia'] = "Xuất bản: $noidungdanhgia";
+        $data2['thoigian'] = date('Y-m-d H:i:s');
+        DB::table('logtintuc')->insert($data2);
         return back();
     }
 
@@ -244,6 +278,7 @@ class TintucController extends Controller{
         DB::table('tintuc')->where('id',$request->id)->update($data);
         $data2 = array();
         $data2['idtintuc'] = $request->id;
+        $data2['idtaikhoan'] = $request->idtaikhoango;
         $data2['lydogo'] = $request->lydogo;
         $data2['thoigian'] = date('Y-m-d H:i:s');
         DB::table('lichsutintuc')->insert($data2);

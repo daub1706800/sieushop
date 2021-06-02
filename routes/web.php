@@ -538,73 +538,78 @@ Route::prefix('/')->group(function () {
             ]);
         });
 
-        /* Module Tin tức */
-        Route::prefix('news')->group(function () {
-            Route::get('/', [
-                'as' => 'tintuc.Tintuc',
-                'uses' => 'App\Http\Controllers\TintucController@printTintuc',
-                'middleware' => 'can:news-list'
-            ]);
-            Route::get('/history/{id}', [
-                'as' => 'tintuc.viewhistoryTintuc',
-                'uses' => 'App\Http\Controllers\TintucController@viewhistoryTintuc',
-                'middleware' => 'can:news-list'
-            ]);
-            Route::get('/add-news', [
-                'as' => 'tintuc.addTintuc',
-                'uses' => 'App\Http\Controllers\TintucController@addTintuc',
-                'middleware' => 'can:news-add'
-            ]);
-            Route::post('/add-news', [
-                'as' => 'tintuc.doaddTintuc',
-                'uses' => 'App\Http\Controllers\TintucController@doaddTintuc',
-            ]);
-            Route::get('/delete-news/{id}', [
-                'as' => 'tintuc.deleteTintuc',
-                'uses' => 'App\Http\Controllers\TintucController@deleteTintuc',
-                'middleware' => 'can:news-delete'
+    /* Module Tin tức */
+    Route::prefix('news')->group(function () {
+        Route::get('/', [
+            'as' => 'tintuc.Tintuc',
+            'uses' => 'App\Http\Controllers\TintucController@printTintuc',
+            'middleware' => 'can:news-list'
+        ]);
+        Route::get('/history/{id}', [
+            'as' => 'tintuc.viewhistoryTintuc',
+            'uses' => 'App\Http\Controllers\TintucController@viewhistoryTintuc',
+            'middleware' => 'can:news-list'
+        ]);
+        Route::get('/log/{id}', [
+            'as' => 'tintuc.viewlogTintuc',
+            'uses' => 'App\Http\Controllers\TintucController@viewlogTintuc',
+            'middleware' => 'can:news-list'
+        ]);
+        Route::get('/add-news', [
+            'as' => 'tintuc.addTintuc',
+            'uses' => 'App\Http\Controllers\TintucController@addTintuc',
+            'middleware' => 'can:news-add'
+        ]);
+        Route::post('/add-news', [
+            'as' => 'tintuc.doaddTintuc',
+            'uses' => 'App\Http\Controllers\TintucController@doaddTintuc',
+        ]);
+        Route::get('/delete-news/{id}', [
+            'as' => 'tintuc.deleteTintuc',
+            'uses' => 'App\Http\Controllers\TintucController@deleteTintuc',
+            'middleware' => 'can:news-delete'
 
-            ]);
-            Route::get('/edit/{id}', [
-                'as' => 'tintuc.detailTintuc',
-                'uses' => 'App\Http\Controllers\TintucController@detailTintuc',
-                'middleware' => 'can:news-view'
-            ]);
-            Route::post('/edit', [
-                'as' => 'tintuc.editTintuc',
-                'uses' => 'App\Http\Controllers\TintucController@editTintuc',
-                'middleware' => 'can:news-update'
-            ]);
-            Route::get('/delete-video/{id}', [
-                'as' => 'tintuc.deleteVideo',
-                'uses' => 'App\Http\Controllers\TintucController@deleteVideo',
-                'middleware' => 'can:news-delete'
-            ]);
-            Route::post('/add-video', [
-                'as' => 'tintuc.addVideo',
-                'uses' => 'App\Http\Controllers\TintucController@addVideo',
-                'middleware' => 'can:news-update'
-            ]);
-            Route::get('/accept-news/{id}', [
-                'as' => 'tintuc.acceptTintuc',
-                'uses' => 'App\Http\Controllers\TintucController@acceptTintuc',
-                'middleware' => 'can:news-browse'
-            ]);
-            Route::get('/post-news/{id}', [
-                'as' => 'tintuc.postTintuc',
-                'uses' => 'App\Http\Controllers\TintucController@postTintuc',
-                'middleware' => 'can:news-publish'
-            ]);
-            Route::get('/remove-news', [
-                'as' => 'tintuc.removeTintuc',
-                'uses' => 'App\Http\Controllers\TintucController@removeTintuc',
-            ]);
-            Route::get('/view/{id}', [
-                'as' => 'tintuc.viewTintuc',
-                'uses' => 'App\Http\Controllers\TintucController@viewTintuc',
-                'middleware' => 'can:news-view'
-            ]);
-        });
+        ]);
+        Route::get('/edit/{id}', [
+            'as' => 'tintuc.detailTintuc',
+            'uses' => 'App\Http\Controllers\TintucController@detailTintuc',
+            'middleware' => 'can:news-view'
+        ]);
+        Route::post('/edit', [
+            'as' => 'tintuc.editTintuc',
+            'uses' => 'App\Http\Controllers\TintucController@editTintuc',
+            'middleware' => 'can:news-update'
+        ]);
+        Route::get('/delete-video/{id}', [
+            'as' => 'tintuc.deleteVideo',
+            'uses' => 'App\Http\Controllers\TintucController@deleteVideo',
+            'middleware' => 'can:news-delete'
+        ]);
+        Route::post('/add-video', [
+            'as' => 'tintuc.addVideo',
+            'uses' => 'App\Http\Controllers\TintucController@addVideo',
+            'middleware' => 'can:news-update'
+        ]);
+        Route::get('/accept-news', [
+            'as' => 'tintuc.acceptTintuc',
+            'uses' => 'App\Http\Controllers\TintucController@acceptTintuc',
+            'middleware' => 'can:news-browse'
+        ]);
+        Route::get('/post-news', [
+            'as' => 'tintuc.postTintuc',
+            'uses' => 'App\Http\Controllers\TintucController@postTintuc',
+            'middleware' => 'can:news-publish'
+        ]);
+        Route::get('/remove-news', [
+            'as' => 'tintuc.removeTintuc',
+            'uses' => 'App\Http\Controllers\TintucController@removeTintuc',
+        ]);
+        Route::get('/view/{id}', [
+            'as' => 'tintuc.viewTintuc',
+            'uses' => 'App\Http\Controllers\TintucController@viewTintuc',
+            'middleware' => 'can:news-view'
+        ]);
+    });
 
         /* Module Thông tin */
         Route::prefix('profile')->group(function () {

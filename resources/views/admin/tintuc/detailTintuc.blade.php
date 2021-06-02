@@ -113,42 +113,44 @@
                         </div>
                     </div>
                 </div>
-                @if($data->xuatbantintuc === 1)
+                @if($data->xuatbantintuc === 1 || $data->duyettintuc === 1)
                     <form action="{{route('tintuc.removeTintuc')}}" style="margin-left: 10%">
                         <div class="form-group">
                             <input type="hidden" name="id" value="{{$data->id}}">
+                            <input type="hidden" class="form-control" value="{{$data3}}" name="idtaikhoango">
                             <label for="lydogo">Lý do gỡ tin: </label>
                             <input type="lydogo" class="form-control" placeholder="VD: Sai sót thông tin" name="lydogo" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Gỡ tin tức</button>
                     </form>
                 @endif
-                <div class="col-sm-10">
-                    <br><br><br><br><br><br>
-                    @if ( $data->duyettintuc === 0 && $data->xuatbantintuc === 0 && $data->lydogo === 0)
-                    <a style="color:blue; font-weight:bold;" href="{{route('tintuc.acceptTintuc',['id'=>$data->id])}}">Chờ Duyệt</a>
-                    @endif
-                    @if ( $data->duyettintuc === 1 && $data->xuatbantintuc === 0 && $data->lydogo === 0)
-                    <a style="color:blue; font-weight:bold;" href="{{route('tintuc.postTintuc',['id'=>$data->id])}}">Chờ Xuất bản</a>
-                    @endif
-                    @if ( $data->duyettintuc === 1 && $data->xuatbantintuc === 1 && $data->lydogo === 0)
-                    <p style="color:green; font-weight:bold;">Tin đã được đăng</p>
-                    @endif
-                    @if ( $data->duyettintuc === 0 && $data->xuatbantintuc === 0 && $data->lydogo === 1)
-                    <a style="color:orange; font-weight:bold;" href="{{route('tintuc.acceptTintuc',['id'=>$data->id])}}">Chờ Duyệt</a>
-                    <br>
-                    <a style="color:red;" href="{{route('tintuc.viewhistoryTintuc',['id'=>$data->id])}}">Xem lịch sử tin</a>
-                    @endif
-                    @if ( $data->duyettintuc === 1 && $data->xuatbantintuc === 0 && $data->lydogo === 1)
-                    <a style="color:orange; font-weight:bold;" href="{{route('tintuc.postTintuc',['id'=>$data->id])}}">Chờ Xuất bản</a>
-                    <br>
-                    <a style="color:red;" href="{{route('tintuc.viewhistoryTintuc',['id'=>$data->id])}}">Xem lịch sử tin</a>
-                    @endif
-                    @if ( $data->duyettintuc === 1 && $data->xuatbantintuc === 1 && $data->lydogo === 1)
-                    <p style="color:green; font-weight:bold;">Tin đã được đăng</p>
-                    <a style="color:red;" href="{{route('tintuc.viewhistoryTintuc',['id'=>$data->id])}}">Xem lịch sử tin</a>
-                    @endif
-                </div>
+
+
+                @if($data->duyettintuc === 0 && $data->xuatbantintuc === 0)
+                    <form action="{{route('tintuc.acceptTintuc')}}" style="margin-left: 10%">
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" value="{{$data->id}}" name="id">
+                            <input type="hidden" class="form-control" value="{{$data3}}" name="idtaikhoandanhgia">
+                            <label for="noidungdanhgia">Ghi chú duyệt tin: </label>
+                            <input type="noidungdanhgia" class="form-control" placeholder="VD: Tin tốt" name="noidungdanhgia" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Duyệt tin tức</button>
+                    </form>
+                @endif
+
+                @if($data->duyettintuc === 1 && $data->xuatbantintuc === 0)
+                    <form action="{{route('tintuc.postTintuc')}}" style="margin-left: 10%">
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" value="{{$data->id}}" name="id">
+                            <input type="hidden" class="form-control" value="{{$data3}}" name="idtaikhoandanhgia">
+                            <label for="noidungdanhgia">Ghi chú xuất bản: </label>
+                            <input type="noidungdanhgia" class="form-control" placeholder="VD: Tin tốt" name="noidungdanhgia" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Xuất bản tin tức</button>
+                    </form>
+                @endif  
+
+                
                 
             </div>
             <!-- /.row -->
