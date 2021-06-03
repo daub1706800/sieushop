@@ -616,9 +616,10 @@ Route::prefix('dasboard')->group(function() {
             'as' => 'tintuc.removeTintuc',
             'uses' => 'App\Http\Controllers\TintucController@removeTintuc',
         ]);
-        Route::post('/view', [
-            'as'   => 'tintuc.view',
-            'uses' => 'App\Http\Controllers\NewsController@view',
+        Route::get('/view/{id}', [
+            'as' => 'tintuc.viewTintuc',
+            'uses' => 'App\Http\Controllers\TintucController@viewTintuc',
+            'middleware' => 'can:news-view'
         ]);
     });
 
