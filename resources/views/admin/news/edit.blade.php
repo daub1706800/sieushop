@@ -26,17 +26,8 @@
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
-        <div class="row">
+            <div class="row">
                 <div class="col-md-12">
-                    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
                     <form action="{{route('news.update', ['id' => $news->id]) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">

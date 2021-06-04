@@ -122,6 +122,7 @@
                             <p style="font-style: italic; font-weight: 10px; text-align: center"
                                 class="mt-0">Hình ảnh chỉ mang tính chất minh họa</p>
                             <div class="noidung"></div>
+                            <div class="video"></div>
                             <p class="tacgia" style="font-size: 15px; float: right"></p>
                         </div>
                     </div>
@@ -190,6 +191,7 @@
                         $('.tomtat').html(data.news.tomtattintuc);
                         $('.hinhanh').attr('src',data.news.hinhanhtintuc);
                         $('.noidung').html(data.news.noidungtintuc);
+                        $('.video').html(data.video);
                         $('.tacgia').html(data.author);
                     }
                 });

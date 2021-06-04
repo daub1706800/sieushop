@@ -262,11 +262,24 @@ class NewsController extends Controller
 
         $ngaydang = Carbon::createFromFormat('Y-m-d H:i:s', $news->ngaydangtintuc)->format('d-m-Y');
 
+        $videos = Video::where('idtintuc', $news->id)->get();
+
+        $output = '';
+
+        foreach($videos as $video)
+        {
+            $output .= '<video style="width:440px; height:300px" controls>
+                            <source src="'.$video->dulieuvideo.'" type="video/mp4">
+                            Trình duyệt của bạn không hỗ trợ thẻ video trong HTML5.
+                        </video>';
+        }
+
         $array = [
             'news' => $news,
             'author' => $author->hothanhvien . ' ' . $author->tenthanhvien,
             'category' => $category->tenchuyenmuc,
-            'ngaydang' => $ngaydang
+            'ngaydang' => $ngaydang,
+            'video' => $output
         ];
 
         return response()->json($array);
