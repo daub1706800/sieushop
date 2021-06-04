@@ -98,7 +98,7 @@
                                     <div class="col-md-6 mb-1">
                                         <label>Sở / Ngành *</label>
                                         <select class="form-control department-selected @error('idso') is-invalid @enderror" name="idso">
-                                            <option value="">Chọn Sở/Ngành</option>
+                                            <option value=""></option>
                                             @foreach($departments as $department)
                                             <option value="{{$department->id}}">{{$department->tenso}}</option>
                                             @endforeach
@@ -110,7 +110,7 @@
                                     <div class="col-md-6 mb-1">
                                         <label>Lĩnh vực *</label>
                                         <select class="form-control field-selected @error('idlinhvuc') is-invalid @enderror" name="idlinhvuc">
-                                            <option value="">Chọn lĩnh vực</option>
+                                            <option value=""></option>
                                             @foreach($fields as $field)
                                                 <option value="{{$field->id}}">{{$field->tenlinhvuc}}</option>
                                             @endforeach
@@ -163,7 +163,13 @@
                             </div>
                         </div>
                         <div class="col-md-8 mt-2 mb-4 text-center">
+                            @if (session()->get('info')['ho'] != "")
                             <button class="btn btn-primary" type="submit">Lưu thông tin</button>
+                            @else
+                            <label for="">Vui lòng cập nhật thông tin cá nhân
+                                <a href="{{ route('profile.index') }}">tại đây.</a>
+                            </label>
+                            @endif
                         </div>
                     </div>
                 </form>
@@ -208,7 +214,8 @@
                     tags: false,
                     theme: "classic",
                     width: "100%",
-                    // multiple: true
+                    // multiple: true,
+                    placeholder: "Chọn lĩnh vực"
                 });
             });
 
@@ -217,7 +224,8 @@
                     tags: false,
                     theme: "classic",
                     width: "100%",
-                    // multiple: true
+                    // multiple: true,
+                    placeholder: "Chọn sở ngành"
                 });
             });
         });

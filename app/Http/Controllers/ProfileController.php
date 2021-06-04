@@ -102,7 +102,11 @@ class ProfileController extends Controller
 
         session()->put('info', $info);
 
-        return redirect()->route('profile.index');
+        if (auth()->user()->idcongty) {
+            return redirect()->route('profile.index');
+        }
+
+        return redirect()->route('profile.company.create');
     }
 
     public function changeAvatar(Request $request, $id)
@@ -178,6 +182,7 @@ class ProfileController extends Controller
 
         $this->user->find(auth()->id())->update([
             'idcongty' => $idcongty,
+            'loaitaikhoan' => 1
         ]);
 
         $role = $this->role->where('loaivaitro', 2)->first();
@@ -186,6 +191,8 @@ class ProfileController extends Controller
             'idtaikhoan' => auth()->id(),
             'idvaitro' => $role->id,
         ]);
+
+        session()->put('idcongty', $idcongty);
 
         return redirect()->route('profile.index');
     }

@@ -40,6 +40,7 @@
                                 <th scope="col">Email</th>
                                 <th scope="col">Vai trò</th>
                                 <th scope="col">Tạo bởi</th>
+                                <th scope="col">Kích hoạt</th>
                                 <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -54,13 +55,22 @@
                                         <p>- {{ $user_role->motavaitro }}</p>
                                         @endforeach
                                     </td>
-                                    @if ($user->idcongty && $user->loaitaikhoan != 2)
-                                    <td>{{ $user->company->tencongty }}</td>
-                                    @elseif ($user->loaitaikhoan == 2)
-                                    <td>Hệ thống</td>
-                                    @else
-                                    <td>Người dùng</td>
-                                    @endif
+                                    <td style="width:150px">
+                                        @if ($user->idcongty && $user->loaitaikhoan != 2)
+                                        {{ $user->company->tencongty }}
+                                        @elseif ($user->loaitaikhoan == 2)
+                                        {{ __('Hệ thống') }}
+                                        @else
+                                        {{ __('Người dùng') }}
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
+                                        @if ($user->email_verified_at)
+                                        <p class="text-success"><i class="fas fa-check"></i></p>
+                                        @else
+                                        <p class="text-danger"><i class="fas fa-times"></i></p>
+                                        @endif
+                                    </td>
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"

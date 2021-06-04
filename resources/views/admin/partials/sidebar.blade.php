@@ -16,7 +16,7 @@
                 <img src="{{ auth()->id() ? asset(session()->get('info')['image']) : '' }}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="{{route('profile.index')}}" class="d-block">{{auth()->id() && session()->get('info')['name'] != null ? session()->get('info')['name'] . ' ' . session()->get('info')['ho'] : "Username"}}</a>
+                <a href="{{route('profile.index')}}" class="d-block">{{auth()->id() && session()->get('info')['name'] != null ? session()->get('info')['ho'] . ' ' . session()->get('info')['name'] : "Username"}}</a>
             </div>
             @endif
 
@@ -36,6 +36,18 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+                @if (session()->get('info'))
+                    @if (session()->get('info')['ho'] != "" && auth()->user()->idcongty == null)
+                    <li class="nav-item">
+                        <a href="{{route('profile.company.create')}}" class="nav-link">
+                            <i class="nav-icon fas fa-building"></i>
+                            <p>
+                                Tạo công ty
+                            </p>
+                        </a>
+                    </li>
+                    @endif
+                @endif
                 <!-- Admin's Module -->
                 @if(auth()->user()->loaitaikhoan == 2 && auth()->user()->idcongty == null)
                 <li class="nav-item">
@@ -135,7 +147,7 @@
 
                 <!-- Company's Module -->
                 @if( auth()->user()->loaitaikhoan == 1 )
-                    @if ( auth()->user()->idcongty != null && session()->get('info')['name'] != null)
+                    @if ( auth()->user()->idcongty != null && session()->get('info')['name'] != null || session()->get('idcongty') != null && session()->get('info')['name'] != null)
                     <li class="nav-item">
                         <a href="{{route('storage.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-warehouse"></i>
