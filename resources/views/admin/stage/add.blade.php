@@ -56,7 +56,7 @@
                                         <div class="form-group">
                                             <label for="">Tên công việc *</label>
                                             <input type="text" class="form-control validated validated-tencongviec enter-keydown"
-                                                    name="tencongviec[]" placeholder="Tên công việc" value="{{ old('tencongviec') }}">
+                                                    name="tencongviec[]" placeholder="Tên công việc" value="{{ old('tencongviec') }}" autofocus>
                                         </div>
                                         <div class="alert alert-danger alert-custom validate-tencongviec"></div>
                                     </div>
@@ -126,31 +126,33 @@
     {{-- <script type="text/javascript" src="{{ asset("vendor/js/summernote.js") }}"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
     <script>
-        function back(){history.back();}
-
         $(document).ready(function() {
-            $('.summernote').summernote({
-                height: 200,                 // set editor height
-                minHeight: null,             // set minimum height of editor
-                maxHeight: null,             // set maximum height of editor
-                focus: false,                  // set focus to editable area after initializing summernote
-                codemirror: { // codemirror options
-                    theme: 'monokai'
-                },
-                placeholder: "Nhập mô tả cho công việc"
-            });
+            initSumernote();
 
-            $(document).on('mouseenter focus', '.summernote', function(){
+            function initSumernote() {
                 $('.summernote').summernote({
                     height: 200,                 // set editor height
-                    minHeight: null,             // set minimum height of editor
-                    maxHeight: null,             // set maximum height of editor
+                    minHeight: 200,             // set minimum height of editor
+                    maxHeight: 300,             // set maximum height of editor
                     focus: false,                  // set focus to editable area after initializing summernote
                     codemirror: { // codemirror options
                         theme: 'monokai'
                     },
-                    placeholder: "Nhập mô tả cho công việc"
+                    placeholder: "Nhập mô tả cho công việc",
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture', 'video']],
+                        ['view', ['help']]
+                    ]
                 });
+            }
+
+            $(document).on('mouseenter focus', '.summernote', function(){
+                initSumernote();
             });
         });
     </script>

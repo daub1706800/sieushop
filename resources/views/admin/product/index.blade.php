@@ -55,8 +55,8 @@
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('product.edit', ['id' => $product->id]) }}">Chỉnh sửa sản phẩm</a>
                                                     <a class="dropdown-item" href="{{ route('stage.index', ['product_id' => $product->id]) }}">Danh sách giai đoạn</a>
+                                                    <a class="dropdown-item" href="{{ route('product.edit', ['id' => $product->id]) }}">Chỉnh sửa sản phẩm</a>
                                                     @if($product->comment->isEmpty() && $product->stage->isEmpty())
                                                     <a class="dropdown-item" href="{{ route('product.delete', ['id' => $product->id]) }}">Xóa</a>
                                                     @endif

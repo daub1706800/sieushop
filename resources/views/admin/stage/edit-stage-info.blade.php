@@ -112,8 +112,6 @@
     {{-- <script type="text/javascript" src="{{ asset("vendor/js/summernote.js") }}"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
     <script>
-        function back(){history.back();}
-
         $(document).ready(function() {
             $('.summernote').summernote({
                 height: 200,                 // set editor height
@@ -123,7 +121,16 @@
                 codemirror: { // codemirror options
                     theme: 'monokai'
                 },
-                placeholder: "Nhập mô tả cho công việc"
+                placeholder: "Nhập mô tả cho công việc",
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['help']]
+                ]
             });
         });
     </script>
@@ -144,24 +151,6 @@
     </script>
     <script>
         $(document).ready(function(){
-            // $(document).on('keydown', '.enter-keydown', function(event) {
-            //     if(event.keyCode == 13 || event.which == 13)
-            //     {
-            //         event.preventDefault();
-            //         $('#btn-submit-stageInfo').click();
-            //     }
-            // });
-
-            // function addDays(dateObj, numDays) {
-            //     dateObj.setDate(dateObj.getDate() + numDays);
-            //     return dateObj;
-            // }
-
-            // function subDays(dateObj, dateObj1) {
-            //     dateObj.setDate(dateObj.getDate() - dateObj1.getDate());
-            //     return dateObj;
-            // }
-
             $(document).on('change', '.validated-thoigianhoanthanh', function() {
                 var ngayhoanthanh = $(this).val();
                 var ngaybatdau = $('input[name="thoigianbatdau"]').val();

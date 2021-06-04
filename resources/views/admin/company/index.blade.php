@@ -38,7 +38,12 @@
                                     @foreach($companys as $key => $company)
                                     <tr>
                                         <th scope="row">{{ $company->id }}</th>
-                                        <td>{{ $company->tencongty }}</td>
+                                        <td>
+                                            {{-- <a href="{{ route('company.view') }}">{{ $company->tencongty }}</a> --}}
+                                            <a href="" class="company-item"
+                                                data-toggle="modal" data-target="#exampleModal"
+                                                data-id="{{ $company->id }}">{{ $company->tencongty }}</a>
+                                        </td>
                                         <td>{{ $company->diachicongty }}</td>
                                         <td>{{ $company->emailcongty }}</td>
                                         <td>{{ $company->dienthoaicongty }}</td>
@@ -69,4 +74,114 @@
     </div>
     <!-- /.content -->
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-md-7">
+                    <h5 class="modal-title congty" id="exampleModalLongTitle"
+                        style="font-size: 18px; font-weight: bold; color: red"></h5>
+                </div>
+                <div class="col-md-5 text-right">
+                    <p class="modal-title ngaythanhlap"
+                        style="font-size: 15px;"></p>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="row">
+                        <p><b>Sở/Ngành:</b></p>
+                        <p class="tenso pl-2"></p>
+                    </div>
+                    <div class="row">
+                        <p><b>Lĩnh vực:</b></p>
+                        <p class="linhvuc pl-2"></p>
+                    </div>
+                    <div class="row">
+                        <p><b>Địa chỉ:</b></p>
+                        <p class="diachi pl-2"></p>
+                    </div>
+                    <div class="row">
+                        <p><b>Email:</b></p>
+                        <p class="email pl-2"></p>
+                    </div>
+                    <div class="row">
+                        <p><b>Điện thoại:</b></p>
+                        <p class="dienthoai pl-2"></p>
+                    </div>
+                    <div class="row">
+                        <p><b>Fax:</b></p>
+                        <p class="fax pl-2"></p>
+                    </div>
+                    <div class="row">
+                        <p><b>Website:</b></p>
+                        <p class="website pl-2"></p>
+                    </div>
+                    <div class="row">
+                        <p><b>Số đăng ký kinh doanh:</b></p>
+                        <p class="sdkkd pl-2"></p>
+                    </div>
+                    <div class="row">
+                        <p><b>Ngày cấp:</b></p>
+                        <p class="ngaycap pl-2"></p>
+                    </div>
+                    <div class="row">
+                        <p><b>Nơi cấp:</b></p>
+                        <p class="noicap pl-2"></p>
+                    </div>
+                    <div class="row">
+                        <p><b>Mã số thuế:</b></p>
+                        <p class="masothue pl-2"></p>
+                    </div>
+                    <div class="row">
+                        <p><b>Subdomain:</b></p>
+                        <p class="subdomain pl-2"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12 text-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function(){
+            $(document).on('click', '.company-item', function() {
+                var idCompany = $(this).data('id');
+                $.ajax({
+                    url : "{{ route('company.view') }}",
+                    type : "post",
+                    data : {
+                        "idCompany":idCompany,
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    success:function(data) {
+                        console.log(data.company);
+                        $('.congty').text(data.company.tencongty);
+                        $('.ngaythanhlap').text('Thành lập ngày ' + data.company.ngaythanhlapcongty);
+                        $('.tenso').text(data.department.tenso);
+                        $('.linhvuc').text(data.field.tenlinhvuc);
+                        $('.diachi').text(data.company.diachicongty);
+                        $('.email').text(data.company.emailcongty);
+                        $('.dienthoai').text(data.company.dienthoaicongty);
+                        $('.fax').text(data.company.faxcongty);
+                        $('.website').text(data.company.webcongty);
+                        $('.sdkkd').text(data.company.sdkkdcongty);
+                        $('.ngaycap').text(data.company.ngaycapdkkdcongty);
+                        $('.noicap').text(data.company.noicapdkkdcongty);
+                        $('.masothue').text(data.company.masothuecongty);
+                        $('.subdomain').text(data.subdomain);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

@@ -72,7 +72,27 @@ class CompanyController extends Controller
     public function delete($id)
     {
         $this->company->find($id)->delete();
-        
+
         return redirect()->route('company.index');
+    }
+
+    public function view(Request $request)
+    {
+        $company = $this->company->find($request->idCompany);
+
+        $department = $company->department;
+
+        $field = $company->field;
+
+        $subdomain = $company->subdomain . '.' . config('app.short_url');
+
+        $arr = [
+            'company' => $company,
+            'department' => $department,
+            'field' => $field,
+            'subdomain' => $subdomain
+        ];
+
+        return response()->json($arr);
     }
 }

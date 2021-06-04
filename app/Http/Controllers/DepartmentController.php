@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DepartmentRequest;
 use App\Models\Department;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -60,7 +61,21 @@ class DepartmentController extends Controller
     public function delete($id)
     {
         $this->department->find($id)->delete();
-        
+
         return redirect()->route('department.index');
+    }
+
+    public function view(Request $request)
+    {
+        $department = $this->department->find($request->idDepartment);
+
+        $date = Carbon::createFromFormat('Y-m-d H:i:s', $department->created_at)->format('d-m-Y');
+
+        $arr = [
+            'department' => $department,
+            'date' => $date
+        ];
+
+        return response()->json($arr);
     }
 }

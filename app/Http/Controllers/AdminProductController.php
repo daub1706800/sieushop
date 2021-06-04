@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\Storage;
 use App\Traits\StorageImageTrait;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -218,7 +219,7 @@ class AdminProductController extends Controller
         catch (\Exception $exception) {
 
             DB::rollBack();
-            
+
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
     }
@@ -228,5 +229,29 @@ class AdminProductController extends Controller
         $this->product->find($id)->delete();
 
         return redirect()->route('admin.product.index');
+    }
+
+    public function view(Request $request)
+    {
+        $product = $this->product->find($request->idProduct);
+
+        $company = $product->company->tencongty;
+
+        $storage = $product->storage->tenkho;
+
+        $profile = $product->profile->hothanhvien . ' ' . $product->profile->tenthanhvien;
+
+        $productcategory = $product->productcategory->tenloaisanpham;
+
+        $date = Carbon::createFromFormat('Y-m-d H:i:s', $product->created_at)->format('d-m-Y');
+
+        return response()->json([
+            'product' => $product,
+            'date' =>$date,
+            'company' => $company,
+            'storage' => $storage,
+            'profile' => $profile,
+            'productcategory' => $productcategory
+        ]);
     }
 }

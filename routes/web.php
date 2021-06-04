@@ -94,6 +94,11 @@ Route::prefix('admin')->group(function () {
             'uses' => 'App\Http\Controllers\DepartmentController@delete',
             'middleware' => 'can:is-admin'
         ]);
+        Route::post('/view', [
+            'as'   => 'department.view',
+            'uses' => 'App\Http\Controllers\DepartmentController@view',
+            'middleware' => 'can:is-admin'
+        ]);
     });
 
     /* Module Lĩnh vực */
@@ -174,6 +179,11 @@ Route::prefix('admin')->group(function () {
         Route::get('/delete/{id}', [
             'as'   => 'company.delete',
             'uses' => 'App\Http\Controllers\CompanyController@delete',
+            'middleware' => 'can:is-admin'
+        ]);
+        Route::post('/view', [
+            'as'   => 'company.view',
+            'uses' => 'App\Http\Controllers\CompanyController@view',
             'middleware' => 'can:is-admin'
         ]);
     });
@@ -264,6 +274,11 @@ Route::prefix('admin')->group(function () {
             'uses' => 'App\Http\Controllers\AdminStorageController@delete',
             'middleware' => 'can:is-admin'
         ]);
+        Route::post('/view', [
+            'as'   => 'admin.storage.view',
+            'uses' => 'App\Http\Controllers\AdminStorageController@view',
+            'middleware' => 'can:is-admin'
+        ]);
     });
 
     /* Module Loại sản phẩm */
@@ -329,7 +344,7 @@ Route::prefix('admin')->group(function () {
         ]);
         Route::post('/view', [
             'as'   => 'admin.product.view',
-            'uses' => 'App\Http\Controllers\ProductController@view',
+            'uses' => 'App\Http\Controllers\AdminProductController@view',
             'middleware' => 'can:is-admin'
         ]);
         Route::post('/input-change', [

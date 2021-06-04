@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Company extends Model
 {
@@ -34,5 +35,15 @@ class Company extends Model
     public function storage()
     {
         return $this->hasMany(Storage::class, 'idcongty', 'id');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'idso', 'id');
+    }
+
+    public function field()
+    {
+        return $this->belongsTo(Field::class, 'idlinhvuc', 'id');
     }
 }

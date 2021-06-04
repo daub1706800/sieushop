@@ -46,9 +46,10 @@
                                     @foreach($storages as $key => $storage)
                                     <tr>
                                         <th scope="row">{{ $storage->id }}</th>
-                                        <td><a href="" class="storage-item"
-                                            data-toggle="modal" data-target="#exampleModalScrollable"
-                                            data-id="{{ $storage->id }}">{{ $storage->tenkho }}</a>
+                                        <td>
+                                            <a href="" class="storage-item"
+                                                data-toggle="modal" data-target="#exampleModalScrollable"
+                                                data-id="{{ $storage->id }}">{{ $storage->tenkho }}</a>
                                         </td>
                                         <td>{{ $storage->diachikho }}</td>
                                         <td>{{ $storage->taitrongkho }}</td>
@@ -83,7 +84,7 @@
 
 <!-- Modal Add Storage -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="col-md-12">

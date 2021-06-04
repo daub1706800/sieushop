@@ -118,7 +118,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Website * (https://)</label>
+                                        <label>Website * (https:// hoặc http://)</label>
                                         <input type="text" class="form-control @error('webcongty') is-invalid @enderror"
                                                 placeholder="Nhập website"
                                                 value="{{ $company->webcongty }}" name="webcongty">

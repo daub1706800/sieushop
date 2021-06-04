@@ -49,7 +49,11 @@
                                     @foreach($storages as $key => $storage)
                                     <tr>
                                         <th scope="row">{{ $storage->id }}</th>
-                                        <td>{{ $storage->tenkho }}</td>
+                                        <td>
+                                            <a href="" class="storage-item"
+                                                data-toggle="modal" data-target="#exampleModalScrollable"
+                                                data-id="{{ $storage->id }}">{{ $storage->tenkho }}
+                                        </td>
                                         <td>{{ $storage->diachikho }}</td>
                                         <td>{{ $storage->taitrongkho }}</td>
                                         <td>{{ $storage->dientichkho }}</td>
@@ -84,7 +88,7 @@
 
 <!-- Modal Add Storage -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="col-md-12">
@@ -178,6 +182,61 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-md-4">
+                    <h5 class="modal-title tenkho" id="exampleModalScrollableTitle"
+                        style="font-size: 18px; font-weight: bold; color: red">Modal title</h5>
+                </div>
+                <div class="col-md-4 offset-md-4 text-right">
+                    <p class="modal-title taongay"
+                        style="font-size: 15px;"></p>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="row">
+                        <p><b>Công ty:</b></p>
+                        <p class="congty pl-2"></p>
+                    </div>
+                    <div class="row">
+                        <p><b>Địa chỉ kho:</b></p>
+                        <p class="diachikho pl-2"></p>
+                    </div>
+                    <div class="row">
+                        <p><b>Tải trọng:</b></p>
+                        <p class="taitrongkho pl-2"></p>
+                    </div>
+                    <div class="row">
+                        <p><b>Diện tích:</b></p>
+                        <p class="dientichkho pl-2"></p>
+                    </div>
+                    <div class="row">
+                        <p><b>Tổng số NV:</b></p>
+                        <p class="sonhanvien pl-2"></p>
+                    </div>
+                    <div class="row">
+                        <p><b>Người tạo:</b></p>
+                        <p class="nguoitao pl-2"></p>
+                    </div>
+                    <div class="row">
+                        <p><b>Ghi chú:</b></p>
+                        <p class="ghichukho pl-2"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12 text-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('js')
     <!-- include select2 js -->
@@ -198,6 +257,30 @@
                     placeholder : 'Chọn công ty',
                     theme: "classic",
                     width: "100%"
+                });
+            });
+
+            $(document).on('click', '.storage-item', function() {
+                var idStorage = $(this).data('id');
+                $.ajax({
+                    url : "{{ route('admin.storage.view') }}",
+                    type : "post",
+                    data : {
+                        "idStorage":idStorage,
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    success:function(data) {
+                        // console.log(data);
+                        $('.tenkho').text(data.storage.tenkho);
+                        $('.diachikho').text(data.storage.diachikho);
+                        $('.taitrongkho').text(data.storage.taitrongkho + ' (tấn)');
+                        $('.dientichkho').text(data.storage.dientichkho + ' (mét vuông)');
+                        $('.sonhanvien').text(data.storage.sonhanvienkho);
+                        $('.ghichukho').text(data.storage.ghichukho);
+                        $('.nguoitao').text(data.author);
+                        $('.congty').text(data.company);
+                        $('.taongay').text('Tạo ngày ' + data.date);
+                    }
                 });
             });
         });

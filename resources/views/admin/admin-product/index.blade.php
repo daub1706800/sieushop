@@ -6,11 +6,6 @@
 
 @section('css')
     <link rel="stylesheet" href="{{asset('AdminLTE/dist/css/mystyle2.css')}}">
-    <style>
-        .product-item:hover{
-            color: #007bff !important;
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -49,7 +44,7 @@
                                         <th scope="row">{{ $product->id }}</th>
                                         <td><img style="width: 100px; height: 100px" src="{{ $product->hinhanhsanpham }}" alt=""></td>
                                         <td>
-                                            <a href="" class="product-item" style="color: black"
+                                            <a href="" class="product-item"
                                                 data-toggle="modal" data-target="#exampleModal"
                                                 data-id="{{ $product->id }}">{{ $product->tensanpham }}</a>
                                         </td>

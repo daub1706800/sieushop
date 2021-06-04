@@ -42,15 +42,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($departments as $key => $department)
+                                @foreach( $departments as $key => $department )
                                 <tr>
                                     <th scope="row">{{$department->id}}</th>
-                                    <td>{{$department->tenso}}</td>
-                                    <td>{{$department->diachiso}}</td>
-                                    <td>{{$department->emailso}}</td>
-                                    <td>{{$department->dienthoaiso}}</td>
-                                    <td>{{$department->faxso}}</td>
-                                    <td>{{$department->webso}}</td>
+                                    <td>
+                                        <a href="" class="department-item"
+                                            data-toggle="modal" data-target="#exampleModalScrollable"
+                                            data-id="{{ $department->id }}">{{ $department->tenso }}</a>
+                                    </td>
+                                    <td>{{ $department->diachiso }}</td>
+                                    <td>{{ $department->emailso }}</td>
+                                    <td>{{ $department->dienthoaiso }}</td>
+                                    <td>{{ $department->faxso }}</td>
+                                    <td>{{ $department->webso }}</td>
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
@@ -79,7 +83,7 @@
 
 <!-- Modal Add Category -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="col-md-12">
@@ -140,7 +144,7 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Website * (https:\\)</label>
+                                <label>Website * (https:// hoặc http://)</label>
                                 <input type="text" class="form-control @error('webso') is-invalid @enderror"
                                         name="webso" placeholder="Website">
                                 @error('webso')
@@ -158,6 +162,53 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-md-7">
+                    <h5 class="modal-title tenso" id="exampleModalScrollableTitle"
+                        style="font-size: 18px; font-weight: bold; color: red">Modal title</h5>
+                </div>
+                <div class="col-md-5 text-right">
+                    <p class="modal-title taongay"
+                        style="font-size: 15px;"></p>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="row">
+                        <p><b>Địa chỉ:</b></p>
+                        <p class="diachi pl-2"></p>
+                    </div>
+                    <div class="row">
+                        <p><b>Email:</b></p>
+                        <p class="email pl-2"></p>
+                    </div>
+                    <div class="row">
+                        <p><b>Điện thoại:</b></p>
+                        <p class="dienthoai pl-2"></p>
+                    </div>
+                    <div class="row">
+                        <p><b>Fax:</b></p>
+                        <p class="fax pl-2"></p>
+                    </div>
+                    <div class="row">
+                        <p><b>Website:</b></p>
+                        <p class="website pl-2"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12 text-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('js')
     <script>
@@ -167,6 +218,28 @@
                 if (errors != null) {
                     $('#btn-modal-click').click();
                 }
+            });
+
+            $(document).on('click', '.department-item', function() {
+                var idDepartment = $(this).data('id');
+                $.ajax({
+                    url : "{{ route('department.view') }}",
+                    type : "post",
+                    data : {
+                        "idDepartment":idDepartment,
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    success:function(data) {
+                        console.log(data);
+                        $('.tenso').text(data.department.tenso);
+                        $('.taongay').text('Ngày tạo ' + data.date);
+                        $('.diachi').text(data.department.diachiso);
+                        $('.email').text(data.department.emailso);
+                        $('.dienthoai').text(data.department.dienthoaiso);
+                        $('.fax').text(data.department.faxso);
+                        $('.website').text(data.department.webso);
+                    }
+                });
             });
         });
     </script>
