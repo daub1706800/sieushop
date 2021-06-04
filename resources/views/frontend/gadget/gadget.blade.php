@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 
 @section('title')
-    <title>Contact Page</title>
+    <title>Sản phẩm</title>
 @endsection
 
 @section('content')
