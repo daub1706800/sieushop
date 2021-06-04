@@ -20,8 +20,8 @@ class CreateCongtyTable extends Migration
             $table->string('tencongty');
             $table->string('diachicongty');
             $table->string('emailcongty');
-            $table->string('dienthoaicongty');
-            $table->string('faxcongty');
+            $table->string('dienthoaicongty')->nullable();
+            $table->string('faxcongty')->nullable();
             $table->string('webcongty');
             $table->string('sdkkdcongty');
             $table->date('ngaycapdkkdcongty');

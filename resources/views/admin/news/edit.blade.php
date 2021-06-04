@@ -117,7 +117,7 @@
                             <label>Tin nổi bật</label>
                         </div>
                         <div class="text-center">
-                            @if ($news->duyettintuc == 0 && $news->xuatbantintuc == 0 && $news->lydogo == 0)
+                            @if ($news->duyettintuc == 0 && $news->xuatbantintuc == 0 && $news->lydogo == 0 || $news->lydogo == 1)
                             <a href="{{ route('news.update-duyet', ['id' => $news->id]) }}" class="btn btn-primary mb-5">Duyệt</a>
                             @endif
                             @if ($news->xuatbantintuc == 0 && $news->duyettintuc == 1)
@@ -131,9 +131,9 @@
                     <hr>
                     <form action="{{ route('news.remove', ['id' => $news->id]) }}">
                         <div class="form-group col-md-6">
-                            <label>Lý do thu hồi</label>
+                            <label>Thu hồi tin tức *</label>
                             <input type="text" name="lydogo" class="form-control @error('lydogo') is-invalid @enderror"
-                                    placeholder="Ví dụ: Thông tin sai">
+                                    placeholder="Lý do: Thông tin sai">
                             @error('lydogo')
                             <div class="alert alert-danger alert-custom">{{ $message }}</div>
                             @enderror

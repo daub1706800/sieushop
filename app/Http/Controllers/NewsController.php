@@ -159,6 +159,7 @@ class NewsController extends Controller
     {
         $this->news->find($id)->update([
             'duyettintuc' => 1,
+            'xuatbantintuc' => 0,
             'lydogo' => 0,
         ]);
 
@@ -200,14 +201,15 @@ class NewsController extends Controller
         $request->validate([
             'lydogo' => 'required|min:5|max:255'
         ], [
-            'lydogo.required' => 'Lý do gỡ không được để trống',
-            'lydogo.min' => 'Lý do gỡ không được ít hơn 10 ký tự',
-            'lydogo.max' => 'Lý do gỡ không được vượt quá 255 ký tự',
+            'lydogo.required' => 'Lý do thu hồi không được để trống',
+            'lydogo.min' => 'Lý do thu hồi không được ít hơn 10 ký tự',
+            'lydogo.max' => 'Lý do thu hồi không được vượt quá 255 ký tự',
         ]);
 
         $this->newshistory->create([
             'idtintuc' => $id,
             'lydogo' => $request->lydogo,
+            'thoigian' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
 
         $this->news->find($id)->update([

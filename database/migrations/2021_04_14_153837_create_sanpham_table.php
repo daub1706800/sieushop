@@ -27,7 +27,7 @@ class CreateSanphamTable extends Migration
             $table->integer('dongiasanpham');
             $table->integer('khoiluongsanpham');
             $table->string('donvitinhsanpham');
-            $table->text('mavachsanpham')->nullable();
+            $table->text('mavachsanpham');
             $table->text('qrcode')->nullable();
             $table->timestamps();
         });
