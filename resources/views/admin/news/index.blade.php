@@ -68,7 +68,7 @@
                                             @if (!$item->newshistory->isEmpty())
                                                 <a href="" class="viewhistory"
                                                     data-toggle="modal" data-target="#exampleModal2"
-                                                    data-id="{{ $item->id }}">Lịch sử tin tức</a>
+                                                    data-id="{{ $item->id }}">Lịch sử thu hồi</a>
                                             @endif
                                         </td>
                                         <td>
@@ -76,6 +76,7 @@
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="{{ route('news.log', ['id' => $item->id]) }}">Lịch sử tin tức</a>
                                                     <a class="dropdown-item" href="{{ route('news.edit', ['id' => $item->id]) }}">Chỉnh sửa</a>
                                                     @if ($item->xuatbantintuc == 0)
                                                     <a class="dropdown-item" href="{{ route('news.delete', ['id' => $item->id]) }}">Xóa</a>
@@ -184,7 +185,7 @@
                     success:function(data) {
                         // console.log(data);
                         $('.chuyenmuc').html(data.category);
-                        $('.ngaydang').html('Đăng ngày ' + data.ngaydang);
+                        $('.ngaydang').html('Viết ngày ' + data.ngaydang);
                         $('.tieude').html(data.news.tieudetintuc);
                         $('.tomtat').html(data.news.tomtattintuc);
                         $('.hinhanh').attr('src',data.news.hinhanhtintuc);

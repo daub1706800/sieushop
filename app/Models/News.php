@@ -30,4 +30,9 @@ class News extends Model
     {
         return $this->hasMany(NewsHistory::class, 'idtintuc', 'id');
     }
+
+    public function newslog()
+    {
+        return $this->hasMany(NewsLog::class, 'idtintuc', 'id');
+    }
 }

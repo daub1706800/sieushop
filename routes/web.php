@@ -245,6 +245,11 @@ Route::prefix('admin')->group(function () {
             'uses' => 'App\Http\Controllers\NewsController@view',
             'middleware' => 'can:is-admin'
         ]);
+        Route::get('/log/{id}', [
+            'as'   => 'news.log',
+            'uses' => 'App\Http\Controllers\NewsController@log',
+            'middleware' => 'can:is-admin'
+        ]);
     });
 
     /* Module Kho */

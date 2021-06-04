@@ -117,13 +117,6 @@
                             <label>Tin nổi bật</label>
                         </div>
                         <div class="text-center">
-                            @if ($news->duyettintuc == 0 && $news->xuatbantintuc == 0 && $news->lydogo == 0 || $news->lydogo == 1)
-                            <a href="{{ route('news.update-duyet', ['id' => $news->id]) }}" class="btn btn-primary mb-5">Duyệt</a>
-                            @endif
-                            @if ($news->xuatbantintuc == 0 && $news->duyettintuc == 1)
-                            <a href="{{ route('news.update-xuatban', ['id' => $news->id]) }}" class="btn btn-primary mb-5">Xuất bản</a>
-                            @endif
-
                             <button type="submit" class="btn btn-primary mb-5">Lưu chỉnh sửa</button>
                         </div>
                     </form>
@@ -140,6 +133,38 @@
                         </div>
                         <div class="col-md-6 text-center">
                             <button type="submit" class="btn btn-primary mb-5">Thu hồi</button>
+                        </div>
+                    </form>
+                    @endif
+                    @if ($news->duyettintuc == 0 && $news->xuatbantintuc == 0 && $news->lydogo == 0 || $news->lydogo == 1)
+                    <hr>
+                    <form action="{{ route('news.update-duyet', ['id' => $news->id]) }}">
+                        <div class="form-group col-md-6">
+                            <label>Duyệt tin *</label>
+                            <input type="text" name="noidungdanhgia" class="form-control @error('noidungdanhgia') is-invalid @enderror"
+                                    placeholder="Nội dung tin hay">
+                            @error('noidungdanhgia')
+                            <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <button type="submit" class="btn btn-primary mb-5">Duyệt</button>
+                        </div>
+                    </form>
+                    @endif
+                    @if ($news->xuatbantintuc == 0 && $news->duyettintuc == 1)
+                    <hr>
+                    <form action="{{ route('news.update-xuatban', ['id' => $news->id]) }}">
+                        <div class="form-group col-md-6">
+                            <label>Xuất bản tin *</label>
+                            <input type="text" name="noidungdanhgia" class="form-control @error('noidungdanhgia') is-invalid @enderror"
+                                    placeholder="Nội dung tin hay">
+                            @error('noidungdanhgia')
+                            <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <button type="submit" class="btn btn-primary mb-5">Xuất bản</button>
                         </div>
                     </form>
                     @endif

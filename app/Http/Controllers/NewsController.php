@@ -7,8 +7,10 @@ use App\Http\Requests\NewsRequestEdit;
 use App\Models\Category;
 use App\Models\Company;
 use App\Models\Field;
+use App\Models\LogNews;
 use App\Models\News;
 use App\Models\NewsHistory;
+use App\Models\NewsLog;
 use App\Models\Video;
 use App\Models\Profile;
 use App\Traits\StorageImageTrait;
@@ -25,8 +27,9 @@ class NewsController extends Controller
     private $profile;
     private $company;
     private $newshistory;
+    private $newslog;
 
-    public function __construct(News $news, Category $category, Video $video, Profile $profile, Company $company, NewsHistory $newshistory)
+    public function __construct(News $news, Category $category, Video $video, Profile $profile, Company $company, NewsHistory $newshistory, NewsLog $newslog)
     {
         $this->news = $news;
         $this->category = $category;
@@ -34,6 +37,7 @@ class NewsController extends Controller
         $this->profile = $profile;
         $this->company = $company;
         $this->newshistory = $newshistory;
+        $this->newslog = $newslog;
     }
 
     public function index()
@@ -155,8 +159,22 @@ class NewsController extends Controller
         return redirect()->route('news.index');
     }
 
-    public function update_duyet($id)
+    public function update_duyet(Request $request, $id)
     {
+        $request->validate([
+            'noidungdanhgia' => 'required|max:255'
+        ], [
+            'noidungdanhgia.required' => 'Nội dung đánh giá không được để trống',
+            'noidungdanhgia.max' => 'Nội dung đánh giá không được vượt quá 255 ký tự',
+        ]);
+
+        $this->newslog->create([
+            'idtintuc' => $id,
+            'idtaikhoan' => auth()->id(),
+            'noidungdanhgia' => 'Duyệt tin: ' . $request->noidungdanhgia,
+            'thoigian' => Carbon::now()->format('Y-m-d H:i:s')
+        ]);
+
         $this->news->find($id)->update([
             'duyettintuc' => 1,
             'xuatbantintuc' => 0,
@@ -166,8 +184,22 @@ class NewsController extends Controller
         return redirect()->route('news.index');
     }
 
-    public function update_xuatban($id)
+    public function update_xuatban(Request $request, $id)
     {
+        $request->validate([
+            'noidungdanhgia' => 'required|max:255'
+        ], [
+            'noidungdanhgia.required' => 'Nội dung đánh giá không được để trống',
+            'noidungdanhgia.max' => 'Nội dung đánh giá không được vượt quá 255 ký tự',
+        ]);
+
+        $this->newslog->create([
+            'idtintuc' => $id,
+            'idtaikhoan' => auth()->id(),
+            'noidungdanhgia' => 'Xuất bản: ' . $request->noidungdanhgia,
+            'thoigian' => Carbon::now()->format('Y-m-d H:i:s')
+        ]);
+
         $this->news->find($id)->update([
             'xuatbantintuc' => 1,
         ]);
@@ -202,7 +234,7 @@ class NewsController extends Controller
             'lydogo' => 'required|min:5|max:255'
         ], [
             'lydogo.required' => 'Lý do thu hồi không được để trống',
-            'lydogo.min' => 'Lý do thu hồi không được ít hơn 10 ký tự',
+            'lydogo.min' => 'Lý do thu hồi không được ít hơn 5 ký tự',
             'lydogo.max' => 'Lý do thu hồi không được vượt quá 255 ký tự',
         ]);
 
@@ -238,5 +270,14 @@ class NewsController extends Controller
         ];
 
         return response()->json($array);
+    }
+
+    public function log($id)
+    {
+        $newslogs = $this->newslog->where('idtintuc', $id)->get();
+
+        $company = $this->news->find($id)->company;
+
+        return view('admin.news.log', compact('newslogs', 'company'));
     }
 }
