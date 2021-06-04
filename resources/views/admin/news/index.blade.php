@@ -6,11 +6,6 @@
 
 @section('css')
     <link rel="stylesheet" href="{{asset('AdminLTE/dist/css/mystyle2.css')}}">
-    <style>
-        .tieudetintuc:hover{
-            color: #007bff !important;
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -50,7 +45,7 @@
                                         <td>{{ $item->profile->tenthanhvien .' '. $item->profile->hothanhvien }}</td>
                                         <td>{{ $item->category->tenchuyenmuc }}</td>
                                         <td>
-                                            <a href="" class="tieudetintuc" style="color: black"
+                                            <a href="" class="tieudetintuc"
                                                 data-toggle="modal" data-target="#exampleModal"
                                                 data-id="{{ $item->id }}">{{ $item->tieudetintuc }}</a>
                                         </td>

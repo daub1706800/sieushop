@@ -99,7 +99,7 @@
                 </div>
             </div>
             <div class="modal-body">
-                <div class="com-md-12">
+                <div class="col-md-12">
                     <div class="row">
                         <p><b>Công ty:</b></p>
                         <p class="congty pl-2"></p>

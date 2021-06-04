@@ -9,9 +9,6 @@
             margin-top: 5px;
             padding: 3px 5px;
         }
-        .storage-item:hover{
-            color: #007bff !important;
-        }
     </style>
 @endsection
 @section('content')
@@ -49,7 +46,7 @@
                                     @foreach($storages as $key => $storage)
                                     <tr>
                                         <th scope="row">{{ $storage->id }}</th>
-                                        <td><a href="" class="storage-item" style="color: black"
+                                        <td><a href="" class="storage-item"
                                             data-toggle="modal" data-target="#exampleModalScrollable"
                                             data-id="{{ $storage->id }}">{{ $storage->tenkho }}</a>
                                         </td>

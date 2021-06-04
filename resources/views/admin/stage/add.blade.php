@@ -60,45 +60,47 @@
                                         </div>
                                         <div class="alert alert-danger alert-custom validate-tencongviec"></div>
                                     </div>
-                                    <div class="col-md-12 row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="">Thời gian bắt đầu *</label>
-                                                <input type="text" class="form-control validated validated-thoigianbatdau enter-keydown"
-                                                        name="thoigianbatdau[]" placeholder="YYYY-MM-DD" value="{{ old('thoigianbatdau') }}">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="">Thời gian bắt đầu *</label>
+                                                    <input type="text" class="form-control validated validated-thoigianbatdau enter-keydown"
+                                                            name="thoigianbatdau[]" placeholder="{{ now()->format('Y-m-d') }}" value="{{ old('thoigianbatdau') }}">
+                                                </div>
+                                                <div class="alert alert-danger alert-custom validate-thoigianbatdau"></div>
                                             </div>
-                                            <div class="alert alert-danger alert-custom validate-thoigianbatdau"></div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="">Thời gian dự kiến (tháng) *</label>
-                                                <input class="form-control validated validated-thoigiandukien enter-keydown" name="thoigiandukien[]"
-                                                        placeholder="Ví dụ: 1 tháng" type="text" value="{{ old('thoigiandukien') }}">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="">Thời gian dự kiến (ngày) *</label>
+                                                    <input class="form-control validated validated-thoigiandukien enter-keydown" name="thoigiandukien[]"
+                                                            placeholder="{{ now()->format('d') }}" type="text" value="{{ old('thoigiandukien') }}">
+                                                </div>
+                                                <div class="alert alert-danger alert-custom validate-thoigiandukien"></div>
                                             </div>
-                                            <div class="alert alert-danger alert-custom validate-thoigiandukien"></div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="">Thời gian hoàn thành</label>
-                                                <input class="form-control validated validated-thoigianhoanthanh enter-keydown" name="thoigianhoanthanh[]"
-                                                        placeholder="YYYY-MM-DD" type="text" value="{{ old('thoigianhoanthanh') }}">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="">Thời gian hoàn thành</label>
+                                                    <input class="form-control validated validated-thoigianhoanthanh enter-keydown" name="thoigianhoanthanh[]"
+                                                            placeholder="{{ now()->format('Y-m-d') }}" type="text" value="{{  old('thoigianhoanthanh') }}">
+                                                </div>
+                                                <div class="alert alert-danger alert-custom validate-thoigianhoanthanh"></div>
                                             </div>
-                                            <div class="alert alert-danger alert-custom validate-thoigianhoanthanh"></div>
-                                        </div>
-                                        <div class="col-md-6 som-tre-han" style="display: none;">
-                                            <div class="form-group">
-                                                <label for="">Sớm/Trễ hạn (ngày)</label>
-                                                <input class="form-control validated validated-trehan enter-keydown" name="trehan[]"
-                                                        placeholder="Ví dụ: 10 ngày" type="text" value="{{ old('trehan') }}">
+                                            <div class="col-md-6 som-tre-han">
+                                                <div class="form-group">
+                                                    <label class="trangthai">Sớm/Trễ hạn (ngày)</label>
+                                                    <input type="text" class="form-control validated validated-trehan enter-keydown"
+                                                            name="trehan[]" value="0" readonly>
+                                                </div>
+                                                <div class="alert alert-danger alert-custom validate-trehan"></div>
                                             </div>
-                                            <div class="alert alert-danger alert-custom validate-trehan"></div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="">Mô tả công việc *</label>
-                                                <textarea name="motacongviec[]" class="form-control summernote validated validated-motacongviec">{{ old('motacongviec') }}</textarea>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="">Mô tả công việc *</label>
+                                                    <textarea name="motacongviec[]" class="form-control summernote validated validated-motacongviec">{{ old('motacongviec') }}</textarea>
+                                                </div>
+                                                <div class="alert alert-danger alert-custom validate-motacongviec"></div>
                                             </div>
-                                            <div class="alert alert-danger alert-custom validate-motacongviec"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -122,10 +124,9 @@
     <!-- include summernote js -->
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     {{-- <script type="text/javascript" src="{{ asset("vendor/js/summernote.js") }}"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
     <script>
-        function back(){
-            history.back();
-        }
+        function back(){history.back();}
 
         $(document).ready(function() {
             $('.summernote').summernote({
@@ -180,18 +181,30 @@
             // Thêm tab
             $('.add-work').click(function(e){
                 e.preventDefault();
-                i++; // Tăng i lên 1 đơn vị;
-                $('#nav-tab').attr('data-count', i);
-                $('#nav-tab').append('<a class="nav-item nav-link nav-count" id="nav-'+i+'-tab" data-toggle="tab" href="#nav-'+i+'" role="tab" aria-controls="nav-'+i+'" aria-selected="false" data-index="'+i+'">Công việc '+i+'</a>');
-                $.ajax({
-                    url: "{{ route('stage-info.render-add')}}",
-                    type: "get",
-                    data: {i:i},
-                    success: function(data)
-                    {
-                        $('#nav-tabContent').append(data.output);
-                    }
-                });
+                var tencongviec = $('input[name="tencongviec[]"]').val();
+                var thoigianbatdau = $('input[name="thoigianbatdau[]"]').val();
+                var thoigiandukien = $('input[name="thoigiandukien[]"]').val();
+                var motacongviec = $('textarea[name="motacongviec[]"]').val();
+                console.log(tencongviec);
+                // if (tencongviec != "" && thoigianbatdau != "" && thoigiandukien != "" && motacongviec != "")
+                // {
+                    i++; // Tăng i lên 1 đơn vị;
+                    $('#nav-tab').attr('data-count', i);
+                    $('#nav-tab').append('<a class="nav-item nav-link nav-count" id="nav-'+i+'-tab" data-toggle="tab" href="#nav-'+i+'" role="tab" aria-controls="nav-'+i+'" aria-selected="false" data-index="'+i+'">Công việc '+i+'</a>');
+                    $.ajax({
+                        url: "{{ route('stage-info.render-add')}}",
+                        type: "get",
+                        data: {i:i},
+                        success: function(data)
+                        {
+                            $('#nav-tabContent').append(data.output);
+                        }
+                    });
+                // }
+                // else
+                // {
+                //     alert("Các trường không được bỏ trống");
+                // }
             });
 
             // Xóa tab-pane
@@ -297,20 +310,49 @@
     </script>
     <script>
         $(document).ready(function(){
-            $(document).on('blur', '.validated-thoigianhoanthanh', function() {
-                if($(this).val() == "")
-                {
-                    $('.som-tre-han').css('display', 'none');
-                }
-            });
-            $(document).on('change', '.validated-thoigianhoanthanh', function() {
-                $('.som-tre-han').css('display', 'block');
-            });
             $(document).on('keydown', '.enter-keydown', function(event) {
                 if(event.keyCode == 13 || event.which == 13)
                 {
                     event.preventDefault();
                     $('#btn-submit-stageInfo').click();
+                }
+            });
+
+            function addDays(dateObj, numDays) {
+                dateObj.setDate(dateObj.getDate() + numDays);
+                return dateObj;
+            }
+
+            function subDays(dateObj, dateObj1) {
+                dateObj.setDate(dateObj.getDate() - dateObj1.getDate());
+                return dateObj;
+            }
+
+            $(document).on('change', '.validated-thoigianhoanthanh', function() {
+                var ngayhoanthanh = $(this).val();
+                var ngaybatdau = $(this).parent().parent().parent().find('input[name="thoigianbatdau[]"]').val();
+                var thoigiandukien = $(this).parent().parent().parent().find('input[name="thoigiandukien[]"]').val();
+
+                if (ngaybatdau != "" && ngaybatdau <= ngayhoanthanh) {
+                    d = moment(ngayhoanthanh).diff(moment(ngaybatdau), 'days');
+                    console.log(d);
+                    console.log(thoigiandukien);
+                    if (Number(d) > Number(thoigiandukien))
+                    {
+                        var kq = Number(d) - Number(thoigiandukien);
+                        $(this).parent().parent().parent().find('input[name="trehan[]"]').val(kq);
+                        $(this).parent().parent().parent().find('.trangthai').text('Trễ hạn (ngày)');
+                    }
+                    else if (Number(d) <= Number(thoigiandukien))
+                    {
+                        var kq = Number(thoigiandukien) - Number(d);
+                        $(this).parent().parent().parent().find('input[name="trehan[]"]').val(kq);
+                        $(this).parent().parent().parent().find('.trangthai').text('Sớm hạn (ngày)');
+                    }
+                }
+                else
+                {
+                    $(this).parent().parent().parent().find('input[name="trehan[]"]').val(0);
                 }
             });
         });

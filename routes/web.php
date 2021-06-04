@@ -339,65 +339,65 @@ Route::prefix('admin')->group(function () {
         ]);
         // Stage
         Route::get('/stage/{product_id}', [
-            'as'   => 'stage.index',
+            'as'   => 'admin.stage.index',
             'uses' => 'App\Http\Controllers\StageController@index',
             // 'middleware' => 'can:product-list'
         ]);
         Route::post('/stage/{product_id}', [
-            'as'   => 'stage.store',
+            'as'   => 'admin.stage.store',
             'uses' => 'App\Http\Controllers\StageController@store',
         ]);
         Route::get('/stage/edit/{id}', [
-            'as'   => 'stage.edit',
+            'as'   => 'admin.stage.edit',
             'uses' => 'App\Http\Controllers\StageController@edit',
             // 'middleware' => 'can:product-view'
         ]);
         Route::post('/stage/update/{id}', [
-            'as'   => 'stage.update',
+            'as'   => 'admin.stage.update',
             'uses' => 'App\Http\Controllers\StageController@update',
             // 'middleware' => 'can:product-update'
         ]);
         Route::get('/stage/delete/{id}', [
-            'as'   => 'stage.delete',
+            'as'   => 'admin.stage.delete',
             'uses' => 'App\Http\Controllers\StageController@delete',
             // 'middleware' => 'can:product-delete'
         ]);
         Route::get('/stage/stage-info/{stage_id}/{product_id}', [
-            'as'   => 'stage-info.index',
+            'as'   => 'admin.stage-info.index',
             'uses' => 'App\Http\Controllers\StageController@stage_info_index',
             // 'middleware' => 'can:product-list'
         ]);
         Route::get('/stage/stage-info/add/{stage_id}/{product_id}', [
-            'as'   => 'stage-info.add',
+            'as'   => 'admin.stage-info.add',
             'uses' => 'App\Http\Controllers\StageController@stage_info_add',
             // 'middleware' => 'can:product-add'
         ]);
         Route::post('/stage/store-info/store/{stage_id}/{product_id}', [
-            'as'   => 'stage-info.store',
+            'as'   => 'admin.stage-info.store',
             'uses' => 'App\Http\Controllers\StageController@stage_info_store',
         ]);
         Route::get('/stage/stage-info/edit/{stageInfo_id}/{stage_id}/{product_id}', [
-            'as'   => 'stage-info.edit',
+            'as'   => 'admin.stage-info.edit',
             'uses' => 'App\Http\Controllers\StageController@stage_info_edit',
         ]);
         Route::post('/stage/stage-info/update/{stageInfo_id}/{stage_id}/{product_id}', [
-            'as'   => 'stage-info.update',
+            'as'   => 'admin.stage-info.update',
             'uses' => 'App\Http\Controllers\StageController@stage_info_update',
         ]);
         Route::get('/stage/stage-info/delete/{stageInfo_id}/{stage_id}/{product_id}', [
-            'as'   => 'stage-info.delete',
+            'as'   => 'admin.stage-info.delete',
             'uses' => 'App\Http\Controllers\StageController@stage_info_delete',
         ]);
         Route::get('/stage/ajax/count-stage-info', [
-            'as' => 'stage-info.count',
+            'as' => 'admin.stage-info.count',
             'uses' => 'App\Http\Controllers\StageController@stage_info_count',
         ]);
         Route::get('/stage/ajax/render-stage-info', [
-            'as' => 'stage-info.render',
+            'as' => 'admin.stage-info.render',
             'uses' => 'App\Http\Controllers\StageController@stage_info_render',
         ]);
         Route::get('/stage/ajax/render-add-stage-info', [
-            'as' => 'stage-info.render-add',
+            'as' => 'admin.stage-info.render-add',
             'uses' => 'App\Http\Controllers\StageController@stage_info_render_add',
         ]);
     });

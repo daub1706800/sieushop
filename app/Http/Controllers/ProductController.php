@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProductRequest;
+use App\Http\Requests\ProductAddRequest;
+use App\Http\Requests\ProductEditRequest;
 use App\Models\Product;
 use App\Models\Field;
 use App\Models\Storage;
@@ -42,16 +43,14 @@ class ProductController extends Controller
 
     public function add()
     {
-        $fields = $this->field->all();
+        $storages = $this->storage->where('idcongty', auth()->user()->idcongty)->get();
 
-        $storages = $this->storage->where('idcongty', auth()->user()->idcongty)
-                                            ->get();
-        $productcategories = $this->productcategory->where('idcongty', auth()->user()->idcongty)
-                                                   ->get();
-        return view('admin.product.add', compact('fields', 'storages', 'productcategories'));
+        $productcategories = $this->productcategory->where('idcongty', auth()->user()->idcongty)->get();
+
+        return view('admin.product.add', compact('storages', 'productcategories'));
     }
 
-    public function store(ProductRequest $request)
+    public function store(ProductAddRequest $request)
     {
         try
         {
@@ -69,7 +68,7 @@ class ProductController extends Controller
                 'dongiasanpham'    => $request->dongiasanpham,
                 'khoiluongsanpham' => $request->khoiluongsanpham,
                 'donvitinhsanpham' => $request->donvitinhsanpham,
-                'mavachsanpham'    => DNS1DFacade::getBarcodeHTML($request->mavachsanpham, 'C39E+', 2, 50, 'black', true),
+                'mavachsanpham'    => DNS1DFacade::getBarcodeHTML($request->mavachsanpham, 'C128', 2, 50, 'black', true),
             ];
 
             $dataImageUpload = $this->StorageUploadImage($request, 'hinhanhsanpham', 'product/images');
@@ -109,38 +108,57 @@ class ProductController extends Controller
     {
         $product = $this->product->find($id);
 
-        $fields = $this->field->all();
+        $company = $product->company;
 
-        $storages = $this->storage->all();
+        $storages = $this->storage->where('idcongty', $company->id)->get();
 
-        $productcategories = $this->productcategory->all();
+        $productcategories = $this->productcategory->where('idcongty', $company->id)->get();
 
         $images = Image::where('idsanpham', $id)->get();
 
-        return view('admin.product.edit', compact('product', 'fields', 'storages', 'productcategories', 'images'));
+        return view('admin.product.edit', compact('product', 'storages', 'productcategories', 'images'));
     }
 
-    public function update(ProductRequest $request, $id)
+    public function update(ProductEditRequest $request, $id)
     {
         try
         {
             DB::beginTransaction();
-            $data = [
-                'idloaisanpham'    => $request->idloaisanpham,
-                'idkho'            => $request->idkho,
-                'tensanpham'       => $request->tensanpham,
-                'thongtinsanpham'  => $request->thongtinsanpham,
-                'xuatxu'           => $request->xuatxu,
-                'chungloaisanpham' => $request->chungloaisanpham,
-                'dongiasanpham'    => $request->dongiasanpham,
-                'khoiluongsanpham' => $request->khoiluongsanpham,
-                'donvitinhsanpham' => $request->donvitinhsanpham,
-            ];
 
-            $dataImageUpload = $this->StorageUploadImage($request, 'hinhanhsanpham', 'product/images');
-
-            if(!empty($dataImageUpload))
+            if ($request->mavachsanpham)
             {
+                $data = [
+                    'idloaisanpham'    => $request->idloaisanpham,
+                    'idkho'            => $request->idkho,
+                    'tensanpham'       => $request->tensanpham,
+                    'thongtinsanpham'  => $request->thongtinsanpham,
+                    'xuatxu'           => $request->xuatxu,
+                    'chungloaisanpham' => $request->chungloaisanpham,
+                    'dongiasanpham'    => $request->dongiasanpham,
+                    'khoiluongsanpham' => $request->khoiluongsanpham,
+                    'donvitinhsanpham' => $request->donvitinhsanpham,
+                    'mavachsanpham'    => DNS1DFacade::getBarcodeHTML($request->mavachsanpham, 'C128', 2, 50, 'black', true),
+                ];
+            }
+            else
+            {
+                $data = [
+                    'idloaisanpham'    => $request->idloaisanpham,
+                    'idkho'            => $request->idkho,
+                    'tensanpham'       => $request->tensanpham,
+                    'thongtinsanpham'  => $request->thongtinsanpham,
+                    'xuatxu'           => $request->xuatxu,
+                    'chungloaisanpham' => $request->chungloaisanpham,
+                    'dongiasanpham'    => $request->dongiasanpham,
+                    'khoiluongsanpham' => $request->khoiluongsanpham,
+                    'donvitinhsanpham' => $request->donvitinhsanpham,
+                ];
+            }
+
+            if($request->hasFile('hinhanhsanpham'))
+            {
+                $dataImageUpload = $this->StorageUploadImage($request, 'hinhanhsanpham', 'product/images');
+
                 $data['hinhanhsanpham'] = $dataImageUpload['file_path'];
             }
 
@@ -158,18 +176,19 @@ class ProductController extends Controller
                 {
                     $dataImageUploadMultiple = $this->StorageUploadImageMultiple($fileItem, 'product/detail-images');
                     Image::create([
-                        'idsanpham'    => $product->id,
+                        'idsanpham' => $product->id,
                         'dulieuhinh' => $dataImageUploadMultiple['file_path']
                     ]);
                 }
             }
             DB::commit();
 
-            // return redirect()->route('product.edit', ['id' => $id]);
             return redirect()->route('product.index');
         }
         catch (\Exception $exception) {
+
             DB::rollBack();
+
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
     }

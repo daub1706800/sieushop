@@ -26,7 +26,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <form action="{{route('product.store')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('admin.product.store')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="col-md-6">
                             <div class="form-group">
@@ -230,7 +230,6 @@
 
             $(document).on('change', '.company-selected', function() {
                 var idCompany = $(this).val();
-                // console.log(idCompany);
                 $.ajax({
                     url : "{{ route('admin.product.input-change') }}",
                     type: "post",

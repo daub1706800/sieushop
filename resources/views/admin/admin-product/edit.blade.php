@@ -30,6 +30,11 @@
                         @csrf
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label>Công ty *</label>
+                                <input  type="text" class="form-control" value="{{ $company->tencongty }}" readonly>
+                                <input  type="hidden" name="idcongty" value="{{ $company->id }}">
+                            </div>
+                            <div class="form-group">
                                 <label>Tên sản phẩm *</label>
                                 <input  type="text" class="form-control @error('tensanpham') is-invalid @enderror"
                                         name="tensanpham" placeholder="Tên sản phẩm"

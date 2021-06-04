@@ -23,8 +23,13 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 row mb-3">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <h4>SẢN PHẨM : {{ $product->tensanpham }}</h4>
+                    </div>
+                </div>
+                <div class="col-md-12 row mb-3">
+                    <div class="col-md-6">
+                        <a href="{{ route('product.index') }}" class="btn btn-primary">Danh sách sản phẩm</a>
                     </div>
                     <div class="col-md-6">
                         <a id="btn-modal-click" href="" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal"
@@ -48,7 +53,10 @@
                                     @foreach($stages as $stage)
                                     <tr>
                                         <th scope="row">{{ $stage->id }}</th>
-                                        <td>{{ $stage->tengiaidoan }}</td>
+                                        <td><a href="{{ route('stage-info.index', ['stage_id' => $stage->id, 'product_id' => $product_id]) }}"
+                                                class="stage-info">
+                                            {{ $stage->tengiaidoan }}</a>
+                                        </td>
                                         <td>{{ $stage->motagiaidoan }}</td>
                                         <td>{{ $stage->thoigiantao }}</td>
                                         <td>
@@ -56,13 +64,9 @@
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
-                                                    @if (!$stage->stageInfo->isEmpty())
-                                                    <a class="dropdown-item" href="{{ route('stage-info.index', ['stage_id' => $stage->id, 'product_id' => $product_id]) }}">Danh sách công việc</a>
-                                                    @endif
-                                                    <a class="dropdown-item" href="{{ route('stage-info.add',  ['stage_id' => $stage->id, 'product_id' => $product_id]) }}">Thêm công việc mới</a>
-                                                    <a class="dropdown-item" href="{{ route('stage.edit', ['id' => $stage->id]) }}">Chỉnh sửa giai đoạn</a>
+                                                    <a class="dropdown-item" href="{{ route('stage.edit', ['id' => $stage->id]) }}">Chỉnh sửa</a>
                                                     @if ($stage->stageInfo->isEmpty())
-                                                    <a class="dropdown-item" href="{{ route('stage.delete', ['id' => $stage->id]) }}">Xóa giai đoạn</a>
+                                                    <a class="dropdown-item" href="{{ route('stage.delete', ['id' => $stage->id]) }}">Xóa</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -73,9 +77,6 @@
                             </table>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-12">
-                    {{-- {{ $products->links() }} --}}
                 </div>
             </div>
             <!-- /.row -->

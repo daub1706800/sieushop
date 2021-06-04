@@ -24,12 +24,11 @@ class StageInfoRequest extends FormRequest
     public function rules()
     {
         return [
-            'tencongviec' => 'bail|required|max:255',
-            'thoigianbatdau' => 'bail|required|before:today',
-            'thoigiandukien' => 'required|numeric',
-            'thoigianhoanthanh' => 'required',
-            // 'trehan' => 'numeric',
-            'motacongviec' => 'bail|required|min:10',
+            'tencongviec.*' => 'bail|required|max:255',
+            'thoigianbatdau.*' => 'required',
+            'thoigiandukien.*' => 'required|numeric',
+            'thoigianhoanthanh.*' => 'nullable|date_format:"Y-m-d"|after_or_equal:thoigianbatdau.*',
+            'motacongviec.*' => 'bail|required|min:10',
         ];
     }
 
@@ -39,12 +38,11 @@ class StageInfoRequest extends FormRequest
             'tencongviec.required' => 'Tên không được để trống',
             'tencongviec.max' => 'Tên không được vượt quá 255 ký tự',
             'thoigianbatdau.required' => 'Thời gian bắt đầu không được để trống',
-            'thoigianbatdau.max' => 'Thời gian bắt đầu không được vượt quá 255 ký tự',
-            'thoigianbatdau.before' => 'Thời gian bắt đầu không hợp lệ',
             'thoigiandukien.required' => 'Thời gian dự kiến không được để trống',
             'thoigiandukien.numeric' => 'Thời gian dự kiến phải là kiểu số nguyên',
             'thoigianhoanthanh.required' => 'Thời gian hoàn thành không được để trống',
-            // 'trehan.numeric' => 'Trễ hạn phải là kiểu số nguyên',
+            'thoigianhoanthanh.date_format' => 'Thời gian hoàn thành phải có kiểu Y-m-d',
+            'thoigianhoanthanh.after_or_equal' => 'Thời gian hoàn thành không sớm hơn thời gian bắt đầu',
             'motacongviec.required' => 'Mô tả công việc không được để trống',
             'motacongviec.min' => 'Mô tả công việc ít nhất 10 ký tự',
         ];

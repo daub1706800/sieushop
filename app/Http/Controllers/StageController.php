@@ -7,6 +7,7 @@ use App\Http\Requests\StageRequest;
 use App\Models\Product;
 use App\Models\Stage;
 use App\Models\StageInfo;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -62,7 +63,36 @@ class StageController extends Controller
 
         $stageInfos = $this->stageInfo->where('idgiaidoan', $stage_id)->get();
 
-        return view('admin.stage.stage-info', compact('stage', 'stageInfos', 'product_id'));
+        $arr = [];
+
+        foreach ($stageInfos as $key => $stageInfo) {
+            $newDatethoigianbatdau = Carbon::create($stageInfo->thoigianbatdau);
+            $newDatethoigianhoanthanh = Carbon::create($stageInfo->thoigianhoanthanh);
+            if ($newDatethoigianbatdau->addDays($stageInfo->thoigiandukien) >= $newDatethoigianhoanthanh) {
+                $check = "Sớm";
+            }
+            else
+            {
+                $check = "Trễ";
+            }
+            $arr += [
+                $key => [
+                    'id' => $stageInfo->id,
+                    'idgiaidoan' => $stageInfo->idgiaidoan,
+                    'tencongviec' => $stageInfo->tencongviec,
+                    'motacongviec' => $stageInfo->motacongviec,
+                    'thoigianbatdau' => $stageInfo->thoigianbatdau,
+                    'thoigiandukien' => $stageInfo->thoigiandukien,
+                    'thoigianhoanthanh' => $stageInfo->thoigianhoanthanh,
+                    'trehan' => $stageInfo->trehan,
+                    'check' => $check
+                ],
+            ];
+        }
+
+        // \dd($arr);
+
+        return view('admin.stage.stage-info', compact('stage', 'arr', 'product_id'));
     }
 
     public function stage_info_add($stage_id, $product_id)
@@ -78,19 +108,18 @@ class StageController extends Controller
 
         $validated = Validator::make($request->all(), [
             'tencongviec.*' => 'bail|required|max:255',
-            'thoigianbatdau.*' => 'bail|required|before:today',
+            'thoigianbatdau.*' => 'required',
             'thoigiandukien.*' => 'required|numeric',
-            'thoigianhoanthanh.*' => 'required',
+            'thoigianhoanthanh.*' => 'nullable|date_format:"Y-m-d"|after_or_equal:thoigianbatdau.*',
             'motacongviec.*' => 'bail|required|min:10',
         ], [
             'tencongviec.*.required' => 'Tên không được để trống',
             'tencongviec.*.max' => 'Tên không được vượt quá 255 ký tự',
             'thoigianbatdau.*.required' => 'Thời gian bắt đầu không được để trống',
-            'thoigianbatdau.*.max' => 'Thời gian bắt đầu không được vượt quá 255 ký tự',
-            'thoigianbatdau.*.before' => 'Thời gian bắt đầu không hợp lệ',
             'thoigiandukien.*.required' => 'Thời gian dự kiến không được để trống',
             'thoigiandukien.*.numeric' => 'Thời gian dự kiến phải là kiểu số nguyên',
-            'thoigianhoanthanh.*.required' => 'Thời gian hoàn thành không được để trống',
+            'thoigianhoanthanh.*.date_format' => 'Thời gian hoàn thành phải có kiểu Y-m-d',
+            'thoigianhoanthanh.*.after_or_equal' => 'Thời gian hoàn thành không được sớm hơn thời gian bắt đầu',
             'motacongviec.*.required' => 'Mô tả công việc không được để trống',
             'motacongviec.*.min' => 'Mô tả công việc ít nhất 10 ký tự',
         ]);
@@ -160,7 +189,7 @@ class StageController extends Controller
         $arr = [
             'count'   => $count
         ];
-        
+
         return response()->json($count);
     }
 
@@ -177,36 +206,38 @@ class StageController extends Controller
                                 </div>
                                 <div class="alert alert-danger alert-custom validate-tencongviec"></div>
                             </div>
-                            <div class="col-md-12 row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="">Thời gian bắt đầu *</label><input type="text" class="form-control datepicker validated validated-thoigianbatdau enter-keydown" name="thoigianbatdau[]" placeholder="YYYY-MM-DD" value="'.old('thoigianbatdau').'">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Thời gian bắt đầu *</label><input type="text" class="form-control datepicker validated validated-thoigianbatdau enter-keydown" name="thoigianbatdau[]" placeholder="'.now()->format('Y-m-d').'" value="'.old('thoigianbatdau').'">
+                                        </div>
+                                        <div class="alert alert-danger alert-custom validate-thoigianbatdau"></div>
                                     </div>
-                                    <div class="alert alert-danger alert-custom validate-thoigianbatdau"></div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="">Thời gian dự kiến *</label><input class="form-control validated validated-thoigiandukien enter-keydown" name="thoigiandukien[]" placeholder="VD: 1 tháng" type="text" value="'.old('thoigiandukien').'">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Thời gian dự kiến (ngày) *</label><input class="form-control validated validated-thoigiandukien enter-keydown" name="thoigiandukien[]" placeholder="'.now()->format('d').'" type="text" value="'.old('thoigiandukien').'">
+                                        </div>
+                                        <div class="alert alert-danger alert-custom validate-thoigiandukien"></div>
                                     </div>
-                                    <div class="alert alert-danger alert-custom validate-thoigiandukien"></div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="">Thời gian hoàn thành *</label><input class="form-control datepicker validated validated-thoigianhoanthanh enter-keydown" name="thoigianhoanthanh[]" placeholder="YYYY-MM-DD" type="text" value="'.old('thoigianhoanthanh').'">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Thời gian hoàn thành</label><input class="form-control datepicker validated validated-thoigianhoanthanh enter-keydown" name="thoigianhoanthanh[]" placeholder="'.now()->format('Y-m-d').'" type="text" value="'.old('thoigianhoanthanh').'">
+                                        </div>
+                                        <div class="alert alert-danger alert-custom validate-thoigianhoanthanh"></div>
                                     </div>
-                                    <div class="alert alert-danger alert-custom validate-thoigianhoanthanh"></div>
-                                </div>
-                                <div class="col-md-6 som-tre-han" style="display: none;">
-                                    <div class="form-group">
-                                        <label for="">Sớm/Trễ hạn (ngày)</label><input class="form-control validated validated-trehan enter-keydown" name="trehan[]" placeholder="Ví dụ: 10 ngày" type="text" value="'.old('trehan').'">
+                                    <div class="col-md-6 som-tre-han">
+                                        <div class="form-group">
+                                            <label class="trangthai">Sớm/Trễ hạn (ngày)</label><input class="form-control validated validated-trehan enter-keydown" name="trehan[]" type="text" value="0" readonly>
+                                        </div>
+                                        <div class="alert alert-danger alert-custom validate-trehan"></div>
                                     </div>
-                                    <div class="alert alert-danger alert-custom validate-trehan"></div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="">Mô tả công việc *</label><textarea name="motacongviec[]" class="form-control summernote validated validated-motacongviec">'.old('motacongviec').'</textarea>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Mô tả công việc *</label><textarea name="motacongviec[]" class="form-control summernote validated validated-motacongviec">'.old('motacongviec').'</textarea>
+                                        </div>
+                                        <div class="alert alert-danger alert-custom validate-motacongviec"></div>
                                     </div>
-                                    <div class="alert alert-danger alert-custom validate-motacongviec"></div>
                                 </div>
                             </div>
                         </div>

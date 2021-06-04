@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProductRequest;
+use App\Http\Requests\AdminProductAddRequest;
+use App\Http\Requests\AdminProductEditRequest;
 use App\Models\Company;
 use App\Models\Field;
 use App\Models\Image;
@@ -77,15 +78,15 @@ class AdminProductController extends Controller
         ]);
     }
 
-    public function store(ProductRequest $request)
+    public function store(AdminProductAddRequest $request)
     {
         try
         {
             DB::beginTransaction();
 
             $data = [
-                'idloaisanpham'    => $request->idloaisanpham,
                 'idcongty'         => $request->idcongty,
+                'idloaisanpham'    => $request->idloaisanpham,
                 'idtaikhoan'       => auth()->id(),
                 'idkho'            => $request->idkho,
                 'tensanpham'       => $request->tensanpham,
@@ -95,7 +96,7 @@ class AdminProductController extends Controller
                 'dongiasanpham'    => $request->dongiasanpham,
                 'khoiluongsanpham' => $request->khoiluongsanpham,
                 'donvitinhsanpham' => $request->donvitinhsanpham,
-                'mavachsanpham'    => DNS1DFacade::getBarcodeHTML($request->mavachsanpham, 'C39E+', 2, 50, 'black', true),
+                'mavachsanpham'    => DNS1DFacade::getBarcodeHTML($request->mavachsanpham, 'C128', 2, 50, 'black', true),
             ];
 
             $dataImageUpload = $this->StorageUploadImage($request, 'hinhanhsanpham', 'product/images');
@@ -135,18 +136,18 @@ class AdminProductController extends Controller
     {
         $product = $this->product->find($id);
 
-        $fields = $this->field->all();
+        $company = $product->company;
 
-        $storages = $this->storage->all();
+        $storages = $this->storage->where('idcongty', $company->id)->get();
 
-        $productcategories = $this->productcategory->all();
+        $productcategories = $this->productcategory->where('idcongty', $company->id)->get();
 
         $images = Image::where('idsanpham', $id)->get();
 
-        return view('admin.admin-product.edit', compact('product', 'fields', 'storages', 'productcategories', 'images'));
+        return view('admin.admin-product.edit', compact('product', 'storages', 'productcategories', 'images', 'company'));
     }
 
-    public function update(ProductRequest $request, $id)
+    public function update(AdminProductEditRequest $request, $id)
     {
         try
         {
@@ -163,7 +164,7 @@ class AdminProductController extends Controller
                     'dongiasanpham'    => $request->dongiasanpham,
                     'khoiluongsanpham' => $request->khoiluongsanpham,
                     'donvitinhsanpham' => $request->donvitinhsanpham,
-                    'mavachsanpham'    => DNS1DFacade::getBarcodeHTML($request->mavachsanpham, 'C39E+', 2, 50, 'black', true),
+                    'mavachsanpham'    => DNS1DFacade::getBarcodeHTML($request->mavachsanpham, 'C128', 2, 50, 'black', true),
                 ];
             }
             else
@@ -181,10 +182,10 @@ class AdminProductController extends Controller
                 ];
             }
 
-            $dataImageUpload = $this->StorageUploadImage($request, 'hinhanhsanpham', 'product/images');
-
-            if(!empty($dataImageUpload))
+            if($request->hasFile('hinhanhsanpham'))
             {
+                $dataImageUpload = $this->StorageUploadImage($request, 'hinhanhsanpham', 'product/images');
+
                 $data['hinhanhsanpham'] = $dataImageUpload['file_path'];
             }
 
@@ -201,8 +202,11 @@ class AdminProductController extends Controller
                 foreach($request->hinhanhchitiet as $fileItem)
                 {
                     $dataImageUploadMultiple = $this->StorageUploadImageMultiple($fileItem, 'product/detail-images');
+
                     Image::create([
+
                         'idsanpham'    => $product->id,
+
                         'dulieuhinh' => $dataImageUploadMultiple['file_path']
                     ]);
                 }
@@ -212,7 +216,9 @@ class AdminProductController extends Controller
             return redirect()->route('admin.product.index');
         }
         catch (\Exception $exception) {
+
             DB::rollBack();
+            
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
     }
