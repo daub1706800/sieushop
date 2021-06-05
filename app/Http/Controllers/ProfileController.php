@@ -152,6 +152,9 @@ class ProfileController extends Controller
         if (!auth()->user()->email_verified_at) {
             return redirect()->route('dasboard.verify');
         }
+        elseif (auth()->user()->idcongty) {
+            return redirect()->route('profile.company.index');
+        }
 
         $fields = $this->field->all();
 

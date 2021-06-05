@@ -12,6 +12,27 @@ class Company extends Model
     protected $table   = 'congty';
     protected $guarded = [];
 
+    public static function getTenant()
+    {
+        $url = request()->getHttpHost();
+
+        $url_array = explode('.', $url);
+
+        $subdomain = $url_array[0];
+
+        if ($subdomain == "www") {
+            $subdomain = $url_array[1];
+        }
+
+        $tenant = Company::where('subdomain', $subdomain)->first();
+
+        if (!$tenant) {
+            return view('frontend.home');
+        }
+
+        dd("Tìm thấy người thuê");
+    }
+
     public function news()
     {
         return $this->hasMany(News::class, 'idcongty', 'id');

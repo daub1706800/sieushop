@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Company;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,9 +15,12 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+
 Auth::routes(['verify' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Company::getTenant();
 
 Route::prefix('/')->group(function () {
     Route::get('/', [
@@ -60,7 +64,6 @@ Route::prefix('/')->group(function () {
         }
     ]);
 });
-
 
 Route::prefix('admin')->group(function () {
     Route::get('/', function () {
