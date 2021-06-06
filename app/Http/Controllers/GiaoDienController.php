@@ -44,6 +44,10 @@ class GiaoDienController extends Controller{
             }
         }
 
+        $header = DB::table('chuyenmuc')
+                    ->orderBy('tenchuyenmuc')
+                    ->get();
+
         $content = DB::table('tintuc')
                     ->where('xuatbantintuc',1)
                     ->orderBy('id', 'desc')
@@ -60,8 +64,46 @@ class GiaoDienController extends Controller{
                                     ->limit(3)
                                     ->get();
 
-        return view('frontend.home', compact('content','sidebar','content_sidebar_video'));
+        return view('frontend.home', compact('sidebar','header','content','content_sidebar_video'));
+    }
+    public function gadget()
+    {
+        $header = DB::table('chuyenmuc')
+        ->orderBy('tenchuyenmuc')
+        ->get();
 
+        $content_sidebar_video = DB::table('video')
+                                    ->orderBy('id', 'desc')
+                                    ->join('tintuc', 'video.idtintuc', '=', 'tintuc.id')
+                                    ->where('tintuc.xuatbantintuc',1)
+                                    ->select('video.*', 'tintuc.tieudetintuc')
+                                    ->limit(3)
+                                    ->get();
+
+        $gadget = DB::table('sanpham')
+                    ->orderBy('id', 'desc')
+                    ->join('congty', 'sanpham.idcongty', '=', 'congty.id')
+                    ->join('loaisanpham', 'sanpham.idloaisanpham', '=', 'loaisanpham.id')
+                    ->select('sanpham.*', 'loaisanpham.tenloaisanpham', 'congty.tencongty')
+                    ->Paginate(10);
+
+        return view('frontend.gadget.gadget', compact('header','content_sidebar_video','gadget'));
     }
     
+    public function contact()
+    {
+        $header = DB::table('chuyenmuc')
+        ->orderBy('tenchuyenmuc')
+        ->get();
+
+        $content_sidebar_video = DB::table('video')
+                                    ->orderBy('id', 'desc')
+                                    ->join('tintuc', 'video.idtintuc', '=', 'tintuc.id')
+                                    ->where('tintuc.xuatbantintuc',1)
+                                    ->select('video.*', 'tintuc.tieudetintuc')
+                                    ->limit(3)
+                                    ->get();
+
+        return view('frontend.contact.contact', compact('header','content_sidebar_video'));
+    }
 }

@@ -35,14 +35,22 @@ Route::prefix('/')->group(function () {
         'as' => 'home',
         'uses' => 'App\Http\Controllers\GiaoDienController@home'
     ]);
-    // phan nay danh cho giao dien
-
+    Route::get('gadget', [
+        'as' => 'gadget',
+        'uses' => 'App\Http\Controllers\GiaoDienController@gadget'
+    ]);
     Route::get('contact', [
         'as' => 'contact',
-        'uses' => function(){
-            return view('frontend.contact.contact');
-        }
+        'uses' => 'App\Http\Controllers\GiaoDienController@contact'
     ]);
+    // phan nay danh cho giao dien
+
+    // Route::get('contact', [
+    //     'as' => 'contact',
+    //     'uses' => function(){
+    //         return view('frontend.contact.contact');
+    //     }
+    // ]);
 
     Route::get('review', [
         'as' => 'review',
@@ -57,12 +65,12 @@ Route::prefix('/')->group(function () {
         }
     ]);
 
-    Route::get('gadget', [
-        'as' => 'gadget',
-        'uses' => function(){
-            return view('frontend.gadget.gadget');
-        }
-    ]);
+    // Route::get('gadget', [
+    //     'as' => 'gadget',
+    //     'uses' => function(){
+    //         return view('frontend.gadget.gadget');
+    //     }
+    // ]);
 
     Route::get('detail', [
         'as' => 'detail',
