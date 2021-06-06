@@ -23,12 +23,19 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Company::getTenant();
 
 Route::prefix('/')->group(function () {
+    // Route::get('/', [
+    //     'as' => 'home',
+    //     'uses' => function (){
+    //         return view('frontend.home');
+    //     }
+    // ]);
+
+    // phan nay danh cho giao dien
     Route::get('/', [
         'as' => 'home',
-        'uses' => function (){
-            return view('frontend.home');
-        }
+        'uses' => 'App\Http\Controllers\GiaoDienController@home'
     ]);
+    // phan nay danh cho giao dien
 
     Route::get('contact', [
         'as' => 'contact',
