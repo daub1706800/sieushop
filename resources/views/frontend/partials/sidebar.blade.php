@@ -3,58 +3,35 @@
 <section class="section first-section">
     <div class="container-fluid">
         <div class="masonry-blog clearfix">
-            <div class="first-slot">
-                <div class="masonry-box post-media">
-                    <img src="TemplateTechBlog/upload/tech_01.jpg" alt="" class="img-fluid">
-                    <div class="shadoweffect">
-                        <div class="shadow-desc">
-                            <div class="blog-meta">
-                                    <span class="bg-orange"><a href="tech-category-01.html"
-                                                               title="">Technology</a></span>
-                                <h4><a href="tech-single.html" title="">Say hello to real handmade office furniture!
-                                        Clean & beautiful design</a></h4>
-                                <small><a href="tech-single.html" title="">24 July, 2017</a></small>
-                                <small><a href="tech-author.html" title="">by Amanda</a></small>
-                            </div><!-- end meta -->
-                        </div><!-- end shadow-desc -->
-                    </div><!-- end shadow -->
-                </div><!-- end post-media -->
-            </div><!-- end first-side -->
 
-            <div class="second-slot">
-                <div class="masonry-box post-media">
-                    <img src="TemplateTechBlog/upload/tech_02.jpg" alt="" class="img-fluid">
-                    <div class="shadoweffect">
-                        <div class="shadow-desc">
-                            <div class="blog-meta">
-                                <span class="bg-orange"><a href="tech-category-01.html" title="">Gadgets</a></span>
-                                <h4><a href="tech-single.html" title="">Do not make mistakes when choosing web
-                                        hosting</a></h4>
-                                <small><a href="tech-single.html" title="">03 July, 2017</a></small>
-                                <small><a href="tech-author.html" title="">by Jessica</a></small>
-                            </div><!-- end meta -->
-                        </div><!-- end shadow-desc -->
-                    </div><!-- end shadow -->
-                </div><!-- end post-media -->
-            </div><!-- end second-side -->
+            
+            
+            @foreach ($sidebar as $key => $row)
+                <?php
+                    if($key==0){
+                        $cl1 = "first-slot";
+                    }
+                    else $cl1 = "second-slot";
+                ?>
+                <div class="<?php echo $cl1 ?>">
+                    <div class="masonry-box post-media">
+                        <img src="{{$row->hinhanhtintuc}}" alt="" class="" width="788px" height="433px" >
+                        <div class="shadoweffect">
+                            <div class="shadow-desc">
+                                <div class="blog-meta">
+                                        <span class="bg-orange"><a href="###########"
+                                                                title="" style="font-family:Arial">{{$row->tenchuyenmuc}}</a></span>
+                                    <h4><a href="########################" title="" style="font-family:Arial">{{$row->tieudetintuc}}</a></h4>
+                                    <small><a href="########" title="" style="font-family:Arial">{{$row->ngaydangtintuc}}</a></small>
+                                    <small><a href="############" title="" style="font-family:Arial">Tác giả: {{$row->hothanhvien}} {{$row->tenthanhvien}}</a></small>
+                                </div><!-- end meta -->
+                            </div><!-- end shadow-desc -->
+                        </div><!-- end shadow -->
+                    </div><!-- end post-media -->
+                </div><!-- end first-side -->
+            @endforeach
+            
 
-            <div class="last-slot">
-                <div class="masonry-box post-media">
-                    <img src="TemplateTechBlog/upload/tech_03.jpg" alt="" class="img-fluid">
-                    <div class="shadoweffect">
-                        <div class="shadow-desc">
-                            <div class="blog-meta">
-                                    <span class="bg-orange"><a href="tech-category-01.html"
-                                                               title="">Technology</a></span>
-                                <h4><a href="tech-single.html" title="">The most reliable Galaxy Note 8 images
-                                        leaked</a></h4>
-                                <small><a href="tech-single.html" title="">01 July, 2017</a></small>
-                                <small><a href="tech-author.html" title="">by Jessica</a></small>
-                            </div><!-- end meta -->
-                        </div><!-- end shadow-desc -->
-                    </div><!-- end shadow -->
-                </div><!-- end post-media -->
-            </div><!-- end second-side -->
         </div><!-- end masonry -->
     </div>
 </section>

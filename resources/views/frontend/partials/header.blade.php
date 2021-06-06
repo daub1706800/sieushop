@@ -23,136 +23,14 @@
                                 <div class="container">
                                     <div class="mega-menu-content clearfix">
                                         <div class="tab">
-                                            <button class="tablinks active" onclick="openCategory(event, 'cat01')">
-                                                Science
-                                            </button>
-                                            <button class="tablinks" onclick="openCategory(event, 'cat02')">
-                                                Technology
-                                            </button>
-                                            <button class="tablinks" onclick="openCategory(event, 'cat03')">
-                                                Social Media
-                                            </button>
-                                            <button class="tablinks" onclick="openCategory(event, 'cat04')">
-                                                Car News
-                                            </button>
-                                            <button class="tablinks" onclick="openCategory(event, 'cat05')">
-                                                Worldwide
-                                            </button>
+                                            @foreach($header as $key => $row)
+                                                <button class="tablinks">
+                                                    {{$row->tenchuyenmuc}}
+                                                </button>
+                                            @endforeach
                                         </div>
 
-                                        <div class="tab-details clearfix">
-                                            <div id="cat01" class="tabcontent active">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                                                        <div class="blog-box">
-                                                            <div class="post-media">
-                                                                <a href="{{route('detail')}}" title="">
-                                                                    <img src="TemplateTechBlog/upload/tech_menu_01.jpg"
-                                                                         alt="" class="img-fluid">
-                                                                    <div class="hovereffect">
-                                                                    </div><!-- end hover -->
-                                                                    <span class="menucat">Science</span>
-                                                                </a>
-                                                            </div><!-- end media -->
-                                                            <div class="blog-meta">
-                                                                <h4><a href="{{route('detail')}}" title="">Top 10+ care
-                                                                        advice for your toenails</a></h4>
-                                                            </div><!-- end meta -->
-                                                        </div><!-- end blog-box -->
-                                                    </div>
-
-                                                </div><!-- end row -->
-                                            </div>
-                                            <div id="cat02" class="tabcontent">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                                                        <div class="blog-box">
-                                                            <div class="post-media">
-                                                                <a href="{{route('detail')}}" title="">
-                                                                    <img src="TemplateTechBlog/upload/tech_menu_05.jpg"
-                                                                         alt="" class="img-fluid">
-                                                                    <div class="hovereffect">
-                                                                    </div><!-- end hover -->
-                                                                    <span class="menucat">Technology</span>
-                                                                </a>
-                                                            </div><!-- end media -->
-                                                            <div class="blog-meta">
-                                                                <h4><a href="{{route('detail')}}" title="">2017 summer
-                                                                        stamp will have design models here</a></h4>
-                                                            </div><!-- end meta -->
-                                                        </div><!-- end blog-box -->
-                                                    </div>
-
-                                                </div><!-- end row -->
-                                            </div>
-                                            <div id="cat03" class="tabcontent">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                                                        <div class="blog-box">
-                                                            <div class="post-media">
-                                                                <a href="{{route('detail')}}" title="">
-                                                                    <img src="TemplateTechBlog/upload/tech_menu_09.jpg"
-                                                                         alt="" class="img-fluid">
-                                                                    <div class="hovereffect">
-                                                                    </div><!-- end hover -->
-                                                                    <span class="menucat">Social Media</span>
-                                                                </a>
-                                                            </div><!-- end media -->
-                                                            <div class="blog-meta">
-                                                                <h4><a href="{{route('detail')}}" title="">I visited
-                                                                        the architects of Istanbul for you</a></h4>
-                                                            </div><!-- end meta -->
-                                                        </div><!-- end blog-box -->
-                                                    </div>
-
-                                                </div><!-- end row -->
-                                            </div>
-                                            <div id="cat04" class="tabcontent">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                                                        <div class="blog-box">
-                                                            <div class="post-media">
-                                                                <a href="{{route('detail')}}" title="">
-                                                                    <img src="TemplateTechBlog/upload/tech_menu_13.jpg"
-                                                                         alt="" class="img-fluid">
-                                                                    <div class="hovereffect">
-                                                                    </div><!-- end hover -->
-                                                                    <span class="menucat">Car News</span>
-                                                                </a>
-                                                            </div><!-- end media -->
-                                                            <div class="blog-meta">
-                                                                <h4><a href="{{route('detail')}}" title="">A collection
-                                                                        of the most beautiful shop designs</a></h4>
-                                                            </div><!-- end meta -->
-                                                        </div><!-- end blog-box -->
-                                                    </div>
-
-                                                </div><!-- end row -->
-                                            </div>
-                                            <div id="cat05" class="tabcontent">
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                                                        <div class="blog-box">
-                                                            <div class="post-media">
-                                                                <a href="{{route('detail')}}" title="">
-                                                                    <img src="TemplateTechBlog/upload/tech_menu_17.jpg"
-                                                                         alt="" class="img-fluid">
-                                                                    <div class="hovereffect">
-                                                                    </div><!-- end hover -->
-                                                                    <span class="menucat">Worldwide</span>
-                                                                </a>
-                                                            </div><!-- end media -->
-                                                            <div class="blog-meta">
-                                                                <h4><a href="{{route('detail')}}" title="">Grilled
-                                                                        vegetable with fish prepared with fish</a>
-                                                                </h4>
-                                                            </div><!-- end meta -->
-                                                        </div><!-- end blog-box -->
-                                                    </div>
-
-                                                </div><!-- end row -->
-                                            </div>
-                                        </div><!-- end tab-details -->
+                                        
                                     </div><!-- end mega-menu-content -->
                                 </div>
                             </li>
