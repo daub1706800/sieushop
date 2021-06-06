@@ -14,7 +14,7 @@
     <link rel="shortcut icon" href="{{ asset('TemplateTechBlog/images/favicon.ico') }}" type="image/x-icon"/>
     <link rel="apple-touch-icon" href="{{ asset('TemplateTechBlog/images/apple-touch-icon.png') }}">
     <!-- Design fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('TemplateTechBlog/css/bootstrap.css') }}" rel="stylesheet">
     <!-- FontAwesome Icons core CSS -->
