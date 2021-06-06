@@ -19,11 +19,10 @@
                         <div class="shadoweffect">
                             <div class="shadow-desc">
                                 <div class="blog-meta">
-                                        <span class="bg-orange"><a href="###########"
-                                                                title="" style="font-family:Arial">{{$row->tenchuyenmuc}}</a></span>
-                                    <h4><a href="########################" title="" style="font-family:Arial">{{$row->tieudetintuc}}</a></h4>
-                                    <small><a href="########" title="" style="font-family:Arial">{{$row->ngaydangtintuc}}</a></small>
-                                    <small><a href="############" title="" style="font-family:Arial">Tác giả: {{$row->hothanhvien}} {{$row->tenthanhvien}}</a></small>
+                                    <span class="bg-orange"><a href="#" title="">{{$row->tenchuyenmuc}}</a></span>
+                                    <h4><a href="#" title="">{{$row->tieudetintuc}}</a></h4>
+                                    <small><a href="#" title="">{{$row->ngaydangtintuc}}</a></small>
+                                    <small><a href="#" title="">Tác giả: {{$row->hothanhvien}} {{$row->tenthanhvien}}</a></small>
                                 </div><!-- end meta -->
                             </div><!-- end shadow-desc -->
                         </div><!-- end shadow -->

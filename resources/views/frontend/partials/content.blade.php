@@ -20,8 +20,7 @@
                     <div class="blog-meta big-meta col-md-8">
                         <h4><a href="{{route('detail')}}" title="">{{$row->tieudetintuc}}</a></h4>
                         <p>{{$row->tomtattintuc}}</p>
-                        <small class="firstsmall"><a class="bg-orange" href="tech-category-01.html"
-                                                    title="">{{$row->tenchuyenmuc}}</a></small>
+                        <small class="firstsmall"><a class="bg-orange" href="tech-category-01.html" title="">{{$row->tenchuyenmuc}}</a></small>
                         <small><a href="{{route('detail')}}" title="">{{$row->ngaydangtintuc}}</a></small>
                         <small><a href="tech-author.html" title="">by {{$row->hothanhvien}} {{$row->tenthanhvien}}</a></small>
                         <!-- <small><a href="{{route('detail')}}" title=""><i class="fa fa-eye"></i>
