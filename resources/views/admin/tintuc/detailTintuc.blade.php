@@ -57,6 +57,16 @@
                             <label>Nội dung chính*</label>
                             <textarea class="form-control summernote-noidung" name="noidungtintuc">{!!$data->noidungtintuc!!}</textarea>
                         </div>
+                        @if($data->xuatbantintuc === 0)
+                            <button style="margin-left: 45%" type="submit" class="btn btn-primary mb-5">Lưu chỉnh sửa</button>
+                        @endif
+                    </form>
+                    
+                    <form action="{{route('tintuc.editloaiTintuc')}}" method="post">
+                        {{csrf_field()}}
+                        <div class="form-group col-md-6">
+                            <input type="hidden" name="id"value="{{$data->id}}">
+                        </div>
                         @if($data->loaitintuc === 1)
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="exampleCheck1" name="tinnoibat" value="1" checked>
@@ -68,9 +78,7 @@
                             <label class="form-check-label" for="exampleCheck1">Tin nổi bật</label>
                         </div>
                         @endif
-                        @if($data->xuatbantintuc === 0)
-                            <button style="margin-left: 45%" type="submit" class="btn btn-primary mb-5">Lưu chỉnh sửa</button>
-                        @endif
+                            <button type="submit" class="btn btn-primary mb-5">Cập nhật tin nổi bật</button>
                     </form>
                 </div>
                 <div class="col-sm-10">

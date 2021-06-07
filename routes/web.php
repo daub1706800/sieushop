@@ -630,6 +630,11 @@ Route::prefix('dasboard')->group(function() {
             'uses' => 'App\Http\Controllers\TintucController@editTintuc',
             'middleware' => 'can:news-update'
         ]);
+        Route::post('/editloai', [
+            'as' => 'tintuc.editloaiTintuc',
+            'uses' => 'App\Http\Controllers\TintucController@editloaiTintuc',
+            'middleware' => 'can:news-update'
+        ]);
         Route::get('/delete-video/{id}', [
             'as' => 'tintuc.deleteVideo',
             'uses' => 'App\Http\Controllers\TintucController@deleteVideo',
