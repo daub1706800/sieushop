@@ -184,17 +184,23 @@ class TintucController extends Controller{
         if($linkhinhanhtieude!=null){
             $data['hinhanhtintuc'] = $linkhinhanhtieude;
         }
+        $data['tieudetintuc'] = $request->tieudetintuc;
+        $data['tomtattintuc'] = $request->tomtattintuc;
+        $data['noidungtintuc'] = $request->noidungtintuc;
+        $data['duyettintuc'] = '0';
+
+        DB::table('tintuc')->where('id',$request->id)->update($data);
+        return redirect()->route('tintuc.Tintuc');
+    }
+
+    public function editloaiTintuc(Request $request){
+        $data = array();
         if($request->tinnoibat!=null){
             $data['loaitintuc'] = $request->tinnoibat;
         }
         else{
             $data['loaitintuc'] = '0';
         }
-        $data['tieudetintuc'] = $request->tieudetintuc;
-        $data['tomtattintuc'] = $request->tomtattintuc;
-        $data['noidungtintuc'] = $request->noidungtintuc;
-        $data['duyettintuc'] = '0';
-
         DB::table('tintuc')->where('id',$request->id)->update($data);
         return redirect()->route('tintuc.Tintuc');
     }
