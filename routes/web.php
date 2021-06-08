@@ -268,6 +268,11 @@ Route::prefix('admin')->group(function () {
             'uses' => 'App\Http\Controllers\NewsController@log',
             'middleware' => 'can:is-admin'
         ]);
+        Route::get('/change-status', [
+            'as'   => 'news.change-status',
+            'uses' => 'App\Http\Controllers\NewsController@change_status',
+            'middleware' => 'can:is-admin'
+        ]);
     });
 
     /* Module Kho */

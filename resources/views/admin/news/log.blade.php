@@ -19,10 +19,15 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 mb-3">
-                    <h4><b>{{ $company->tencongty }}</b></h4>
+                    <a href="{{ route('news.index') }}" class="btn btn-primary">Danh sách tin tức</a>
                 </div>
                 <div class="col-md-12 mb-3">
-                    <a href="{{ route('news.index') }}" class="btn btn-primary">Danh sách tin tức</a>
+                    <div class="d-flex justify-content-center">
+                        <h4><b>{{ $company->tencongty }}</b></h4>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <h4>Bản tin: <b>{{ $news->tieudetintuc }}</b></h4>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <div class="card">

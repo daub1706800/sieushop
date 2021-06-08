@@ -82,19 +82,28 @@ class NewsController extends Controller
         }
 
         $tintuc = $this->news->create($dataNews);
-
-        // Insert data to table Video
+        
         if($request->hasFile('videotintuc'))
         {
-            foreach($request->videotintuc as $fileItem)
-            {
-                $dataVideo = $this->StorageUploadImageMultiple($fileItem, 'news/video');
-                Video::create([
-                    'idtintuc'    => $tintuc->id,
-                    'dulieuvideo' => $dataVideo['file_path']
-                ]);
-            }
+            $dataVideoUpload = $this->StorageUploadImage($request, 'videotintuc', 'news/video');
+
+            $this->video->create([
+                'idtintuc'    => $tintuc->id,
+                'dulieuvideo' => $dataVideoUpload['file_path']
+            ]);
         }
+        // Insert data to table Video
+        // if($request->hasFile('videotintuc'))
+        // {
+        //     foreach($request->videotintuc as $fileItem)
+        //     {
+        //         $dataVideo = $this->StorageUploadImageMultiple($fileItem, 'news/video');
+                // Video::create([
+                //     'idtintuc'    => $tintuc->id,
+                //     'dulieuvideo' => $dataVideo['file_path']
+                // ]);
+        //     }
+        // }
 
         return redirect()->route('news.index');
     }
@@ -131,23 +140,35 @@ class NewsController extends Controller
 
         $this->news->find($id)->update($dataNews);
 
-        $tintuc = $this->news->find($id);
-
-        // Insert data to table Video
         if($request->hasFile('videotintuc'))
         {
-            // Delete data from table Video before Update
+            $tintuc = $this->news->find($id);
+
             $this->video->where('idtintuc', $id)->delete();
 
-            foreach($request->videotintuc as $fileItem)
-            {
-                $dataVideo = $this->StorageUploadImageMultiple($fileItem, 'news/video');
-                Video::create([
-                    'idtintuc'    => $tintuc->id,
-                    'dulieuvideo' => $dataVideo['file_path']
-                ]);
-            }
+            $dataVideoUpload = $this->StorageUploadImage($request, 'videotintuc', 'news/video');
+
+            $this->video->create([
+                'idtintuc'    => $tintuc->id,
+                'dulieuvideo' => $dataVideoUpload['file_path']
+            ]);
         }
+
+        // // Insert data to table Video
+        // if($request->hasFile('videotintuc'))
+        // {
+        //     // Delete data from table Video before Update
+        //     $this->video->where('idtintuc', $id)->delete();
+
+        //     foreach($request->videotintuc as $fileItem)
+        //     {
+        //         $dataVideo = $this->StorageUploadImageMultiple($fileItem, 'news/video');
+        //         Video::create([
+        //             'idtintuc'    => $tintuc->id,
+        //             'dulieuvideo' => $dataVideo['file_path']
+        //         ]);
+        //     }
+        // }
 
         return redirect()->route('news.index');
     }
@@ -287,10 +308,31 @@ class NewsController extends Controller
 
     public function log($id)
     {
+        $news = $this->news->find($id);
+
         $newslogs = $this->newslog->where('idtintuc', $id)->get();
 
         $company = $this->news->find($id)->company;
 
-        return view('admin.news.log', compact('newslogs', 'company'));
+        return view('admin.news.log', compact('newslogs', 'company', 'news'));
+    }
+
+    public function change_status(Request $request)
+    {
+        if ($request->status == 1) {
+            $this->news->find($request->id)->update([
+                'loaitintuc' => 0
+            ]);
+            
+            return response()->json($status=0);
+        }
+        else
+        {
+            $this->news->find($request->id)->update([
+                'loaitintuc' => 1
+            ]);
+
+            return response()->json($status=1);
+        }
     }
 }
