@@ -75,12 +75,9 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-6">
-                                <label>Video *</label>
-                                <input type="file" class="form-control-file @error('videotintuc.*') is-invalid @enderror @error('videotintuc') is-invalid @enderror"
-                                        name="videotintuc[]" multiple>
-                                @error('videotintuc.*')
-                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                                @enderror
+                                <label>Video</label>
+                                <input type="file" class="form-control-file @error('videotintuc') is-invalid @enderror"
+                                        name="videotintuc">
                                 @error('videotintuc')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror
@@ -110,11 +107,12 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="loaitintuc" value="1">
+                            <label>Tin nổi bật</label>
+                        </div>
                         <div class="text-center">
-                            <div class="form-group">
-                                <input type="checkbox" name="loaitintuc" value="1">
-                                <label>Tin nổi bật</label>
-                            </div>
+                            
                             <button type="submit" class="btn btn-primary mb-5">Lưu</button>
                         </div>
                     </form>

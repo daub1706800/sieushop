@@ -11,8 +11,6 @@
 @section('content')
 @endsection
 
-
-
 <div id="wrapper">
     <header class="tech-header header">
         <div class="container-fluid">

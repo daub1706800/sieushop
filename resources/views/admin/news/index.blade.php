@@ -28,12 +28,12 @@
                                 <thead>
                                 <tr>
                                     <th scope="col">ID</th>
-                                    <th scope="col">Người đăng</th>
-                                    <th scope="col">Chuyên mục</th>
                                     <th scope="col">Tiêu đề</th>
-                                    <th scope="col">Tin nổi bật</th>
+                                    <th scope="col">Chuyên mục</th>
+                                    <th scope="col">Người đăng</th>
                                     <th scope="col">Ngày đăng</th>
                                     <th scope="col">Công ty</th>
+                                    <th scope="col">Tin nổi bật</th>
                                     <th scope="col">Trạng thái</th>
                                     <th scope="col"></th>
                                 </tr>
@@ -42,28 +42,30 @@
                                     @foreach($news as $key => $item)
                                     <tr>
                                         <th scope="row">{{ $item->id }}</th>
-                                        <td>{{ $item->profile->tenthanhvien .' '. $item->profile->hothanhvien }}</td>
-                                        <td>{{ $item->category->tenchuyenmuc }}</td>
                                         <td>
                                             <a href="" class="tieudetintuc"
                                                 data-toggle="modal" data-target="#exampleModal"
                                                 data-id="{{ $item->id }}">{{ $item->tieudetintuc }}</a>
                                         </td>
-                                        <td>{{ $item->loaitintuc == 1 ? "Nổi bật" : "" }}</td>
+                                        <td>{{ $item->category->tenchuyenmuc }}</td>
+                                        <td>{{ $item->profile->tenthanhvien .' '. $item->profile->hothanhvien }}</td>
                                         <td>{{ $item->ngaydangtintuc }}</td>
                                         <td>{{ $item->company->tencongty }}</td>
+                                        <td class="text-center">
+                                            <input type="checkbox" id="tinnoibat" data-id="{{ $item->id }}" value="{{ $item->loaitintuc }}" {{ $item->loaitintuc == 1 ? "checked" : "" }}>
+                                        </td>
                                         <td style="width:120px;">
                                             @if ($item->duyettintuc == 0 && $item->xuatbantintuc == 0 && $item->lydogo == 0)
-                                            <p>Chờ duyệt</p>
+                                            <p class="text-warning">{{ __('Chờ duyệt') }}</p>
                                             @endif
                                             @if ($item->xuatbantintuc == 0 && $item->duyettintuc == 1)
-                                            <p>Chờ xuất bản</p>
+                                            <p class="text-warning">{{ __('Chờ xuất bản') }}</p>
                                             @endif
                                             @if ($item->xuatbantintuc == 1 && $item->lydogo == 0)
-                                            <p>Đã xuất bản</p>
+                                            <p class="text-success">{{ __('Đã xuất bản') }}</p>
                                             @endif
                                             @if ($item->xuatbantintuc == 1 && $item->lydogo == 1)
-                                            <p>Được thu hồi</p>
+                                            <p class="text-danger">{{ __('Được thu hồi') }}</p>
                                             @endif
                                             @if (!$item->newshistory->isEmpty())
                                                 <a href="" class="viewhistory"
@@ -167,6 +169,7 @@
 @endsection
 
 @section('js')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function(){
             $('.item-news').on('click', function() {
@@ -210,6 +213,45 @@
                         // console.log(data);
                         $('.tieudeNews').text(data.news);
                         $('.show-history').html(data.output);
+                    }
+                });
+            });
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1000,
+                timerProgressBar: false,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+
+            $(document).on('click', '#tinnoibat', function() {
+                var id = $(this).data('id');
+                if ($(this).val() == 1) {
+                    var status = 1;
+                }
+                else
+                {
+                    var status = 0;
+                }
+                $.ajax({
+                    url : "{{ route('news.change-status') }}",
+                    type: "get",
+                    data: {
+                        "id":id,
+                        "status":status
+                    },
+                    success:function(data) {
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Signed in successfully'
+                        });
+
+                        $('#tinnoibat').val(data);
                     }
                 });
             });
