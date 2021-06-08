@@ -25,7 +25,7 @@
                                         <div class="tab">
                                             @foreach($header as $key => $row)
                                                 <button class="tablinks">
-                                                    {{$row->tenchuyenmuc}}
+                                                    <a href="{{route('tinchuyenmuc',['id'=>$row->id])}}">{{$row->tenchuyenmuc}}</a>
                                                 </button>
                                             @endforeach
                                         </div>

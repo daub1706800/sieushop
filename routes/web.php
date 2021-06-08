@@ -43,6 +43,14 @@ Route::prefix('/')->group(function () {
         'as' => 'contact',
         'uses' => 'App\Http\Controllers\GiaoDienController@contact'
     ]);
+    Route::get('detail', [
+        'as' => 'detail',
+        'uses' => 'App\Http\Controllers\GiaoDienController@detail'
+    ]);
+    Route::get('tinchuyenmuc/{id}', [
+        'as' => 'tinchuyenmuc',
+        'uses' => 'App\Http\Controllers\GiaoDienController@tinchuyenmuc'
+    ]);
     // phan nay danh cho giao dien
 
     // Route::get('contact', [
@@ -72,12 +80,12 @@ Route::prefix('/')->group(function () {
     //     }
     // ]);
 
-    Route::get('detail', [
-        'as' => 'detail',
-        'uses' => function(){
-            return view('frontend.detail.detail');
-        }
-    ]);
+    // Route::get('detail', [
+    //     'as' => 'detail',
+    //     'uses' => function(){
+    //         return view('frontend.detail.detail');
+    //     }
+    // ]);
 });
 
 Route::prefix('admin')->group(function () {

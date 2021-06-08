@@ -31,7 +31,6 @@
                 <hr class="invis">
             </div><!-- end blog-list -->
         @endforeach
-        {{$content->links()}}
             <!-- <div class="row">
                 <div class="col-lg-10 offset-lg-1">
                     <div class="banner-spot clearfix">
