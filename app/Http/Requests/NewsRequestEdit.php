@@ -26,7 +26,7 @@ class NewsRequestEdit extends FormRequest
         return [
             'idchuyenmuc' => 'required|exists:chuyenmuc,id',
             'idcongty' => 'required|exists:congty,id',
-            'hinhanhtintuc' => 'nullable|mimes:jpeg,jpg,png|max:2000',
+            'hinhanhtintuc' => 'required|mimes:jpeg,jpg,png|max:5000|dimensions:min_width=788, min_height=443',
             'videotintuc' => 'bail|nullable|mimes:mp4|max:20000',
             // 'videotintuc.*' => 'mimes:mp4|max:20000',
             'tieudetintuc' => 'required|min:10|max:100',
@@ -43,7 +43,8 @@ class NewsRequestEdit extends FormRequest
             'idcongty.required' => 'Công ty không được để trống',
             'idcongty.exists' => 'Chuyên mục không tồn tại',
             'hinhanhtintuc.mimes' => 'Hình ảnh phải là .jpg, .jpeg, .png',
-            'hinhanhtintuc.max' => 'Kích thước hình ảnh không vượt quá 2MB',
+            'hinhanhtintuc.max' => 'Kích thước hình ảnh không vượt quá 5MB',
+            'hinhanhtintuc.dimensions' => 'Độ phân giải tối thiểu 788 x 443',
             'videotintuc.mimes' => 'Video phải là .avi, .mp4, .mpeg, .mov',
             'videotintuc.max' => 'Kích thước video không vượt quá 20MB',
             // 'videotintuc.*.mimes' => 'Video phải là .avi, .mp4, .mpeg, .mov',

@@ -206,7 +206,7 @@ class TintucController extends Controller{
             $data['loaitintuc'] = '0';
         }
         DB::table('tintuc')->where('id',$request->id)->update($data);
-        return redirect()->route('tintuc.Tintuc');
+        return back();
     }
 
     public function deleteVideo($id)
