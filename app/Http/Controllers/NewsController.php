@@ -260,6 +260,7 @@ class NewsController extends Controller
         ]);
 
         $this->newshistory->create([
+            'idtaikhoan' => auth()->id(),
             'idtintuc' => $id,
             'lydogo' => $request->lydogo,
             'thoigian' => Carbon::now()->format('Y-m-d H:i:s')
@@ -334,5 +335,10 @@ class NewsController extends Controller
 
             return response()->json($status=1);
         }
+    }
+
+    public function delete_video(Request $request)
+    {
+        $this->video->where('idtintuc', $request->id)->delete();
     }
 }

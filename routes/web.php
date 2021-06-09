@@ -281,6 +281,11 @@ Route::prefix('admin')->group(function () {
             'uses' => 'App\Http\Controllers\NewsController@change_status',
             'middleware' => 'can:is-admin'
         ]);
+        Route::get('/delete-video', [
+            'as'   => 'news.delete-video',
+            'uses' => 'App\Http\Controllers\NewsController@delete_video',
+            'middleware' => 'can:is-admin'
+        ]);
     });
 
     /* Module Kho */

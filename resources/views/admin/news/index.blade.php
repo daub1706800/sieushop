@@ -58,10 +58,10 @@
                                             @if ($item->duyettintuc == 0 && $item->xuatbantintuc == 0 && $item->lydogo == 0)
                                             <p class="text-warning">{{ __('Chờ duyệt') }}</p>
                                             @endif
-                                            @if ($item->xuatbantintuc == 0 && $item->duyettintuc == 1)
+                                            @if ($item->duyettintuc == 1 && $item->xuatbantintuc == 0 && $item->lydogo == 0)
                                             <p class="text-warning">{{ __('Chờ xuất bản') }}</p>
                                             @endif
-                                            @if ($item->xuatbantintuc == 1 && $item->lydogo == 0)
+                                            @if ($item->duyettintuc == 1 && $item->xuatbantintuc == 1 && $item->lydogo == 0)
                                             <p class="text-success">{{ __('Đã xuất bản') }}</p>
                                             @endif
                                             @if ($item->xuatbantintuc == 1 && $item->lydogo == 1)
@@ -248,7 +248,7 @@
                     success:function(data) {
                         Toast.fire({
                             icon: 'success',
-                            title: 'Signed in successfully'
+                            title: 'Chuyển đổi thành công'
                         });
 
                         $('#tinnoibat').val(data);

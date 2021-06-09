@@ -85,7 +85,7 @@
                                     <source src="{{ $video->dulieuvideo }}" type="video/mp4">
                                     Trình duyệt của bạn không hỗ trợ thẻ video trong HTML5.
                                 </video>
-                                <a href="">X</a>
+                                <button type="button" style="margin-bottom: 30px;" data-id="{{ $news->id }}" class="btn btn-danger xoa-video">X</button>
                                 @endforeach
                             </div>
                             <div class="form-group col-md-12">
@@ -121,7 +121,7 @@
                     </form>
 
                     <div class="col-md-6">
-                        @if ($news->xuatbantintuc == 1)
+                        @if ($news->xuatbantintuc == 1 || $news->duyettintuc == 1)
                         <form action="{{ route('news.remove', ['id' => $news->id]) }}">
                             <div class="d-flex justify-content-start">
                                 <div class="form-group">
@@ -173,12 +173,12 @@
                                 <div class="d-flex align-items-center" style="margin-top: 16px">
                                     <button type="submit" class="btn btn-primary btn-lydo">Xuất bản</button>
                                 </div>
-                                @error('noidungdanhgia')
+                            </div>
+                            @error('noidungdanhgia')
                             <div class="d-flex justify-content-start">
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                             </div>
                             @enderror
-                            </div>
                         </form>
                         @endif
                     </div>
@@ -256,6 +256,20 @@
                 placeholder : 'Chọn công ty',
                 theme: "classic",
                 width: "100%"
+            });
+        });
+
+        $(document).on('click', '.xoa-video', function() {
+            var id = $(this).data('id');
+            $.ajax({
+                url : "{{ route('news.delete-video') }}",
+                type: "get",
+                data: {
+                    "id":id
+                },
+                success:function(data) {
+                    location.reload();
+                }
             });
         });
     });

@@ -108,14 +108,14 @@
                         <p class="nguoitao pl-2"></p>
                     </div>
                     <div class="row">
-                        <p><b>Thông tin:</b></p>
-                        <p class="thongtinsanpham pl-2"></p>
-                    </div>
-                    <div class="row">
                         <p><b>Hình ảnh:</b></p>
                         <img src="" style="width:200px; height: 200px" class="hinhanhsanpham pl-2">
                     </div>
                     <div class="row mt-3">
+                        <p><b>Thông tin:</b></p>
+                        <p class="thongtinsanpham pl-2"></p>
+                    </div>
+                    <div class="row">
                         <p><b>Xuất xứ:</b></p>
                         <p class="xuatxu pl-2"></p>
                     </div>
@@ -142,6 +142,10 @@
                     <div class="row">
                         <p><b>Mã vạch:</b></p>
                         <p class="mavachsanpham pl-2"></p>
+                    </div>
+                    <hr>
+                    <div class="text-center">
+                        <h4><b>Giai đoạn</b></h4>
                     </div>
                 </div>
             </div>
