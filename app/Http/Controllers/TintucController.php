@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use DB;
 use Session;
 use App\Http\Requests;
+use App\Http\Requests\NewsRequest;
+use App\Http\Requests\NewsRequestEdit;
 use Illuminate\Support\Facades\Redirect;
 Use Alert;
 use App\Models\Category;
@@ -102,11 +104,13 @@ class TintucController extends Controller{
 
     public function addTintuc()
     {
-        $data = DB::table('chuyenmuc')->get();
+        $data = DB::table('chuyenmuc')
+                ->orderBy('tenchuyenmuc')
+                ->get();
         return view('admin.tintuc.addTintuc', compact('data'));
     }
 
-    public function doaddTintuc(Request $request)
+    public function doaddTintuc(NewsRequest $request)
     {
         $dataImageUpload = $this->StorageUploadImage($request, 'hinhanhtintuc', 'news/image');
 
@@ -129,14 +133,14 @@ class TintucController extends Controller{
 
         if($request->hasFile('dulieuvideo'))
         {
-            foreach($request->dulieuvideo as $fileItem)
-            {
-                $dataVideo = $this->StorageUploadImageMultiple($fileItem, 'news/video');
+            // foreach($request->dulieuvideo as $fileItem)
+            // {
+                $dataVideo = $this->StorageUploadImage($request,'dulieuvideo', 'news/video');
                 Video::create([
                     'idtintuc'    => $id1,
                     'dulieuvideo' => $dataVideo['file_path']
                 ]);
-            }
+            // }
         }
 
         return back();
@@ -165,7 +169,7 @@ class TintucController extends Controller{
         return view('admin.tintuc.viewTintuc', compact('data','data2','data3'));
     }
 
-    public function editTintuc(Request $request)
+    public function editTintuc(NewsRequestEdit   $request)
     {
         $linkhinhanhtieude = null;
         if($request->hasFile('hinhanhtieude')){
@@ -223,14 +227,14 @@ class TintucController extends Controller{
         DB::table('tintuc')->where('id',$id)->update($data);
         $mang3 = array();
         if ($request->hasfile('dulieuvideo')) {
-            foreach ($request->file('dulieuvideo') as $file) {
-                $dulieuvideo = $file->getClientOriginalName(); //lay ten file
-                $file->move(public_path().'/video', $dulieuvideo);// up hinh len server
+            // foreach ($request->file('dulieuvideo') as $file) {
+                $dulieuvideo = $request->file('dulieuvideo')->getClientOriginalName(); //lay ten file
+                $request->file('dulieuvideo')->move(public_path().'/video', $dulieuvideo);// up hinh len server
                 $linkvideo = '/video'.'/'.$dulieuvideo;// gan lai duong link cho anh
                 $mang3['dulieuvideo'] = $linkvideo;
                 $mang3['idtintuc'] = $id;
                 DB::table('video')->insert($mang3);
-            }
+            // }
         }
         return back();
     }

@@ -29,8 +29,8 @@ class NewsRequestEdit extends FormRequest
             'hinhanhtintuc' => 'nullable|mimes:jpeg,jpg,png|max:2000',
             'videotintuc' => 'bail|nullable|mimes:mp4|max:20000',
             // 'videotintuc.*' => 'mimes:mp4|max:20000',
-            'tieudetintuc' => 'required|min:10|max:255',
-            'tomtattintuc' => 'required|min:10|max:1000',
+            'tieudetintuc' => 'required|min:10|max:100',
+            'tomtattintuc' => 'required|min:10|max:230',
             'noidungtintuc' => 'required|min:10',
         ];
     }
@@ -50,10 +50,10 @@ class NewsRequestEdit extends FormRequest
             // 'videotintuc.*.max' => 'Kích thước video không vượt quá 20MB',
             'tieudetintuc.required' => 'Tiêu đề không được để trống',
             'tieudetintuc.min' => 'Tiêu đề không được ít hơn 10 ký tự',
-            'tieudetintuc.max' => 'Tiêu đề không được vượt quá 255 ký tự',
+            'tieudetintuc.max' => 'Tiêu đề không được vượt quá 100 ký tự',
             'tomtattintuc.required' => 'Tóm tắt không được để trống',
             'tomtattintuc.min' => 'Tóm tắt không được ít hơn 10 ký tự',
-            'tomtattintuc.max' => 'Tóm tắt không được vượt quá 1000 ký tự',
+            'tomtattintuc.max' => 'Tóm tắt không được vượt quá 230 ký tự',
             'noidungtintuc.required' => 'Nội dung không được để trống',
             'noidungtintuc.min' => 'Nội dung không được ít hơn 10 ký tự',
         ];

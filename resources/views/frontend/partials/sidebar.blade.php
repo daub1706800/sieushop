@@ -15,7 +15,7 @@
                 ?>
                 <div class="<?php echo $cl1 ?>">
                     <div class="masonry-box post-media">
-                        <img src="{{$row->hinhanhtintuc}}" alt="" class="" height="443px">
+                        <img src="{{$row->hinhanhtintuc}}" alt="" class="" height="443px" style="object-fit:cover">
                         <div class="shadoweffect">
                             <div class="shadow-desc">
                                 <div class="blog-meta">

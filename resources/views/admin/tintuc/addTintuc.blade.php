@@ -22,6 +22,15 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <form action="{{ route('tintuc.doaddTintuc') }}" method="post" enctype="multipart/form-data">
                         {{csrf_field()}}
                         <div class="row">
@@ -45,20 +54,20 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label>Hình ảnh tiêu đề *</label>
-                                <input type="file" class="form-control-file" name="hinhanhtintuc" required>
+                                <input type="file" class="form-control-file" name="hinhanhtintuc" >
                             </div>
                             <div class="form-group col-md-6">
-                                <label>Video tin tức *</label>
-                                <input type="file" class="form-control-file" name="dulieuvideo[]" multiple>
+                                <label>Video tin tức</label>
+                                <input type="file" class="form-control-file" name="dulieuvideo">
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Tiêu đề tin tức *</label>
-                            <input type="text" class="form-control" name="tieudetintuc" placeholder="" required>
+                            <input type="text" class="form-control" name="tieudetintuc" placeholder="" value="{{old('tieudetintuc')}}">
                         </div>
                         <div class="form-group">
                             <label>Tóm tắt tin tức *</label>
-                            <textarea class="form-control summernote-tomtat" name="tomtattintuc" ></textarea>
+                            <textarea class="form-control summernote-tomtat" name="tomtattintuc">{{old('tomtattintuc')}}</textarea>
                         </div>
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="exampleCheck1" name="tinnoibat" value="1">
@@ -66,7 +75,7 @@
                         </div>
                         <div class="form-group">
                             <label>Nội dung chính*</label>
-                            <textarea class="form-control summernote-noidung" name="noidungtintuc" ></textarea>
+                            <textarea class="form-control summernote-noidung" name="noidungtintuc" >{{old('noidungtintuc')}}</textarea>
                         </div>
                         <button style="margin-left: 45%" type="submit" class="btn btn-primary mb-5">Lưu</button>
                     </form>

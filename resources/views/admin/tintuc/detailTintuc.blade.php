@@ -22,6 +22,15 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <form action="{{route('tintuc.editTintuc')}}" method="post" enctype="multipart/form-data">
                         {{csrf_field()}}
                         <div class="row">
@@ -51,7 +60,7 @@
                         </div>
                         <div class="form-group">
                             <label>Tóm tắt tin tức *</label>
-                            <textarea class="form-control summernote-tomtat" name="tomtattintuc">{!!$data->noidungtintuc!!}</textarea>
+                            <textarea class="form-control summernote-tomtat" name="tomtattintuc">{!!$data->tomtattintuc!!}</textarea>
                         </div>
                         <div class="form-group">
                             <label>Nội dung chính*</label>
@@ -118,7 +127,7 @@
                                         <input type="hidden" name="idtintuc" value="{{$data->id}}">
                                         <div class="form-group">
                                             <label>Video</label>
-                                            <input type="file" class="form-control" name="dulieuvideo[]" multiple>
+                                            <input type="file" class="form-control" name="dulieuvideo">
                                         </div>
                                         <button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Trở về</button>
                                         <button type="submit" class="btn btn-primary float-right">Thêm</button>
