@@ -25,7 +25,7 @@ class CategoryRequest extends FormRequest
     {
         return [
             'tenchuyenmuc' => 'bail|required|max:255',
-            'idlinhvuc' => 'bail|required|exists:chuyenmuc,id',
+            'idlinhvuc' => 'bail|required|exists:linhvuc,id',
         ];
     }
 
