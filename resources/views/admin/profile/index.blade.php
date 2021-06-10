@@ -23,7 +23,8 @@
                     <div class="profile-img">
                         <img style="width: 200px; height: 200px;" src="{{ asset(session()->get('info')['image']) }}" alt=""/>
                         <form id="changeform" method="post" enctype="multipart/form-data">
-                            <input type="hidden" id="csrf" value="{{csrf_token()}}">
+                            {{-- <input type="hidden" id="csrf" value="{{csrf_token()}}"> --}}
+                            @csrf
                             <div class="file btn btn-lg btn-primary">
                                 Change Photo
                                 <input type="file" name="file" id="changeavatar" data-url="{{route('profile.change', ['id' => $profile->id])}}"/>
@@ -218,15 +219,9 @@
                 autoclose: true,
             };
             date_input.datepicker(options);
-        })
-    </script>
-    <script>
+        });
+
         $(document).ready(function (){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('#csrf').val()
-                }
-            });
             $('#changeavatar').on('change', function (){
                 var url = $('#changeavatar').data('url');
                 $.ajax({
@@ -237,7 +232,6 @@
                     contentType: false,
                     success:function (data)
                     {
-                        // console.log(data)
                         if (data.code === 200)
                         {
                             location.reload();

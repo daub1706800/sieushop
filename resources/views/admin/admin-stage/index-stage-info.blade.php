@@ -16,10 +16,10 @@
             <div class="row">
                 <div class="col-md-12 row mb-3">
                     <div class="col-md-6">
-                        <a href="{{ route('stage.index', ['product_id' => $product_id]) }}" class="btn btn-primary">Danh sách giai đoạn</a>
+                        <a href="{{ route('admin.stage.index', ['product_id' => $product_id]) }}" class="btn btn-primary">Danh sách giai đoạn</a>
                     </div>
                     <div class="col-md-6">
-                        <a href="{{ route('stage-info.add',  ['stage_id' => $stage->id, 'product_id' => $product_id]) }}" class="btn btn-primary float-right">Thêm công việc</a>
+                        <a href="{{ route('admin.stage-info.add',  ['stage_id' => $stage->id, 'product_id' => $product_id]) }}" class="btn btn-primary float-right">Thêm công việc</a>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -43,7 +43,7 @@
                                     <tr>
                                         <th scope="row">{{ $stageInfo['id'] }}</th>
                                         <td>
-                                            <a href="{{ route('stage-info.edit', ['stageInfo_id' => $stageInfo['id'], 'stage_id' => $stage->id, 'product_id' => $product_id]) }}">
+                                            <a href="{{ route('admin.stage-info.edit', ['stageInfo_id' => $stageInfo['id'], 'stage_id' => $stage->id, 'product_id' => $product_id]) }}">
                                                 {{ $stageInfo['tencongviec'] }}</a>
                                         </td>
                                         <td>{!! $stageInfo['motacongviec'] !!}</td>
@@ -52,13 +52,9 @@
                                         <td>{{ $stageInfo['thoigiandukien'] }} ngày</td>
                                         <td>{{ $stageInfo['check'] . ' ' . $stageInfo['trehan'] }} ngày</td>
                                         <td>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('stage-info.delete', ['stageInfo_id' => $stageInfo['id'], 'stage_id' => $stage->id, 'product_id' => $product_id]) }}">Xóa</a>
-                                                </div>
-                                            </div>
+                                            <a class="btn btn-danger" href="{{ route('admin.stage-info.delete', ['stageInfo_id' => $stageInfo['id'], 'stage_id' => $stage->id, 'product_id' => $product_id]) }}">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                     @endforeach

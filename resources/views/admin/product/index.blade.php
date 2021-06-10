@@ -92,55 +92,7 @@
                 </div>
             </div>
             <div class="modal-body">
-                <div class="col-md-12">
-                    <div class="row">
-                        <p><b>Công ty:</b></p>
-                        <p class="congty pl-2"></p>
-                    </div>
-                    <div class="row">
-                        <p><b>Kho:</b></p>
-                        <p class="tenkho pl-2"></p>
-                    </div>
-                    <div class="row">
-                        <p><b>Người tạo:</b></p>
-                        <p class="nguoitao pl-2"></p>
-                    </div>
-                    <div class="row">
-                        <p><b>Thông tin:</b></p>
-                        <p class="thongtinsanpham pl-2"></p>
-                    </div>
-                    <div class="row">
-                        <p><b>Hình ảnh:</b></p>
-                        <img src="" style="width:200px; height: 200px" class="hinhanhsanpham pl-2">
-                    </div>
-                    <div class="row mt-3">
-                        <p><b>Xuất xứ:</b></p>
-                        <p class="xuatxu pl-2"></p>
-                    </div>
-                    <div class="row">
-                        <p><b>Loại sản phẩm:</b></p>
-                        <p class="loaisanpham pl-2"></p>
-                    </div>
-                    <div class="row">
-                        <p><b>Chủng loại:</b></p>
-                        <p class="chungloaisanpham pl-2"></p>
-                    </div>
-                    <div class="row">
-                        <p><b>Đơn giá:</b></p>
-                        <p class="dongiasanpham pl-2"></p>
-                    </div>
-                    <div class="row">
-                        <p><b>Khối lượng:</b></p>
-                        <p class="khoiluongsanpham pl-2"></p>
-                    </div>
-                    <div class="row">
-                        <p><b>Đơn vị tính:</b></p>
-                        <p class="donvitinhsanpham pl-2"></p>
-                    </div>
-                    <div class="row">
-                        <p><b>Mã vạch:</b></p>
-                        <p class="mavachsanpham pl-2"></p>
-                    </div>
+                <div class="col-md-12" id="view-product">
                 </div>
             </div>
             <div class="modal-footer">
@@ -166,21 +118,9 @@
                         "_token": "{{ csrf_token() }}"
                     },
                     success:function(data) {
-                        // console.log(data);
-                        $('.tensanpham').text(data.product.tensanpham);
+                        $('.tensanpham').text(data.tensanpham);
                         $('.ngaytao').text('Tạo ngày ' + data.date);
-                        $('.congty').text(data.company);
-                        $('.tenkho').text(data.storage);
-                        $('.nguoitao').text(data.profile);
-                        $('.thongtinsanpham').html(data.product.thongtinsanpham);
-                        $('.hinhanhsanpham').attr('src',data.product.hinhanhsanpham);
-                        $('.xuatxu').text(data.product.xuatxu);
-                        $('.loaisanpham').text(data.productcategory);
-                        $('.chungloaisanpham').text(data.product.chungloaisanpham);
-                        $('.dongiasanpham').text(data.product.dongiasanpham + ' (VNĐ)');
-                        $('.khoiluongsanpham').text(data.product.khoiluongsanpham + ' (Kilôgram)');
-                        $('.donvitinhsanpham').text(data.product.donvitinhsanpham);
-                        $('.mavachsanpham').html(data.product.mavachsanpham);
+                        $('#view-product').html(data.output);
                     }
                 });
             });

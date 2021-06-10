@@ -115,9 +115,11 @@
                             <input type="checkbox" name="loaitintuc" value="1" {{ $news->loaitintuc == 1 ? "checked" : "" }}>
                             <label>Tin nổi bật</label>
                         </div>
+                        @if ($news->xuatbantintuc != 1)
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary mb-5">Lưu chỉnh sửa</button>
-                        </div>
+                        </div>  
+                        @endif
                     </form>
 
                     <div class="col-md-6">

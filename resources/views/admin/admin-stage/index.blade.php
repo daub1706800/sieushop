@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-md-12 row mb-3">
                     <div class="col-md-6">
-                        <a href="{{ route('product.index') }}" class="btn btn-primary">Danh sách sản phẩm</a>
+                        <a href="{{ route('admin.product.index') }}" class="btn btn-primary">Danh sách sản phẩm</a>
                     </div>
                     <div class="col-md-6">
                         <a id="btn-modal-click" href="" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal"
@@ -53,7 +53,7 @@
                                     @foreach($stages as $stage)
                                     <tr>
                                         <th scope="row">{{ $stage->id }}</th>
-                                        <td><a href="{{ route('stage-info.index', ['stage_id' => $stage->id, 'product_id' => $product_id]) }}"
+                                        <td><a href="{{ route('admin.stage-info.index', ['stage_id' => $stage->id, 'product_id' => $product_id]) }}"
                                                 class="stage-info">
                                             {{ $stage->tengiaidoan }}</a>
                                         </td>
@@ -64,9 +64,9 @@
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('stage.edit', ['id' => $stage->id, 'product_id' => $product_id]) }}">Chỉnh sửa</a>
+                                                    <a class="dropdown-item" href="{{ route('admin.stage.edit', ['id' => $stage->id, 'product_id' => $product_id]) }}">Chỉnh sửa</a>
                                                     @if ($stage->stageInfo->isEmpty())
-                                                    <a class="dropdown-item" href="{{ route('stage.delete', ['id' => $stage->id]) }}">Xóa</a>
+                                                    <a class="dropdown-item" href="{{ route('admin.stage.delete', ['id' => $stage->id]) }}">Xóa</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -91,7 +91,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <h4><b>Thêm giai đoạn</b></h4><hr>
-                <form action="{{ route('stage.store', ['product_id' => $product->id]) }}" method="post">
+                <form action="{{ route('admin.stage.store', ['product_id' => $product->id]) }}" method="post">
                     {{-- <input type="hidden" id="csrf" value="{{csrf_token()}}"> --}}
                     @csrf
                     <div class="col-md-12">

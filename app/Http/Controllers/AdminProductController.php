@@ -9,6 +9,7 @@ use App\Models\Field;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\Stage;
 use App\Models\Storage;
 use App\Traits\StorageImageTrait;
 use Carbon\Carbon;
@@ -25,14 +26,16 @@ class AdminProductController extends Controller
     private $storage;
     private $productcategory;
     private $company;
+    private $stage;
 
-    public function __construct(Product $product, Field $field, Storage $storage, ProductCategory $productcategory, Company $company)
+    public function __construct(Product $product, Field $field, Storage $storage, ProductCategory $productcategory, Company $company, Stage $stage)
     {
         $this->product         = $product;
         $this->field           = $field;
         $this->storage         = $storage;
         $this->productcategory = $productcategory;
         $this->company = $company;
+        $this->stage = $stage;
     }
 
     public function index()
@@ -235,23 +238,91 @@ class AdminProductController extends Controller
     {
         $product = $this->product->find($request->idProduct);
 
-        $company = $product->company->tencongty;
+        $company = $product->company;
 
-        $storage = $product->storage->tenkho;
+        $storage = $product->storage;
 
         $profile = $product->profile->hothanhvien . ' ' . $product->profile->tenthanhvien;
 
-        $productcategory = $product->productcategory->tenloaisanpham;
+        $productcategory = $product->productcategory;
 
         $date = Carbon::createFromFormat('Y-m-d H:i:s', $product->created_at)->format('d-m-Y');
 
+        $output = '<div class="row">
+                        <p><b>Công ty:</b></p>
+                        <p class="pl-2">'.$company->tencongty.'</p>
+                    </div>
+                    <div class="row">
+                        <p><b>Kho:</b></p>
+                        <p class="pl-2">'.$storage->tenkho.'</p>
+                    </div>
+                    <div class="row">
+                        <p><b>Người tạo:</b></p>
+                        <p class="pl-2">'.$profile.'</p>
+                    </div>
+                    <div class="row">
+                        <p><b>Hình ảnh:</b></p>
+                        <img src="'.$product->hinhanhsanpham.'" style="width:200px; height: 200px" class="pl-2">
+                    </div>
+                    <div class="row mt-3">
+                        <p><b>Thông tin:</b></p>
+                        <p class="pl-2">'.$product->thongtinsanpham.'</p>
+                    </div>
+                    <div class="row">
+                        <p><b>Xuất xứ:</b></p>
+                        <p class="pl-2">'.$product->xuatxu.'</p>
+                    </div>
+                    <div class="row">
+                        <p><b>Loại sản phẩm:</b></p>
+                        <p class="pl-2">'.$productcategory->tenloaisanpham.'</p>
+                    </div>
+                    <div class="row">
+                        <p><b>Chủng loại:</b></p>
+                        <p class="pl-2">'.$product->chungloaisanpham.'</p>
+                    </div>
+                    <div class="row">
+                        <p><b>Đơn giá:</b></p>
+                        <p class="pl-2">'.$product->dongiasanpham.'</p>
+                    </div>
+                    <div class="row">
+                        <p><b>Khối lượng:</b></p>
+                        <p class="pl-2">'.$product->khoiluongsanpham.'</p>
+                    </div>
+                    <div class="row">
+                        <p><b>Đơn vị tính:</b></p>
+                        <p class="pl-2">'.$product->donvitinhsanpham.'</p>
+                    </div>
+                    <div class="row">
+                        <p><b>Mã vạch:</b></p>
+                        <p class="pl-2">'.$product->mavachsanpham.'</p>
+                    </div>';
+
+        $stages = $this->stage->where('idsanpham', $request->idProduct)->get();
+
+        if (!$stages->isEmpty()) {
+            $output .= '<hr>
+                        <div class="text-center">
+                            <h4><b>Giai đoạn</b></h4>
+                        </div>';
+
+            foreach ($stages as $key => $stage) {
+                $output .= '<div class="row">
+                                <p><b>'.$stage->tengiaidoan.':</b></p>
+                                <p class="pl-2">'.$stage->motagiaidoan.'</p>
+                            </div>';
+                foreach ($stage->stageInfo as $key => $item) {
+                    $output .= '<div class="row ml-3">
+                                    <p><b>'.$item->tencongviec.':</b></p>
+                                    <p class="pl-2">'.$item->motacongviec.'</p>
+                                </div>';
+                }
+            }
+        }
+
         return response()->json([
-            'product' => $product,
-            'date' =>$date,
-            'company' => $company,
-            'storage' => $storage,
-            'profile' => $profile,
-            'productcategory' => $productcategory
+            'output' => $output,
+            'tensanpham' => $product->tensanpham,
+            'date' => $date
         ]);
     }
 }

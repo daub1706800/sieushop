@@ -28,7 +28,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <form action="{{ route('stage-info.update', ['stageInfo_id' => $stageInfo->id, 'stage_id' => $stage_id, 'product_id' => $product_id]) }}" method="post">
+                    <form action="{{ route('admin.stage-info.update', ['stageInfo_id' => $stageInfo->id, 'stage_id' => $stage_id, 'product_id' => $product_id]) }}" method="post">
                         @csrf
                         <div class="col-md-12 row">
                             <div class="col-md-12">

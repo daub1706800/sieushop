@@ -26,7 +26,7 @@ class NewsRequestEdit extends FormRequest
         return [
             'idchuyenmuc' => 'required|exists:chuyenmuc,id',
             'idcongty' => 'required|exists:congty,id',
-            'hinhanhtintuc' => 'required|mimes:jpeg,jpg,png|max:5000|dimensions:min_width=788, min_height=443',
+            'hinhanhtintuc' => 'nullable|mimes:jpeg,jpg,png|max:5000|dimensions:min_width=788, min_height=443',
             'videotintuc' => 'bail|nullable|mimes:mp4|max:20000',
             // 'videotintuc.*' => 'mimes:mp4|max:20000',
             'tieudetintuc' => 'required|min:10|max:100',

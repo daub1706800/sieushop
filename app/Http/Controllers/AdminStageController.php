@@ -11,7 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class StageController extends Controller
+class AdminStageController extends Controller
 {
     private $stage;
     private $product;
@@ -30,7 +30,7 @@ class StageController extends Controller
 
         $stages  = $this->stage->where('idsanpham', $product_id)->get();
 
-        return view('admin.stage.index', compact('product_id', 'stages', 'product'));
+        return view('admin.admin-stage.index', compact('product_id', 'stages', 'product'));
     }
 
     public function store(StageRequest $request, $product_id)
@@ -49,17 +49,19 @@ class StageController extends Controller
     {
         $stage = $this->stage->find($id);
 
-        return view('admin.stage.edit', compact('stage', 'product_id'));
+        return view('admin.admin-stage.edit', compact('stage', 'product_id'));
     }
 
-    public function update(Request $request, $id)
+    public function update(StageRequest $request, $id)
     {
+        $validated = $request->validated();
+
         $this->stage->find($id)->update([
             'tengiaidoan' => $request->tengiaidoan,
             'motagiaidoan' => $request->motagiaidoan
         ]);
 
-        return redirect()->route('stage.index', ['product_id' => $request->product_id]);
+        return redirect()->route('admin.stage.index', ['product_id' => $request->product_id]);
     }
 
     public function delete($id)
@@ -102,14 +104,14 @@ class StageController extends Controller
             ];
         }
 
-        return view('admin.stage.index-stage-info', compact('stage', 'arr', 'product_id'));
+        return view('admin.admin-stage.index-stage-info', compact('stage', 'arr', 'product_id'));
     }
 
     public function stage_info_add($stage_id, $product_id)
     {
         $stage = $this->stage->find($stage_id);
 
-        return view('admin.stage.add-stage-info', compact('stage', 'product_id'));
+        return view('admin.admin-stage.add-stage-info', compact('stage', 'product_id'));
     }
 
     public function stage_info_store(Request $request, $stage_id, $product_id)
@@ -158,7 +160,7 @@ class StageController extends Controller
             }
             return response()->json([
                 'status' => 1,
-                'url' => route('stage-info.index', ['stage_id' => $stage_id, 'product_id' => $product_id])
+                'url' => route('admin.stage-info.index', ['stage_id' => $stage_id, 'product_id' => $product_id])
             ]);
         }
     }
@@ -167,7 +169,7 @@ class StageController extends Controller
     {
         $stageInfo = $this->stageInfo->find($stageInfo_id);
 
-        return view('admin.stage.edit-stage-info', compact('stageInfo', 'stage_id', 'product_id'));
+        return view('admin.admin-stage.edit-stage-info', compact('stageInfo', 'stage_id', 'product_id'));
     }
 
     public function stage_info_update(StageInfoRequest $request, $stageInfo_id, $stage_id, $product_id)
@@ -181,14 +183,14 @@ class StageController extends Controller
             'trehan'            => $request->trehan,
         ]);
 
-        return redirect()->route('stage-info.index', ['stage_id' => $stage_id, 'product_id' => $product_id]);
+        return redirect()->route('admin.stage-info.index', ['stage_id' => $stage_id, 'product_id' => $product_id]);
     }
 
     public function stage_info_delete($stageInfo_id, $stage_id, $product_id)
     {
         $this->stageInfo->find($stageInfo_id)->delete();
 
-        return redirect()->route('stage-info.index', ['stage_id' => $stage_id, 'product_id' => $product_id]);
+        return redirect()->route('admin.stage-info.index', ['stage_id' => $stage_id, 'product_id' => $product_id]);
     }
 
     public function stage_info_count(Request $request)

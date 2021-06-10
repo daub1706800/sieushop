@@ -92,18 +92,6 @@ class NewsController extends Controller
                 'dulieuvideo' => $dataVideoUpload['file_path']
             ]);
         }
-        // Insert data to table Video
-        // if($request->hasFile('videotintuc'))
-        // {
-        //     foreach($request->videotintuc as $fileItem)
-        //     {
-        //         $dataVideo = $this->StorageUploadImageMultiple($fileItem, 'news/video');
-                // Video::create([
-                //     'idtintuc'    => $tintuc->id,
-                //     'dulieuvideo' => $dataVideo['file_path']
-                // ]);
-        //     }
-        // }
 
         return redirect()->route('news.index');
     }
@@ -129,6 +117,7 @@ class NewsController extends Controller
             'tomtattintuc'  => $request->tomtattintuc,
             'noidungtintuc' => $request->noidungtintuc,
             'loaitintuc'    => $request->loaitintuc,
+            'duyettintuc' => 0
         ];
 
         $dataImageUpload = $this->StorageUploadImage($request, 'hinhanhtintuc', 'news/image');
@@ -153,22 +142,6 @@ class NewsController extends Controller
                 'dulieuvideo' => $dataVideoUpload['file_path']
             ]);
         }
-
-        // // Insert data to table Video
-        // if($request->hasFile('videotintuc'))
-        // {
-        //     // Delete data from table Video before Update
-        //     $this->video->where('idtintuc', $id)->delete();
-
-        //     foreach($request->videotintuc as $fileItem)
-        //     {
-        //         $dataVideo = $this->StorageUploadImageMultiple($fileItem, 'news/video');
-        //         Video::create([
-        //             'idtintuc'    => $tintuc->id,
-        //             'dulieuvideo' => $dataVideo['file_path']
-        //         ]);
-        //     }
-        // }
 
         return redirect()->route('news.index');
     }
