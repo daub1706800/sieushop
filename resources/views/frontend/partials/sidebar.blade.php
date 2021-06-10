@@ -19,9 +19,9 @@
                         <div class="shadoweffect">
                             <div class="shadow-desc">
                                 <div class="blog-meta">
-                                    <span class="bg-orange"><a href="tech-category-01.html" title="">{{$row->tenchuyenmuc}}</a></span>
-                                    <h4><a href="tech-single.html" title="">{{$row->tieudetintuc}}</a></h4>
-                                    <small><a href="tech-single.html" title="">{{$row->ngaydangtintuc}}</a></small>
+                                    <span class="bg-orange"><a href="{{route('tinchuyenmuc',['id'=>$row->idchuyenmuc])}}" title="">{{$row->tenchuyenmuc}}</a></span>
+                                    <h4><a href="{{route('detail',['id'=>$row->id])}}" title="">{{$row->tieudetintuc}}</a></h4>
+                                    <!-- <small><a href="tech-single.html" title="">{{$row->ngaydangtintuc}}</a></small> -->
                                     <small><a href="tech-author.html" title="">Tác giả: {{$row->hothanhvien}} {{$row->tenthanhvien}}</a></small>
                                 </div><!-- end meta -->
                             </div><!-- end shadow-desc -->

@@ -40,6 +40,10 @@ Route::prefix('/')->group(function () {
         'as' => 'detail',
         'uses' => 'App\Http\Controllers\GiaoDienController@detail'
     ]);
+    // Route::get('detail/{id}', [
+    //     'as' => 'detail',
+    //     'uses' => 'App\Http\Controllers\GiaoDienController@detail'
+    // ]);
     Route::get('tinchuyenmuc/{id}', [
         'as' => 'tinchuyenmuc',
         'uses' => 'App\Http\Controllers\GiaoDienController@tinchuyenmuc'
