@@ -56,7 +56,7 @@
                         </div>
                         <div class="form-group">
                             <label>Tiêu đề tin tức *</label>
-                            <input type="text" class="form-control" name="tieudetintuc" value="{{$data->tieudetintuc}}" required>
+                            <input type="text" class="form-control" name="tieudetintuc" value="{{$data->tieudetintuc}}">
                         </div>
                         <div class="form-group">
                             <label>Tóm tắt tin tức *</label>

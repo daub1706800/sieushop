@@ -18,7 +18,7 @@
                     </div><!-- end col -->
 
                     <div class="blog-meta big-meta col-md-8">
-                        <h4><a href="{{route('detail',['id'=>$row->id])}}" title="">{{$row->id}}{{$row->tieudetintuc}}</a></h4>
+                        <h4><a href="{{route('detail',['id'=>$row->id])}}" title="">{{$row->tieudetintuc}}</a></h4>
                         <p>{!!$row->tomtattintuc!!}</p>
                         <small class="firstsmall"><a class="bg-orange" href="{{route('tinchuyenmuc',['id'=>$row->idchuyenmuc])}}" title="">{{$row->tenchuyenmuc}}</a></small>
                         <small><a href="#" title="">{{$row->ngaydangtintuc}}</a></small>
