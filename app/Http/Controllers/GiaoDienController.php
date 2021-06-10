@@ -98,7 +98,7 @@ class GiaoDienController extends Controller{
     public function detail(Request $request)
     {
         $id = $request->id;
-        dd($id);
+
         $header = DB::table('chuyenmuc')
                     ->orderBy('tenchuyenmuc')
                     ->get();
@@ -111,7 +111,13 @@ class GiaoDienController extends Controller{
                                     ->limit(3)
                                     ->get();
 
-        return view('frontend.detail.detail', compact('header','content_sidebar_video'));
+        $detail = DB::table('tintuc')
+                    ->where('tintuc.id',$id)
+                    ->Join('chuyenmuc', 'tintuc.idchuyenmuc', '=', 'chuyenmuc.id')
+                    ->Join('thongtin', 'tintuc.idtaikhoan', '=', 'thongtin.idtaikhoan')
+                    ->select('tintuc.*','chuyenmuc.tenchuyenmuc','thongtin.hothanhvien','thongtin.tenthanhvien')
+                    ->first();
+        return view('frontend.detail.detail', compact('header','content_sidebar_video','detail'));
     }
     public function tinchuyenmuc(request $request)
     {

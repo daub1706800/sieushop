@@ -4,7 +4,8 @@
         <div class="widget">
             <div class="banner-spot clearfix">
                 <div class="banner-img">
-                    <img src="TemplateTechBlog/upload/banner_07.jpg" alt="" class="img-fluid">
+                    <!-- <img src="TemplateTechBlog/upload/banner_07.jpg" alt="" class="img-fluid"> -->
+                    <img src="https://nukeviet.vn/uploads/store/demo_images/2013_01/banner13.png" alt="" class="" height="600px">
                 </div><!-- end banner-img -->
             </div><!-- end banner -->
         </div><!-- end widget -->
@@ -159,7 +160,8 @@
         <div class="widget">
             <div class="banner-spot clearfix">
                 <div class="banner-img">
-                    <img src="TemplateTechBlog/upload/banner_03.jpg" alt="" class="img-fluid">
+                    <!-- <img src="TemplateTechBlog/upload/banner_03.jpg" alt="" class="img-fluid"> -->
+                    <img src="https://inanaz.com.vn/wp-content/uploads/2020/02/mau-banner-quang-cao-dep-15.jpg" alt="" class="" height="200px">
                 </div><!-- end banner-img -->
             </div><!-- end banner -->
         </div><!-- end widget -->

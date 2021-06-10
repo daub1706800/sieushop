@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 08, 2021 at 05:20 PM
+-- Generation Time: Jun 10, 2021 at 09:34 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.3.2
 
@@ -247,7 +247,14 @@ INSERT INTO `lichsutintuc` (`id`, `idtintuc`, `idtaikhoan`, `lydogo`, `thoigian`
 (20, 13, 2, 'das', '2021-06-04 22:03:00', NULL, NULL),
 (21, 12, 2, 'asd', '2021-06-04 22:03:31', NULL, NULL),
 (22, 13, 2, 'Sai sot thông tin', '2021-06-07 23:12:12', NULL, NULL),
-(23, 13, 2, 'dá', '2021-06-07 23:13:10', NULL, NULL);
+(23, 13, 2, 'dá', '2021-06-07 23:13:10', NULL, NULL),
+(24, 13, 2, 'sai hinh', '2021-06-09 15:00:44', NULL, NULL),
+(25, 13, 2, 'dsa', '2021-06-09 15:01:14', NULL, NULL),
+(26, 12, 2, 'fds', '2021-06-09 15:02:08', NULL, NULL),
+(27, 11, 2, 's', '2021-06-09 15:04:30', NULL, NULL),
+(28, 13, 2, 'sd', '2021-06-09 15:09:54', NULL, NULL),
+(29, 12, 2, 'dsa', '2021-06-09 15:16:31', NULL, NULL),
+(31, 12, 2, 'dá', '2021-06-09 16:23:20', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -341,7 +348,37 @@ INSERT INTO `logtintuc` (`id`, `idtintuc`, `idtaikhoan`, `noidungdanhgia`, `thoi
 (26, 13, 2, 'Duyệt tin: tin tốt', '2021-06-07 16:12:21'),
 (27, 13, 2, 'Xuất bản: tin tốt', '2021-06-07 16:12:26'),
 (28, 13, 2, 'Duyệt tin: sadasdadsa', '2021-06-07 16:13:25'),
-(29, 13, 2, 'Xuất bản: sda', '2021-06-07 16:13:31');
+(29, 13, 2, 'Xuất bản: sda', '2021-06-07 16:13:31'),
+(30, 13, 2, 'Duyệt tin: sadasdadsa', '2021-06-09 08:00:53'),
+(31, 13, 2, 'Xuất bản: dá', '2021-06-09 08:00:59'),
+(32, 13, 2, 'Duyệt tin: sdf', '2021-06-09 08:01:33'),
+(33, 13, 2, 'Duyệt tin: sdf', '2021-06-09 08:01:34'),
+(34, 13, 2, 'Xuất bản: dfs', '2021-06-09 08:01:39'),
+(35, 12, 2, 'Duyệt tin: fsd', '2021-06-09 08:02:21'),
+(36, 12, 2, 'Duyệt tin: f', '2021-06-09 08:02:37'),
+(37, 12, 2, 'Xuất bản: viet sai chinh ta', '2021-06-09 08:02:43'),
+(38, 11, 2, 'Duyệt tin: s', '2021-06-09 08:04:45'),
+(39, 11, 2, 'Xuất bản: s', '2021-06-09 08:04:49'),
+(40, 13, 2, 'Duyệt tin: dsa', '2021-06-09 08:10:12'),
+(41, 13, 2, 'Xuất bản: d', '2021-06-09 08:10:16'),
+(42, 12, 2, 'Duyệt tin: viet sai chinh ta', '2021-06-09 08:17:01'),
+(43, 12, 2, 'Xuất bản: tin tốt', '2021-06-09 08:17:06'),
+(44, 20, 2, 'Duyệt tin: xeđẹp', '2021-06-09 08:59:43'),
+(45, 20, 2, 'Xuất bản: đạp quá', '2021-06-09 08:59:50'),
+(46, 23, 2, 'Duyệt tin: viet sai chinh ta', '2021-06-09 09:10:19'),
+(47, 23, 2, 'Xuất bản: ádasa', '2021-06-09 09:10:24'),
+(48, 12, 2, 'Duyệt tin: sda', '2021-06-09 09:26:48'),
+(49, 12, 2, 'Xuất bản: sdada', '2021-06-09 09:26:53'),
+(50, 20, 2, 'Duyệt tin: fds', '2021-06-09 09:36:28'),
+(51, 20, 2, 'Xuất bản: utjujfg', '2021-06-09 09:36:34'),
+(52, 20, 2, 'Duyệt tin: fds', '2021-06-09 10:09:22'),
+(53, 20, 2, 'Xuất bản: viet sai chinh ta', '2021-06-09 10:09:27'),
+(54, 22, 2, 'Duyệt tin: gfdfdsg', '2021-06-10 08:56:34'),
+(55, 22, 2, 'Xuất bản: fdsdfsd', '2021-06-10 08:56:39'),
+(56, 23, 2, 'Duyệt tin: dsadasd', '2021-06-10 09:09:02'),
+(57, 23, 2, 'Xuất bản: đâsda', '2021-06-10 09:09:07'),
+(58, 24, 2, 'Duyệt tin: xe hay', '2021-06-10 09:30:05'),
+(59, 24, 2, 'Xuất bản: xe hay quá', '2021-06-10 09:30:14');
 
 -- --------------------------------------------------------
 
@@ -731,23 +768,25 @@ CREATE TABLE `tintuc` (
 INSERT INTO `tintuc` (`id`, `idchuyenmuc`, `idcongty`, `idtaikhoan`, `ngaydangtintuc`, `tieudetintuc`, `tomtattintuc`, `noidungtintuc`, `hinhanhtintuc`, `loaitintuc`, `duyettintuc`, `xuatbantintuc`, `lydogo`, `created_at`, `updated_at`) VALUES
 (1, 1, 2, 2, '2021-06-04 14:26:09', 'tin1', 'tomtat1', 'noidung1', '/hinhanh/2705.useravatar.png', 0, 0, 0, 0, NULL, NULL),
 (2, 1, 2, 2, '2021-06-04 14:26:13', 'tin2', 'tomtat2', 'noidung2', '/hinhanh/24393.cafe.jpg', 0, 0, 0, 0, NULL, NULL),
-(3, 1, 2, 2, '2021-06-04 14:25:32', 'tin3', 'tomtat3', 'noidung3', '/hinhanh/40651.khautrang.png', 1, 1, 0, 1, NULL, NULL),
-(4, 1, 2, 2, '2021-06-08 16:50:16', 'Indonesia không hưởng quả phạt góc nào trước Việt Nam', 'Bên cạnh tỷ số 4-0, thế trận áp đảo của Việt Nam trước Indonesia còn thể hiện qua số phạt góc cũng như dứt điểm, trong trận đấu thuộc vòng loại World Cup 2022 tối 7/6.\r\n\r\nTrong hiệp một, Việt Nam dồn ép và hưởng tới 10', 'noidung4', '/hinhanh/2705.useravatar.png', 1, 1, 1, 1, NULL, '2021-06-02 14:24:41'),
-(5, 2, 1, 1, '2021-06-03 14:38:09', 'tieude5', 'tomtat5', 'noidung5', '/hinhanh/24393.cafe.jpg', 0, 1, 1, 0, NULL, NULL),
+(3, 1, 2, 2, '2021-06-09 09:35:17', 'tin3', 'noidung3', 'noidung3 435353', '/hinhanh/40651.khautrang.png', 1, 0, 0, 1, NULL, NULL),
+(4, 1, 2, 2, '2021-06-10 08:30:34', 'Indonesia không hưởng quả phạt góc nào trước Việt Nam', 'Bên cạnh tỷ số 4-0, thế trận áp đảo của Việt Nam trước Indonesia còn thể hiện qua số phạt góc cũng như dứt điểm, trong trận đấu thuộc vòng loại World Cup 2022 tối 7/6.\r\n\r\nTrong hiệp một, Việt Nam dồn ép và hưởng tới 10', 'Trong hiệp một, Việt Nam dồn ép và hưởng tới 10 quả phạt góc. Nhiều lần Quang Hải đá phạt góc thẳng ra tuyến hai cho Tuấn Anh hoặc cầu thủ vào thay người Xuân Trường sút xa. Nguy hiểm nhất là cú vô-lê của Tuấn Anh ngay phút thứ 6, bóng đi căng nhưng trúng vị trí thủ môn Nadeo Argawinata.\r\n\r\nSang hiệp hai, Việt Nam tạo ra thêm năm quả phạt góc. Trong đó, quả cuối cùng dẫn tới bàn của Công Phượng phút 67. Xuân Trường sút phạt về cột gần cho Tiến Linh chạy cắt mặt đánh đầu ngược vào trong. Công Phượng bị bất ngờ khi bóng bay đến nhưng vẫn kịp dùng đùi trái đẩy bóng vào lưới cận thành, nâng tỷ số lên 3-0. Kể từ đó, Việt Nam đá giữ sức và không tạo ra thêm phạt góc.\r\n\r\nIndonesia không được đá phạt góc lần nào trong cả trận. Họ cũng không sút được lần nào trong hiệp một. Sang hiệp hai, Indonesia dứt điểm được bốn lần, trong đó một pha bị thủ môn Tấn Trường bắt gọn và một lần trúng xà. Việt Nam cả trận tung ra 13 cú dứt điểm, ghi bốn bàn nhờ công Tiến Linh, Quang Hải, Công Phượng và Văn Thanh trong hiệp hai.\r\n\r\nTỷ lệ kiểm soát bóng cũng nghiêng hẳn về Việt Nam, có lúc lên tới 71% thời gian. Indonesia chỉ hơn Việt Nam về số pha phạm lỗi (16 so với 10) và số thẻ vàng (5 so với 2).\r\n\r\nNhờ chiến thắng này, thầy trò Park Hang-seo giữ đỉnh bảng G với 14 điểm, hơn UAE hai điểm. Ở loạt trận áp chót tối 11/6, Việt Nam gặp Malaysia, còn Indonesia đụng UAE.', '/hinhanh/62409.3277909_3d_red_supercar-wallpaper-1920x1080.jpg', 1, 1, 1, 1, NULL, '2021-06-02 14:24:41'),
+(5, 2, 2, 1, '2021-06-09 08:03:24', 'tieude5', 'tomtat5', 'noidung5', '/hinhanh/24393.cafe.jpg', 0, 1, 1, 0, NULL, NULL),
 (6, 2, 1, 1, '2021-06-03 14:38:09', 'tieude6', 'tomtat6', 'noidung6', '/hinhanh/24393.cafe.jpg', 0, 1, 1, 0, NULL, NULL),
 (7, 2, 1, 1, '2021-06-03 14:38:09', 'tieude7', 'tomtat7', 'noidung7\r\n', '/hinhanh/24393.cafe.jpg', 0, 1, 1, 0, NULL, NULL),
 (8, 2, 1, 1, '2021-06-03 14:38:09', 'tieude8', 'tomtat8', 'noidung8', '/hinhanh/24393.cafe.jpg', 0, 1, 1, 0, NULL, NULL),
 (9, 2, 1, 1, '2021-06-03 14:38:09', 'tieude9', 'tomtat9', 'noidung9', '/hinhanh/24393.cafe.jpg', 0, 1, 1, 0, NULL, NULL),
 (10, 2, 1, 1, '2021-06-03 14:38:09', 'tieude10', 'tomtat10', 'noidung10', '/hinhanh/24393.cafe.jpg', 0, 1, 1, 0, NULL, NULL),
-(11, 1, 1, 2, '2021-06-04 14:21:44', 'tin5', 'tomtat5', 'noidung5', '/hinhanh/24393.cafe.jpg', 1, 1, 1, 1, NULL, '2021-05-30 02:19:15'),
-(12, 1, 2, 2, '2021-06-04 15:03:44', 'tin6', 'tomtat6', 'noidung6', '/hinhanh/90242.meo.jpg', 1, 1, 1, 1, NULL, '2021-06-04 15:03:44'),
-(13, 2, 2, 2, '2021-06-07 16:13:31', 'tin7', 'noidung7', 'noidung7', '/hinhanh/28104.meo.jpg', 1, 1, 1, 1, NULL, '2021-06-07 16:13:31'),
+(11, 1, 2, 2, '2021-06-09 08:04:49', 'tin5', 'noidung5', 'noidung5', '/hinhanh/79059.quan2.jpg', 1, 1, 1, 1, NULL, '2021-06-09 08:04:49'),
+(12, 1, 2, 2, '2021-06-09 09:26:53', 'tin6', 'noidung6', 'noidung6', '/hinhanh/16131.khautrang.png', 1, 1, 1, 1, NULL, '2021-06-09 09:26:53'),
+(13, 2, 2, 2, '2021-06-09 09:54:06', 'Siêu xe về VN qwer tyui opas dfgh jklz xcvb nm,q ưerty uiop asdf ghjkSiêu xe về VN qwer tyui opas dfgh jklz', 'noidung7', 'noidung7', '/hinhanh/62409.3277909_3d_red_supercar-wallpaper-1920x1080.jpg', 1, 1, 1, 1, NULL, '2021-06-09 08:10:16'),
 (14, 1, 2, 28, '2021-06-07 16:01:43', 'tin8', 'tomtat8', 'noidung8', '/hinhanh/10311.quan1.jpg', 0, 1, 1, 1, NULL, '2021-06-04 15:02:48'),
-(15, 1, 2, 2, '2021-06-07 15:51:11', 'tieude10', '<p>noidung10</p>', '<p>noi dung10</p>', '/hinhanh/27611.useravatar.png', 0, 0, 0, 0, NULL, NULL),
 (16, 2, 1, 2, '2021-06-08 17:04:16', 'q', 'q', 'q', '', 0, 0, 1, 0, NULL, NULL),
 (17, 2, 1, 2, '2021-06-08 17:04:30', 'q', 'q', 'q', '', 0, 0, 1, 0, NULL, NULL),
 (18, 2, 1, 2, '2021-06-08 17:04:39', 'q', 'q', 'q', '', 0, 0, 1, 0, NULL, NULL),
-(19, 2, 1, 2, '2021-06-08 17:04:58', 'q', 'q', 'q', '', 0, 0, 1, 0, NULL, NULL);
+(19, 2, 1, 2, '2021-06-08 17:04:58', 'q', 'q', 'q', '', 0, 0, 1, 0, NULL, NULL),
+(22, 4, 2, 2, '2021-06-10 08:56:39', 'dấdađâsdasdasd', '<p>đâsdaádasdasdasdas</p>', '<p>sdasdadasdasdad</p>', '/storage/news/image/2/6XyDKrVqkOmxCv7lrLKO.jpg', 1, 1, 1, 0, NULL, '2021-06-10 08:56:39'),
+(23, 4, 2, 2, '2021-06-10 09:09:21', 'Dân chơi Cần Thơ mang dàn siêu xe, xe thể thao khủng đi offline', '<p>Dân chơi Cần Thơ mang dàn siêu xe, xe thể thao khủng đi offline, có sự góp mặt của Chevrolet Corvette C8 vừa về tay chủ nhân</p>', '<p>Dân chơi Cần Thơ mang dàn siêu xe, xe thể thao khủng đi offline, có sự góp mặt của Chevrolet Corvette C8 vừa về tay chủ nhânn<br></p>', '/storage/news/image/2/ihUhWX87fUaa0xVUsHzK.jpg', 1, 1, 1, 0, NULL, '2021-06-10 09:09:07'),
+(24, 4, 2, 2, '2021-06-10 09:30:14', 'Thêm \'biệt thự di động\' Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn', '<p><span style=\"color: rgb(136, 136, 136); font-family: Arial; font-size: 13px;\">Mercedes-Maybach S 650 Pullman là mẫu xe sang bậc nhất hiện nay của thương hiệu ngôi sao 3 cánh, được sản xuất dành cho những VIP.</span><br></p>', '<p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Mới đây, một chiếc Mercedes-Maybach S 650 Pullman đã xuất hiện tại showroom tư nhân ở Sài Gòn. Nhiều khả năng đây chính là chiếc S 650 Pullman thứ ba được đưa về nước.</p><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Về ngoại thất, xe sở hữu màu đen ở toàn bộ phần thân xe, tương đồng với chiếc đầu tiên được nhập khẩu bởi một đại lý tư nhân có tiếng ngoài Hà Nội. Hai chiếc này còn sở hữu bộ mâm giống nhau nên càng khó để phân biệt. Trong khi đó, chiếc thứ 2 mang 2 tông màu tương phản.</p><div class=\"VCSortableInPreviewMode noCaption active\" type=\"Photo\" style=\"padding: 0px; margin-top: 0px; margin-right: auto; margin-left: auto; outline: 0px; display: inline-block; position: relative; text-align: center; transition: all 0.3s ease-in-out 0s; width: 640px; z-index: 100; visibility: visible; overflow-wrap: break-word; cursor: default; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; background-color: rgb(255, 255, 255); margin-bottom: 20px !important;\"><div style=\"padding: 0px; margin: 0px; outline: 0px; position: relative; display: inline-block;\"><div id=\"adnzone_511318\" style=\"padding: 0px; margin: 0px auto; outline: 0px; clear: both; text-align: left; position: absolute; width: 640px; top: 0px;\"><iframe id=\"adnzone_511318_0_80302\" scrolling=\"no\" frameborder=\"no\" style=\"padding: 0px; margin: 0px; width: 640px; height: 132px; border-width: initial; border-style: none; z-index: 2; position: relative; transition: height 1s ease-out 0s;\"></iframe></div><a href=\"https://autopro8.mediacdn.vn/2021/6/10/1924215169500720257929192717118227332894463n-16233093746582091287651.jpg\" data-fancybox=\"img-lightbox\" title=\"\" class=\"detail-img-lightbox\" style=\"padding: 0px; margin: 0px; display: block; outline: none !important;\"><img src=\"https://autopro8.mediacdn.vn/thumb_w/640/2021/6/10/1924215169500720257929192717118227332894463n-16233093746582091287651.jpg\" id=\"img_bdffd720-c9bb-11eb-9c2d-57b61dc229c1\" w=\"960\" h=\"720\" alt=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 1.\" title=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 1.\" rel=\"lightbox\" photoid=\"bdffd720-c9bb-11eb-9c2d-57b61dc229c1\" type=\"photo\" data-original=\"https://autopro8.mediacdn.vn/2021/6/10/1924215169500720257929192717118227332894463n-16233093746582091287651.jpg\" width=\"\" height=\"\" class=\"lightbox-content\" style=\"padding-top: unset; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin: 137px auto 0px; display: inline-block; vertical-align: top; pointer-events: none; max-width: 100%;\"></a></div></div><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Ngoại thất của xe sở hữu màu đen bóng, điểm xuyết là các chi tiết bằng kim loại sáng bóng như tay nắm cửa, lưới tản nhiệt, viền cửa sổ... tương tự Mercedes-Maybach S 650 thông thường. Điểm khác biệt lớn nhất của bản Pullman là kích thước xe lên tới 6,5 mét.</p><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Mercedes-Maybach S 650 Pullman thực chất là phiên bản facelift và được đổi tên của phiên bản Mercedes-Maybach S 600 Pullman. Trước đó, giới mê xe Việt đã có cơ hội đón hai chiếc S 600 Pullman với màu sơn trắng và đen.</p><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Sự thay đổi lớn nhất giữa phiên bản S 650 và S 600 đó là&nbsp;phần đầu xe được thiết kế lại với hốc gió mới làm tăng khả năng làm mát động cơ và hệ thống đèn pha LED Multibeam có khả năng chiếu sáng hơn 600 m. Ngoài ra, một thanh nẹp chrome được bổ sung cho cả phần cản trước và cản sau của xe.</p><div class=\"VCSortableInPreviewMode active noCaption\" type=\"Photo\" style=\"padding: 0px; margin-top: 0px; margin-right: auto; margin-left: auto; outline: 0px; display: inline-block; position: relative; text-align: center; transition: all 0.3s ease-in-out 0s; width: 640px; z-index: 100; visibility: visible; overflow-wrap: break-word; cursor: default; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; background-color: rgb(255, 255, 255); margin-bottom: 20px !important;\"><div style=\"padding: 0px; margin: 0px; outline: 0px;\"><a href=\"https://autopro8.mediacdn.vn/2021/6/10/photo-1-16233155612931639098081.jpg\" data-fancybox=\"img-lightbox\" title=\"\" class=\"detail-img-lightbox\" style=\"padding: 0px; margin: 0px; display: block; outline: none !important;\"><img src=\"https://autopro8.mediacdn.vn/thumb_w/640/2021/6/10/photo-1-16233155612931639098081.jpg\" id=\"img_25260ec0-c9ca-11eb-b822-39bd312c79ca\" w=\"1024\" h=\"768\" alt=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 2.\" title=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 2.\" rel=\"lightbox\" photoid=\"25260ec0-c9ca-11eb-b822-39bd312c79ca\" type=\"photo\" data-original=\"https://autopro8.mediacdn.vn/2021/6/10/photo-1-16233155612931639098081.jpg\" width=\"\" height=\"\" class=\"lightbox-content\" style=\"padding: 0px; margin: 0px auto; display: inline-block; vertical-align: top; pointer-events: none; max-width: 100%;\"></a></div></div><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Được biết, showroom nhập về chiếc Mercedes-Maybach S 650 Pullman này toạ lạc trên đường An Dương Vương, Q.5, TP.HCM. Đây cũng chính là đơn vị nhập về hai chiếc Ford GT, chiếc Ferrari 488 Pista Spider thứ hai và chiếc Mercedes-Maybach S 650 Pullman hai tông màu kể trên.<br style=\"padding: 0px; margin: 0px;\"></p><div class=\"VCSortableInPreviewMode active noCaption\" type=\"Photo\" style=\"padding: 0px; margin-top: 0px; margin-right: auto; margin-left: auto; outline: 0px; display: inline-block; position: relative; text-align: center; transition: all 0.3s ease-in-out 0s; width: 640px; z-index: 100; visibility: visible; overflow-wrap: break-word; cursor: default; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; background-color: rgb(255, 255, 255); margin-bottom: 20px !important;\"><div style=\"padding: 0px; margin: 0px; outline: 0px;\"><a href=\"https://autopro8.mediacdn.vn/2021/6/10/1943446289472095927458295045540580620425387n-1623309374681828586472.jpg\" data-fancybox=\"img-lightbox\" title=\"\" class=\"detail-img-lightbox\" style=\"padding: 0px; margin: 0px; display: block; outline: none !important;\"><img src=\"https://autopro8.mediacdn.vn/thumb_w/640/2021/6/10/1943446289472095927458295045540580620425387n-1623309374681828586472.jpg\" id=\"img_be1708a0-c9bb-11eb-80f3-9937f5f0f3df\" w=\"960\" h=\"720\" alt=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 3.\" title=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 3.\" rel=\"lightbox\" photoid=\"be1708a0-c9bb-11eb-80f3-9937f5f0f3df\" type=\"photo\" data-original=\"https://autopro8.mediacdn.vn/2021/6/10/1943446289472095927458295045540580620425387n-1623309374681828586472.jpg\" width=\"\" height=\"\" class=\"lightbox-content\" style=\"padding: 0px; margin: 0px auto; display: inline-block; vertical-align: top; pointer-events: none; max-width: 100%;\"></a></div></div><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Bên trong nội thất, vô-lăng được thay đổi lên loại 3 chấu, các nút bấm trên vô-lăng được thiết kế lại. Cụm màn hình kích thước 12,3 inch ở phía sau vô lăng cũng như màn hình giải trí trung tâm có giao diện mới mẻ hơn, độ phân giải được cải thiết cho chất lượng sắc nét hơn. Nhìn chung, khoang lái của bản Pullman với bản thường không có sự khác biệt.</p><div id=\"admzone480456\" class=\"mgt10\" style=\"padding: 0px; margin: 0px; outline: 0px; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; background-color: rgb(255, 255, 255);\"><div id=\"zone-480456\" style=\"padding: 0px; margin: 0px; outline: 0px;\"><div id=\"share-jkkj65ph\" style=\"padding: 0px; margin: 0px; outline: 0px;\"><div id=\"placement-k6ssarfg\" revenue=\"cpm\" style=\"padding: 0px; margin: 0px; outline: 0px;\"><div id=\"banner-480456-554230\" style=\"padding: 0px; margin: 0px; outline: 0px; min-height: 10px; min-width: 10px;\"><div id=\"slot-2-480456-554230\" style=\"padding: 0px; margin: 0px; outline: 0px;\"><div id=\"sspbid_3345\" style=\"padding: 0px; margin: 0px; outline: 0px;\"></div></div></div></div></div></div></div><div class=\"VCSortableInPreviewMode noCaption\" type=\"Photo\" style=\"padding: 0px; margin-top: 0px; margin-right: auto; margin-left: auto; outline: 0px; display: inline-block; position: relative; text-align: center; transition: all 0.3s ease-in-out 0s; width: 640px; z-index: 100; visibility: visible; overflow-wrap: break-word; cursor: default; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; background-color: rgb(255, 255, 255); margin-bottom: 20px !important;\"><div style=\"padding: 0px; margin: 0px; outline: 0px;\"><a href=\"https://autopro8.mediacdn.vn/2020/11/18/robb-pullman-7-16057073259921924881895.jpg\" data-fancybox=\"img-lightbox\" title=\"\" class=\"detail-img-lightbox\" style=\"padding: 0px; margin: 0px; display: block; outline: none !important;\"><img src=\"https://autopro8.mediacdn.vn/thumb_w/640/2020/11/18/robb-pullman-7-16057073259921924881895.jpg\" id=\"img_c9e2ee40-29a4-11eb-b4c3-1b5625fe3d04\" w=\"1280\" h=\"720\" alt=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 4.\" title=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 4.\" rel=\"lightbox\" photoid=\"c9e2ee40-29a4-11eb-b4c3-1b5625fe3d04\" type=\"photo\" data-original=\"https://autopro8.mediacdn.vn/2020/11/18/robb-pullman-7-16057073259921924881895.jpg\" width=\"\" height=\"\" class=\"lightbox-content\" style=\"padding: 0px; margin: 0px auto; display: inline-block; vertical-align: top; pointer-events: none; max-width: 100%;\"></a></div></div><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Điểm nhấn của bản Pullman là hàng ghế sau. So với phiên bản S-Class Maybach thường, S 650 Pullman được bổ sung 2 ghế phụ cho khoang sau và có thể gập gọn khi không cần thiết. Phần ghế ngồi phụ này đồng thời được tích hợp 2 màn hình giải trí. Hệ thống âm thanh là loại hàng hiệu Burmester 3D cao cấp. Để tăng tính riêng tư, xe cũng được trang bị một vách ngăn giữa khoang hành khách và tài xế. Một tấm kính nhỏ có thể trượt lên/xuống và làm mờ khi chủ nhân cần không gian riêng tư.</p><div class=\"VCSortableInPreviewMode active noCaption\" type=\"Photo\" style=\"padding: 0px; margin-top: 0px; margin-right: auto; margin-left: auto; outline: 0px; display: inline-block; position: relative; text-align: center; transition: all 0.3s ease-in-out 0s; width: 640px; z-index: 100; visibility: visible; overflow-wrap: break-word; cursor: default; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; background-color: rgb(255, 255, 255); margin-bottom: 20px !important;\"><div style=\"padding: 0px; margin: 0px; outline: 0px;\"><a href=\"https://autopro8.mediacdn.vn/2020/11/18/robb-pullman-6-1605707325968247657870.jpg\" data-fancybox=\"img-lightbox\" title=\"\" class=\"detail-img-lightbox\" style=\"padding: 0px; margin: 0px; display: block; outline: none !important;\"><img src=\"https://autopro8.mediacdn.vn/thumb_w/640/2020/11/18/robb-pullman-6-1605707325968247657870.jpg\" id=\"img_c9ac4de0-29a4-11eb-80f3-9937f5f0f3df\" w=\"1280\" h=\"720\" alt=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 5.\" title=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 5.\" rel=\"lightbox\" photoid=\"c9ac4de0-29a4-11eb-80f3-9937f5f0f3df\" type=\"photo\" data-original=\"https://autopro8.mediacdn.vn/2020/11/18/robb-pullman-6-1605707325968247657870.jpg\" width=\"\" height=\"\" class=\"lightbox-content\" style=\"padding: 0px; margin: 0px auto; display: inline-block; vertical-align: top; pointer-events: none; max-width: 100%;\"></a></div></div><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\"><span style=\"padding: 0px; margin: 0px;\">Động cơ của Mercedes-Maybach S 650 Pullman là loại V12, tăng áp kép, dung tích 6 lít, tạo ra công suất tối đa 630 mã lực, mô-men xoắn cực đại 1.000 Nm cùng với hộp số tự động 7 cấp 7G Tronic.</span></p>', '/storage/news/image/2/TYvLG98Y2fh9sZxSHaSG.jpg', 1, 1, 1, 0, NULL, '2021-06-10 09:30:14');
 
 -- --------------------------------------------------------
 
@@ -776,7 +815,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `idcongty`, `email`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `remember_token`, `loaitaikhoan`, `trangthai`, `created_at`, `updated_at`) VALUES
 (1, NULL, 'admin@dev.com', '2021-05-28 14:57:46', '$2y$10$vFxTKDYsc5xa6LW1UxdTZeeF5Sbk2dzL8kkh/1TUERQnp1nawEULu', NULL, NULL, NULL, 2, 0, NULL, '2021-05-26 16:21:16'),
-(2, 2, 'admin2@dev.com', '2021-05-28 14:57:46', '$2y$10$vFxTKDYsc5xa6LW1UxdTZeeF5Sbk2dzL8kkh/1TUERQnp1nawEULu', NULL, NULL, 'PSyHoZYMD0Y87Q3sPYdE9gNlmk5aCDrsYvr1yRthMZaVpdy7r9muZSe0qSbl', 1, 0, NULL, '2021-05-27 15:19:35'),
+(2, 2, 'admin2@dev.com', '2021-05-28 14:57:46', '$2y$10$vFxTKDYsc5xa6LW1UxdTZeeF5Sbk2dzL8kkh/1TUERQnp1nawEULu', NULL, NULL, 'MIbOAicbwkKrzzlYwWArUeo4PqNUTdR2ZxhhlZuiyy2FNZOQj3DUO6yNL9y7', 1, 0, NULL, '2021-05-27 15:19:35'),
 (28, 2, 'admin3@dev.com', '2021-05-28 14:57:46', '$2y$10$vFxTKDYsc5xa6LW1UxdTZeeF5Sbk2dzL8kkh/1TUERQnp1nawEULu', NULL, NULL, NULL, 1, 0, '2021-04-28 07:20:59', '2021-05-04 14:27:22'),
 (36, NULL, 'chau@gmail.com', '2021-05-28 14:57:46', '$2y$10$dwkz7Fr6NzxHwA7n9XUnwOqdDGjIMgNm.mjlrwko9yJO0PfH.cGF2', NULL, NULL, NULL, 1, 0, '2021-05-18 11:01:26', '2021-05-18 11:02:31'),
 (37, NULL, 'trung@dev.com', '2021-05-28 14:57:46', '$2y$10$JoBQ0bj7qN6YvW/4xNoM.eMZO.hOinupFaXyJwlZ.O2Q6S5SN1VU.', NULL, NULL, NULL, 1, 0, '2021-05-18 11:06:36', '2021-05-18 11:08:46'),
@@ -977,7 +1016,7 @@ CREATE TABLE `video` (
 INSERT INTO `video` (`id`, `idsanpham`, `idtintuc`, `iddanhgia`, `dulieuvideo`, `created_at`, `updated_at`) VALUES
 (29, NULL, 14, NULL, '/video/BMW Logo Intro.mp4', NULL, NULL),
 (30, NULL, 13, NULL, '/video/BMW Logo Intro.mp4', NULL, NULL),
-(31, NULL, 12, NULL, '/video/BMW LOGO [Animate this static!].mp4', NULL, NULL);
+(32, NULL, 12, NULL, '/video/BMW LOGO [Animate this static!].mp4', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -1181,7 +1220,7 @@ ALTER TABLE `kho`
 -- AUTO_INCREMENT for table `lichsutintuc`
 --
 ALTER TABLE `lichsutintuc`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `linhvuc`
@@ -1199,7 +1238,7 @@ ALTER TABLE `loaisanpham`
 -- AUTO_INCREMENT for table `logtintuc`
 --
 ALTER TABLE `logtintuc`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -1247,7 +1286,7 @@ ALTER TABLE `thongtingiaidoan`
 -- AUTO_INCREMENT for table `tintuc`
 --
 ALTER TABLE `tintuc`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -1271,7 +1310,7 @@ ALTER TABLE `vaitro_quyen`
 -- AUTO_INCREMENT for table `video`
 --
 ALTER TABLE `video`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
