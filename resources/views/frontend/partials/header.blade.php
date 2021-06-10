@@ -9,7 +9,7 @@
             </button>
             <a class="navbar-brand" href="tech-index.html">
                 <!-- <img src="TemplateTechBlog/images/version/tech-logo.png" alt=""> -->
-                <img src="https://i.pinimg.com/originals/ce/56/99/ce5699233cbc0f142250b520d967dff7.png" alt="" width="80px" height="80px">
+                <img src="https://i.pinimg.com/originals/ce/56/99/ce5699233cbc0f142250b520d967dff7.png" alt="" width="80px" height="50px">
             </a>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">

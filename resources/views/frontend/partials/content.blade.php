@@ -1,7 +1,7 @@
 <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
     <div class="page-wrapper">
         <div class="blog-top clearfix">
-            <h4 class="pull-left">Recent News <a href="#"><i class="fa fa-rss"></i></a></h4>
+            <h4 class="pull-left">Tin gần đây <a href="#"><i class="fa fa-rss"></i></a></h4>
         </div><!-- end blog-top -->
 
         @foreach ($content as $key => $row)
@@ -18,7 +18,7 @@
                     </div><!-- end col -->
 
                     <div class="blog-meta big-meta col-md-8">
-                        <h4><a href="{{route('detail',['id'=>$row->id])}}" title="">{{$row->tieudetintuc}}</a></h4>
+                        <h4><a href="{{route('detail',['id'=>$row->id])}}" title="">{{ Str::limit($row->tieudetintuc, 100) }}</a></h4>
                         <p>{!!$row->tomtattintuc!!}</p>
                         <small class="firstsmall"><a class="bg-orange" href="{{route('tinchuyenmuc',['id'=>$row->idchuyenmuc])}}" title="">{{$row->tenchuyenmuc}}</a></small>
                         <small><a href="#" title="">{{$row->ngaydangtintuc}}</a></small>

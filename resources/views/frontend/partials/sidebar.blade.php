@@ -4,9 +4,6 @@
 
     <div class="container-fluid">
         <div class="masonry-blog clearfix">
-
-            
-            
             @foreach ($sidebar as $key => $row)
                 <?php
                     if($key==0) $cl1 = "first-slot";
@@ -20,7 +17,7 @@
                             <div class="shadow-desc">
                                 <div class="blog-meta">
                                     <span class="bg-orange"><a href="{{route('tinchuyenmuc',['id'=>$row->idchuyenmuc])}}" title="">{{$row->tenchuyenmuc}}</a></span>
-                                    <h4><a href="{{route('detail',['id'=>$row->id])}}" title="">{{$row->tieudetintuc}}</a></h4>
+                                    <h4><a href="{{route('detail',['id'=>$row->id])}}" title="">{{ Str::limit($row->tieudetintuc, 80) }}</a></h4>
                                     <!-- <small><a href="tech-single.html" title="">{{$row->ngaydangtintuc}}</a></small> -->
                                     <small><a href="tech-author.html" title="">Tác giả: {{$row->hothanhvien}} {{$row->tenthanhvien}}</a></small>
                                 </div><!-- end meta -->
@@ -29,8 +26,6 @@
                     </div><!-- end post-media -->
                 </div><!-- end first-side -->
             @endforeach
-            
-
         </div><!-- end masonry -->
     </div>
     
