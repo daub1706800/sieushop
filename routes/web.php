@@ -28,9 +28,9 @@ Route::prefix('/')->group(function () {
         'as' => 'home',
         'uses' => 'App\Http\Controllers\GiaoDienController@home'
     ]);
-    Route::get('gadget', [
-        'as' => 'gadget',
-        'uses' => 'App\Http\Controllers\GiaoDienController@gadget'
+    Route::get('product', [
+        'as' => 'frontend.product.index',
+        'uses' => 'App\Http\Controllers\GiaoDienController@index_product'
     ]);
     Route::get('contact', [
         'as' => 'contact',

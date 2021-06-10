@@ -37,7 +37,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('gadget') }}">Sản phẩm</a>
+                        <a class="nav-link" href="{{ route('frontend.product.index') }}">Sản phẩm</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('contact') }}">Liên hệ</a>

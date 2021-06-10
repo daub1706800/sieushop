@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 
 @section('title')
-    <title>Gadget Page</title>
+    <title>Sản phẩm</title>
 @endsection
 
 @section('content')
@@ -37,7 +37,7 @@
                                         <div class="blog-box">
                                             <div class="post-media">
                                                 <a href="tech-single.html" title="">
-                                                    <img src="TemplateTechBlog/upload/tech_menu_01.jpg" alt="" class="img-fluid">
+                                                    <img src="{{$row->hinhanhsanpham}}" style="width:800px;height:460px" alt="" class="img-fluid">
                                                     <div class="hovereffect">
                                                         <span></span>
                                                     </div><!-- end hover -->
@@ -46,7 +46,7 @@
                                             <div class="blog-meta big-meta">
                                                 <span class="color-orange"><a href="tech-category-01.html" title="">{{$row->tenloaisanpham}}</a></span>
                                                 <h4><a href="tech-single.html" title="">{{$row->tensanpham}}</a></h4>
-                                                <p>{{$row->thongtinsanpham}}</p>
+                                                <p>{!! Str::limit($row->thongtinsanpham, 50) !!}</p>
                                                 <!-- <small><a href="tech-single.html" title="">14 July, 2017</a></small> -->
                                                 <small><a href="tech-author.html" title="">by {{$row->tencongty}}</a></small>
                                                 <small><a href="tech-single.html" title=""><i class="fa fa-eye"></i> 2887</a></small>

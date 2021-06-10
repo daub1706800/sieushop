@@ -54,7 +54,7 @@ class GiaoDienController extends Controller{
 
         return view('frontend.home', compact('sidebar','header','content','content_sidebar_video'));
     }
-    public function gadget()
+    public function index_product()
     {
         $header = DB::table('chuyenmuc')
                     ->orderBy('tenchuyenmuc')
