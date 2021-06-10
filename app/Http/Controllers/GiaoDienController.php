@@ -95,8 +95,10 @@ class GiaoDienController extends Controller{
         return view('frontend.contact.contact', compact('header','content_sidebar_video'));
     }
 
-    public function detail()
+    public function detail(Request $request)
     {
+        $id = $request->id;
+        dd($id);
         $header = DB::table('chuyenmuc')
                     ->orderBy('tenchuyenmuc')
                     ->get();

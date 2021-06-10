@@ -10,7 +10,7 @@
                 <div class="blog-box row">
                     <div class="col-md-4">
                         <div class="post-media">
-                            <a href="{{route('detail')}}" title="">
+                            <a href="{{route('detail',['id'=>$row->id])}}" title="">
                                 <img src="{{$row->hinhanhtintuc}}" alt="" class="" height="215px">
                                 <div class="hovereffect"></div>
                             </a>
@@ -18,10 +18,10 @@
                     </div><!-- end col -->
 
                     <div class="blog-meta big-meta col-md-8">
-                        <h4><a href="{{route('detail')}}" title="">{{$row->tieudetintuc}}</a></h4>
+                        <h4><a href="{{route('detail',['id'=>$row->id])}}" title="">{{$row->id}}{{$row->tieudetintuc}}</a></h4>
                         <p>{!!$row->tomtattintuc!!}</p>
-                        <small class="firstsmall"><a class="bg-orange" href="tech-category-01.html" title="">{{$row->tenchuyenmuc}}</a></small>
-                        <small><a href="{{route('detail')}}" title="">{{$row->ngaydangtintuc}}</a></small>
+                        <small class="firstsmall"><a class="bg-orange" href="{{route('tinchuyenmuc',['id'=>$row->idchuyenmuc])}}" title="">{{$row->tenchuyenmuc}}</a></small>
+                        <small><a href="#" title="">{{$row->ngaydangtintuc}}</a></small>
                         <small><a href="tech-author.html" title="">by {{$row->hothanhvien}} {{$row->tenthanhvien}}</a></small>
                         <!-- <small><a href="{{route('detail')}}" title=""><i class="fa fa-eye"></i>
                                 1114</a></small> -->

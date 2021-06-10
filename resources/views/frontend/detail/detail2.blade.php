@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 
 @section('title')
-    <title>Detail Page</title>
+    <title>Contact Page</title>
 @endsection
 
 @section('css')

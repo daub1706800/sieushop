@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 
 @section('title')
-    <title>Contact Page</title>
+    <title>Gadget Page</title>
 @endsection
 
 @section('content')
