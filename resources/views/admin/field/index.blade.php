@@ -49,7 +49,7 @@
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
                                                     <a class="dropdown-item" href="{{route('field.edit', ['id' => $field->id])}}">Chỉnh sửa</a>
-                                                    @if($field->category->isEmpty() && $field->company->isEmpty() && $field->product->isEmpty())
+                                                    @if($field->category->isEmpty() && $field->company->isEmpty())
                                                     <a class="dropdown-item" href="{{route('field.delete', ['id' => $field->id])}}">Xóa</a>
                                                     @endif
                                                 </div>
