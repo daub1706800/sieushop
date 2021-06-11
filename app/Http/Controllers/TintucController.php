@@ -112,14 +112,11 @@ class TintucController extends Controller{
 
     public function doaddTintuc(NewsRequest $request)
     {
-        $dataImageUpload = $this->StorageUploadImage($request, 'hinhanhtintuc', 'news/image');
-
         $mang1 = array();
         $mang1['idchuyenmuc'] = $request->idchuyenmuc;
         $mang1['idcongty'] = $request->idcongty;
         $mang1['idtaikhoan'] = $request->idtaikhoan;
         $mang1['ngaydangtintuc'] = date('Y-m-d H:i:s');
-        $mang1['hinhanhtintuc'] = $dataImageUpload['file_path'];
         $mang1['tieudetintuc'] = $request->tieudetintuc;
         $mang1['tomtattintuc'] = $request->tomtattintuc;
         if($request->tinnoibat!=null){
@@ -129,19 +126,31 @@ class TintucController extends Controller{
             $mang1['loaitintuc'] = '0';
         }
         $mang1['noidungtintuc'] = $request->noidungtintuc;
-        $id1 = DB::table('tintuc')->insertGetId($mang1);
+        // $id1 = DB::table('tintuc')->insertGetId($mang1);
+
+        if($request->hasFile('hinhanhtintuc'))
+        {
+            $dataImageUpload = $this->StorageUploadImage($request, 'hinhanhtintuc', 'news/image');
+
+            $mang1['hinhanhtintuc'] = $dataImageUpload['file_path'];
+            // Video::create([
+            //     'idtintuc'    => $id1,
+            //     'dulieuvideo' => $dataVideo['file_path']
+            // ]);
+        }
 
         if($request->hasFile('dulieuvideo'))
         {
-            // foreach($request->dulieuvideo as $fileItem)
-            // {
-                $dataVideo = $this->StorageUploadImage($request,'dulieuvideo', 'news/video');
-                Video::create([
-                    'idtintuc'    => $id1,
-                    'dulieuvideo' => $dataVideo['file_path']
-                ]);
-            // }
+            $dataVideoUpload = $this->StorageUploadImage($request,'dulieuvideo', 'news/video');
+
+            $mang1['videotintuc'] = $dataVideoUpload['file_path'];
+            // Video::create([
+            //     'idtintuc'    => $id1,
+            //     'dulieuvideo' => $dataVideo['file_path']
+            // ]);
         }
+
+        DB::table('tintuc')->insertGetId($mang1);
 
         return back();
     }
@@ -171,23 +180,23 @@ class TintucController extends Controller{
 
     public function editTintuc(NewsRequestEdit   $request)
     {
-        $linkhinhanhtieude = null;
-        if($request->hasFile('hinhanhtieude')){
-            $file = $request->file('hinhanhtieude');
-            $filename = rand(1, 99999) . '.' . $file->getClientOriginalName();
-            $hinhanhtieude = public_path().'/hinhanh';// public_path la public
-            $file->move($hinhanhtieude, $filename);
-            $linkhinhanhtieude = '/hinhanh'.'/'.$filename;// vi tri trang dang o public nen chi can hinhanh/tenfile
-        }
+        // $linkhinhanhtieude = null;
+        // if($request->hasFile('hinhanhtieude')){
+        //     $file = $request->file('hinhanhtieude');
+        //     $filename = rand(1, 99999) . '.' . $file->getClientOriginalName();
+        //     $hinhanhtieude = public_path().'/hinhanh';// public_path la public
+        //     $file->move($hinhanhtieude, $filename);
+        //     $linkhinhanhtieude = '/hinhanh'.'/'.$filename;// vi tri trang dang o public nen chi can hinhanh/tenfile
+        // }
 
         $data = array();
         $data['idchuyenmuc'] = $request->idchuyenmuc;
         $data['idcongty'] = $request->idcongty;
         $data['idtaikhoan'] = $request->idtaikhoan;
         $data['ngaydangtintuc'] = date('Y-m-d H:i:s');
-        if($linkhinhanhtieude!=null){
-            $data['hinhanhtintuc'] = $linkhinhanhtieude;
-        }
+        // if($linkhinhanhtieude!=null){
+        //     $data['hinhanhtintuc'] = $linkhinhanhtieude;
+        // }
         $data['tieudetintuc'] = $request->tieudetintuc;
         $data['tomtattintuc'] = $request->tomtattintuc;
         $data['noidungtintuc'] = $request->noidungtintuc;

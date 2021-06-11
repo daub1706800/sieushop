@@ -44,15 +44,15 @@ class GiaoDienController extends Controller{
                     ->limit(10)
                     ->get();
 
-        $content_sidebar_video = DB::table('video')
-                                    ->orderBy('id', 'desc')
-                                    ->join('tintuc', 'video.idtintuc', '=', 'tintuc.id')
-                                    ->where('tintuc.xuatbantintuc',1)
-                                    ->select('video.*', 'tintuc.tieudetintuc')
-                                    ->limit(3)
-                                    ->get();
+        // $content_sidebar_video = DB::table('video')
+        //                             ->orderBy('id', 'desc')
+        //                             ->join('tintuc', 'video.idtintuc', '=', 'tintuc.id')
+        //                             ->where('tintuc.xuatbantintuc',1)
+        //                             ->select('video.*', 'tintuc.tieudetintuc')
+        //                             ->limit(3)
+        //                             ->get();
 
-        return view('frontend.home', compact('sidebar','header','content','content_sidebar_video'));
+        return view('frontend.home', compact('sidebar','header','content'));
     }
     public function index_product()
     {

@@ -74,24 +74,21 @@ class NewsController extends Controller
             'loaitintuc'    => $loaitintuc,
         ];
 
-        $dataImageUpload = $this->StorageUploadImage($request, 'hinhanhtintuc', 'news/image');
+        if ($request->hasFile('hinhanhtintuc')) {
 
-        if($dataImageUpload)
-        {
+            $dataImageUpload = $this->StorageUploadImage($request, 'hinhanhtintuc', 'news/image');
+
             $dataNews['hinhanhtintuc'] = $dataImageUpload['file_path'];
         }
-
-        $tintuc = $this->news->create($dataNews);
         
         if($request->hasFile('videotintuc'))
         {
             $dataVideoUpload = $this->StorageUploadImage($request, 'videotintuc', 'news/video');
 
-            $this->video->create([
-                'idtintuc'    => $tintuc->id,
-                'dulieuvideo' => $dataVideoUpload['file_path']
-            ]);
+            $dataNews['videotintuc'] = $dataVideoUpload['file_path'];
         }
+
+        $this->news->create($dataNews);
 
         return redirect()->route('news.index');
     }
@@ -102,11 +99,9 @@ class NewsController extends Controller
 
         $categories = $this->category->all();
 
-        $videos = $this->video->where('idtintuc', $id)->get();
-
         $companies = $this->company->all();
 
-        return view('admin.news.edit', compact('news', 'categories', 'videos', 'companies'));
+        return view('admin.news.edit', compact('news', 'categories', 'companies'));
     }
 
     public function update(NewsRequestEdit $request, $id)
@@ -120,28 +115,22 @@ class NewsController extends Controller
             'duyettintuc' => 0
         ];
 
-        $dataImageUpload = $this->StorageUploadImage($request, 'hinhanhtintuc', 'news/image');
+        if ($request->hasFile('hinhanhtintuc')) {
 
-        if(!empty($dataImageUpload))
-        {
+            $dataImageUpload = $this->StorageUploadImage($request, 'hinhanhtintuc', 'news/image');
+
             $dataNews['hinhanhtintuc'] = $dataImageUpload['file_path'];
         }
 
-        $this->news->find($id)->update($dataNews);
 
         if($request->hasFile('videotintuc'))
         {
-            $tintuc = $this->news->find($id);
-
-            $this->video->where('idtintuc', $id)->delete();
-
             $dataVideoUpload = $this->StorageUploadImage($request, 'videotintuc', 'news/video');
 
-            $this->video->create([
-                'idtintuc'    => $tintuc->id,
-                'dulieuvideo' => $dataVideoUpload['file_path']
-            ]);
+            $dataNews['videotintuc'] = $dataVideoUpload['file_path'];
         }
+
+        $this->news->find($id)->update($dataNews);
 
         return redirect()->route('news.index');
     }
@@ -257,16 +246,13 @@ class NewsController extends Controller
 
         $ngaydang = Carbon::createFromFormat('Y-m-d H:i:s', $news->ngaydangtintuc)->format('d-m-Y');
 
-        $videos = Video::where('idtintuc', $news->id)->get();
-
         $output = '';
 
-        foreach($videos as $video)
-        {
-            $output .= '<video style="width:440px; height:300px" controls>
-                            <source src="'.$video->dulieuvideo.'" type="video/mp4">
-                            Trình duyệt của bạn không hỗ trợ thẻ video trong HTML5.
-                        </video>';
+        if ($news->videotintuc) {
+            $output = '<video style="width:440px; height:300px" controls>
+                        <source src="'.$news->dulieuvideo.'" type="video/mp4">
+                        Trình duyệt của bạn không hỗ trợ thẻ video trong HTML5.
+                    </video>';
         }
 
         $array = [
@@ -312,6 +298,8 @@ class NewsController extends Controller
 
     public function delete_video(Request $request)
     {
-        $this->video->where('idtintuc', $request->id)->delete();
+        $this->news->find($request->id)->update([
+            'videotintuc' => null
+        ]);
     }
 }

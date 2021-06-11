@@ -12,7 +12,7 @@
         <div class="widget">
             <h2 class="widget-title">Trend Videos</h2>
             <div class="trend-videos">
-                @foreach ($content_sidebar_video as $key => $row)
+                @foreach ($sidebar as $key => $row)
                     <div class="blog-box">
                         <div class="post-media">
                             <!-- <a href="tech-single.html" title="">
@@ -22,7 +22,7 @@
                                 </div>
                             </a> -->
                             <video height="150px" controls>
-                                    <source src="{{$row->dulieuvideo}}" type="video/mp4">
+                                    <source src="{{$row->videotintuc}}" type="video/mp4">
                             </video>
                         </div><!-- end media -->
                         <div class="blog-meta">

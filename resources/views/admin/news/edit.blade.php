@@ -80,13 +80,13 @@
                                 @error('videotintuc')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror
-                                @foreach($videos as $video)
+                                @if ($news->videotintuc)
                                 <video style="witdh:140px; height:140px; margin-top: 10px" controls>
-                                    <source src="{{ $video->dulieuvideo }}" type="video/mp4">
+                                    <source src="{{ $news->videotintuc }}" type="video/mp4">
                                     Trình duyệt của bạn không hỗ trợ thẻ video trong HTML5.
                                 </video>
-                                <button type="button" style="margin-bottom: 30px;" data-id="{{ $news->id }}" class="btn btn-danger xoa-video">X</button>
-                                @endforeach
+                                <button type="button" style="margin-bottom: 30px;" data-id="{{ $news->id }}" class="btn btn-danger xoa-video">X</button>  
+                                @endif
                             </div>
                             <div class="form-group col-md-12">
                                 <label>Tiêu đề *</label>

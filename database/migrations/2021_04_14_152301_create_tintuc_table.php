@@ -23,6 +23,7 @@ class CreateTintucTable extends Migration
             $table->text('tomtattintuc');
             $table->text('noidungtintuc');
             $table->string('hinhanhtintuc');
+            $table->string('videotintuc')->nullable();
             $table->smallInteger('loaitintuc')->default('0')->comment('1-nổi bật, 0-không nổi bật');
             $table->smallInteger('duyettintuc')->default('0')->comment('1-đã duyệt, 0-chưa duyệt');
             $table->smallInteger('xuatbantintuc')->default('0')->comment('1-duyệt xuất bản, 0-chưa được xuất bản');
