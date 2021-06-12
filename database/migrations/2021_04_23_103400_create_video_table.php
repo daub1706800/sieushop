@@ -15,8 +15,7 @@ class CreateVideoTable extends Migration
     {
         Schema::create('video', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('idsanpham')->nullable();
-            $table->bigInteger('iddanhgia')->nullable();
+            $table->bigInteger('iddanhgia');
             $table->string('dulieuvideo');
             $table->timestamps();
         });

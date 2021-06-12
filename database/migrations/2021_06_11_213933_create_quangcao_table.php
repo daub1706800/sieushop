@@ -14,7 +14,10 @@ class CreateQuangcaoTable extends Migration
     public function up()
     {
         Schema::create('quangcao', function (Blueprint $table) {
-            $table->id();  
+            $table->id();
+            $table->string('tieudequangcao');
+            $table->smallInteger('loaiquangcao')->default(0)->comment('0-thường, 1-sự kiện');
+            $table->timestamp('ngaytaoquangcao')->useCurrent();
             $table->timestamps();
         });
     }

@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Advertise extends Model
+class AdvertiseImage extends Model
 {
     use HasFactory;
-    protected $table = 'quangcao';
+    protected $table = 'hinhanhquangcao';
     protected $guarded = [];
 }

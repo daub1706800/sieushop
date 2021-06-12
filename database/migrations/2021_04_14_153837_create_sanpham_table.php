@@ -22,6 +22,7 @@ class CreateSanphamTable extends Migration
             $table->string('tensanpham');
             $table->text('thongtinsanpham');
             $table->string('hinhanhsanpham');
+            $table->string('videosanpham')->nullable();
             $table->string('xuatxu');
             $table->string('chungloaisanpham');
             $table->integer('dongiasanpham');

@@ -85,6 +85,7 @@ Route::prefix('/')->group(function () {
     // ]);
 });
 
+/* Route Administrator */
 Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('/', function () {
@@ -248,6 +249,66 @@ Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
             Route::get('/delete-video', [
                 'as'   => 'news.delete-video',
                 'uses' => 'App\Http\Controllers\NewsController@delete_video'
+            ]);
+        });
+
+        /* Module Video tin tức */
+        Route::prefix('video')->group(function () {
+            Route::get('/', [
+                'as'   => 'admin.video.index',
+                'uses' => 'App\Http\Controllers\AdminNewsVideoController@index'
+            ]);
+            Route::get('/add', [
+                'as'   => 'admin.video.add',
+                'uses' => 'App\Http\Controllers\AdminNewsVideoController@add'
+            ]);
+            Route::post('/store', [
+                'as'   => 'admin.video.store',
+                'uses' => 'App\Http\Controllers\AdminNewsVideoController@store'
+            ]);
+            Route::get('/edit/{id}', [
+                'as'   => 'admin.video.edit',
+                'uses' => 'App\Http\Controllers\AdminNewsVideoController@edit'
+            ]);
+            Route::post('/update/{id}', [
+                'as'   => 'admin.video.update',
+                'uses' => 'App\Http\Controllers\AdminNewsVideoController@update'
+            ]);
+            Route::get('/delete/{id}', [
+                'as'   => 'admin.video.delete',
+                'uses' => 'App\Http\Controllers\AdminNewsVideoController@delete'
+            ]);
+            Route::get('/duyet/{id}', [
+                'as'   => 'admin.video.update-duyet',
+                'uses' => 'App\Http\Controllers\AdminNewsVideoController@update_duyet'
+            ]);
+            Route::get('/xuatban/{id}', [
+                'as'   => 'admin.video.update-xuatban',
+                'uses' => 'App\Http\Controllers\AdminNewsVideoController@update_xuatban'
+            ]);
+            Route::post('/history', [
+                'as'   => 'admin.video.history',
+                'uses' => 'App\Http\Controllers\AdminNewsVideoController@history'
+            ]);
+            Route::get('/remove/{id}', [
+                'as'   => 'admin.video.remove',
+                'uses' => 'App\Http\Controllers\AdminNewsVideoController@remove'
+            ]);
+            Route::post('/view', [
+                'as'   => 'admin.video.view',
+                'uses' => 'App\Http\Controllers\AdminNewsVideoController@view'
+            ]);
+            Route::get('/log/{id}', [
+                'as'   => 'admin.video.log',
+                'uses' => 'App\Http\Controllers\AdminNewsVideoController@log'
+            ]);
+            Route::get('/change-status', [
+                'as'   => 'admin.video.change-status',
+                'uses' => 'App\Http\Controllers\AdminNewsVideoController@change_status'
+            ]);
+            Route::get('/delete-video', [
+                'as'   => 'admin.video.delete-video',
+                'uses' => 'App\Http\Controllers\AdminNewsVideoController@delete_video'
             ]);
         });
     
@@ -493,6 +554,7 @@ Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
     }); 
 });
 
+/* Route Company */
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('dasboard')->group(function() {
         Route::get('/', function () {
@@ -604,6 +666,66 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 'as' => 'tintuc.viewTintuc',
                 'uses' => 'App\Http\Controllers\TintucController@viewTintuc',
                 'middleware' => 'can:news-view'
+            ]);
+        });
+
+        /* Module Video tin tức */
+        Route::prefix('video')->group(function () {
+            Route::get('/', [
+                'as'   => 'video.index',
+                'uses' => 'App\Http\Controllers\NewsVideoController@index'
+            ]);
+            Route::get('/add', [
+                'as'   => 'video.add',
+                'uses' => 'App\Http\Controllers\NewsVideoController@add'
+            ]);
+            Route::post('/store', [
+                'as'   => 'video.store',
+                'uses' => 'App\Http\Controllers\NewsVideoController@store'
+            ]);
+            Route::get('/edit/{id}', [
+                'as'   => 'video.edit',
+                'uses' => 'App\Http\Controllers\NewsVideoController@edit'
+            ]);
+            Route::post('/update/{id}', [
+                'as'   => 'video.update',
+                'uses' => 'App\Http\Controllers\NewsVideoController@update'
+            ]);
+            Route::get('/delete/{id}', [
+                'as'   => 'video.delete',
+                'uses' => 'App\Http\Controllers\NewsVideoController@delete'
+            ]);
+            Route::get('/duyet/{id}', [
+                'as'   => 'video.update-duyet',
+                'uses' => 'App\Http\Controllers\NewsVideoController@update_duyet'
+            ]);
+            Route::get('/xuatban/{id}', [
+                'as'   => 'video.update-xuatban',
+                'uses' => 'App\Http\Controllers\NewsVideoController@update_xuatban'
+            ]);
+            Route::post('/history', [
+                'as'   => 'video.history',
+                'uses' => 'App\Http\Controllers\NewsVideoController@history'
+            ]);
+            Route::get('/remove/{id}', [
+                'as'   => 'video.remove',
+                'uses' => 'App\Http\Controllers\NewsVideoController@remove'
+            ]);
+            Route::post('/view', [
+                'as'   => 'video.view',
+                'uses' => 'App\Http\Controllers\NewsVideoController@view'
+            ]);
+            Route::get('/log/{id}', [
+                'as'   => 'video.log',
+                'uses' => 'App\Http\Controllers\NewsVideoController@log'
+            ]);
+            Route::get('/change-status', [
+                'as'   => 'video.change-status',
+                'uses' => 'App\Http\Controllers\NewsVideoController@change_status'
+            ]);
+            Route::get('/delete-video', [
+                'as'   => 'video.delete-video',
+                'uses' => 'App\Http\Controllers\NewsVideoController@delete_video'
             ]);
         });
     

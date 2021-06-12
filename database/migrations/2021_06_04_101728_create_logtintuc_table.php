@@ -15,7 +15,8 @@ class CreateLogtintucTable extends Migration
     {
         Schema::create('logtintuc', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('idtintuc');
+            $table->bigInteger('idtintuc')->nullable();
+            $table->bigInteger('idvideotintuc')->nullable();
             $table->bigInteger('idtaikhoan');
             $table->string('noidungdanhgia');
             $table->timestamp('thoigian');

@@ -19,6 +19,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
@@ -111,6 +112,22 @@ class ProfileController extends Controller
 
     public function changeAvatar(Request $request, $id)
     {
+        $validated = Validator::make($request->all(), [
+            'file' => 'bail|mimes:jpeg,jpg,png|dimensions:min_width=960, min_height=960|max:2048',
+        ], [
+            'file.mimes' => 'File ảnh phải là kiểu jpeg, jpg, png',
+            'file.dimensions' => 'Độ phân giải ảnh không vượt quá 960px x 960px',
+            'file.max' => 'Kích thước ảnh không vượt quá 2MB',
+        ]);
+
+        if(!$validated->passes())
+        {
+            return response()->json([
+                'status' => 0,
+                'error' => $validated->errors(),
+            ]);
+        }
+
         $dataUploadImage = $this->StorageUploadImage($request, 'file', 'profile');
 
         if (!empty($dataUploadImage)) {
@@ -129,7 +146,7 @@ class ProfileController extends Controller
             session()->put('info', $info);
 
             return response([
-                'code' => 200,
+                'status' => 1,
                 'message' => 'success'
             ], 200);
         }

@@ -101,6 +101,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{route('admin.video.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-video"></i>
+                        <p>
+                            Tin tức Video
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{route('admin.productcategory.index')}}" class="nav-link">
                         <i class="nav-icon fas fa-list"></i>
                         <p>
@@ -161,6 +169,14 @@
                             <i class="nav-icon fas fa-newspaper"></i>
                             <p>
                                 Tin tức
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('video.index')}}" class="nav-link">
+                            <i class="nav-icon fas fa-video"></i>
+                            <p>
+                                Tin tức Video
                             </p>
                         </a>
                     </li>

@@ -1,7 +1,7 @@
 @extends('admin.layouts.admin')
 
 @section('title')
-    <title>Tin tức | Chỉnh sửa</title>
+    <title>Tin tức Video | Chỉnh sửa</title>
 @endsection
 
 @section('css')
@@ -30,7 +30,7 @@
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    @include('admin.partials.content-header', ['name' => 'CHỈNH SỬA', 'key' => 'TIN TỨC'])
+    @include('admin.partials.content-header', ['name' => 'CHỈNH SỬA', 'key' => 'TIN TỨC VIDEO'])
     <!-- /.content-header -->
 
     <!-- Main content -->
@@ -38,7 +38,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <form action="{{route('news.update', ['id' => $news->id]) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('video.update', ['id' => $newsvideo->id]) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="form-group col-md-6">
@@ -46,76 +46,67 @@
                                 <select class="form-control category-selected @error('idchuyenmuc') is-invalid @enderror" name="idchuyenmuc">
                                     <option value=""></option>
                                     @foreach($categories as $category)
-                                        <option {{ $news->idchuyenmuc == $category->id ? "selected" : "" }} value="{{ $category->id }}">{{ $category->tenchuyenmuc}}</option>
+                                        <option {{ $newsvideo->idchuyenmuc == $category->id ? "selected" : "" }} value="{{ $category->id }}">{{ $category->tenchuyenmuc}}</option>
                                     @endforeach
                                 </select>
                                 @error('idchuyenmuc')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="form-group col-md-6">
-                                <label>Công ty *</label>
-                                <select class="form-control company-selected @error('idcongty') is-invalid @enderror" name="idcongty">
-                                    <option value=""></option>
-                                    @foreach($companies as $company)
-                                        <option {{ $news->idchuyenmuc == $company->id ? "selected" : "" }} value="{{$company->id}}">{{$company->tencongty}}</option>
-                                    @endforeach
-                                </select>
-                                @error('idcongty')
+                                <label>Ảnh đại diện *</label>
+                                <input type="file" class="form-control-file @error('hinhdaidienvideo') is-invalid @enderror"
+                                    name="hinhdaidienvideo">
+                                @error('hinhdaidienvideo')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror
+                                <img style="width:150px; height:150px; margin-top: 10px; object-fit: cover" src="{{ $newsvideo->hinhdaidienvideo }}" alt="">
                             </div>
                             <div class="form-group col-md-6">
-                                <label>Ảnh tóm tắt *</label>
-                                <input type="file" class="form-control-file @error('hinhanhtintuc') is-invalid @enderror" name="hinhanhtintuc">
-                                @error('hinhanhtintuc')
+                                <label>Video *</label>
+                                <input type="file" class="form-control-file @error('dulieuvideotintuc') is-invalid @enderror"
+                                        name="dulieuvideotintuc">
+                                @error('dulieuvideotintuc')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror
-                                <img style="width:150px; height:150px; margin-top: 10px; object-fit: cover" src="{{ $news->hinhanhtintuc }}" alt="">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label>Video</label>
-                                <input type="file" class="form-control-file @error('videotintuc') is-invalid @enderror"
-                                        name="videotintuc">
-                                @error('videotintuc')
-                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                                @enderror
-                                @if ($news->videotintuc)
+                                @if ($newsvideo->dulieuvideotintuc)
                                 <video style="height:140px; margin-top: 10px" controls>
-                                    <source src="{{ $news->videotintuc }}" type="video/mp4">
+                                    <source src="{{ $newsvideo->dulieuvideotintuc }}" type="video/mp4">
                                     Trình duyệt của bạn không hỗ trợ thẻ video trong HTML5.
                                 </video>
-                                <button type="button" style="margin-bottom: 30px;" data-id="{{ $news->id }}" class="btn btn-danger xoa-video">X</button>  
                                 @endif
                             </div>
                             <div class="form-group col-md-12">
                                 <label>Tiêu đề *</label>
-                                <input type="text" class="form-control @error('tieudetintuc') is-invalid @enderror"
-                                        name="tieudetintuc" value="{{ old('tieudetintuc', $news->tieudetintuc) }}" placeholder="Tiêu đề tin tức">
-                                @error('tieudetintuc')
+                                <input type="text" class="form-control @error('tieudevideo') is-invalid @enderror"
+                                        name="tieudevideo" value="{{ old('tieudevideo', $newsvideo->tieudevideo) }}" placeholder="Tiêu đề tin tức">
+                                @error('tieudevideo')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="form-group col-md-12">
                                 <label>Tóm tắt *</label>
-                                <textarea class="form-control summernote-tomtat @error('tomtattintuc') is-invalid @enderror" name="tomtattintuc">{{ old('tomtattintuc', $news->tomtattintuc)}}</textarea>
-                                @error('tomtattintuc')
+                                <textarea class="form-control summernote-tomtat @error('tomtatvideo') is-invalid @enderror" name="tomtatvideo">{{ old('tomtatvideo', $newsvideo->tomtatvideo)}}</textarea>
+                                @error('tomtatvideo')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="form-group col-md-12">
-                                <label>Nội dung *</label>
-                                <textarea class="form-control summernote-noidung @error('noidungtintuc') is-invalid @enderror" name="noidungtintuc">{{ old('noidungtintuc', $news->noidungtintuc) }}</textarea>
-                                @error('noidungtintuc')
+                                <label>Nguồn *</label>
+                                <input class="form-control @error('nguonvideotintuc') is-invalid @enderror"
+                                    name="nguonvideotintuc" value="{{ old('nguonvideotintuc', $newsvideo->nguonvideotintuc) }}">
+                                @error('nguonvideotintuc')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="checkbox" name="loaitintuc" value="1" {{ $news->loaitintuc == 1 ? "checked" : "" }}>
+                            <input type="checkbox" name="loaivideotintuc" value="1" {{ $newsvideo->loaivideotintuc == 1 ? "checked" : "" }}>
                             <label>Tin nổi bật</label>
                         </div>
-                        @if ($news->xuatbantintuc != 1)
+                        @if ($newsvideo->xuatbanvideotintuc != 1)
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary mb-5">Lưu chỉnh sửa</button>
                         </div>  
@@ -123,8 +114,8 @@
                     </form>
 
                     <div class="col-md-6">
-                        @if ($news->xuatbantintuc == 1 || $news->duyettintuc == 1)
-                        <form action="{{ route('news.remove', ['id' => $news->id]) }}">
+                        @if ($newsvideo->xuatbanvideotintuc == 1 || $newsvideo->duyetvideotintuc == 1)
+                        <form action="{{ route('video.remove', ['id' => $newsvideo->id]) }}">
                             <div class="d-flex justify-content-start">
                                 <div class="form-group">
                                     <label>Thu hồi tin tức *</label>
@@ -144,8 +135,8 @@
                         </form>
                         @endif
 
-                        @if ($news->duyettintuc == 0 && $news->xuatbantintuc == 0 && $news->lydogo == 0 || $news->lydogo == 1)
-                        <form action="{{ route('news.update-duyet', ['id' => $news->id]) }}">
+                        @if ($newsvideo->duyetvideotintuc == 0 && $newsvideo->xuatbanvideotintuc == 0 && $newsvideo->trangthaithuhoi == 0 || $newsvideo->trangthaithuhoi == 1)
+                        <form action="{{ route('video.update-duyet', ['id' => $newsvideo->id]) }}">
                             <div class="d-flex justify-content-start">
                                 <div class="form-group">
                                     <label>Duyệt tin *</label>
@@ -164,8 +155,8 @@
                         </form>
                         @endif
 
-                        @if ($news->xuatbantintuc == 0 && $news->duyettintuc == 1)
-                        <form action="{{ route('news.update-xuatban', ['id' => $news->id]) }}">
+                        @if ($newsvideo->xuatbanvideotintuc == 0 && $newsvideo->duyetvideotintuc == 1)
+                        <form action="{{ route('video.update-xuatban', ['id' => $newsvideo->id]) }}">
                             <div class="d-flex justify-content-start">
                                 <div class="form-group">
                                     <label>Xuất bản tin *</label>
@@ -222,56 +213,11 @@
         });
 
         $(function(){
-            $('.summernote-noidung').summernote({
-                height: 400,                // set editor height
-                minHeight: 400,             // set minimum height of editor
-                maxHeight: 400,             // set maximum height of editor
-                focus: false,                  // set focus to editable area after initializing summernote
-                codemirror: { // codemirror options
-                    theme: 'monokai'
-                },
-                placeholder: "Nhập nội dung chính",
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'underline', 'clear']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['help']]
-                ]
-            });
-        });
-
-        $(function(){
             $(".category-selected").select2({
                 tags: false,
                 placeholder : 'Chọn chuyên mục',
                 theme: "classic",
                 width: "100%"
-            });
-        });
-
-        $(function(){
-            $(".company-selected").select2({
-                tags: false,
-                placeholder : 'Chọn công ty',
-                theme: "classic",
-                width: "100%"
-            });
-        });
-
-        $(document).on('click', '.xoa-video', function() {
-            var id = $(this).data('id');
-            $.ajax({
-                url : "{{ route('news.delete-video') }}",
-                type: "get",
-                data: {
-                    "id":id
-                },
-                success:function(data) {
-                    location.reload();
-                }
             });
         });
     });

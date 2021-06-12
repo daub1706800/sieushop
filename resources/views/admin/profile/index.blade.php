@@ -18,16 +18,16 @@
 <div class="content-wrapper">
     <div class="content">
         <div class="container-fluid emp-profile">
+            <div style="display:none;margin-top: 5px;padding: 3px 5px;" class="alert alert-danger" id="file"></div>
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
                         <img style="width: 200px; height: 200px;" src="{{ asset(session()->get('info')['image']) }}" alt=""/>
                         <form id="changeform" method="post" enctype="multipart/form-data">
-                            {{-- <input type="hidden" id="csrf" value="{{csrf_token()}}"> --}}
                             @csrf
                             <div class="file btn btn-lg btn-primary">
                                 Change Photo
-                                <input type="file" name="file" id="changeavatar" data-url="{{route('profile.change', ['id' => $profile->id])}}"/>
+                                <input style="z-index: 1;height: 38px;" type="file" name="file" id="changeavatar" data-url="{{route('profile.change', ['id' => $profile->id])}}"/>
                             </div>
                         </form>
                     </div>
@@ -232,9 +232,17 @@
                     contentType: false,
                     success:function (data)
                     {
-                        if (data.code === 200)
+                        if (data.status == 1)
                         {
                             location.reload();
+                        }
+                        else
+                        {
+                            $.each(data.error, function(prefix, val){
+                                console.log(prefix)
+                                $('#' + prefix).text(val);
+                                $('#' + prefix).css('display', 'block');
+                            });
                         }
                     }
                 });

@@ -15,7 +15,8 @@ class CreateLichsutintucTable extends Migration
     {
         Schema::create('lichsutintuc', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('idtintuc');
+            $table->bigInteger('idtintuc')->nullable();
+            $table->bigInteger('idvideotintuc')->nullable();
             $table->bigInteger('idtaikhoan');
             $table->string('lydogo');
             $table->timestamp('thoigian')->useCurrent();

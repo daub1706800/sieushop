@@ -15,6 +15,8 @@ class CreateHinhanhquangcaoTable extends Migration
     {
         Schema::create('hinhanhquangcao', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('idquangcao');
+            $table->string('dulieuhinhanhquangcao');
             $table->timestamps();
         });
     }

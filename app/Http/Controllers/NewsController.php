@@ -49,7 +49,7 @@ class NewsController extends Controller
 
     public function add()
     {
-        $categories = $this->category->all();
+        $categories = $this->category->orderBy('tenchuyenmuc', 'asc')->get();
 
         $companies = $this->company->all();
 
@@ -97,7 +97,7 @@ class NewsController extends Controller
     {
         $news = $this->news->find($id);
 
-        $categories = $this->category->all();
+        $categories = $this->category->orderBy('tenchuyenmuc', 'asc')->get();
 
         $companies = $this->company->all();
 
@@ -106,12 +106,18 @@ class NewsController extends Controller
 
     public function update(NewsRequestEdit $request, $id)
     {
+        $loaitintuc = 0;
+
+        if ($request->loaitintuc) {
+            $loaitintuc = 1;
+        }
+
         $dataNews = [
             'idchuyenmuc'   => $request->idchuyenmuc,
             'tieudetintuc'  => $request->tieudetintuc,
             'tomtattintuc'  => $request->tomtattintuc,
             'noidungtintuc' => $request->noidungtintuc,
-            'loaitintuc'    => $request->loaitintuc,
+            'loaitintuc'    => $loaitintuc,
             'duyettintuc' => 0
         ];
 

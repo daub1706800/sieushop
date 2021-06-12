@@ -1,7 +1,7 @@
 @extends('admin.layouts.admin')
 
 @section('title')
-    <title>Tin tức | Lịch sử</title>
+    <title>Tin tức Video| Lịch sử</title>
 @endsection
 
 @section('css')
@@ -11,13 +11,24 @@
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    @include('admin.partials.content-header', ['name' => 'LỊCH SỬ THU HỒI', 'key' => 'TIN TỨC'])
+    @include('admin.partials.content-header', ['name' => 'LỊCH SỬ DUYỆT / XUẤT BẢN', 'key' => 'TIN TỨC VIDEO'])
     <!-- /.content-header -->
 
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
             <div class="row">
+                <div class="col-md-12 mb-3">
+                    <a href="{{ route('admin.video.index') }}" class="btn btn-primary">Danh sách tin tức video</a>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <div class="d-flex justify-content-center">
+                        <h4><b>{{ $company->tencongty }}</b></h4>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <h4>Bản tin: <b>{{ $newsvideo->tieudevideo }}</b></h4>
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
@@ -26,16 +37,24 @@
                                 <tr>
                                     <th scope="col">ID</th>
                                     <th scope="col">ID Tin tức</th>
-                                    <th scope="col">Lý do gỡ</th>
+                                    <th scope="col">Nội dung đánh giá</th>
+                                    <th scope="col">Người đánh giá</th>
                                     <th scope="col">Thời gian</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($newshistories as $key => $item)
+                                    @foreach($newslogs as $key => $item)
                                     <tr>
                                         <th scope="row">{{ $item->id }}</th>
-                                        <td>{{ $item->idtintuc }}</td>
-                                        <td>{{ $item->lydogo }}</td>
+                                        <td>{{ $item->idvideotintuc }}</td>
+                                        <td>{{ $item->noidungdanhgia }}</td>
+                                        <td>
+                                            @if ($item->user->loaitaikhoan == 2)
+                                            {{ __('Administator') }}
+                                            @else
+                                            {{ $item->profile->hothanhvien . ' ' . $item->profile->tenthanhvien }}
+                                            @endif
+                                        </td>
                                         <td>{{ $item->thoigian }}</td>
                                     </tr>
                                     @endforeach

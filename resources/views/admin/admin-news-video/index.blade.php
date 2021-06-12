@@ -1,7 +1,7 @@
 @extends('admin.layouts.admin')
 
 @section('title')
-    <title>Tin tức | Danh sách</title>
+    <title>Tin tức Video| Danh sách</title>
 @endsection
 
 @section('css')
@@ -11,7 +11,7 @@
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    @include('admin.partials.content-header', ['name' => 'DANH SÁCH', 'key' => 'TIN TỨC'])
+    @include('admin.partials.content-header', ['name' => 'DANH SÁCH', 'key' => 'TIN TỨC VIDEO'])
     <!-- /.content-header -->
 
     <!-- Main content -->
@@ -19,7 +19,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <a href="{{ route('news.add') }}" class="btn btn-primary float-right m-2"><i class="fas fa-plus"></i></a></a>
+                    <a href="{{ route('admin.video.add') }}" class="btn btn-primary float-right m-2"><i class="fas fa-plus"></i></a></a>
                 </div>
                 <div class="col-md-12">
                     <div class="card">
@@ -39,32 +39,32 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($news as $key => $item)
+                                    @foreach($newsvideo as $key => $item)
                                     <tr>
                                         <th scope="row">{{ $item->id }}</th>
                                         <td>
                                             <a href="" class="tieudetintuc"
                                                 data-toggle="modal" data-target="#exampleModal"
-                                                data-id="{{ $item->id }}">{{ $item->tieudetintuc }}</a>
+                                                data-id="{{ $item->id }}">{{ $item->tieudevideo }}</a>
                                         </td>
                                         <td>{{ $item->category->tenchuyenmuc }}</td>
                                         <td>{{ $item->profile->tenthanhvien .' '. $item->profile->hothanhvien }}</td>
-                                        <td>{{ $item->ngaydangtintuc }}</td>
+                                        <td>{{ $item->ngaydangvideo }}</td>
                                         <td>{{ $item->company->tencongty }}</td>
                                         <td class="text-center">
-                                            <input type="checkbox" id="tinnoibat" data-id="{{ $item->id }}" value="{{ $item->loaitintuc }}" {{ $item->loaitintuc == 1 ? "checked" : "" }}>
+                                            <input type="checkbox" id="tinnoibat" data-id="{{ $item->id }}" value="{{ $item->loaivideotintuc }}" {{ $item->loaivideotintuc == 1 ? "checked" : "" }}>
                                         </td>
                                         <td style="width:120px;">
-                                            @if ($item->duyettintuc == 0 && $item->xuatbantintuc == 0 && $item->lydogo == 0)
+                                            @if ($item->duyetvideotintuc == 0 && $item->xuatbanvideotintuc == 0 && $item->trangthaithuhoi == 0)
                                             <p class="text-warning">{{ __('Chờ duyệt') }}</p>
                                             @endif
-                                            @if ($item->duyettintuc == 1 && $item->xuatbantintuc == 0 && $item->lydogo == 0)
+                                            @if ($item->duyetvideotintuc == 1 && $item->xuatbanvideotintuc == 0 && $item->trangthaithuhoi == 0)
                                             <p class="text-warning">{{ __('Chờ xuất bản') }}</p>
                                             @endif
-                                            @if ($item->duyettintuc == 1 && $item->xuatbantintuc == 1 && $item->lydogo == 0)
+                                            @if ($item->duyetvideotintuc == 1 && $item->xuatbanvideotintuc == 1 && $item->trangthaithuhoi == 0)
                                             <p class="text-success">{{ __('Đã xuất bản') }}</p>
                                             @endif
-                                            @if ($item->xuatbantintuc == 1 && $item->lydogo == 1)
+                                            @if ($item->xuatbanvideotintuc == 1 && $item->trangthaithuhoi == 1)
                                             <p class="text-danger">{{ __('Được thu hồi') }}</p>
                                             @endif
                                             @if (!$item->newshistory->isEmpty())
@@ -78,10 +78,10 @@
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('news.log', ['id' => $item->id]) }}">Lịch sử tin tức</a>
-                                                    <a class="dropdown-item" href="{{ route('news.edit', ['id' => $item->id]) }}">Chỉnh sửa</a>
+                                                    <a class="dropdown-item" href="{{ route('admin.video.log', ['id' => $item->id]) }}">Lịch sử tin tức</a>
+                                                    <a class="dropdown-item" href="{{ route('admin.video.edit', ['id' => $item->id]) }}">Chỉnh sửa</a>
                                                     @if ($item->xuatbantintuc == 0)
-                                                    <a class="dropdown-item" href="{{ route('news.delete', ['id' => $item->id]) }}">Xóa</a>
+                                                    <a class="dropdown-item" href="{{ route('admin.video.delete', ['id' => $item->id]) }}">Xóa</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -120,11 +120,11 @@
                         <div class="col-md-12" style="text-align: justify">
                             <p class="tieude" style="font-size: 28px"></p>
                             <p class="tomtat"></p>
-                            <p><img src="" style="width:440px; height: 400px" class="hinhanh"></p>
+                            <p><img src="" style="width:440px; height: 300px" class="hinhanh"></p>
                             <p style="font-style: italic; font-weight: 10px; text-align: center"
-                                class="mt-0">Hình ảnh chỉ mang tính chất minh họa</p>
+                                class="mt-0">Hình đại diện video</p>
+                            <div style="margin-top:-20px" class="video"></div>
                             <div class="noidung"></div>
-                            <div class="video"></div>
                             <p class="tacgia" style="font-size: 15px; float: right"></p>
                         </div>
                     </div>
@@ -180,7 +180,7 @@
             $(document).on('click', '.tieudetintuc', function() {
                 var idNews = $(this).data('id');
                 $.ajax({
-                    url : "{{ route('news.view') }}",
+                    url : "{{ route('admin.video.view') }}",
                     type : "post",
                     data : {
                         "idNews":idNews,
@@ -190,10 +190,10 @@
                         // console.log(data);
                         $('.chuyenmuc').html(data.category);
                         $('.ngaydang').html('Viết ngày ' + data.ngaydang);
-                        $('.tieude').html(data.news.tieudetintuc);
-                        $('.tomtat').html(data.news.tomtattintuc);
-                        $('.hinhanh').attr('src',data.news.hinhanhtintuc);
-                        $('.noidung').html(data.news.noidungtintuc);
+                        $('.tieude').html(data.newsvideo.tieudevideo);
+                        $('.tomtat').html(data.newsvideo.tomtatvideo);
+                        $('.hinhanh').attr('src',data.newsvideo.hinhdaidienvideo);
+                        $('.noidung').html('Nguồn: ' + data.newsvideo.nguonvideotintuc);
                         $('.video').html(data.video);
                         $('.tacgia').html(data.author);
                     }
@@ -203,7 +203,7 @@
             $(document).on('click', '.viewhistory', function() {
                 var idNews = $(this).data('id');
                 $.ajax({
-                    url : "{{ route('news.history') }}",
+                    url : "{{ route('admin.video.history') }}",
                     type : "post",
                     data : {
                         "idNews":idNews,
@@ -211,7 +211,7 @@
                     },
                     success:function(data) {
                         // console.log(data);
-                        $('.tieudeNews').text(data.news);
+                        $('.tieudeNews').text(data.newsvideo);
                         $('.show-history').html(data.output);
                     }
                 });
@@ -239,7 +239,7 @@
                     var status = 0;
                 }
                 $.ajax({
-                    url : "{{ route('news.change-status') }}",
+                    url : "{{ route('admin.video.change-status') }}",
                     type: "get",
                     data: {
                         "id":id,
