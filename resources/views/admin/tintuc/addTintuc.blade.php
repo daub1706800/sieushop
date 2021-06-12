@@ -58,7 +58,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Video tin tức</label>
-                                <input type="file" class="form-control-file" name="dulieuvideo">
+                                <input type="file" class="form-control-file" name="videotintuc">
                             </div>
                         </div>
                         <div class="form-group">

@@ -139,9 +139,9 @@ class TintucController extends Controller{
             // ]);
         }
 
-        if($request->hasFile('dulieuvideo'))
+        if($request->hasFile('videotintuc'))
         {
-            $dataVideoUpload = $this->StorageUploadImage($request,'dulieuvideo', 'news/video');
+            $dataVideoUpload = $this->StorageUploadImage($request,'videotintuc', 'news/video');
 
             $mang1['videotintuc'] = $dataVideoUpload['file_path'];
             // Video::create([
@@ -165,20 +165,18 @@ class TintucController extends Controller{
     public function detailTintuc($id)
     {
         $data = DB::table('tintuc')->where('id',$id)->first();
-        $data2 = DB::table('video')->where('idtintuc',$id)->get();
-        $data3 = auth()->user()->id;
-        return view('admin.tintuc.detailTintuc', compact('data','data2','data3'));
+        $data2 = auth()->user()->id;
+        return view('admin.tintuc.detailTintuc', compact('data','data2'));
     }
 
     public function viewTintuc($id)
     {
         $data = DB::table('tintuc')->where('id',$id)->first();
-        $data2 = DB::table('video')->where('idtintuc',$id)->get();
-        $data3 = DB::table('chuyenmuc')->get();
-        return view('admin.tintuc.viewTintuc', compact('data','data2','data3'));
+        $data2 = DB::table('chuyenmuc')->get();
+        return view('admin.tintuc.viewTintuc', compact('data','data2'));
     }
 
-    public function editTintuc(NewsRequestEdit   $request)
+    public function editTintuc(NewsRequestEdit $request)
     {
         // $linkhinhanhtieude = null;
         // if($request->hasFile('hinhanhtieude')){
@@ -188,22 +186,47 @@ class TintucController extends Controller{
         //     $file->move($hinhanhtieude, $filename);
         //     $linkhinhanhtieude = '/hinhanh'.'/'.$filename;// vi tri trang dang o public nen chi can hinhanh/tenfile
         // }
-
         $data = array();
         $data['idchuyenmuc'] = $request->idchuyenmuc;
         $data['idcongty'] = $request->idcongty;
         $data['idtaikhoan'] = $request->idtaikhoan;
-        $data['ngaydangtintuc'] = date('Y-m-d H:i:s');
+        // $data['ngaydangtintuc'] = date('Y-m-d H:i:s');
         // if($linkhinhanhtieude!=null){
         //     $data['hinhanhtintuc'] = $linkhinhanhtieude;
         // }
+        if($request->hasFile('hinhanhtintuc'))
+        {
+            $dataImageUpload = $this->StorageUploadImage($request, 'hinhanhtintuc', 'news/image');
+
+            $data['hinhanhtintuc'] = $dataImageUpload['file_path'];
+            // Video::create([
+            //     'idtintuc'    => $id1,
+            //     'dulieuvideo' => $dataVideo['file_path']
+            // ]);
+        }
+
+        if($request->hasFile('videotintuc'))
+        {
+            $dataVideoUpload = $this->StorageUploadImage($request,'videotintuc', 'news/video');
+
+            $data['videotintuc'] = $dataVideoUpload['file_path'];
+            // Video::create([
+            //     'idtintuc'    => $id1,
+            //     'dulieuvideo' => $dataVideo['file_path']
+            // ]);
+        }
+        else if($request->xoavideo == "xoavideo")
+                {
+                    $data['videotintuc'] = null;
+                }
         $data['tieudetintuc'] = $request->tieudetintuc;
         $data['tomtattintuc'] = $request->tomtattintuc;
         $data['noidungtintuc'] = $request->noidungtintuc;
         $data['duyettintuc'] = '0';
 
         DB::table('tintuc')->where('id',$request->id)->update($data);
-        return redirect()->route('tintuc.Tintuc');
+        // return redirect()->route('tintuc.Tintuc');
+        return back();
     }
 
     public function editloaiTintuc(Request $request){
@@ -218,35 +241,35 @@ class TintucController extends Controller{
         return back();
     }
 
-    public function deleteVideo($id)
-    {
-        $row = DB::table('video')->where('id',$id)->first();
-        $data = array();
-        $data['duyettintuc'] = '0';
-        DB::table('tintuc')->where('id',$row->idtintuc)->update($data);
-        DB::table('video')->where('id',$id)->delete();
-        return back();
-    }
+    // public function deleteVideo($id)
+    // {
+    //     $row = DB::table('video')->where('id',$id)->first();
+    //     $data = array();
+    //     $data['duyettintuc'] = '0';
+    //     DB::table('tintuc')->where('id',$row->idtintuc)->update($data);
+    //     DB::table('video')->where('id',$id)->delete();
+    //     return back();
+    // }
 
-    public function addVideo(Request $request)
-    {
-        $id = $request->idtintuc;
-        $data = array();
-        $data['duyettintuc'] = '0';
-        DB::table('tintuc')->where('id',$id)->update($data);
-        $mang3 = array();
-        if ($request->hasfile('dulieuvideo')) {
-            // foreach ($request->file('dulieuvideo') as $file) {
-                $dulieuvideo = $request->file('dulieuvideo')->getClientOriginalName(); //lay ten file
-                $request->file('dulieuvideo')->move(public_path().'/video', $dulieuvideo);// up hinh len server
-                $linkvideo = '/video'.'/'.$dulieuvideo;// gan lai duong link cho anh
-                $mang3['dulieuvideo'] = $linkvideo;
-                $mang3['idtintuc'] = $id;
-                DB::table('video')->insert($mang3);
-            // }
-        }
-        return back();
-    }
+    // public function addVideo(Request $request)
+    // {
+    //     $id = $request->idtintuc;
+    //     $data = array();
+    //     $data['duyettintuc'] = '0';
+    //     DB::table('tintuc')->where('id',$id)->update($data);
+    //     $mang3 = array();
+    //     if ($request->hasfile('dulieuvideo')) {
+    //         // foreach ($request->file('dulieuvideo') as $file) {
+    //             $dulieuvideo = $request->file('dulieuvideo')->getClientOriginalName(); //lay ten file
+    //             $request->file('dulieuvideo')->move(public_path().'/video', $dulieuvideo);// up hinh len server
+    //             $linkvideo = '/video'.'/'.$dulieuvideo;// gan lai duong link cho anh
+    //             $mang3['dulieuvideo'] = $linkvideo;
+    //             $mang3['idtintuc'] = $id;
+    //             DB::table('video')->insert($mang3);
+    //         // }
+    //     }
+    //     return back();
+    // }
 
     public function acceptTintuc(Request $request)
     {
