@@ -70,6 +70,7 @@ class NewsController extends Controller
             'idtaikhoan'    => auth()->id(),
             'tieudetintuc'  => $request->tieudetintuc,
             'tomtattintuc'  => $request->tomtattintuc,
+            // 'ngaydangtintuc'=> date('Y-m-d H:i:s'),
             'noidungtintuc' => $request->noidungtintuc,
             'loaitintuc'    => $loaitintuc,
         ];

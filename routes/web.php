@@ -576,16 +576,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 'uses' => 'App\Http\Controllers\TintucController@editloaiTintuc',
                 'middleware' => 'can:news-update'
             ]);
-            Route::get('/delete-video/{id}', [
-                'as' => 'tintuc.deleteVideo',
-                'uses' => 'App\Http\Controllers\TintucController@deleteVideo',
-                'middleware' => 'can:news-delete'
-            ]);
-            Route::post('/add-video', [
-                'as' => 'tintuc.addVideo',
-                'uses' => 'App\Http\Controllers\TintucController@addVideo',
-                'middleware' => 'can:news-update'
-            ]);
+            // Route::get('/delete-video/{id}', [
+            //     'as' => 'tintuc.deleteVideo',
+            //     'uses' => 'App\Http\Controllers\TintucController@deleteVideo',
+            //     'middleware' => 'can:news-delete'
+            // ]);
+            // Route::post('/add-video', [
+            //     'as' => 'tintuc.addVideo',
+            //     'uses' => 'App\Http\Controllers\TintucController@addVideo',
+            //     'middleware' => 'can:news-update'
+            // ]);
             Route::get('/accept-news', [
                 'as' => 'tintuc.acceptTintuc',
                 'uses' => 'App\Http\Controllers\TintucController@acceptTintuc',

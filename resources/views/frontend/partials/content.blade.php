@@ -19,7 +19,7 @@
 
                     <div class="blog-meta big-meta col-md-8">
                         <h4><a href="{{route('detail',['id'=>$row->id])}}" title="">{{ Str::limit($row->tieudetintuc, 100) }}</a></h4>
-                        <p>{!!$row->tomtattintuc!!}</p>
+                        <p>{!! Str::limit($row->tomtattintuc, 230) !!}</p>
                         <small class="firstsmall"><a class="bg-orange" href="{{route('tinchuyenmuc',['id'=>$row->idchuyenmuc])}}" title="">{{$row->tenchuyenmuc}}</a></small>
                         <small><a href="#" title="">{{$row->ngaydangtintuc}}</a></small>
                         <small><a href="tech-author.html" title="">by {{$row->hothanhvien}} {{$row->tenthanhvien}}</a></small>

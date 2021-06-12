@@ -33,8 +33,14 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label>Hình ảnh tiêu đề *</label>
-                                <img src='{{$data->hinhanhtintuc}}' style="width:150px; height:150px; margin-top:10px">
+                                <label>Hình ảnh tiêu đề *</label><br>
+                                <img src='{{$data->hinhanhtintuc}}' style="width:320px; height:240px; margin-top:10px">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Video tin tức</label><br>
+                                <video width="320px" height="240px" controls>
+                                    <source src="{{$data->videotintuc}}" type="video/mp4">
+                                </video>
                             </div>
                         </div>
                         <div class="form-group">
@@ -62,24 +68,7 @@
                         @endif
                     </form>
                 </div>
-                <div class="col-sm-10">
-                    <table class="table">
-                        <tr>
-                            <th>ID</th>
-                            <th>Video</th>
-                        </tr>
-                        @foreach ($data2 as $key => $row2)
-                        <tr>
-                            <td>ID Video: {{$row2->id}}</td>
-                            <td>
-                                <video width="320" height="240" controls>
-                                    <source src="{{$row2->dulieuvideo}}" type="video/mp4">
-                                </video>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </table>
-                </div>
+                
                 
             </div>
             <!-- /.row -->
