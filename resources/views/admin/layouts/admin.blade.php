@@ -20,9 +20,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{ asset('adminLTE/dist/css/adminlte.min.css') }}">
     <!-- My style -->
     <link rel="stylesheet" href="{{ asset('adminLTE/dist/css/mystyle.css') }}">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{{ asset('adminLTE/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     @yield('css')
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini sidebar-collapse layout-fixed">
 <div class="wrapper">
     @include('admin.partials.header')
     @include('admin.partials.sidebar')
@@ -30,6 +32,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     @yield('content')
     <!-- /.content-wrapper -->
     @include('admin.partials.footer')
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 
@@ -53,6 +60,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{ asset('adminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('adminLTE/dist/js/adminlte.min.js')}}"></script>
+<!-- overlayScrollbars -->
+<script src="{{ asset('adminLTE/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+<!-- My style -->
+<script src="{{ asset('adminLTE/dist/js/mystyle.js') }}"></script>
 <!-- Page specific script -->
 <script>
     $(function () {
@@ -60,6 +71,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
             "responsive": true, "lengthChange": true, "autoWidth": true
             // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    });
+    $(function () {
+        $.ajax({
+            url : "{{ route('admin.count-badge') }}",
+            type : "get",
+            success:function (data) {
+                $('.news-badge').text(data.news);
+                $('.newsvideo-badge').text(data.newsvideo);
+                $('.account-badge').text(data.accounts);
+            }
+        });
     });
 </script>
 @yield('js')

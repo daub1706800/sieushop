@@ -113,10 +113,10 @@ class ProfileController extends Controller
     public function changeAvatar(Request $request, $id)
     {
         $validated = Validator::make($request->all(), [
-            'file' => 'bail|mimes:jpeg,jpg,png|dimensions:min_width=960, min_height=960|max:2048',
+            'file' => 'bail|mimes:jpeg,jpg,png|dimensions:max_width=960, max_height=960|max:2048',
         ], [
             'file.mimes' => 'File ảnh phải là kiểu jpeg, jpg, png',
-            'file.dimensions' => 'Độ phân giải ảnh không vượt quá 960px x 960px',
+            'file.dimensions' => 'Độ phân giải ảnh không vượt quá 960x960 pixel',
             'file.max' => 'Kích thước ảnh không vượt quá 2MB',
         ]);
 

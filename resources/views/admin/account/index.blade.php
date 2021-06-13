@@ -66,9 +66,13 @@
                                     </td>
                                     <td class="text-center">
                                         @if ($user->email_verified_at)
-                                        <p class="text-success"><i class="fas fa-check"></i></p>
+                                        <p class="text-success"><i class="fas fa-check"></i>
+                                            <b style="visibility: hidden">1</b>
+                                        </p>
                                         @else
-                                        <p class="text-danger"><i class="fas fa-times"></i></p>
+                                        <p class="text-danger"><i class="fas fa-times"></i>
+                                            <b style="visibility: hidden">0</b>
+                                        </p>
                                         @endif
                                     </td>
                                     <td>

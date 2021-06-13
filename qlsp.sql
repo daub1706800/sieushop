@@ -2,10 +2,10 @@
 -- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Jun 10, 2021 at 09:34 AM
--- Server version: 5.7.24
--- PHP Version: 7.3.2
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th6 12, 2021 lúc 05:42 PM
+-- Phiên bản máy phục vụ: 10.4.18-MariaDB
+-- Phiên bản PHP: 8.0.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `qlsp`
+-- Cơ sở dữ liệu: `qlsp`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chuyenmuc`
+-- Cấu trúc bảng cho bảng `chuyenmuc`
 --
 
 CREATE TABLE `chuyenmuc` (
@@ -36,7 +36,7 @@ CREATE TABLE `chuyenmuc` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `chuyenmuc`
+-- Đang đổ dữ liệu cho bảng `chuyenmuc`
 --
 
 INSERT INTO `chuyenmuc` (`id`, `idlinhvuc`, `tenchuyenmuc`, `created_at`, `updated_at`) VALUES
@@ -48,7 +48,7 @@ INSERT INTO `chuyenmuc` (`id`, `idlinhvuc`, `tenchuyenmuc`, `created_at`, `updat
 -- --------------------------------------------------------
 
 --
--- Table structure for table `congty`
+-- Cấu trúc bảng cho bảng `congty`
 --
 
 CREATE TABLE `congty` (
@@ -72,7 +72,7 @@ CREATE TABLE `congty` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `congty`
+-- Đang đổ dữ liệu cho bảng `congty`
 --
 
 INSERT INTO `congty` (`id`, `idso`, `idlinhvuc`, `tencongty`, `diachicongty`, `emailcongty`, `dienthoaicongty`, `faxcongty`, `webcongty`, `sdkkdcongty`, `ngaycapdkkdcongty`, `noicapdkkdcongty`, `masothuecongty`, `ngaythanhlapcongty`, `subdomain`, `created_at`, `updated_at`) VALUES
@@ -82,17 +82,17 @@ INSERT INTO `congty` (`id`, `idso`, `idlinhvuc`, `tencongty`, `diachicongty`, `e
 -- --------------------------------------------------------
 
 --
--- Table structure for table `danhgia`
+-- Cấu trúc bảng cho bảng `danhgia`
 --
 
 CREATE TABLE `danhgia` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `idtaikhoan` bigint(20) NOT NULL,
   `idsanpham` bigint(20) NOT NULL,
-  `thoigiandanhgia` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `thoigiandanhgia` timestamp NOT NULL DEFAULT current_timestamp(),
   `saodanhgia` int(11) NOT NULL,
   `noidungdanhgia` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `trangthaidanhgia` int(11) NOT NULL DEFAULT '0',
+  `trangthaidanhgia` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -100,7 +100,7 @@ CREATE TABLE `danhgia` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `failed_jobs`
+-- Cấu trúc bảng cho bảng `failed_jobs`
 --
 
 CREATE TABLE `failed_jobs` (
@@ -110,13 +110,13 @@ CREATE TABLE `failed_jobs` (
   `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `giaidoan`
+-- Cấu trúc bảng cho bảng `giaidoan`
 --
 
 CREATE TABLE `giaidoan` (
@@ -124,14 +124,14 @@ CREATE TABLE `giaidoan` (
   `idsanpham` bigint(20) NOT NULL,
   `idtaikhoan` bigint(20) NOT NULL,
   `tengiaidoan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `thoigiantao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `thoigiantao` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `motagiaidoan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `giaidoan`
+-- Đang đổ dữ liệu cho bảng `giaidoan`
 --
 
 INSERT INTO `giaidoan` (`id`, `idsanpham`, `idtaikhoan`, `tengiaidoan`, `thoigiantao`, `motagiaidoan`, `created_at`, `updated_at`) VALUES
@@ -141,7 +141,7 @@ INSERT INTO `giaidoan` (`id`, `idsanpham`, `idtaikhoan`, `tengiaidoan`, `thoigia
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hinhanh`
+-- Cấu trúc bảng cho bảng `hinhanh`
 --
 
 CREATE TABLE `hinhanh` (
@@ -154,7 +154,7 @@ CREATE TABLE `hinhanh` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `hinhanh`
+-- Đang đổ dữ liệu cho bảng `hinhanh`
 --
 
 INSERT INTO `hinhanh` (`id`, `idsanpham`, `iddanhgia`, `dulieuhinh`, `created_at`, `updated_at`) VALUES
@@ -178,7 +178,21 @@ INSERT INTO `hinhanh` (`id`, `idsanpham`, `iddanhgia`, `dulieuhinh`, `created_at
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kho`
+-- Cấu trúc bảng cho bảng `hinhanhquangcao`
+--
+
+CREATE TABLE `hinhanhquangcao` (
+  `id` bigint(20) NOT NULL,
+  `idquangcao` bigint(20) NOT NULL,
+  `dulieuhinhanhquangcao` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `kho`
 --
 
 CREATE TABLE `kho` (
@@ -196,7 +210,7 @@ CREATE TABLE `kho` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `kho`
+-- Đang đổ dữ liệu cho bảng `kho`
 --
 
 INSERT INTO `kho` (`id`, `idcongty`, `idtaikhoan`, `tenkho`, `diachikho`, `taitrongkho`, `dientichkho`, `sonhanvienkho`, `ghichukho`, `created_at`, `updated_at`) VALUES
@@ -207,12 +221,13 @@ INSERT INTO `kho` (`id`, `idcongty`, `idtaikhoan`, `tenkho`, `diachikho`, `taitr
 -- --------------------------------------------------------
 
 --
--- Table structure for table `lichsutintuc`
+-- Cấu trúc bảng cho bảng `lichsutintuc`
 --
 
 CREATE TABLE `lichsutintuc` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `idtintuc` bigint(20) NOT NULL,
+  `idtintuc` bigint(20) DEFAULT NULL,
+  `idvideotintuc` bigint(20) DEFAULT NULL,
   `idtaikhoan` bigint(20) NOT NULL,
   `lydogo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `thoigian` datetime NOT NULL,
@@ -221,45 +236,48 @@ CREATE TABLE `lichsutintuc` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `lichsutintuc`
+-- Đang đổ dữ liệu cho bảng `lichsutintuc`
 --
 
-INSERT INTO `lichsutintuc` (`id`, `idtintuc`, `idtaikhoan`, `lydogo`, `thoigian`, `created_at`, `updated_at`) VALUES
-(1, 12, 0, 'gfgdgfg', '2021-05-28 23:59:42', NULL, NULL),
-(2, 11, 0, '23232', '2021-05-29 00:00:42', NULL, NULL),
-(3, 12, 0, 'wewewew', '2021-05-29 09:10:32', NULL, NULL),
-(4, 12, 0, '123', '2021-05-30 09:15:52', NULL, NULL),
-(5, 12, 0, 'Sai sot thông tin', '2021-06-01 20:23:46', NULL, NULL),
-(6, 13, 0, 'Sai sot thông tin', '2021-06-01 20:49:24', NULL, NULL),
-(7, 13, 0, 'sa', '2021-06-01 20:49:36', NULL, NULL),
-(8, 13, 0, 'Sai sot thông tin', '2021-06-01 20:53:51', NULL, NULL),
-(9, 4, 0, 'gdfg', '2021-06-01 20:56:50', NULL, NULL),
-(10, 13, 0, 'Sai sot thông tin', '2021-06-02 20:54:27', NULL, NULL),
-(11, 13, 28, 'Sai sot thông tin', '2021-06-02 21:03:44', NULL, NULL),
-(12, 3, 28, 'Sai sot thông tin', '2021-06-02 21:07:13', NULL, NULL),
-(13, 14, 28, 'dá', '2021-06-02 21:53:59', NULL, NULL),
-(14, 14, 2, 'Sai sot thông tin', '2021-06-02 21:55:28', NULL, NULL),
-(15, 14, 2, 'dsafacd', '2021-06-02 21:55:47', NULL, NULL),
-(16, 14, 2, 'Sai sot thông tin', '2021-06-03 21:42:25', NULL, NULL),
-(17, 12, 2, 'dá', '2021-06-03 22:47:54', NULL, NULL),
-(18, 14, 2, 'gd', '2021-06-04 21:56:38', NULL, NULL),
-(19, 14, 2, 'da', '2021-06-04 22:02:38', NULL, NULL),
-(20, 13, 2, 'das', '2021-06-04 22:03:00', NULL, NULL),
-(21, 12, 2, 'asd', '2021-06-04 22:03:31', NULL, NULL),
-(22, 13, 2, 'Sai sot thông tin', '2021-06-07 23:12:12', NULL, NULL),
-(23, 13, 2, 'dá', '2021-06-07 23:13:10', NULL, NULL),
-(24, 13, 2, 'sai hinh', '2021-06-09 15:00:44', NULL, NULL),
-(25, 13, 2, 'dsa', '2021-06-09 15:01:14', NULL, NULL),
-(26, 12, 2, 'fds', '2021-06-09 15:02:08', NULL, NULL),
-(27, 11, 2, 's', '2021-06-09 15:04:30', NULL, NULL),
-(28, 13, 2, 'sd', '2021-06-09 15:09:54', NULL, NULL),
-(29, 12, 2, 'dsa', '2021-06-09 15:16:31', NULL, NULL),
-(31, 12, 2, 'dá', '2021-06-09 16:23:20', NULL, NULL);
+INSERT INTO `lichsutintuc` (`id`, `idtintuc`, `idvideotintuc`, `idtaikhoan`, `lydogo`, `thoigian`, `created_at`, `updated_at`) VALUES
+(1, 12, NULL, 0, 'gfgdgfg', '2021-05-28 23:59:42', NULL, NULL),
+(2, 11, NULL, 0, '23232', '2021-05-29 00:00:42', NULL, NULL),
+(3, 12, NULL, 0, 'wewewew', '2021-05-29 09:10:32', NULL, NULL),
+(4, 12, NULL, 0, '123', '2021-05-30 09:15:52', NULL, NULL),
+(5, 12, NULL, 0, 'Sai sot thông tin', '2021-06-01 20:23:46', NULL, NULL),
+(6, 13, NULL, 0, 'Sai sot thông tin', '2021-06-01 20:49:24', NULL, NULL),
+(7, 13, NULL, 0, 'sa', '2021-06-01 20:49:36', NULL, NULL),
+(8, 13, NULL, 0, 'Sai sot thông tin', '2021-06-01 20:53:51', NULL, NULL),
+(9, 4, NULL, 0, 'gdfg', '2021-06-01 20:56:50', NULL, NULL),
+(10, 13, NULL, 0, 'Sai sot thông tin', '2021-06-02 20:54:27', NULL, NULL),
+(11, 13, NULL, 28, 'Sai sot thông tin', '2021-06-02 21:03:44', NULL, NULL),
+(12, 3, NULL, 28, 'Sai sot thông tin', '2021-06-02 21:07:13', NULL, NULL),
+(13, 14, NULL, 28, 'dá', '2021-06-02 21:53:59', NULL, NULL),
+(14, 14, NULL, 2, 'Sai sot thông tin', '2021-06-02 21:55:28', NULL, NULL),
+(15, 14, NULL, 2, 'dsafacd', '2021-06-02 21:55:47', NULL, NULL),
+(16, 14, NULL, 2, 'Sai sot thông tin', '2021-06-03 21:42:25', NULL, NULL),
+(17, 12, NULL, 2, 'dá', '2021-06-03 22:47:54', NULL, NULL),
+(18, 14, NULL, 2, 'gd', '2021-06-04 21:56:38', NULL, NULL),
+(19, 14, NULL, 2, 'da', '2021-06-04 22:02:38', NULL, NULL),
+(20, 13, NULL, 2, 'das', '2021-06-04 22:03:00', NULL, NULL),
+(21, 12, NULL, 2, 'asd', '2021-06-04 22:03:31', NULL, NULL),
+(22, 13, NULL, 2, 'Sai sot thông tin', '2021-06-07 23:12:12', NULL, NULL),
+(23, 13, NULL, 2, 'dá', '2021-06-07 23:13:10', NULL, NULL),
+(24, 13, NULL, 2, 'sai hinh', '2021-06-09 15:00:44', NULL, NULL),
+(25, 13, NULL, 2, 'dsa', '2021-06-09 15:01:14', NULL, NULL),
+(26, 12, NULL, 2, 'fds', '2021-06-09 15:02:08', NULL, NULL),
+(27, 11, NULL, 2, 's', '2021-06-09 15:04:30', NULL, NULL),
+(28, 13, NULL, 2, 'sd', '2021-06-09 15:09:54', NULL, NULL),
+(29, 12, NULL, 2, 'dsa', '2021-06-09 15:16:31', NULL, NULL),
+(31, 12, NULL, 2, 'dá', '2021-06-09 16:23:20', NULL, NULL),
+(36, 27, NULL, 2, '12132132', '2021-06-12 19:08:03', NULL, NULL),
+(37, NULL, 1, 2, 'sđáadsdá', '2021-06-12 21:25:23', '2021-06-12 14:25:23', '2021-06-12 14:25:23'),
+(38, NULL, 1, 1, '12321321321312313', '2021-06-12 22:10:58', '2021-06-12 15:10:58', '2021-06-12 15:10:58');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `linhvuc`
+-- Cấu trúc bảng cho bảng `linhvuc`
 --
 
 CREATE TABLE `linhvuc` (
@@ -271,7 +289,7 @@ CREATE TABLE `linhvuc` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `linhvuc`
+-- Đang đổ dữ liệu cho bảng `linhvuc`
 --
 
 INSERT INTO `linhvuc` (`id`, `tenlinhvuc`, `motalinhvuc`, `created_at`, `updated_at`) VALUES
@@ -281,7 +299,7 @@ INSERT INTO `linhvuc` (`id`, `tenlinhvuc`, `motalinhvuc`, `created_at`, `updated
 -- --------------------------------------------------------
 
 --
--- Table structure for table `loaisanpham`
+-- Cấu trúc bảng cho bảng `loaisanpham`
 --
 
 CREATE TABLE `loaisanpham` (
@@ -294,7 +312,7 @@ CREATE TABLE `loaisanpham` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `loaisanpham`
+-- Đang đổ dữ liệu cho bảng `loaisanpham`
 --
 
 INSERT INTO `loaisanpham` (`id`, `idcongty`, `tenloaisanpham`, `motaloaisanpham`, `created_at`, `updated_at`) VALUES
@@ -305,85 +323,99 @@ INSERT INTO `loaisanpham` (`id`, `idcongty`, `tenloaisanpham`, `motaloaisanpham`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `logtintuc`
+-- Cấu trúc bảng cho bảng `logtintuc`
 --
 
 CREATE TABLE `logtintuc` (
   `id` bigint(20) NOT NULL,
-  `idtintuc` bigint(20) NOT NULL,
+  `idtintuc` bigint(20) DEFAULT NULL,
+  `idvideotintuc` bigint(20) DEFAULT NULL,
   `idtaikhoan` bigint(20) NOT NULL,
   `noidungdanhgia` varchar(255) NOT NULL,
-  `thoigian` timestamp NOT NULL
+  `thoigian` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `logtintuc`
+-- Đang đổ dữ liệu cho bảng `logtintuc`
 --
 
-INSERT INTO `logtintuc` (`id`, `idtintuc`, `idtaikhoan`, `noidungdanhgia`, `thoigian`) VALUES
-(2, 13, 28, 'Duyệt tin: tin viet rat hay', '2021-06-02 13:55:01'),
-(3, 13, 28, 'Xuất bản: tin viet rat hay', '2021-06-02 13:58:53'),
-(4, 14, 28, 'Duyệt tin: tin viet rat hay', '2021-06-02 14:20:57'),
-(5, 14, 28, 'Xuất bản: tin viet rat hay', '2021-06-02 14:21:02'),
-(6, 4, 28, 'Xuất bản: tin viet rat hay', '2021-06-02 14:24:41'),
-(7, 14, 2, 'Duyệt tin: viet sai chinh ta', '2021-06-02 14:54:52'),
-(8, 14, 2, 'Xuất bản: tin tốt', '2021-06-02 14:55:08'),
-(9, 14, 2, 'Duyệt tin: sadasdadsa', '2021-06-02 14:55:38'),
-(10, 14, 2, 'Duyệt tin: fvdg', '2021-06-02 14:55:55'),
-(11, 14, 2, 'Duyệt tin: dsa', '2021-06-03 06:28:27'),
-(12, 14, 2, 'Xuất bản: dâs', '2021-06-03 06:28:32'),
-(13, 14, 2, 'Duyệt tin: fgsfsf', '2021-06-04 14:24:31'),
-(14, 14, 2, 'Xuất bản: xuatbantin8', '2021-06-04 14:24:39'),
-(15, 13, 2, 'Duyệt tin: fds', '2021-06-04 14:24:52'),
-(16, 13, 2, 'Xuất bản: xuat ban tin 7', '2021-06-04 14:25:00'),
-(17, 12, 2, 'Duyệt tin: yku666666', '2021-06-04 14:25:14'),
-(18, 12, 2, 'Xuất bản: xuat ban tin 6', '2021-06-04 14:25:21'),
-(19, 3, 2, 'Duyệt tin: dasd', '2021-06-04 14:25:32'),
-(20, 14, 2, 'Duyệt tin: sadasdadsa', '2021-06-04 15:02:44'),
-(21, 14, 2, 'Xuất bản: sadasdadsa', '2021-06-04 15:02:48'),
-(22, 13, 2, 'Duyệt tin: sadasdadsa', '2021-06-04 15:03:11'),
-(23, 13, 2, 'Xuất bản: ewr', '2021-06-04 15:03:14'),
-(24, 12, 2, 'Duyệt tin: d', '2021-06-04 15:03:40'),
-(25, 12, 2, 'Xuất bản: sadasdadsa', '2021-06-04 15:03:44'),
-(26, 13, 2, 'Duyệt tin: tin tốt', '2021-06-07 16:12:21'),
-(27, 13, 2, 'Xuất bản: tin tốt', '2021-06-07 16:12:26'),
-(28, 13, 2, 'Duyệt tin: sadasdadsa', '2021-06-07 16:13:25'),
-(29, 13, 2, 'Xuất bản: sda', '2021-06-07 16:13:31'),
-(30, 13, 2, 'Duyệt tin: sadasdadsa', '2021-06-09 08:00:53'),
-(31, 13, 2, 'Xuất bản: dá', '2021-06-09 08:00:59'),
-(32, 13, 2, 'Duyệt tin: sdf', '2021-06-09 08:01:33'),
-(33, 13, 2, 'Duyệt tin: sdf', '2021-06-09 08:01:34'),
-(34, 13, 2, 'Xuất bản: dfs', '2021-06-09 08:01:39'),
-(35, 12, 2, 'Duyệt tin: fsd', '2021-06-09 08:02:21'),
-(36, 12, 2, 'Duyệt tin: f', '2021-06-09 08:02:37'),
-(37, 12, 2, 'Xuất bản: viet sai chinh ta', '2021-06-09 08:02:43'),
-(38, 11, 2, 'Duyệt tin: s', '2021-06-09 08:04:45'),
-(39, 11, 2, 'Xuất bản: s', '2021-06-09 08:04:49'),
-(40, 13, 2, 'Duyệt tin: dsa', '2021-06-09 08:10:12'),
-(41, 13, 2, 'Xuất bản: d', '2021-06-09 08:10:16'),
-(42, 12, 2, 'Duyệt tin: viet sai chinh ta', '2021-06-09 08:17:01'),
-(43, 12, 2, 'Xuất bản: tin tốt', '2021-06-09 08:17:06'),
-(44, 20, 2, 'Duyệt tin: xeđẹp', '2021-06-09 08:59:43'),
-(45, 20, 2, 'Xuất bản: đạp quá', '2021-06-09 08:59:50'),
-(46, 23, 2, 'Duyệt tin: viet sai chinh ta', '2021-06-09 09:10:19'),
-(47, 23, 2, 'Xuất bản: ádasa', '2021-06-09 09:10:24'),
-(48, 12, 2, 'Duyệt tin: sda', '2021-06-09 09:26:48'),
-(49, 12, 2, 'Xuất bản: sdada', '2021-06-09 09:26:53'),
-(50, 20, 2, 'Duyệt tin: fds', '2021-06-09 09:36:28'),
-(51, 20, 2, 'Xuất bản: utjujfg', '2021-06-09 09:36:34'),
-(52, 20, 2, 'Duyệt tin: fds', '2021-06-09 10:09:22'),
-(53, 20, 2, 'Xuất bản: viet sai chinh ta', '2021-06-09 10:09:27'),
-(54, 22, 2, 'Duyệt tin: gfdfdsg', '2021-06-10 08:56:34'),
-(55, 22, 2, 'Xuất bản: fdsdfsd', '2021-06-10 08:56:39'),
-(56, 23, 2, 'Duyệt tin: dsadasd', '2021-06-10 09:09:02'),
-(57, 23, 2, 'Xuất bản: đâsda', '2021-06-10 09:09:07'),
-(58, 24, 2, 'Duyệt tin: xe hay', '2021-06-10 09:30:05'),
-(59, 24, 2, 'Xuất bản: xe hay quá', '2021-06-10 09:30:14');
+INSERT INTO `logtintuc` (`id`, `idtintuc`, `idvideotintuc`, `idtaikhoan`, `noidungdanhgia`, `thoigian`, `created_at`, `updated_at`) VALUES
+(2, 13, NULL, 28, 'Duyệt tin: tin viet rat hay', '2021-06-02 13:55:01', NULL, NULL),
+(3, 13, NULL, 28, 'Xuất bản: tin viet rat hay', '2021-06-02 13:58:53', NULL, NULL),
+(4, 14, NULL, 28, 'Duyệt tin: tin viet rat hay', '2021-06-02 14:20:57', NULL, NULL),
+(5, 14, NULL, 28, 'Xuất bản: tin viet rat hay', '2021-06-02 14:21:02', NULL, NULL),
+(6, 4, NULL, 28, 'Xuất bản: tin viet rat hay', '2021-06-02 14:24:41', NULL, NULL),
+(7, 14, NULL, 2, 'Duyệt tin: viet sai chinh ta', '2021-06-02 14:54:52', NULL, NULL),
+(8, 14, NULL, 2, 'Xuất bản: tin tốt', '2021-06-02 14:55:08', NULL, NULL),
+(9, 14, NULL, 2, 'Duyệt tin: sadasdadsa', '2021-06-02 14:55:38', NULL, NULL),
+(10, 14, NULL, 2, 'Duyệt tin: fvdg', '2021-06-02 14:55:55', NULL, NULL),
+(11, 14, NULL, 2, 'Duyệt tin: dsa', '2021-06-03 06:28:27', NULL, NULL),
+(12, 14, NULL, 2, 'Xuất bản: dâs', '2021-06-03 06:28:32', NULL, NULL),
+(13, 14, NULL, 2, 'Duyệt tin: fgsfsf', '2021-06-04 14:24:31', NULL, NULL),
+(14, 14, NULL, 2, 'Xuất bản: xuatbantin8', '2021-06-04 14:24:39', NULL, NULL),
+(15, 13, NULL, 2, 'Duyệt tin: fds', '2021-06-04 14:24:52', NULL, NULL),
+(16, 13, NULL, 2, 'Xuất bản: xuat ban tin 7', '2021-06-04 14:25:00', NULL, NULL),
+(17, 12, NULL, 2, 'Duyệt tin: yku666666', '2021-06-04 14:25:14', NULL, NULL),
+(18, 12, NULL, 2, 'Xuất bản: xuat ban tin 6', '2021-06-04 14:25:21', NULL, NULL),
+(19, 3, NULL, 2, 'Duyệt tin: dasd', '2021-06-04 14:25:32', NULL, NULL),
+(20, 14, NULL, 2, 'Duyệt tin: sadasdadsa', '2021-06-04 15:02:44', NULL, NULL),
+(21, 14, NULL, 2, 'Xuất bản: sadasdadsa', '2021-06-04 15:02:48', NULL, NULL),
+(22, 13, NULL, 2, 'Duyệt tin: sadasdadsa', '2021-06-04 15:03:11', NULL, NULL),
+(23, 13, NULL, 2, 'Xuất bản: ewr', '2021-06-04 15:03:14', NULL, NULL),
+(24, 12, NULL, 2, 'Duyệt tin: d', '2021-06-04 15:03:40', NULL, NULL),
+(25, 12, NULL, 2, 'Xuất bản: sadasdadsa', '2021-06-04 15:03:44', NULL, NULL),
+(26, 13, NULL, 2, 'Duyệt tin: tin tốt', '2021-06-07 16:12:21', NULL, NULL),
+(27, 13, NULL, 2, 'Xuất bản: tin tốt', '2021-06-07 16:12:26', NULL, NULL),
+(28, 13, NULL, 2, 'Duyệt tin: sadasdadsa', '2021-06-07 16:13:25', NULL, NULL),
+(29, 13, NULL, 2, 'Xuất bản: sda', '2021-06-07 16:13:31', NULL, NULL),
+(30, 13, NULL, 2, 'Duyệt tin: sadasdadsa', '2021-06-09 08:00:53', NULL, NULL),
+(31, 13, NULL, 2, 'Xuất bản: dá', '2021-06-09 08:00:59', NULL, NULL),
+(32, 13, NULL, 2, 'Duyệt tin: sdf', '2021-06-09 08:01:33', NULL, NULL),
+(33, 13, NULL, 2, 'Duyệt tin: sdf', '2021-06-09 08:01:34', NULL, NULL),
+(34, 13, NULL, 2, 'Xuất bản: dfs', '2021-06-09 08:01:39', NULL, NULL),
+(35, 12, NULL, 2, 'Duyệt tin: fsd', '2021-06-09 08:02:21', NULL, NULL),
+(36, 12, NULL, 2, 'Duyệt tin: f', '2021-06-09 08:02:37', NULL, NULL),
+(37, 12, NULL, 2, 'Xuất bản: viet sai chinh ta', '2021-06-09 08:02:43', NULL, NULL),
+(38, 11, NULL, 2, 'Duyệt tin: s', '2021-06-09 08:04:45', NULL, NULL),
+(39, 11, NULL, 2, 'Xuất bản: s', '2021-06-09 08:04:49', NULL, NULL),
+(40, 13, NULL, 2, 'Duyệt tin: dsa', '2021-06-09 08:10:12', NULL, NULL),
+(41, 13, NULL, 2, 'Xuất bản: d', '2021-06-09 08:10:16', NULL, NULL),
+(42, 12, NULL, 2, 'Duyệt tin: viet sai chinh ta', '2021-06-09 08:17:01', NULL, NULL),
+(43, 12, NULL, 2, 'Xuất bản: tin tốt', '2021-06-09 08:17:06', NULL, NULL),
+(44, 20, NULL, 2, 'Duyệt tin: xeđẹp', '2021-06-09 08:59:43', NULL, NULL),
+(45, 20, NULL, 2, 'Xuất bản: đạp quá', '2021-06-09 08:59:50', NULL, NULL),
+(46, 23, NULL, 2, 'Duyệt tin: viet sai chinh ta', '2021-06-09 09:10:19', NULL, NULL),
+(47, 23, NULL, 2, 'Xuất bản: ádasa', '2021-06-09 09:10:24', NULL, NULL),
+(48, 12, NULL, 2, 'Duyệt tin: sda', '2021-06-09 09:26:48', NULL, NULL),
+(49, 12, NULL, 2, 'Xuất bản: sdada', '2021-06-09 09:26:53', NULL, NULL),
+(50, 20, NULL, 2, 'Duyệt tin: fds', '2021-06-09 09:36:28', NULL, NULL),
+(51, 20, NULL, 2, 'Xuất bản: utjujfg', '2021-06-09 09:36:34', NULL, NULL),
+(52, 20, NULL, 2, 'Duyệt tin: fds', '2021-06-09 10:09:22', NULL, NULL),
+(53, 20, NULL, 2, 'Xuất bản: viet sai chinh ta', '2021-06-09 10:09:27', NULL, NULL),
+(54, 22, NULL, 2, 'Duyệt tin: gfdfdsg', '2021-06-10 08:56:34', NULL, NULL),
+(55, 22, NULL, 2, 'Xuất bản: fdsdfsd', '2021-06-10 08:56:39', NULL, NULL),
+(56, 23, NULL, 2, 'Duyệt tin: dsadasd', '2021-06-10 09:09:02', NULL, NULL),
+(57, 23, NULL, 2, 'Xuất bản: đâsda', '2021-06-10 09:09:07', NULL, NULL),
+(58, 24, NULL, 2, 'Duyệt tin: xe hay', '2021-06-10 09:30:05', NULL, NULL),
+(59, 24, NULL, 2, 'Xuất bản: xe hay quá', '2021-06-10 09:30:14', NULL, NULL),
+(60, 27, NULL, 2, 'Duyệt tin: 12313', '2021-06-12 12:07:46', NULL, NULL),
+(61, 27, NULL, 2, 'Duyệt tin: 312314846', '2021-06-12 12:08:00', NULL, NULL),
+(62, 27, NULL, 2, 'Duyệt tin: +655646546', '2021-06-12 12:08:06', NULL, NULL),
+(63, 27, NULL, 2, 'Xuất bản: 965+65+456', '2021-06-12 12:08:09', NULL, NULL),
+(64, NULL, 1, 2, 'Duyệt tin: 23123', '2021-06-12 14:09:40', '2021-06-12 14:09:40', '2021-06-12 14:09:40'),
+(65, 1, NULL, 2, 'Xuất bản: 131311212', '2021-06-12 14:21:16', '2021-06-12 14:21:16', '2021-06-12 14:21:16'),
+(66, NULL, 1, 2, 'Xuất bản: thfhfghfgfg', '2021-06-12 14:22:20', '2021-06-12 14:22:20', '2021-06-12 14:22:20'),
+(67, NULL, 1, 2, 'Xuất bản: gdfdfgdfggdf', '2021-06-12 14:22:33', '2021-06-12 14:22:33', '2021-06-12 14:22:33'),
+(68, NULL, 1, 1, 'Duyệt tin: 12333333321123', '2021-06-12 15:09:50', '2021-06-12 15:09:50', '2021-06-12 15:09:50'),
+(69, NULL, 1, 1, 'Duyệt tin: 213123213', '2021-06-12 15:10:40', '2021-06-12 15:10:40', '2021-06-12 15:10:40'),
+(70, NULL, 1, 1, 'Xuất bản: sấđấ', '2021-06-12 15:10:49', '2021-06-12 15:10:49', '2021-06-12 15:10:49');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migrations`
+-- Cấu trúc bảng cho bảng `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -393,7 +425,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `migrations`
+-- Đang đổ dữ liệu cho bảng `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -424,7 +456,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `password_resets`
+-- Cấu trúc bảng cho bảng `password_resets`
 --
 
 CREATE TABLE `password_resets` (
@@ -434,7 +466,7 @@ CREATE TABLE `password_resets` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `password_resets`
+-- Đang đổ dữ liệu cho bảng `password_resets`
 --
 
 INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
@@ -444,7 +476,22 @@ INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `quyen`
+-- Cấu trúc bảng cho bảng `quangcao`
+--
+
+CREATE TABLE `quangcao` (
+  `id` bigint(20) NOT NULL,
+  `tieudequangcao` varchar(255) NOT NULL,
+  `loaiquangcao` smallint(6) NOT NULL DEFAULT 0 COMMENT '0-thường, 1-sự kiện',
+  `ngaytaoquangcao` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `quyen`
 --
 
 CREATE TABLE `quyen` (
@@ -452,13 +499,13 @@ CREATE TABLE `quyen` (
   `parent_id` bigint(20) NOT NULL,
   `tenquyen` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `motaquyen` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `trangthai` smallint(6) NOT NULL DEFAULT '0' COMMENT '1-on, 0-off',
+  `trangthai` smallint(6) NOT NULL DEFAULT 0 COMMENT '1-on, 0-off',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `quyen`
+-- Đang đổ dữ liệu cho bảng `quyen`
 --
 
 INSERT INTO `quyen` (`id`, `parent_id`, `tenquyen`, `motaquyen`, `trangthai`, `created_at`, `updated_at`) VALUES
@@ -548,7 +595,7 @@ INSERT INTO `quyen` (`id`, `parent_id`, `tenquyen`, `motaquyen`, `trangthai`, `c
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sanpham`
+-- Cấu trúc bảng cho bảng `sanpham`
 --
 
 CREATE TABLE `sanpham` (
@@ -560,41 +607,42 @@ CREATE TABLE `sanpham` (
   `tensanpham` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `thongtinsanpham` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `hinhanhsanpham` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `videosanpham` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `xuatxu` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `chungloaisanpham` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `dongiasanpham` int(11) NOT NULL,
   `khoiluongsanpham` int(11) NOT NULL,
   `donvitinhsanpham` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mavachsanpham` longtext COLLATE utf8mb4_unicode_ci,
-  `qrcode` longtext COLLATE utf8mb4_unicode_ci,
+  `mavachsanpham` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `qrcode` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `sanpham`
+-- Đang đổ dữ liệu cho bảng `sanpham`
 --
 
-INSERT INTO `sanpham` (`id`, `idloaisanpham`, `idcongty`, `idtaikhoan`, `idkho`, `tensanpham`, `thongtinsanpham`, `hinhanhsanpham`, `xuatxu`, `chungloaisanpham`, `dongiasanpham`, `khoiluongsanpham`, `donvitinhsanpham`, `mavachsanpham`, `qrcode`, `created_at`, `updated_at`) VALUES
-(1, 1, 2, 2, 1, 'Cá kho', 'Cá kho tiêu khổ qua', '', 'Việt Nam', 'Đồ ăn - Thức uống', 25000, 1, 'kg', NULL, NULL, NULL, NULL),
-(2, 1, 2, 2, 1, 'Cá kho', 'Cá kho tiêu khổ qua', '', 'Việt Nam', 'Đồ ăn - Thức uống', 25000, 1, 'kg', NULL, NULL, NULL, NULL),
-(3, 1, 2, 2, 1, 'Cá kho', 'Cá kho tiêu khổ qua', '', 'Việt Nam', 'Đồ ăn - Thức uống', 25000, 1, 'kg', NULL, NULL, NULL, NULL),
-(4, 1, 2, 2, 1, 'Cá kho', 'Cá kho tiêu khổ qua', '', 'Việt Nam', 'Đồ ăn - Thức uống', 25000, 1, 'kg', NULL, NULL, NULL, NULL),
-(5, 1, 2, 2, 1, 'Cá kho', 'Cá kho tiêu khổ qua', '', 'Việt Nam', 'Đồ ăn - Thức uống', 25000, 1, 'kg', NULL, NULL, NULL, NULL),
-(6, 1, 2, 2, 1, 'Cá kho', 'Cá kho tiêu khổ qua', '', 'Việt Nam', 'Đồ ăn - Thức uống', 25000, 1, 'kg', NULL, NULL, NULL, NULL),
-(7, 1, 2, 2, 1, 'Cá kho', 'Cá kho tiêu khổ qua', '', 'Việt Nam', 'Đồ ăn - Thức uống', 25000, 1, 'kg', NULL, NULL, NULL, NULL),
-(8, 1, 2, 2, 1, 'Cá kho', 'Cá kho tiêu khổ qua', '', 'Việt Nam', 'Đồ ăn - Thức uống', 25000, 1, 'kg', NULL, NULL, NULL, NULL),
-(9, 1, 2, 2, 1, 'Cá kho', 'Cá kho tiêu khổ qua', '', 'Việt Nam', 'Đồ ăn - Thức uống', 25000, 1, 'kg', NULL, NULL, NULL, NULL),
-(22, 1, 1, 2, 1, '123123213123', '<p>213213121</p>', '/storage/product/images/1/RhgJ44Kjd8edpvMSikeE.jpg', '3313', '1232uuhuhuhuhu', 221321, 123, '21321', '<div style=\"font-size:0;position:relative;width:384px;height:50px;\">\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:0px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:8px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:12px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:20px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:28px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:32px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:40px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:48px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:52px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:56px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:64px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:68px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:80px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:84px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:88px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:96px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:104px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:116px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:120px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:124px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:128px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:132px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:140px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:148px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:152px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:160px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:168px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:176px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:184px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:188px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:192px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:196px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:208px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:216px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:220px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:224px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:228px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:236px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:240px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:248px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:256px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:264px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:272px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:276px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:284px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:288px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:292px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:304px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:308px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:316px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:320px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:324px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:336px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:340px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:344px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:352px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:360px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:364px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:372px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:380px;top:0px;\">&nbsp;</div>\n<div style=\"position:absolute;bottom:0; text-align:center; width:384px;  font-size: 0.6vw;\">123456789</div></div>\n', NULL, '2021-04-27 09:50:20', '2021-05-30 14:36:49'),
-(23, 1, 1, 2, 1, '3213', '<p>1233213131</p>', '/storage/product/images/1/etqDuVSJAI13auNzxl81.jpg', '312', '131', 123, 123, '12', '<div style=\"font-size:0;position:relative;width:160px;height:50px;\">\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:0px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:8px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:12px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:20px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:28px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:32px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:36px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:48px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:52px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:56px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:64px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:72px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:84px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:88px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:92px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:96px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:104px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:112px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:120px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:124px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:128px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:136px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:140px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:148px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:156px;top:0px;\">&nbsp;</div>\n<div style=\"position:absolute;bottom:0; text-align:center; width:160px;  font-size: 0.6vw;\">23</div></div>\n', NULL, '2021-04-27 10:05:54', '2021-04-27 10:05:54'),
-(24, 2, 2, 28, 2, 'sada32313132132213', 'sfsdfsdfsfqe e rw rw rwr wr ', '/storage/product/images/2/VV8r340sRjTUgSkdlIis.jpg', 'dsadá', 'ádsadadsa321312321321', 123, 12312, '1321', '<div style=\"font-size:0;position:relative;width:160px;height:50px;\">\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:0px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:8px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:12px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:20px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:28px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:32px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:36px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:48px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:52px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:56px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:64px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:68px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:76px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:84px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:88px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:96px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:100px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:112px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:120px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:124px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:128px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:136px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:140px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:148px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:156px;top:0px;\">&nbsp;</div>\n<div style=\"position:absolute;bottom:0; text-align:center; width:160px;  font-size: 0.6vw;\">24</div></div>\n', NULL, '2021-04-28 04:52:24', '2021-05-18 03:19:26'),
-(27, 3, 2, 2, 3, '1232131231213', '2321wqeqêwqeqe', '/storage/product/images/2/tIms845W7pQni8Erl3T8.jpg', '213123', '123123313123123', 123131, 12313, 'ewqewqewqe', '<div style=\"font-size:0;position:relative;width:448px;height:50px;\">\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:0px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:8px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:12px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:20px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:28px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:32px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:40px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:48px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:52px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:56px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:64px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:68px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:80px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:84px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:88px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:96px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:104px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:116px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:120px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:124px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:128px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:136px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:144px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:148px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:152px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:160px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:168px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:180px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:184px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:188px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:192px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:200px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:208px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:212px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:216px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:224px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:228px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:240px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:244px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:248px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:256px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:264px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:276px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:280px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:284px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:288px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:292px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:304px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:308px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:312px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:320px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:328px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:336px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:340px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:344px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:352px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:360px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:372px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:376px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:380px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:384px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:392px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:400px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:404px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:412px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:416px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:424px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:428px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:436px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:444px;top:0px;\">&nbsp;</div>\n<div style=\"position:absolute;bottom:0; text-align:center; width:448px;  font-size: 0.6vw;\">12313123213</div></div>\n', NULL, '2021-05-18 16:11:20', '2021-05-18 16:11:20'),
-(28, 3, 2, 2, 2, 'Cá kho đông lạnh', 'Cá kho đông lạnh', '/storage/product/images/2/3FiCzDcunTlJSpYo12kx.png', 'VN', 'Thức ăn siêu thị', 0, 1, 'kg', '<div style=\"font-size:0;position:relative;width:192px;height:50px;\">\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:0px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:8px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:12px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:20px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:28px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:32px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:40px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:48px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:52px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:56px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:64px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:72px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:80px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:84px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:88px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:96px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:104px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:112px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:116px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:120px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:128px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:136px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:148px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:152px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:156px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:160px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:168px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:172px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:180px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:188px;top:0px;\">&nbsp;</div>\n<div style=\"position:absolute;bottom:0; text-align:center; width:192px;  font-size: 0.6vw;\">111</div></div>\n', NULL, '2021-06-06 15:43:26', '2021-06-06 15:43:26');
+INSERT INTO `sanpham` (`id`, `idloaisanpham`, `idcongty`, `idtaikhoan`, `idkho`, `tensanpham`, `thongtinsanpham`, `hinhanhsanpham`, `videosanpham`, `xuatxu`, `chungloaisanpham`, `dongiasanpham`, `khoiluongsanpham`, `donvitinhsanpham`, `mavachsanpham`, `qrcode`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, 2, 1, 'Cá kho', 'Cá kho tiêu khổ qua', '', NULL, 'Việt Nam', 'Đồ ăn - Thức uống', 25000, 1, 'kg', NULL, NULL, NULL, NULL),
+(2, 1, 2, 2, 1, 'Cá kho', 'Cá kho tiêu khổ qua', '', NULL, 'Việt Nam', 'Đồ ăn - Thức uống', 25000, 1, 'kg', NULL, NULL, NULL, NULL),
+(3, 1, 2, 2, 1, 'Cá kho', 'Cá kho tiêu khổ qua', '', NULL, 'Việt Nam', 'Đồ ăn - Thức uống', 25000, 1, 'kg', NULL, NULL, NULL, NULL),
+(4, 1, 2, 2, 1, 'Cá kho', 'Cá kho tiêu khổ qua', '', NULL, 'Việt Nam', 'Đồ ăn - Thức uống', 25000, 1, 'kg', NULL, NULL, NULL, NULL),
+(5, 1, 2, 2, 1, 'Cá kho', 'Cá kho tiêu khổ qua', '', NULL, 'Việt Nam', 'Đồ ăn - Thức uống', 25000, 1, 'kg', NULL, NULL, NULL, NULL),
+(6, 1, 2, 2, 1, 'Cá kho', 'Cá kho tiêu khổ qua', '', NULL, 'Việt Nam', 'Đồ ăn - Thức uống', 25000, 1, 'kg', NULL, NULL, NULL, NULL),
+(7, 1, 2, 2, 1, 'Cá kho', 'Cá kho tiêu khổ qua', '', NULL, 'Việt Nam', 'Đồ ăn - Thức uống', 25000, 1, 'kg', NULL, NULL, NULL, NULL),
+(8, 1, 2, 2, 1, 'Cá kho', 'Cá kho tiêu khổ qua', '', NULL, 'Việt Nam', 'Đồ ăn - Thức uống', 25000, 1, 'kg', NULL, NULL, NULL, NULL),
+(9, 1, 2, 2, 1, 'Cá kho', 'Cá kho tiêu khổ qua', '', NULL, 'Việt Nam', 'Đồ ăn - Thức uống', 25000, 1, 'kg', NULL, NULL, NULL, NULL),
+(22, 1, 1, 2, 1, '123123213123', '<p>213213121</p>', '/storage/product/images/1/RhgJ44Kjd8edpvMSikeE.jpg', NULL, '3313', '1232uuhuhuhuhu', 221321, 123, '21321', '<div style=\"font-size:0;position:relative;width:384px;height:50px;\">\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:0px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:8px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:12px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:20px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:28px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:32px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:40px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:48px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:52px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:56px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:64px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:68px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:80px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:84px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:88px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:96px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:104px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:116px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:120px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:124px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:128px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:132px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:140px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:148px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:152px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:160px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:168px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:176px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:184px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:188px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:192px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:196px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:208px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:216px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:220px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:224px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:228px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:236px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:240px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:248px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:256px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:264px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:272px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:276px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:284px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:288px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:292px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:304px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:308px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:316px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:320px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:324px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:336px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:340px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:344px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:352px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:360px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:364px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:372px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:380px;top:0px;\">&nbsp;</div>\n<div style=\"position:absolute;bottom:0; text-align:center; width:384px;  font-size: 0.6vw;\">123456789</div></div>\n', NULL, '2021-04-27 09:50:20', '2021-05-30 14:36:49'),
+(23, 1, 1, 2, 1, '3213', '<p>1233213131</p>', '/storage/product/images/1/etqDuVSJAI13auNzxl81.jpg', NULL, '312', '131', 123, 123, '12', '<div style=\"font-size:0;position:relative;width:160px;height:50px;\">\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:0px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:8px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:12px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:20px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:28px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:32px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:36px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:48px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:52px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:56px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:64px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:72px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:84px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:88px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:92px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:96px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:104px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:112px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:120px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:124px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:128px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:136px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:140px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:148px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:156px;top:0px;\">&nbsp;</div>\n<div style=\"position:absolute;bottom:0; text-align:center; width:160px;  font-size: 0.6vw;\">23</div></div>\n', NULL, '2021-04-27 10:05:54', '2021-04-27 10:05:54'),
+(24, 2, 2, 28, 2, 'sada32313132132213', 'sfsdfsdfsfqe e rw rw rwr wr ', '/storage/product/images/2/VV8r340sRjTUgSkdlIis.jpg', NULL, 'dsadá', 'ádsadadsa321312321321', 123, 12312, '1321', '<div style=\"font-size:0;position:relative;width:160px;height:50px;\">\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:0px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:8px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:12px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:20px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:28px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:32px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:36px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:48px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:52px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:56px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:64px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:68px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:76px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:84px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:88px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:96px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:100px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:112px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:120px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:124px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:128px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:136px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:140px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:148px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:156px;top:0px;\">&nbsp;</div>\n<div style=\"position:absolute;bottom:0; text-align:center; width:160px;  font-size: 0.6vw;\">24</div></div>\n', NULL, '2021-04-28 04:52:24', '2021-05-18 03:19:26'),
+(27, 3, 2, 2, 3, '1232131231213', '2321wqeqêwqeqe', '/storage/product/images/2/tIms845W7pQni8Erl3T8.jpg', NULL, '213123', '123123313123123', 123131, 12313, 'ewqewqewqe', '<div style=\"font-size:0;position:relative;width:448px;height:50px;\">\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:0px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:8px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:12px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:20px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:28px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:32px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:40px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:48px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:52px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:56px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:64px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:68px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:80px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:84px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:88px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:96px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:104px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:116px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:120px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:124px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:128px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:136px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:144px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:148px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:152px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:160px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:168px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:180px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:184px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:188px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:192px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:200px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:208px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:212px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:216px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:224px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:228px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:240px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:244px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:248px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:256px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:264px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:276px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:280px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:284px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:288px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:292px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:304px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:308px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:312px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:320px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:328px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:336px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:340px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:344px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:352px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:360px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:372px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:376px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:380px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:384px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:392px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:400px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:404px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:412px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:416px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:424px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:428px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:436px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:444px;top:0px;\">&nbsp;</div>\n<div style=\"position:absolute;bottom:0; text-align:center; width:448px;  font-size: 0.6vw;\">12313123213</div></div>\n', NULL, '2021-05-18 16:11:20', '2021-05-18 16:11:20'),
+(28, 3, 2, 2, 2, 'Cá kho đông lạnh', 'Cá kho đông lạnh', '/storage/product/images/2/3FiCzDcunTlJSpYo12kx.png', NULL, 'VN', 'Thức ăn siêu thị', 0, 1, 'kg', '<div style=\"font-size:0;position:relative;width:192px;height:50px;\">\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:0px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:8px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:12px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:20px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:28px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:32px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:40px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:48px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:52px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:56px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:64px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:72px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:80px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:84px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:88px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:96px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:104px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:112px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:116px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:120px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:128px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:136px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:148px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:152px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:156px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:160px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:168px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:172px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:6px;height:38px;position:absolute;left:180px;top:0px;\">&nbsp;</div>\n<div style=\"background-color:black;width:2px;height:38px;position:absolute;left:188px;top:0px;\">&nbsp;</div>\n<div style=\"position:absolute;bottom:0; text-align:center; width:192px;  font-size: 0.6vw;\">111</div></div>\n', NULL, '2021-06-06 15:43:26', '2021-06-06 15:43:26');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `so`
+-- Cấu trúc bảng cho bảng `so`
 --
 
 CREATE TABLE `so` (
@@ -610,7 +658,7 @@ CREATE TABLE `so` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `so`
+-- Đang đổ dữ liệu cho bảng `so`
 --
 
 INSERT INTO `so` (`id`, `tenso`, `diachiso`, `emailso`, `dienthoaiso`, `faxso`, `webso`, `created_at`, `updated_at`) VALUES
@@ -621,7 +669,7 @@ INSERT INTO `so` (`id`, `tenso`, `diachiso`, `emailso`, `dienthoaiso`, `faxso`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `taikhoan_vaitro`
+-- Cấu trúc bảng cho bảng `taikhoan_vaitro`
 --
 
 CREATE TABLE `taikhoan_vaitro` (
@@ -633,7 +681,7 @@ CREATE TABLE `taikhoan_vaitro` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `taikhoan_vaitro`
+-- Đang đổ dữ liệu cho bảng `taikhoan_vaitro`
 --
 
 INSERT INTO `taikhoan_vaitro` (`id`, `idtaikhoan`, `idvaitro`, `created_at`, `updated_at`) VALUES
@@ -663,7 +711,7 @@ INSERT INTO `taikhoan_vaitro` (`id`, `idtaikhoan`, `idvaitro`, `created_at`, `up
 -- --------------------------------------------------------
 
 --
--- Table structure for table `thongtin`
+-- Cấu trúc bảng cho bảng `thongtin`
 --
 
 CREATE TABLE `thongtin` (
@@ -681,12 +729,12 @@ CREATE TABLE `thongtin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `thongtin`
+-- Đang đổ dữ liệu cho bảng `thongtin`
 --
 
 INSERT INTO `thongtin` (`id`, `idtaikhoan`, `hothanhvien`, `tenthanhvien`, `gioitinhthanhvien`, `hinhanhthanhvien`, `namsinh`, `diachi`, `dienthoai`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Nguyễn', 'Huy', 1, '/storage/profile/1/m5nElWaHjYC5YGmDzr5u.jpg', '1999-12-07', 'Vĩnh Long', '0938858944', '2021-04-23 07:00:25', '2021-04-27 11:56:12'),
-(2, 2, 'Nguyễn', 'Huy', 1, '/storage/profile/2/RpiixNGJM4pwTrfd1jRg.jpg', '1999-12-07', 'kkj', '4545621315', '2021-04-24 21:00:06', '2021-05-30 13:27:05'),
+(2, 2, 'Nguyễn', 'Huy', 1, '/storage/profile/2/WZ69jtQeeJ1MTJLxKalt.jpg', '1999-12-07', 'kkj', '4545621315', '2021-04-24 21:00:06', '2021-06-12 13:54:38'),
 (3, 3, 'Trần', 'Tú', 1, '/storage/profile/3/UL9bFa5gVjogBcLbvUMJ.jpg', '2021-03-30', 'Hậu Giang', '0122558866', '2021-04-25 20:38:25', '2021-04-25 20:57:35'),
 (4, 4, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-04-25 20:58:25', '2021-04-25 20:58:25'),
 (6, 8, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-04-25 21:58:56', '2021-04-25 21:58:56'),
@@ -707,12 +755,15 @@ INSERT INTO `thongtin` (`id`, `idtaikhoan`, `hothanhvien`, `tenthanhvien`, `gioi
 (26, 35, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-05-15 17:16:02', '2021-05-15 17:16:02'),
 (27, 36, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-05-18 11:01:27', '2021-05-18 11:01:27'),
 (28, 37, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-05-18 11:06:36', '2021-05-18 11:06:36'),
-(30, 47, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-05-28 14:53:14', '2021-05-28 14:53:14');
+(30, 47, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-05-28 14:53:14', '2021-05-28 14:53:14'),
+(31, 48, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-06-10 15:14:31', '2021-06-10 15:14:31'),
+(32, 49, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-06-10 15:17:56', '2021-06-10 15:17:56'),
+(33, 50, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-06-10 15:20:01', '2021-06-10 15:20:01');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `thongtingiaidoan`
+-- Cấu trúc bảng cho bảng `thongtingiaidoan`
 --
 
 CREATE TABLE `thongtingiaidoan` (
@@ -723,13 +774,13 @@ CREATE TABLE `thongtingiaidoan` (
   `thoigianbatdau` date NOT NULL,
   `thoigiandukien` int(11) NOT NULL,
   `thoigianhoanthanh` date NOT NULL,
-  `trehan` int(11) NOT NULL DEFAULT '0',
+  `trehan` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `thongtingiaidoan`
+-- Đang đổ dữ liệu cho bảng `thongtingiaidoan`
 --
 
 INSERT INTO `thongtingiaidoan` (`id`, `idgiaidoan`, `motacongviec`, `tencongviec`, `thoigianbatdau`, `thoigiandukien`, `thoigianhoanthanh`, `trehan`, `created_at`, `updated_at`) VALUES
@@ -740,7 +791,7 @@ INSERT INTO `thongtingiaidoan` (`id`, `idgiaidoan`, `motacongviec`, `tencongviec
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tintuc`
+-- Cấu trúc bảng cho bảng `tintuc`
 --
 
 CREATE TABLE `tintuc` (
@@ -748,50 +799,54 @@ CREATE TABLE `tintuc` (
   `idchuyenmuc` bigint(20) NOT NULL,
   `idcongty` bigint(20) NOT NULL,
   `idtaikhoan` bigint(20) NOT NULL,
-  `ngaydangtintuc` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `ngaydangtintuc` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `tieudetintuc` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tomtattintuc` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `noidungtintuc` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `hinhanhtintuc` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `loaitintuc` smallint(6) NOT NULL DEFAULT '0' COMMENT '1-nổi bật, 0-không nổi bật',
-  `duyettintuc` smallint(6) NOT NULL DEFAULT '0' COMMENT '1-đã duyệt, 0-chưa duyệt',
-  `xuatbantintuc` smallint(6) NOT NULL DEFAULT '0' COMMENT '1-duyệt xuất bản, 0-chưa được xuất bản',
-  `lydogo` smallint(6) NOT NULL DEFAULT '0' COMMENT '1-có, 0-không',
+  `videotintuc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `loaitintuc` smallint(6) NOT NULL DEFAULT 0 COMMENT '1-nổi bật, 0-không nổi bật',
+  `duyettintuc` smallint(6) NOT NULL DEFAULT 0 COMMENT '1-đã duyệt, 0-chưa duyệt',
+  `xuatbantintuc` smallint(6) NOT NULL DEFAULT 0 COMMENT '1-duyệt xuất bản, 0-chưa được xuất bản',
+  `lydogo` smallint(6) NOT NULL DEFAULT 0 COMMENT '1-có, 0-không',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `tintuc`
+-- Đang đổ dữ liệu cho bảng `tintuc`
 --
 
-INSERT INTO `tintuc` (`id`, `idchuyenmuc`, `idcongty`, `idtaikhoan`, `ngaydangtintuc`, `tieudetintuc`, `tomtattintuc`, `noidungtintuc`, `hinhanhtintuc`, `loaitintuc`, `duyettintuc`, `xuatbantintuc`, `lydogo`, `created_at`, `updated_at`) VALUES
-(1, 1, 2, 2, '2021-06-04 14:26:09', 'tin1', 'tomtat1', 'noidung1', '/hinhanh/2705.useravatar.png', 0, 0, 0, 0, NULL, NULL),
-(2, 1, 2, 2, '2021-06-04 14:26:13', 'tin2', 'tomtat2', 'noidung2', '/hinhanh/24393.cafe.jpg', 0, 0, 0, 0, NULL, NULL),
-(3, 1, 2, 2, '2021-06-09 09:35:17', 'tin3', 'noidung3', 'noidung3 435353', '/hinhanh/40651.khautrang.png', 1, 0, 0, 1, NULL, NULL),
-(4, 1, 2, 2, '2021-06-10 08:30:34', 'Indonesia không hưởng quả phạt góc nào trước Việt Nam', 'Bên cạnh tỷ số 4-0, thế trận áp đảo của Việt Nam trước Indonesia còn thể hiện qua số phạt góc cũng như dứt điểm, trong trận đấu thuộc vòng loại World Cup 2022 tối 7/6.\r\n\r\nTrong hiệp một, Việt Nam dồn ép và hưởng tới 10', 'Trong hiệp một, Việt Nam dồn ép và hưởng tới 10 quả phạt góc. Nhiều lần Quang Hải đá phạt góc thẳng ra tuyến hai cho Tuấn Anh hoặc cầu thủ vào thay người Xuân Trường sút xa. Nguy hiểm nhất là cú vô-lê của Tuấn Anh ngay phút thứ 6, bóng đi căng nhưng trúng vị trí thủ môn Nadeo Argawinata.\r\n\r\nSang hiệp hai, Việt Nam tạo ra thêm năm quả phạt góc. Trong đó, quả cuối cùng dẫn tới bàn của Công Phượng phút 67. Xuân Trường sút phạt về cột gần cho Tiến Linh chạy cắt mặt đánh đầu ngược vào trong. Công Phượng bị bất ngờ khi bóng bay đến nhưng vẫn kịp dùng đùi trái đẩy bóng vào lưới cận thành, nâng tỷ số lên 3-0. Kể từ đó, Việt Nam đá giữ sức và không tạo ra thêm phạt góc.\r\n\r\nIndonesia không được đá phạt góc lần nào trong cả trận. Họ cũng không sút được lần nào trong hiệp một. Sang hiệp hai, Indonesia dứt điểm được bốn lần, trong đó một pha bị thủ môn Tấn Trường bắt gọn và một lần trúng xà. Việt Nam cả trận tung ra 13 cú dứt điểm, ghi bốn bàn nhờ công Tiến Linh, Quang Hải, Công Phượng và Văn Thanh trong hiệp hai.\r\n\r\nTỷ lệ kiểm soát bóng cũng nghiêng hẳn về Việt Nam, có lúc lên tới 71% thời gian. Indonesia chỉ hơn Việt Nam về số pha phạm lỗi (16 so với 10) và số thẻ vàng (5 so với 2).\r\n\r\nNhờ chiến thắng này, thầy trò Park Hang-seo giữ đỉnh bảng G với 14 điểm, hơn UAE hai điểm. Ở loạt trận áp chót tối 11/6, Việt Nam gặp Malaysia, còn Indonesia đụng UAE.', '/hinhanh/62409.3277909_3d_red_supercar-wallpaper-1920x1080.jpg', 1, 1, 1, 1, NULL, '2021-06-02 14:24:41'),
-(5, 2, 2, 1, '2021-06-09 08:03:24', 'tieude5', 'tomtat5', 'noidung5', '/hinhanh/24393.cafe.jpg', 0, 1, 1, 0, NULL, NULL),
-(6, 2, 1, 1, '2021-06-03 14:38:09', 'tieude6', 'tomtat6', 'noidung6', '/hinhanh/24393.cafe.jpg', 0, 1, 1, 0, NULL, NULL),
-(7, 2, 1, 1, '2021-06-03 14:38:09', 'tieude7', 'tomtat7', 'noidung7\r\n', '/hinhanh/24393.cafe.jpg', 0, 1, 1, 0, NULL, NULL),
-(8, 2, 1, 1, '2021-06-03 14:38:09', 'tieude8', 'tomtat8', 'noidung8', '/hinhanh/24393.cafe.jpg', 0, 1, 1, 0, NULL, NULL),
-(9, 2, 1, 1, '2021-06-03 14:38:09', 'tieude9', 'tomtat9', 'noidung9', '/hinhanh/24393.cafe.jpg', 0, 1, 1, 0, NULL, NULL),
-(10, 2, 1, 1, '2021-06-03 14:38:09', 'tieude10', 'tomtat10', 'noidung10', '/hinhanh/24393.cafe.jpg', 0, 1, 1, 0, NULL, NULL),
-(11, 1, 2, 2, '2021-06-09 08:04:49', 'tin5', 'noidung5', 'noidung5', '/hinhanh/79059.quan2.jpg', 1, 1, 1, 1, NULL, '2021-06-09 08:04:49'),
-(12, 1, 2, 2, '2021-06-09 09:26:53', 'tin6', 'noidung6', 'noidung6', '/hinhanh/16131.khautrang.png', 1, 1, 1, 1, NULL, '2021-06-09 09:26:53'),
-(13, 2, 2, 2, '2021-06-09 09:54:06', 'Siêu xe về VN qwer tyui opas dfgh jklz xcvb nm,q ưerty uiop asdf ghjkSiêu xe về VN qwer tyui opas dfgh jklz', 'noidung7', 'noidung7', '/hinhanh/62409.3277909_3d_red_supercar-wallpaper-1920x1080.jpg', 1, 1, 1, 1, NULL, '2021-06-09 08:10:16'),
-(14, 1, 2, 28, '2021-06-07 16:01:43', 'tin8', 'tomtat8', 'noidung8', '/hinhanh/10311.quan1.jpg', 0, 1, 1, 1, NULL, '2021-06-04 15:02:48'),
-(16, 2, 1, 2, '2021-06-08 17:04:16', 'q', 'q', 'q', '', 0, 0, 1, 0, NULL, NULL),
-(17, 2, 1, 2, '2021-06-08 17:04:30', 'q', 'q', 'q', '', 0, 0, 1, 0, NULL, NULL),
-(18, 2, 1, 2, '2021-06-08 17:04:39', 'q', 'q', 'q', '', 0, 0, 1, 0, NULL, NULL),
-(19, 2, 1, 2, '2021-06-08 17:04:58', 'q', 'q', 'q', '', 0, 0, 1, 0, NULL, NULL),
-(22, 4, 2, 2, '2021-06-10 08:56:39', 'dấdađâsdasdasd', '<p>đâsdaádasdasdasdas</p>', '<p>sdasdadasdasdad</p>', '/storage/news/image/2/6XyDKrVqkOmxCv7lrLKO.jpg', 1, 1, 1, 0, NULL, '2021-06-10 08:56:39'),
-(23, 4, 2, 2, '2021-06-10 09:09:21', 'Dân chơi Cần Thơ mang dàn siêu xe, xe thể thao khủng đi offline', '<p>Dân chơi Cần Thơ mang dàn siêu xe, xe thể thao khủng đi offline, có sự góp mặt của Chevrolet Corvette C8 vừa về tay chủ nhân</p>', '<p>Dân chơi Cần Thơ mang dàn siêu xe, xe thể thao khủng đi offline, có sự góp mặt của Chevrolet Corvette C8 vừa về tay chủ nhânn<br></p>', '/storage/news/image/2/ihUhWX87fUaa0xVUsHzK.jpg', 1, 1, 1, 0, NULL, '2021-06-10 09:09:07'),
-(24, 4, 2, 2, '2021-06-10 09:30:14', 'Thêm \'biệt thự di động\' Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn', '<p><span style=\"color: rgb(136, 136, 136); font-family: Arial; font-size: 13px;\">Mercedes-Maybach S 650 Pullman là mẫu xe sang bậc nhất hiện nay của thương hiệu ngôi sao 3 cánh, được sản xuất dành cho những VIP.</span><br></p>', '<p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Mới đây, một chiếc Mercedes-Maybach S 650 Pullman đã xuất hiện tại showroom tư nhân ở Sài Gòn. Nhiều khả năng đây chính là chiếc S 650 Pullman thứ ba được đưa về nước.</p><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Về ngoại thất, xe sở hữu màu đen ở toàn bộ phần thân xe, tương đồng với chiếc đầu tiên được nhập khẩu bởi một đại lý tư nhân có tiếng ngoài Hà Nội. Hai chiếc này còn sở hữu bộ mâm giống nhau nên càng khó để phân biệt. Trong khi đó, chiếc thứ 2 mang 2 tông màu tương phản.</p><div class=\"VCSortableInPreviewMode noCaption active\" type=\"Photo\" style=\"padding: 0px; margin-top: 0px; margin-right: auto; margin-left: auto; outline: 0px; display: inline-block; position: relative; text-align: center; transition: all 0.3s ease-in-out 0s; width: 640px; z-index: 100; visibility: visible; overflow-wrap: break-word; cursor: default; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; background-color: rgb(255, 255, 255); margin-bottom: 20px !important;\"><div style=\"padding: 0px; margin: 0px; outline: 0px; position: relative; display: inline-block;\"><div id=\"adnzone_511318\" style=\"padding: 0px; margin: 0px auto; outline: 0px; clear: both; text-align: left; position: absolute; width: 640px; top: 0px;\"><iframe id=\"adnzone_511318_0_80302\" scrolling=\"no\" frameborder=\"no\" style=\"padding: 0px; margin: 0px; width: 640px; height: 132px; border-width: initial; border-style: none; z-index: 2; position: relative; transition: height 1s ease-out 0s;\"></iframe></div><a href=\"https://autopro8.mediacdn.vn/2021/6/10/1924215169500720257929192717118227332894463n-16233093746582091287651.jpg\" data-fancybox=\"img-lightbox\" title=\"\" class=\"detail-img-lightbox\" style=\"padding: 0px; margin: 0px; display: block; outline: none !important;\"><img src=\"https://autopro8.mediacdn.vn/thumb_w/640/2021/6/10/1924215169500720257929192717118227332894463n-16233093746582091287651.jpg\" id=\"img_bdffd720-c9bb-11eb-9c2d-57b61dc229c1\" w=\"960\" h=\"720\" alt=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 1.\" title=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 1.\" rel=\"lightbox\" photoid=\"bdffd720-c9bb-11eb-9c2d-57b61dc229c1\" type=\"photo\" data-original=\"https://autopro8.mediacdn.vn/2021/6/10/1924215169500720257929192717118227332894463n-16233093746582091287651.jpg\" width=\"\" height=\"\" class=\"lightbox-content\" style=\"padding-top: unset; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin: 137px auto 0px; display: inline-block; vertical-align: top; pointer-events: none; max-width: 100%;\"></a></div></div><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Ngoại thất của xe sở hữu màu đen bóng, điểm xuyết là các chi tiết bằng kim loại sáng bóng như tay nắm cửa, lưới tản nhiệt, viền cửa sổ... tương tự Mercedes-Maybach S 650 thông thường. Điểm khác biệt lớn nhất của bản Pullman là kích thước xe lên tới 6,5 mét.</p><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Mercedes-Maybach S 650 Pullman thực chất là phiên bản facelift và được đổi tên của phiên bản Mercedes-Maybach S 600 Pullman. Trước đó, giới mê xe Việt đã có cơ hội đón hai chiếc S 600 Pullman với màu sơn trắng và đen.</p><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Sự thay đổi lớn nhất giữa phiên bản S 650 và S 600 đó là&nbsp;phần đầu xe được thiết kế lại với hốc gió mới làm tăng khả năng làm mát động cơ và hệ thống đèn pha LED Multibeam có khả năng chiếu sáng hơn 600 m. Ngoài ra, một thanh nẹp chrome được bổ sung cho cả phần cản trước và cản sau của xe.</p><div class=\"VCSortableInPreviewMode active noCaption\" type=\"Photo\" style=\"padding: 0px; margin-top: 0px; margin-right: auto; margin-left: auto; outline: 0px; display: inline-block; position: relative; text-align: center; transition: all 0.3s ease-in-out 0s; width: 640px; z-index: 100; visibility: visible; overflow-wrap: break-word; cursor: default; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; background-color: rgb(255, 255, 255); margin-bottom: 20px !important;\"><div style=\"padding: 0px; margin: 0px; outline: 0px;\"><a href=\"https://autopro8.mediacdn.vn/2021/6/10/photo-1-16233155612931639098081.jpg\" data-fancybox=\"img-lightbox\" title=\"\" class=\"detail-img-lightbox\" style=\"padding: 0px; margin: 0px; display: block; outline: none !important;\"><img src=\"https://autopro8.mediacdn.vn/thumb_w/640/2021/6/10/photo-1-16233155612931639098081.jpg\" id=\"img_25260ec0-c9ca-11eb-b822-39bd312c79ca\" w=\"1024\" h=\"768\" alt=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 2.\" title=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 2.\" rel=\"lightbox\" photoid=\"25260ec0-c9ca-11eb-b822-39bd312c79ca\" type=\"photo\" data-original=\"https://autopro8.mediacdn.vn/2021/6/10/photo-1-16233155612931639098081.jpg\" width=\"\" height=\"\" class=\"lightbox-content\" style=\"padding: 0px; margin: 0px auto; display: inline-block; vertical-align: top; pointer-events: none; max-width: 100%;\"></a></div></div><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Được biết, showroom nhập về chiếc Mercedes-Maybach S 650 Pullman này toạ lạc trên đường An Dương Vương, Q.5, TP.HCM. Đây cũng chính là đơn vị nhập về hai chiếc Ford GT, chiếc Ferrari 488 Pista Spider thứ hai và chiếc Mercedes-Maybach S 650 Pullman hai tông màu kể trên.<br style=\"padding: 0px; margin: 0px;\"></p><div class=\"VCSortableInPreviewMode active noCaption\" type=\"Photo\" style=\"padding: 0px; margin-top: 0px; margin-right: auto; margin-left: auto; outline: 0px; display: inline-block; position: relative; text-align: center; transition: all 0.3s ease-in-out 0s; width: 640px; z-index: 100; visibility: visible; overflow-wrap: break-word; cursor: default; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; background-color: rgb(255, 255, 255); margin-bottom: 20px !important;\"><div style=\"padding: 0px; margin: 0px; outline: 0px;\"><a href=\"https://autopro8.mediacdn.vn/2021/6/10/1943446289472095927458295045540580620425387n-1623309374681828586472.jpg\" data-fancybox=\"img-lightbox\" title=\"\" class=\"detail-img-lightbox\" style=\"padding: 0px; margin: 0px; display: block; outline: none !important;\"><img src=\"https://autopro8.mediacdn.vn/thumb_w/640/2021/6/10/1943446289472095927458295045540580620425387n-1623309374681828586472.jpg\" id=\"img_be1708a0-c9bb-11eb-80f3-9937f5f0f3df\" w=\"960\" h=\"720\" alt=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 3.\" title=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 3.\" rel=\"lightbox\" photoid=\"be1708a0-c9bb-11eb-80f3-9937f5f0f3df\" type=\"photo\" data-original=\"https://autopro8.mediacdn.vn/2021/6/10/1943446289472095927458295045540580620425387n-1623309374681828586472.jpg\" width=\"\" height=\"\" class=\"lightbox-content\" style=\"padding: 0px; margin: 0px auto; display: inline-block; vertical-align: top; pointer-events: none; max-width: 100%;\"></a></div></div><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Bên trong nội thất, vô-lăng được thay đổi lên loại 3 chấu, các nút bấm trên vô-lăng được thiết kế lại. Cụm màn hình kích thước 12,3 inch ở phía sau vô lăng cũng như màn hình giải trí trung tâm có giao diện mới mẻ hơn, độ phân giải được cải thiết cho chất lượng sắc nét hơn. Nhìn chung, khoang lái của bản Pullman với bản thường không có sự khác biệt.</p><div id=\"admzone480456\" class=\"mgt10\" style=\"padding: 0px; margin: 0px; outline: 0px; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; background-color: rgb(255, 255, 255);\"><div id=\"zone-480456\" style=\"padding: 0px; margin: 0px; outline: 0px;\"><div id=\"share-jkkj65ph\" style=\"padding: 0px; margin: 0px; outline: 0px;\"><div id=\"placement-k6ssarfg\" revenue=\"cpm\" style=\"padding: 0px; margin: 0px; outline: 0px;\"><div id=\"banner-480456-554230\" style=\"padding: 0px; margin: 0px; outline: 0px; min-height: 10px; min-width: 10px;\"><div id=\"slot-2-480456-554230\" style=\"padding: 0px; margin: 0px; outline: 0px;\"><div id=\"sspbid_3345\" style=\"padding: 0px; margin: 0px; outline: 0px;\"></div></div></div></div></div></div></div><div class=\"VCSortableInPreviewMode noCaption\" type=\"Photo\" style=\"padding: 0px; margin-top: 0px; margin-right: auto; margin-left: auto; outline: 0px; display: inline-block; position: relative; text-align: center; transition: all 0.3s ease-in-out 0s; width: 640px; z-index: 100; visibility: visible; overflow-wrap: break-word; cursor: default; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; background-color: rgb(255, 255, 255); margin-bottom: 20px !important;\"><div style=\"padding: 0px; margin: 0px; outline: 0px;\"><a href=\"https://autopro8.mediacdn.vn/2020/11/18/robb-pullman-7-16057073259921924881895.jpg\" data-fancybox=\"img-lightbox\" title=\"\" class=\"detail-img-lightbox\" style=\"padding: 0px; margin: 0px; display: block; outline: none !important;\"><img src=\"https://autopro8.mediacdn.vn/thumb_w/640/2020/11/18/robb-pullman-7-16057073259921924881895.jpg\" id=\"img_c9e2ee40-29a4-11eb-b4c3-1b5625fe3d04\" w=\"1280\" h=\"720\" alt=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 4.\" title=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 4.\" rel=\"lightbox\" photoid=\"c9e2ee40-29a4-11eb-b4c3-1b5625fe3d04\" type=\"photo\" data-original=\"https://autopro8.mediacdn.vn/2020/11/18/robb-pullman-7-16057073259921924881895.jpg\" width=\"\" height=\"\" class=\"lightbox-content\" style=\"padding: 0px; margin: 0px auto; display: inline-block; vertical-align: top; pointer-events: none; max-width: 100%;\"></a></div></div><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Điểm nhấn của bản Pullman là hàng ghế sau. So với phiên bản S-Class Maybach thường, S 650 Pullman được bổ sung 2 ghế phụ cho khoang sau và có thể gập gọn khi không cần thiết. Phần ghế ngồi phụ này đồng thời được tích hợp 2 màn hình giải trí. Hệ thống âm thanh là loại hàng hiệu Burmester 3D cao cấp. Để tăng tính riêng tư, xe cũng được trang bị một vách ngăn giữa khoang hành khách và tài xế. Một tấm kính nhỏ có thể trượt lên/xuống và làm mờ khi chủ nhân cần không gian riêng tư.</p><div class=\"VCSortableInPreviewMode active noCaption\" type=\"Photo\" style=\"padding: 0px; margin-top: 0px; margin-right: auto; margin-left: auto; outline: 0px; display: inline-block; position: relative; text-align: center; transition: all 0.3s ease-in-out 0s; width: 640px; z-index: 100; visibility: visible; overflow-wrap: break-word; cursor: default; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; background-color: rgb(255, 255, 255); margin-bottom: 20px !important;\"><div style=\"padding: 0px; margin: 0px; outline: 0px;\"><a href=\"https://autopro8.mediacdn.vn/2020/11/18/robb-pullman-6-1605707325968247657870.jpg\" data-fancybox=\"img-lightbox\" title=\"\" class=\"detail-img-lightbox\" style=\"padding: 0px; margin: 0px; display: block; outline: none !important;\"><img src=\"https://autopro8.mediacdn.vn/thumb_w/640/2020/11/18/robb-pullman-6-1605707325968247657870.jpg\" id=\"img_c9ac4de0-29a4-11eb-80f3-9937f5f0f3df\" w=\"1280\" h=\"720\" alt=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 5.\" title=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 5.\" rel=\"lightbox\" photoid=\"c9ac4de0-29a4-11eb-80f3-9937f5f0f3df\" type=\"photo\" data-original=\"https://autopro8.mediacdn.vn/2020/11/18/robb-pullman-6-1605707325968247657870.jpg\" width=\"\" height=\"\" class=\"lightbox-content\" style=\"padding: 0px; margin: 0px auto; display: inline-block; vertical-align: top; pointer-events: none; max-width: 100%;\"></a></div></div><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\"><span style=\"padding: 0px; margin: 0px;\">Động cơ của Mercedes-Maybach S 650 Pullman là loại V12, tăng áp kép, dung tích 6 lít, tạo ra công suất tối đa 630 mã lực, mô-men xoắn cực đại 1.000 Nm cùng với hộp số tự động 7 cấp 7G Tronic.</span></p>', '/storage/news/image/2/TYvLG98Y2fh9sZxSHaSG.jpg', 1, 1, 1, 0, NULL, '2021-06-10 09:30:14');
+INSERT INTO `tintuc` (`id`, `idchuyenmuc`, `idcongty`, `idtaikhoan`, `ngaydangtintuc`, `tieudetintuc`, `tomtattintuc`, `noidungtintuc`, `hinhanhtintuc`, `videotintuc`, `loaitintuc`, `duyettintuc`, `xuatbantintuc`, `lydogo`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, 2, '2021-06-12 10:47:00', 'tin113123121231321213', '<p>tomtat1ffsdfáđàá</p>', 'noidung14565611536156153', '/storage/news/image/1/wfmdffzcTuQv4QSCqI7p.jpg', NULL, 1, 0, 0, 0, NULL, '2021-06-12 10:47:00'),
+(2, 1, 2, 2, '2021-06-11 15:46:34', 'tin2', 'tomtat2', 'noidung2', '/hinhanh/24393.cafe.jpg', NULL, 0, 0, 0, 0, NULL, NULL),
+(3, 1, 2, 2, '2021-06-11 15:46:32', 'tin3', 'noidung3', 'noidung3 435353', '/hinhanh/40651.khautrang.png', NULL, 1, 0, 0, 1, NULL, NULL),
+(4, 1, 2, 2, '2021-06-11 15:46:35', 'Indonesia không hưởng quả phạt góc nào trước Việt Nam', 'Bên cạnh tỷ số 4-0, thế trận áp đảo của Việt Nam trước Indonesia còn thể hiện qua số phạt góc cũng như dứt điểm, trong trận đấu thuộc vòng loại World Cup 2022 tối 7/6.\r\n\r\nTrong hiệp một, Việt Nam dồn ép và hưởng tới 10', 'Trong hiệp một, Việt Nam dồn ép và hưởng tới 10 quả phạt góc. Nhiều lần Quang Hải đá phạt góc thẳng ra tuyến hai cho Tuấn Anh hoặc cầu thủ vào thay người Xuân Trường sút xa. Nguy hiểm nhất là cú vô-lê của Tuấn Anh ngay phút thứ 6, bóng đi căng nhưng trúng vị trí thủ môn Nadeo Argawinata.\r\n\r\nSang hiệp hai, Việt Nam tạo ra thêm năm quả phạt góc. Trong đó, quả cuối cùng dẫn tới bàn của Công Phượng phút 67. Xuân Trường sút phạt về cột gần cho Tiến Linh chạy cắt mặt đánh đầu ngược vào trong. Công Phượng bị bất ngờ khi bóng bay đến nhưng vẫn kịp dùng đùi trái đẩy bóng vào lưới cận thành, nâng tỷ số lên 3-0. Kể từ đó, Việt Nam đá giữ sức và không tạo ra thêm phạt góc.\r\n\r\nIndonesia không được đá phạt góc lần nào trong cả trận. Họ cũng không sút được lần nào trong hiệp một. Sang hiệp hai, Indonesia dứt điểm được bốn lần, trong đó một pha bị thủ môn Tấn Trường bắt gọn và một lần trúng xà. Việt Nam cả trận tung ra 13 cú dứt điểm, ghi bốn bàn nhờ công Tiến Linh, Quang Hải, Công Phượng và Văn Thanh trong hiệp hai.\r\n\r\nTỷ lệ kiểm soát bóng cũng nghiêng hẳn về Việt Nam, có lúc lên tới 71% thời gian. Indonesia chỉ hơn Việt Nam về số pha phạm lỗi (16 so với 10) và số thẻ vàng (5 so với 2).\r\n\r\nNhờ chiến thắng này, thầy trò Park Hang-seo giữ đỉnh bảng G với 14 điểm, hơn UAE hai điểm. Ở loạt trận áp chót tối 11/6, Việt Nam gặp Malaysia, còn Indonesia đụng UAE.', '/hinhanh/62409.3277909_3d_red_supercar-wallpaper-1920x1080.jpg', NULL, 1, 1, 1, 1, NULL, '2021-06-02 14:24:41'),
+(5, 2, 2, 1, '2021-06-11 15:46:37', 'tieude5', 'tomtat5', 'noidung5', '/hinhanh/24393.cafe.jpg', NULL, 0, 1, 1, 0, NULL, NULL),
+(6, 2, 1, 1, '2021-06-11 15:46:39', 'tieude6', 'tomtat6', 'noidung6', '/hinhanh/24393.cafe.jpg', NULL, 0, 1, 1, 0, NULL, NULL),
+(7, 2, 1, 1, '2021-06-11 15:46:40', 'tieude7', 'tomtat7', 'noidung7\r\n', '/hinhanh/24393.cafe.jpg', NULL, 0, 1, 1, 0, NULL, NULL),
+(8, 2, 1, 1, '2021-06-11 15:46:43', 'tieude8', 'tomtat8', 'noidung8', '/hinhanh/24393.cafe.jpg', NULL, 0, 1, 1, 0, NULL, NULL),
+(9, 2, 1, 1, '2021-06-11 15:46:45', 'tieude9', 'tomtat9', 'noidung9', '/hinhanh/24393.cafe.jpg', NULL, 0, 1, 1, 0, NULL, NULL),
+(10, 2, 1, 1, '2021-06-11 15:46:46', 'tieude10', 'tomtat10', 'noidung10', '/hinhanh/24393.cafe.jpg', NULL, 0, 1, 1, 0, NULL, NULL),
+(11, 1, 2, 2, '2021-06-11 15:46:47', 'tin5', 'noidung5', 'noidung5', '/hinhanh/79059.quan2.jpg', NULL, 1, 1, 1, 1, NULL, '2021-06-09 08:04:49'),
+(12, 1, 2, 2, '2021-06-11 15:46:49', 'tin6', 'noidung6', 'noidung6', '/hinhanh/16131.khautrang.png', NULL, 1, 1, 1, 1, NULL, '2021-06-09 09:26:53'),
+(13, 2, 2, 2, '2021-06-11 15:46:51', 'Siêu xe về VN qwer tyui opas dfgh jklz xcvb nm,q ưerty uiop asdf ghjkSiêu xe về VN qwer tyui opas dfgh jklz', 'noidung7', 'noidung7', '/hinhanh/62409.3277909_3d_red_supercar-wallpaper-1920x1080.jpg', NULL, 1, 1, 1, 1, NULL, '2021-06-09 08:10:16'),
+(14, 1, 2, 28, '2021-06-11 15:46:56', 'tin8', 'tomtat8', 'noidung8', '/hinhanh/10311.quan1.jpg', NULL, 0, 1, 1, 1, NULL, '2021-06-04 15:02:48'),
+(16, 2, 1, 2, '2021-06-11 15:46:57', 'q', 'q', 'q', '', NULL, 0, 0, 1, 0, NULL, NULL),
+(17, 2, 1, 2, '2021-06-11 15:46:58', 'q', 'q', 'q', '', NULL, 0, 0, 1, 0, NULL, NULL),
+(18, 2, 1, 2, '2021-06-11 15:46:54', 'q', 'q', 'q', '', NULL, 0, 0, 1, 0, NULL, NULL),
+(19, 2, 1, 2, '2021-06-11 15:46:53', 'q', 'q', 'q', '', NULL, 0, 0, 1, 0, NULL, NULL),
+(22, 4, 2, 2, '2021-06-11 15:47:00', 'dấdađâsdasdasd', '<p>đâsdaádasdasdasdas</p>', '<p>sdasdadasdasdad</p>', '/storage/news/image/2/6XyDKrVqkOmxCv7lrLKO.jpg', NULL, 1, 1, 1, 0, NULL, '2021-06-10 08:56:39'),
+(23, 4, 2, 2, '2021-06-11 15:47:01', 'Dân chơi Cần Thơ mang dàn siêu xe, xe thể thao khủng đi offline', '<p>Dân chơi Cần Thơ mang dàn siêu xe, xe thể thao khủng đi offline, có sự góp mặt của Chevrolet Corvette C8 vừa về tay chủ nhân</p>', '<p>Dân chơi Cần Thơ mang dàn siêu xe, xe thể thao khủng đi offline, có sự góp mặt của Chevrolet Corvette C8 vừa về tay chủ nhânn<br></p>', '/storage/news/image/2/ihUhWX87fUaa0xVUsHzK.jpg', NULL, 1, 1, 1, 0, NULL, '2021-06-10 09:09:07'),
+(24, 4, 2, 2, '2021-06-11 15:47:04', 'Thêm \'biệt thự di động\' Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn', '<p><span style=\"color: rgb(136, 136, 136); font-family: Arial; font-size: 13px;\">Mercedes-Maybach S 650 Pullman là mẫu xe sang bậc nhất hiện nay của thương hiệu ngôi sao 3 cánh, được sản xuất dành cho những VIP.</span><br></p>', '<p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Mới đây, một chiếc Mercedes-Maybach S 650 Pullman đã xuất hiện tại showroom tư nhân ở Sài Gòn. Nhiều khả năng đây chính là chiếc S 650 Pullman thứ ba được đưa về nước.</p><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Về ngoại thất, xe sở hữu màu đen ở toàn bộ phần thân xe, tương đồng với chiếc đầu tiên được nhập khẩu bởi một đại lý tư nhân có tiếng ngoài Hà Nội. Hai chiếc này còn sở hữu bộ mâm giống nhau nên càng khó để phân biệt. Trong khi đó, chiếc thứ 2 mang 2 tông màu tương phản.</p><div class=\"VCSortableInPreviewMode noCaption active\" type=\"Photo\" style=\"padding: 0px; margin-top: 0px; margin-right: auto; margin-left: auto; outline: 0px; display: inline-block; position: relative; text-align: center; transition: all 0.3s ease-in-out 0s; width: 640px; z-index: 100; visibility: visible; overflow-wrap: break-word; cursor: default; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; background-color: rgb(255, 255, 255); margin-bottom: 20px !important;\"><div style=\"padding: 0px; margin: 0px; outline: 0px; position: relative; display: inline-block;\"><div id=\"adnzone_511318\" style=\"padding: 0px; margin: 0px auto; outline: 0px; clear: both; text-align: left; position: absolute; width: 640px; top: 0px;\"><iframe id=\"adnzone_511318_0_80302\" scrolling=\"no\" frameborder=\"no\" style=\"padding: 0px; margin: 0px; width: 640px; height: 132px; border-width: initial; border-style: none; z-index: 2; position: relative; transition: height 1s ease-out 0s;\"></iframe></div><a href=\"https://autopro8.mediacdn.vn/2021/6/10/1924215169500720257929192717118227332894463n-16233093746582091287651.jpg\" data-fancybox=\"img-lightbox\" title=\"\" class=\"detail-img-lightbox\" style=\"padding: 0px; margin: 0px; display: block; outline: none !important;\"><img src=\"https://autopro8.mediacdn.vn/thumb_w/640/2021/6/10/1924215169500720257929192717118227332894463n-16233093746582091287651.jpg\" id=\"img_bdffd720-c9bb-11eb-9c2d-57b61dc229c1\" w=\"960\" h=\"720\" alt=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 1.\" title=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 1.\" rel=\"lightbox\" photoid=\"bdffd720-c9bb-11eb-9c2d-57b61dc229c1\" type=\"photo\" data-original=\"https://autopro8.mediacdn.vn/2021/6/10/1924215169500720257929192717118227332894463n-16233093746582091287651.jpg\" width=\"\" height=\"\" class=\"lightbox-content\" style=\"padding-top: unset; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin: 137px auto 0px; display: inline-block; vertical-align: top; pointer-events: none; max-width: 100%;\"></a></div></div><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Ngoại thất của xe sở hữu màu đen bóng, điểm xuyết là các chi tiết bằng kim loại sáng bóng như tay nắm cửa, lưới tản nhiệt, viền cửa sổ... tương tự Mercedes-Maybach S 650 thông thường. Điểm khác biệt lớn nhất của bản Pullman là kích thước xe lên tới 6,5 mét.</p><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Mercedes-Maybach S 650 Pullman thực chất là phiên bản facelift và được đổi tên của phiên bản Mercedes-Maybach S 600 Pullman. Trước đó, giới mê xe Việt đã có cơ hội đón hai chiếc S 600 Pullman với màu sơn trắng và đen.</p><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Sự thay đổi lớn nhất giữa phiên bản S 650 và S 600 đó là&nbsp;phần đầu xe được thiết kế lại với hốc gió mới làm tăng khả năng làm mát động cơ và hệ thống đèn pha LED Multibeam có khả năng chiếu sáng hơn 600 m. Ngoài ra, một thanh nẹp chrome được bổ sung cho cả phần cản trước và cản sau của xe.</p><div class=\"VCSortableInPreviewMode active noCaption\" type=\"Photo\" style=\"padding: 0px; margin-top: 0px; margin-right: auto; margin-left: auto; outline: 0px; display: inline-block; position: relative; text-align: center; transition: all 0.3s ease-in-out 0s; width: 640px; z-index: 100; visibility: visible; overflow-wrap: break-word; cursor: default; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; background-color: rgb(255, 255, 255); margin-bottom: 20px !important;\"><div style=\"padding: 0px; margin: 0px; outline: 0px;\"><a href=\"https://autopro8.mediacdn.vn/2021/6/10/photo-1-16233155612931639098081.jpg\" data-fancybox=\"img-lightbox\" title=\"\" class=\"detail-img-lightbox\" style=\"padding: 0px; margin: 0px; display: block; outline: none !important;\"><img src=\"https://autopro8.mediacdn.vn/thumb_w/640/2021/6/10/photo-1-16233155612931639098081.jpg\" id=\"img_25260ec0-c9ca-11eb-b822-39bd312c79ca\" w=\"1024\" h=\"768\" alt=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 2.\" title=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 2.\" rel=\"lightbox\" photoid=\"25260ec0-c9ca-11eb-b822-39bd312c79ca\" type=\"photo\" data-original=\"https://autopro8.mediacdn.vn/2021/6/10/photo-1-16233155612931639098081.jpg\" width=\"\" height=\"\" class=\"lightbox-content\" style=\"padding: 0px; margin: 0px auto; display: inline-block; vertical-align: top; pointer-events: none; max-width: 100%;\"></a></div></div><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Được biết, showroom nhập về chiếc Mercedes-Maybach S 650 Pullman này toạ lạc trên đường An Dương Vương, Q.5, TP.HCM. Đây cũng chính là đơn vị nhập về hai chiếc Ford GT, chiếc Ferrari 488 Pista Spider thứ hai và chiếc Mercedes-Maybach S 650 Pullman hai tông màu kể trên.<br style=\"padding: 0px; margin: 0px;\"></p><div class=\"VCSortableInPreviewMode active noCaption\" type=\"Photo\" style=\"padding: 0px; margin-top: 0px; margin-right: auto; margin-left: auto; outline: 0px; display: inline-block; position: relative; text-align: center; transition: all 0.3s ease-in-out 0s; width: 640px; z-index: 100; visibility: visible; overflow-wrap: break-word; cursor: default; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; background-color: rgb(255, 255, 255); margin-bottom: 20px !important;\"><div style=\"padding: 0px; margin: 0px; outline: 0px;\"><a href=\"https://autopro8.mediacdn.vn/2021/6/10/1943446289472095927458295045540580620425387n-1623309374681828586472.jpg\" data-fancybox=\"img-lightbox\" title=\"\" class=\"detail-img-lightbox\" style=\"padding: 0px; margin: 0px; display: block; outline: none !important;\"><img src=\"https://autopro8.mediacdn.vn/thumb_w/640/2021/6/10/1943446289472095927458295045540580620425387n-1623309374681828586472.jpg\" id=\"img_be1708a0-c9bb-11eb-80f3-9937f5f0f3df\" w=\"960\" h=\"720\" alt=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 3.\" title=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 3.\" rel=\"lightbox\" photoid=\"be1708a0-c9bb-11eb-80f3-9937f5f0f3df\" type=\"photo\" data-original=\"https://autopro8.mediacdn.vn/2021/6/10/1943446289472095927458295045540580620425387n-1623309374681828586472.jpg\" width=\"\" height=\"\" class=\"lightbox-content\" style=\"padding: 0px; margin: 0px auto; display: inline-block; vertical-align: top; pointer-events: none; max-width: 100%;\"></a></div></div><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Bên trong nội thất, vô-lăng được thay đổi lên loại 3 chấu, các nút bấm trên vô-lăng được thiết kế lại. Cụm màn hình kích thước 12,3 inch ở phía sau vô lăng cũng như màn hình giải trí trung tâm có giao diện mới mẻ hơn, độ phân giải được cải thiết cho chất lượng sắc nét hơn. Nhìn chung, khoang lái của bản Pullman với bản thường không có sự khác biệt.</p><div id=\"admzone480456\" class=\"mgt10\" style=\"padding: 0px; margin: 0px; outline: 0px; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; background-color: rgb(255, 255, 255);\"><div id=\"zone-480456\" style=\"padding: 0px; margin: 0px; outline: 0px;\"><div id=\"share-jkkj65ph\" style=\"padding: 0px; margin: 0px; outline: 0px;\"><div id=\"placement-k6ssarfg\" revenue=\"cpm\" style=\"padding: 0px; margin: 0px; outline: 0px;\"><div id=\"banner-480456-554230\" style=\"padding: 0px; margin: 0px; outline: 0px; min-height: 10px; min-width: 10px;\"><div id=\"slot-2-480456-554230\" style=\"padding: 0px; margin: 0px; outline: 0px;\"><div id=\"sspbid_3345\" style=\"padding: 0px; margin: 0px; outline: 0px;\"></div></div></div></div></div></div></div><div class=\"VCSortableInPreviewMode noCaption\" type=\"Photo\" style=\"padding: 0px; margin-top: 0px; margin-right: auto; margin-left: auto; outline: 0px; display: inline-block; position: relative; text-align: center; transition: all 0.3s ease-in-out 0s; width: 640px; z-index: 100; visibility: visible; overflow-wrap: break-word; cursor: default; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; background-color: rgb(255, 255, 255); margin-bottom: 20px !important;\"><div style=\"padding: 0px; margin: 0px; outline: 0px;\"><a href=\"https://autopro8.mediacdn.vn/2020/11/18/robb-pullman-7-16057073259921924881895.jpg\" data-fancybox=\"img-lightbox\" title=\"\" class=\"detail-img-lightbox\" style=\"padding: 0px; margin: 0px; display: block; outline: none !important;\"><img src=\"https://autopro8.mediacdn.vn/thumb_w/640/2020/11/18/robb-pullman-7-16057073259921924881895.jpg\" id=\"img_c9e2ee40-29a4-11eb-b4c3-1b5625fe3d04\" w=\"1280\" h=\"720\" alt=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 4.\" title=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 4.\" rel=\"lightbox\" photoid=\"c9e2ee40-29a4-11eb-b4c3-1b5625fe3d04\" type=\"photo\" data-original=\"https://autopro8.mediacdn.vn/2020/11/18/robb-pullman-7-16057073259921924881895.jpg\" width=\"\" height=\"\" class=\"lightbox-content\" style=\"padding: 0px; margin: 0px auto; display: inline-block; vertical-align: top; pointer-events: none; max-width: 100%;\"></a></div></div><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\">Điểm nhấn của bản Pullman là hàng ghế sau. So với phiên bản S-Class Maybach thường, S 650 Pullman được bổ sung 2 ghế phụ cho khoang sau và có thể gập gọn khi không cần thiết. Phần ghế ngồi phụ này đồng thời được tích hợp 2 màn hình giải trí. Hệ thống âm thanh là loại hàng hiệu Burmester 3D cao cấp. Để tăng tính riêng tư, xe cũng được trang bị một vách ngăn giữa khoang hành khách và tài xế. Một tấm kính nhỏ có thể trượt lên/xuống và làm mờ khi chủ nhân cần không gian riêng tư.</p><div class=\"VCSortableInPreviewMode active noCaption\" type=\"Photo\" style=\"padding: 0px; margin-top: 0px; margin-right: auto; margin-left: auto; outline: 0px; display: inline-block; position: relative; text-align: center; transition: all 0.3s ease-in-out 0s; width: 640px; z-index: 100; visibility: visible; overflow-wrap: break-word; cursor: default; color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: medium; background-color: rgb(255, 255, 255); margin-bottom: 20px !important;\"><div style=\"padding: 0px; margin: 0px; outline: 0px;\"><a href=\"https://autopro8.mediacdn.vn/2020/11/18/robb-pullman-6-1605707325968247657870.jpg\" data-fancybox=\"img-lightbox\" title=\"\" class=\"detail-img-lightbox\" style=\"padding: 0px; margin: 0px; display: block; outline: none !important;\"><img src=\"https://autopro8.mediacdn.vn/thumb_w/640/2020/11/18/robb-pullman-6-1605707325968247657870.jpg\" id=\"img_c9ac4de0-29a4-11eb-80f3-9937f5f0f3df\" w=\"1280\" h=\"720\" alt=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 5.\" title=\"Thêm biệt thự di động Mercedes-Maybach S 650 Pullman về Việt Nam với ngoại hình dễ gây nhầm lẫn - Ảnh 5.\" rel=\"lightbox\" photoid=\"c9ac4de0-29a4-11eb-80f3-9937f5f0f3df\" type=\"photo\" data-original=\"https://autopro8.mediacdn.vn/2020/11/18/robb-pullman-6-1605707325968247657870.jpg\" width=\"\" height=\"\" class=\"lightbox-content\" style=\"padding: 0px; margin: 0px auto; display: inline-block; vertical-align: top; pointer-events: none; max-width: 100%;\"></a></div></div><p style=\"padding: 15px 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 17px; line-height: 25px; font-family: TimeNewRoman; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);\"><span style=\"padding: 0px; margin: 0px;\">Động cơ của Mercedes-Maybach S 650 Pullman là loại V12, tăng áp kép, dung tích 6 lít, tạo ra công suất tối đa 630 mã lực, mô-men xoắn cực đại 1.000 Nm cùng với hộp số tự động 7 cấp 7G Tronic.</span></p>', '/storage/news/image/2/TYvLG98Y2fh9sZxSHaSG.jpg', NULL, 1, 1, 1, 0, NULL, '2021-06-10 09:30:14'),
+(25, 1, 1, 1, '2021-06-11 18:45:19', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', '<p><strong style=\"margin: 0px; padding: 0px; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify; background-color: rgb(255, 255, 255);\">Lorem Ipsum</strong><span style=\"color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify; background-color: rgb(255, 255, 255);\">&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged</span><br></p>', '<p><span style=\"font-weight: bolder; margin: 0px; padding: 0px; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify; background-color: rgb(255, 255, 255);\">Lorem Ipsum</span><span style=\"color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify; background-color: rgb(255, 255, 255);\">&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchange</span></p><p><span style=\"color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify; background-color: rgb(255, 255, 255);\"><br></span><span style=\"color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify; background-color: rgb(255, 255, 255);\"><br></span><br></p>', '/storage/news/image/1/4sZqVKRhMYH02vprXK0g.jpg', NULL, 0, 0, 0, 0, '2021-06-11 17:40:02', '2021-06-11 18:45:19'),
+(26, 1, 2, 1, '2021-06-12 06:37:45', '223123135465485654', '<p>kjkjoljklklhkhjklhjkhjkhjhjhjhjl</p>', '<p>gỳtftỳvtyctct cgcghj ghvgh ghjvgvjvjgvvg vvgvgv gvv gg gv jgkhvt ft ohio io nion</p>', '/storage/news/image/1/i8l2CJcdKVCXgQnU2Nhy.jpg', NULL, 1, 0, 0, 0, '2021-06-12 06:37:40', '2021-06-12 06:37:45'),
+(27, 4, 2, 2, '2021-06-12 12:08:09', '31313212qđứaàdà sdf', '<p> D ÁD Ád ád AD SDF  F SF SDF SF SF</p>', '<p> ÁD FDSF SDF SDFSDÀ DSF SD SDF SDA SDA SADF SADF S</p>', '/storage/news/image/2/JRkaRsNQMH9jaDqW1hLU.jpg', '/storage/news/video/2/Dx7h4gMVFADyJeThbpgl.mp4', 1, 1, 1, 1, NULL, '2021-06-12 12:08:09');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Cấu trúc bảng cho bảng `users`
 --
 
 CREATE TABLE `users` (
@@ -800,31 +855,34 @@ CREATE TABLE `users` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `two_factor_secret` text COLLATE utf8mb4_unicode_ci,
-  `two_factor_recovery_codes` text COLLATE utf8mb4_unicode_ci,
+  `two_factor_secret` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `two_factor_recovery_codes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `loaitaikhoan` smallint(6) NOT NULL DEFAULT '0' COMMENT '1-admin, 0-normal, 2-administrator',
-  `trangthai` smallint(6) NOT NULL DEFAULT '0',
+  `loaitaikhoan` smallint(6) NOT NULL DEFAULT 0 COMMENT '1-admin, 0-normal, 2-administrator',
+  `trangthai` smallint(6) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `users`
+-- Đang đổ dữ liệu cho bảng `users`
 --
 
 INSERT INTO `users` (`id`, `idcongty`, `email`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `remember_token`, `loaitaikhoan`, `trangthai`, `created_at`, `updated_at`) VALUES
 (1, NULL, 'admin@dev.com', '2021-05-28 14:57:46', '$2y$10$vFxTKDYsc5xa6LW1UxdTZeeF5Sbk2dzL8kkh/1TUERQnp1nawEULu', NULL, NULL, NULL, 2, 0, NULL, '2021-05-26 16:21:16'),
-(2, 2, 'admin2@dev.com', '2021-05-28 14:57:46', '$2y$10$vFxTKDYsc5xa6LW1UxdTZeeF5Sbk2dzL8kkh/1TUERQnp1nawEULu', NULL, NULL, 'MIbOAicbwkKrzzlYwWArUeo4PqNUTdR2ZxhhlZuiyy2FNZOQj3DUO6yNL9y7', 1, 0, NULL, '2021-05-27 15:19:35'),
+(2, 2, 'admin2@dev.com', '2021-05-28 14:57:46', '$2y$10$vFxTKDYsc5xa6LW1UxdTZeeF5Sbk2dzL8kkh/1TUERQnp1nawEULu', NULL, NULL, 'h4ykd4TXGsf4EkHs7DUcroTBFoR3ILFtdkXiU6HiVGe9bawHbDDMENYmvfGS', 1, 0, NULL, '2021-05-27 15:19:35'),
 (28, 2, 'admin3@dev.com', '2021-05-28 14:57:46', '$2y$10$vFxTKDYsc5xa6LW1UxdTZeeF5Sbk2dzL8kkh/1TUERQnp1nawEULu', NULL, NULL, NULL, 1, 0, '2021-04-28 07:20:59', '2021-05-04 14:27:22'),
 (36, NULL, 'chau@gmail.com', '2021-05-28 14:57:46', '$2y$10$dwkz7Fr6NzxHwA7n9XUnwOqdDGjIMgNm.mjlrwko9yJO0PfH.cGF2', NULL, NULL, NULL, 1, 0, '2021-05-18 11:01:26', '2021-05-18 11:02:31'),
 (37, NULL, 'trung@dev.com', '2021-05-28 14:57:46', '$2y$10$JoBQ0bj7qN6YvW/4xNoM.eMZO.hOinupFaXyJwlZ.O2Q6S5SN1VU.', NULL, NULL, NULL, 1, 0, '2021-05-18 11:06:36', '2021-05-18 11:08:46'),
-(47, NULL, 'klthuynguyen1998@gmail.com', '2021-05-28 14:57:46', '$2y$10$yBhLxLXqcvLvGKvpn4eDfOeHBQg45rTZSdf8wWgbzGTKSfPWvTZ3m', NULL, NULL, 'gBmDZqvfdKXRcsXDPTcgfiIkICj3RBuBqeQZ9MbuNcDAM5a8eMOK2LjWP5hz', 0, 0, '2021-05-28 14:53:09', '2021-05-28 15:22:11');
+(47, NULL, 'klthuynguyen1998@gmail.com', '2021-05-28 14:57:46', '$2y$10$yBhLxLXqcvLvGKvpn4eDfOeHBQg45rTZSdf8wWgbzGTKSfPWvTZ3m', NULL, NULL, 'gBmDZqvfdKXRcsXDPTcgfiIkICj3RBuBqeQZ9MbuNcDAM5a8eMOK2LjWP5hz', 0, 0, '2021-05-28 14:53:09', '2021-05-28 15:22:11'),
+(48, NULL, 'admin4@dev.com', NULL, '$2y$10$SVLHz0KTxCZ9Rbqy3QgGuuhZKk7hrJKki3HrMV4Yt/vR0vLzQafmm', NULL, NULL, NULL, 0, 0, '2021-06-10 15:14:27', '2021-06-10 15:14:27'),
+(49, NULL, 'admin5@dev.com', NULL, '$2y$10$nnNiW/PtwvR5rkef7we19uF7PrKTo/gIX4CS0iUtMW3C4nsON2Sfu', NULL, NULL, NULL, 0, 0, '2021-06-10 15:17:53', '2021-06-10 15:17:53'),
+(50, NULL, 'buihuuchau99@gmail.com', NULL, '$2y$10$dyL1Kibu9Xr1vtsgnzVQuO8LC/saaDSTrQT9EVaotaxaZT5PHMAqK', NULL, NULL, NULL, 0, 0, '2021-06-10 15:19:58', '2021-06-10 15:19:58');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `vaitro`
+-- Cấu trúc bảng cho bảng `vaitro`
 --
 
 CREATE TABLE `vaitro` (
@@ -838,7 +896,7 @@ CREATE TABLE `vaitro` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `vaitro`
+-- Đang đổ dữ liệu cho bảng `vaitro`
 --
 
 INSERT INTO `vaitro` (`id`, `idcongty`, `tenvaitro`, `motavaitro`, `loaivaitro`, `created_at`, `updated_at`) VALUES
@@ -850,7 +908,7 @@ INSERT INTO `vaitro` (`id`, `idcongty`, `tenvaitro`, `motavaitro`, `loaivaitro`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `vaitro_quyen`
+-- Cấu trúc bảng cho bảng `vaitro_quyen`
 --
 
 CREATE TABLE `vaitro_quyen` (
@@ -862,7 +920,7 @@ CREATE TABLE `vaitro_quyen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `vaitro_quyen`
+-- Đang đổ dữ liệu cho bảng `vaitro_quyen`
 --
 
 INSERT INTO `vaitro_quyen` (`id`, `idvaitro`, `idquyen`, `created_at`, `updated_at`) VALUES
@@ -996,321 +1054,379 @@ INSERT INTO `vaitro_quyen` (`id`, `idvaitro`, `idquyen`, `created_at`, `updated_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `video`
+-- Cấu trúc bảng cho bảng `video`
 --
 
 CREATE TABLE `video` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `idsanpham` bigint(20) DEFAULT NULL,
-  `idtintuc` bigint(20) DEFAULT NULL,
-  `iddanhgia` bigint(20) DEFAULT NULL,
+  `iddanhgia` bigint(20) NOT NULL,
   `dulieuvideo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `video`
---
-
-INSERT INTO `video` (`id`, `idsanpham`, `idtintuc`, `iddanhgia`, `dulieuvideo`, `created_at`, `updated_at`) VALUES
-(29, NULL, 14, NULL, '/video/BMW Logo Intro.mp4', NULL, NULL),
-(30, NULL, 13, NULL, '/video/BMW Logo Intro.mp4', NULL, NULL),
-(32, NULL, 12, NULL, '/video/BMW LOGO [Animate this static!].mp4', NULL, NULL);
+-- --------------------------------------------------------
 
 --
--- Indexes for dumped tables
+-- Cấu trúc bảng cho bảng `videotintuc`
+--
+
+CREATE TABLE `videotintuc` (
+  `id` bigint(20) NOT NULL,
+  `idchuyenmuc` bigint(20) NOT NULL,
+  `idcongty` bigint(20) NOT NULL,
+  `idtaikhoan` bigint(20) NOT NULL,
+  `tieudevideo` varchar(255) NOT NULL,
+  `tomtatvideo` text NOT NULL,
+  `hinhdaidienvideo` varchar(255) NOT NULL,
+  `dulieuvideotintuc` varchar(255) NOT NULL,
+  `nguonvideotintuc` varchar(255) NOT NULL,
+  `ngaydangvideo` timestamp NOT NULL DEFAULT current_timestamp(),
+  `loaivideotintuc` smallint(6) NOT NULL DEFAULT 0 COMMENT '1-nổi bật, 0-không nổi bật',
+  `duyetvideotintuc` smallint(6) NOT NULL DEFAULT 0 COMMENT '1-đã duyệt, 0-chưa duyệt',
+  `xuatbanvideotintuc` smallint(6) NOT NULL DEFAULT 0 COMMENT '1-xuất bản, 0-chưa xuất bản',
+  `trangthaithuhoi` smallint(6) NOT NULL DEFAULT 0 COMMENT '1-có, 0-không',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `videotintuc`
+--
+
+INSERT INTO `videotintuc` (`id`, `idchuyenmuc`, `idcongty`, `idtaikhoan`, `tieudevideo`, `tomtatvideo`, `hinhdaidienvideo`, `dulieuvideotintuc`, `nguonvideotintuc`, `ngaydangvideo`, `loaivideotintuc`, `duyetvideotintuc`, `xuatbanvideotintuc`, `trangthaithuhoi`, `created_at`, `updated_at`) VALUES
+(1, 2, 2, 2, 'Nhạc hay quá đii', '<p>Haccscshcshshsdhsdhádhsfdhsdfh dhj a áhda sda ád ád ád a</p>', '/storage/news/image/2/niQx63LgJtEabf5ADO5i.jpg', '/storage/news/video/2/2jLiZSBCDrJfCu9JA0kH.mp4', 'Trên mạng213231231231', '2021-06-12 13:10:39', 1, 0, 0, 0, '2021-06-12 13:05:07', '2021-06-12 15:14:19'),
+(2, 4, 2, 2, 'fsdf sdfds fdsf dsf dsf dsfsdf', '<p>dsf dsfdsf sdf ádf sdà sdf sdà sdf sdfsdfsdà</p>', '/storage/news/image/2/kPSr5UfnnTp0D79C6l6S.jpg', '/storage/news/video/2/IpX6QI630OaiwokNbman.mp4', 'ẻwe rưẻ ưẻ ưqẻ ưẻ ử ưẻ ưẻ ử', '2021-06-12 13:33:03', 1, 0, 0, 0, '2021-06-12 13:33:03', '2021-06-12 14:44:09');
+
+--
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `chuyenmuc`
+-- Chỉ mục cho bảng `chuyenmuc`
 --
 ALTER TABLE `chuyenmuc`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `congty`
+-- Chỉ mục cho bảng `congty`
 --
 ALTER TABLE `congty`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `subdomain` (`subdomain`);
 
 --
--- Indexes for table `danhgia`
+-- Chỉ mục cho bảng `danhgia`
 --
 ALTER TABLE `danhgia`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `failed_jobs`
+-- Chỉ mục cho bảng `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
--- Indexes for table `giaidoan`
+-- Chỉ mục cho bảng `giaidoan`
 --
 ALTER TABLE `giaidoan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `hinhanh`
+-- Chỉ mục cho bảng `hinhanh`
 --
 ALTER TABLE `hinhanh`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `kho`
+-- Chỉ mục cho bảng `hinhanhquangcao`
+--
+ALTER TABLE `hinhanhquangcao`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `kho`
 --
 ALTER TABLE `kho`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `lichsutintuc`
+-- Chỉ mục cho bảng `lichsutintuc`
 --
 ALTER TABLE `lichsutintuc`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `linhvuc`
+-- Chỉ mục cho bảng `linhvuc`
 --
 ALTER TABLE `linhvuc`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `loaisanpham`
+-- Chỉ mục cho bảng `loaisanpham`
 --
 ALTER TABLE `loaisanpham`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `logtintuc`
+-- Chỉ mục cho bảng `logtintuc`
 --
 ALTER TABLE `logtintuc`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `migrations`
+-- Chỉ mục cho bảng `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `password_resets`
+-- Chỉ mục cho bảng `password_resets`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
--- Indexes for table `quyen`
+-- Chỉ mục cho bảng `quangcao`
+--
+ALTER TABLE `quangcao`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `quyen`
 --
 ALTER TABLE `quyen`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `tenquyen` (`tenquyen`);
 
 --
--- Indexes for table `sanpham`
+-- Chỉ mục cho bảng `sanpham`
 --
 ALTER TABLE `sanpham`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `so`
+-- Chỉ mục cho bảng `so`
 --
 ALTER TABLE `so`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `taikhoan_vaitro`
+-- Chỉ mục cho bảng `taikhoan_vaitro`
 --
 ALTER TABLE `taikhoan_vaitro`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `thongtin`
+-- Chỉ mục cho bảng `thongtin`
 --
 ALTER TABLE `thongtin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `thongtingiaidoan`
+-- Chỉ mục cho bảng `thongtingiaidoan`
 --
 ALTER TABLE `thongtingiaidoan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tintuc`
+-- Chỉ mục cho bảng `tintuc`
 --
 ALTER TABLE `tintuc`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Chỉ mục cho bảng `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
--- Indexes for table `vaitro`
+-- Chỉ mục cho bảng `vaitro`
 --
 ALTER TABLE `vaitro`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `vaitro_quyen`
+-- Chỉ mục cho bảng `vaitro_quyen`
 --
 ALTER TABLE `vaitro_quyen`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `video`
+-- Chỉ mục cho bảng `video`
 --
 ALTER TABLE `video`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Chỉ mục cho bảng `videotintuc`
+--
+ALTER TABLE `videotintuc`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `chuyenmuc`
+-- AUTO_INCREMENT cho bảng `chuyenmuc`
 --
 ALTER TABLE `chuyenmuc`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `congty`
+-- AUTO_INCREMENT cho bảng `congty`
 --
 ALTER TABLE `congty`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `danhgia`
+-- AUTO_INCREMENT cho bảng `danhgia`
 --
 ALTER TABLE `danhgia`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `failed_jobs`
+-- AUTO_INCREMENT cho bảng `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `giaidoan`
+-- AUTO_INCREMENT cho bảng `giaidoan`
 --
 ALTER TABLE `giaidoan`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `hinhanh`
+-- AUTO_INCREMENT cho bảng `hinhanh`
 --
 ALTER TABLE `hinhanh`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
--- AUTO_INCREMENT for table `kho`
+-- AUTO_INCREMENT cho bảng `hinhanhquangcao`
+--
+ALTER TABLE `hinhanhquangcao`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `kho`
 --
 ALTER TABLE `kho`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `lichsutintuc`
+-- AUTO_INCREMENT cho bảng `lichsutintuc`
 --
 ALTER TABLE `lichsutintuc`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
--- AUTO_INCREMENT for table `linhvuc`
+-- AUTO_INCREMENT cho bảng `linhvuc`
 --
 ALTER TABLE `linhvuc`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `loaisanpham`
+-- AUTO_INCREMENT cho bảng `loaisanpham`
 --
 ALTER TABLE `loaisanpham`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `logtintuc`
+-- AUTO_INCREMENT cho bảng `logtintuc`
 --
 ALTER TABLE `logtintuc`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
--- AUTO_INCREMENT for table `migrations`
+-- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=180;
 
 --
--- AUTO_INCREMENT for table `quyen`
+-- AUTO_INCREMENT cho bảng `quangcao`
+--
+ALTER TABLE `quangcao`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `quyen`
 --
 ALTER TABLE `quyen`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
--- AUTO_INCREMENT for table `sanpham`
+-- AUTO_INCREMENT cho bảng `sanpham`
 --
 ALTER TABLE `sanpham`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- AUTO_INCREMENT for table `so`
+-- AUTO_INCREMENT cho bảng `so`
 --
 ALTER TABLE `so`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `taikhoan_vaitro`
+-- AUTO_INCREMENT cho bảng `taikhoan_vaitro`
 --
 ALTER TABLE `taikhoan_vaitro`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
--- AUTO_INCREMENT for table `thongtin`
+-- AUTO_INCREMENT cho bảng `thongtin`
 --
 ALTER TABLE `thongtin`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
--- AUTO_INCREMENT for table `thongtingiaidoan`
+-- AUTO_INCREMENT cho bảng `thongtingiaidoan`
 --
 ALTER TABLE `thongtingiaidoan`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `tintuc`
+-- AUTO_INCREMENT cho bảng `tintuc`
 --
 ALTER TABLE `tintuc`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
--- AUTO_INCREMENT for table `vaitro`
+-- AUTO_INCREMENT cho bảng `vaitro`
 --
 ALTER TABLE `vaitro`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `vaitro_quyen`
+-- AUTO_INCREMENT cho bảng `vaitro_quyen`
 --
 ALTER TABLE `vaitro_quyen`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
 
 --
--- AUTO_INCREMENT for table `video`
+-- AUTO_INCREMENT cho bảng `video`
 --
 ALTER TABLE `video`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT cho bảng `videotintuc`
+--
+ALTER TABLE `videotintuc`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
