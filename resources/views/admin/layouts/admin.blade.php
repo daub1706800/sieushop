@@ -74,12 +74,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
     });
     $(function () {
         $.ajax({
-            url : "{{ route('admin.count-badge') }}",
+            url : "{{ route('count-badge') }}",
             type : "get",
             success:function (data) {
                 $('.news-badge').text(data.news);
                 $('.newsvideo-badge').text(data.newsvideo);
-                $('.account-badge').text(data.accounts);
+                if (data.accounts != "") {
+                    $('.account-badge').text(data.accounts);
+                }
             }
         });
     });

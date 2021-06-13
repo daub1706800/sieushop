@@ -85,6 +85,11 @@ Route::prefix('/')->group(function () {
     // ]);
 });
 
+Route::get('count-badge', [
+    'as' => 'count-badge',
+    'uses' => 'App\Http\Controllers\AdminController@count_badge'
+]);
+
 /* Route Administrator */
 Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
     Route::prefix('admin')->group(function () {
@@ -92,11 +97,6 @@ Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
             return view('admin.home');
         })->name('admin.home');
 
-        Route::get('count-badge', [
-            'as' => 'admin.count-badge',
-            'uses' => 'App\Http\Controllers\AdminController@count_badge'
-        ]);
-    
         /* Module Sở ngành */
         Route::prefix('department')->group(function () {
             Route::get('/', [

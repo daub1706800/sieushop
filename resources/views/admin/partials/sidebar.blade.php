@@ -216,6 +216,7 @@
                                     <i class="nav-icon fas fa-newspaper"></i>
                                     <p>
                                         Tin tức
+                                        <span class="badge badge-info right news-badge"></span>
                                     </p>
                                 </a>
                             </li>
@@ -224,6 +225,7 @@
                                     <i class="nav-icon fas fa-video"></i>
                                     <p>
                                         Tin tức Video
+                                        <span class="badge badge-info right newsvideo-badge"></span>
                                     </p>
                                 </a>
                             </li>
@@ -248,6 +250,7 @@
                                     <i class="nav-icon fas fa-user"></i>
                                     <p>
                                         Tài khoản
+                                        <span class="badge badge-info right account-badge"></span>
                                     </p>
                                 </a>
                             </li>
