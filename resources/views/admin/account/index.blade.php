@@ -82,7 +82,7 @@
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" href="{{ route('account.edit', ['id' => $user->id]) }}">Chỉnh sửa</a>
                                                 @if($user->storage->isEmpty() && $user->stage->isEmpty() && $user->product->isEmpty()
-                                                    && $user->news->isEmpty() && !empty($user->idcongty))
+                                                    && $user->news->isEmpty() )
                                                 <a class="dropdown-item" href="{{ route('account.delete', ['id' => $user->id]) }}">Xóa</a>
                                                 @endif
                                                 @if(!$user->email_verified_at)
