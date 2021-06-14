@@ -312,7 +312,43 @@ Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
                 'uses' => 'App\Http\Controllers\AdminNewsVideoController@delete_video'
             ]);
         });
-    
+
+        /* Module Quảng cáo */
+        Route::prefix('advertise')->group(function () {
+            Route::get('/', [
+                'as' => 'advertise.index',
+                'uses' => 'App\Http\Controllers\AdvertiseController@index'
+            ]);
+            Route::get('/add', [
+                'as' => 'advertise.add',
+                'uses' => 'App\Http\Controllers\AdvertiseController@add'
+            ]);
+            Route::post('/store', [
+                'as' => 'advertise.store',
+                'uses' => 'App\Http\Controllers\AdvertiseController@store'
+            ]);
+            Route::get('/edit/{id}', [
+                'as' => 'advertise.edit',
+                'uses' => 'App\Http\Controllers\AdvertiseController@edit'
+            ]);
+            Route::post('/update{id}', [
+                'as' => 'advertise.update',
+                'uses' => 'App\Http\Controllers\AdvertiseController@update'
+            ]);
+            Route::get('/delete/{id}', [
+                'as' => 'advertise.delete',
+                'uses' => 'App\Http\Controllers\AdvertiseController@delete'
+            ]);
+            Route::get('/change-status', [
+                'as' => 'advertise.change-status',
+                'uses' => 'App\Http\Controllers\AdvertiseController@change_status'
+            ]);
+            Route::post('view', [
+                'as' => 'advertise.view',
+                'uses' => 'App\Http\Controllers\AdvertiseController@view'
+            ]);
+        });
+
         /* Module Kho */
         Route::prefix('storages')->group(function () {
             Route::get('/', [
