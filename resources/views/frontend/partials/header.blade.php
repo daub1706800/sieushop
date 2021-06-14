@@ -24,13 +24,41 @@
                                     <div class="mega-menu-content clearfix">
                                         <div class="tab">
                                             @foreach($header as $key => $row)
-                                                <button class="tablinks">
+                                                <button class="tablinks" onmouseover="openCategory(event, '{{$row->id}}')">
                                                     <a href="{{route('tinchuyenmuc',['id'=>$row->id])}}">{{$row->tenchuyenmuc}}</a>
                                                 </button>
                                             @endforeach
                                         </div>
-
                                         
+                                        <div class="tab-details clearfix">
+                                            @foreach($header as $key => $row)
+                                            
+                                                <div id="{{$row->id}}" class="tabcontent">
+                                                    <div class="row">
+                                                        @foreach($hinhanhheader as $key2 => $row2)
+                                                        @if($row->id == $row2->idchuyenmuc)
+                                                        <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+                                                            <div class="blog-box">
+                                                                <div class="post-media">
+                                                                    <a href="{{route('detail',['id'=>$row2->id])}}" title="">
+                                                                        <img src="{{$row2->hinhanhtintuc}}"alt="" class="img-fluid">
+                                                                        <div class="hovereffect">
+                                                                        </div><!-- end hover -->
+                                                                        <span class="menucat">{{$row2->idchuyenmuc}}</span>
+                                                                    </a>
+                                                                </div><!-- end media -->
+                                                                <div class="blog-meta">
+                                                                    <h4><a href="" title="">{{Str::limit($row2->tieudetintuc,50)}}</a></h4>
+                                                                </div><!-- end meta -->
+                                                            </div><!-- end blog-box -->
+                                                        </div>
+                                                        @endif
+                                                        @endforeach 
+                                                    </div><!-- end row -->
+                                                </div>
+                                            @endforeach 
+                                                  
+                                        </div><!-- end tab-details -->
 
 
                                     </div><!-- end mega-menu-content -->
@@ -38,6 +66,9 @@
                             </li>
                         </ul>
                     </li>
+
+                    
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('frontend.product.index') }}">Sản phẩm</a>
                     </li>
