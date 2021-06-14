@@ -44,6 +44,16 @@ class GiaoDienController extends Controller{
                     ->limit(10)
                     ->get();
 
+        // $videotintuc = DB::table('videotintuc')
+        //                 ->orderBy('id', 'desc')
+        //                 ->where('xuatbanvideotintuc', 1)
+        //                 ->where('loaivideotintuc', 1)
+        //                 ->Join('chuyenmuc', 'videotintuc.idchuyenmuc', '=', 'chuyenmuc.id')
+        //                 ->Join('thongtin', 'videotintuc.idtaikhoan', '=', 'thongtin.idtaikhoan')
+        //                 ->select('videotintuc.*','chuyenmuc.tenchuyenmuc','thongtin.hothanhvien','thongtin.tenthanhvien')
+        //                 ->limit(3)
+        //                 ->get();
+
         return view('frontend.home', compact('sidebar','header','content'));
     }
     public function index_product()
@@ -69,6 +79,16 @@ class GiaoDienController extends Controller{
                     ->join('loaisanpham', 'sanpham.idloaisanpham', '=', 'loaisanpham.id')
                     ->select('sanpham.*', 'loaisanpham.tenloaisanpham', 'congty.tencongty')
                     ->Paginate(10);
+
+        $videotintuc = DB::table('videotintuc')
+                        ->orderBy('id', 'desc')
+                        ->where('xuatbanvideotintuc', 1)
+                        ->where('loaivideotintuc', 1)
+                        ->Join('chuyenmuc', 'videotintuc.idchuyenmuc', '=', 'chuyenmuc.id')
+                        ->Join('thongtin', 'videotintuc.idtaikhoan', '=', 'thongtin.idtaikhoan')
+                        ->select('videotintuc.*','chuyenmuc.tenchuyenmuc','thongtin.hothanhvien','thongtin.tenthanhvien')
+                        ->limit(3)
+                        ->get();
 
         return view('frontend.gadget.gadget', compact('header','sidebar','gadget'));
     }
@@ -104,8 +124,20 @@ class GiaoDienController extends Controller{
                     ->where('tintuc.id',$id)
                     ->Join('chuyenmuc', 'tintuc.idchuyenmuc', '=', 'chuyenmuc.id')
                     ->Join('thongtin', 'tintuc.idtaikhoan', '=', 'thongtin.idtaikhoan')
-                    ->select('tintuc.*','chuyenmuc.tenchuyenmuc','thongtin.hothanhvien','thongtin.tenthanhvien')
+                    ->select('tintuc.*','chuyenmuc.id','chuyenmuc.tenchuyenmuc','thongtin.hothanhvien','thongtin.tenthanhvien')
                     ->first();
+
+        // $videotintuc = DB::table('videotintuc')
+        //                 ->orderBy('id', 'desc')
+        //                 ->where('xuatbanvideotintuc', 1)
+        //                 ->where('loaivideotintuc', 1)
+        //                 ->where('idchuyenmuc', $detail->idchuyenmuc)
+        //                 ->Join('chuyenmuc', 'videotintuc.idchuyenmuc', '=', 'chuyenmuc.id')
+        //                 ->Join('thongtin', 'videotintuc.idtaikhoan', '=', 'thongtin.idtaikhoan')
+        //                 ->select('videotintuc.*','chuyenmuc.tenchuyenmuc','thongtin.hothanhvien','thongtin.tenthanhvien')
+        //                 ->limit(3)
+        //                 ->get();
+
         return view('frontend.detail.detail', compact('header','sidebar','detail'));
     }
     public function tinchuyenmuc(request $request)
@@ -134,6 +166,17 @@ class GiaoDienController extends Controller{
                     ->Join('thongtin', 'tintuc.idtaikhoan', '=', 'thongtin.idtaikhoan')
                     ->select('tintuc.*','chuyenmuc.tenchuyenmuc','thongtin.hothanhvien','thongtin.tenthanhvien')
                     ->Paginate(10);
+
+        // $videotintuc = DB::table('videotintuc')
+        //                 ->orderBy('id', 'desc')
+        //                 ->where('xuatbanvideotintuc', 1)
+        //                 ->where('loaivideotintuc', 1)
+        //                 ->where('idchuyenmuc', $detail->idchuyenmuc)
+        //                 ->Join('chuyenmuc', 'videotintuc.idchuyenmuc', '=', 'chuyenmuc.id')
+        //                 ->Join('thongtin', 'videotintuc.idtaikhoan', '=', 'thongtin.idtaikhoan')
+        //                 ->select('videotintuc.*','chuyenmuc.tenchuyenmuc','thongtin.hothanhvien','thongtin.tenthanhvien')
+        //                 ->limit(3)
+        //                 ->get();
 
         return view('frontend.partials.tinchuyenmuc', compact('sidebar','header','tinchuyenmuc'));
     }
