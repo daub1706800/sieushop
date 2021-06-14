@@ -42,9 +42,9 @@ class ProductAddRequest extends FormRequest
             'khoiluongsanpham' => 'bail|required|numeric',
             'donvitinhsanpham' => 'required|max:255',
             'mavachsanpham' => 'required|digits_between:9,20',
-            'hinhanhsanpham' => 'required|mimes:jpeg,jpg,png|dimensions:min_width=960, min_height=960|max:2048',
+            'hinhanhsanpham' => 'bail|required|mimes:jpeg,jpg,png|dimensions:max_width=960, max_height=960|max:2048',
             'hinhanhchitiet' => 'required',
-            'hinhanhchitiet.*' => 'required|mimes:jpeg,jpg,png|max:2000',
+            'hinhanhchitiet.*' => 'bail|mimes:jpeg,jpg,png|max:2048',
             'thongtinsanpham' => 'required|min:10',
         ];
 
@@ -77,7 +77,7 @@ class ProductAddRequest extends FormRequest
             'mavachsanpham.digits_between' => 'Mã vạch phải là kiểu số, độ dài khoảng 9 đến 20 ký tự',
             'hinhanhsanpham.required' => 'Hình ảnh Không được để trống',
             'hinhanhsanpham.mimes' => 'Hình ảnh phải là JPG, JPEG, PNG',
-            'hinhanhsanpham.dimensions' => 'Độ phân giải ảnh không vượt quá 960px x 960px',
+            'hinhanhsanpham.dimensions' => 'Độ phân giải ảnh không vượt quá 960x960 pixel',
             'hinhanhsanpham.max' => 'Hình ảnh phải có dung lượng dưới 2MB',
             'hinhanhchitiet.required' => 'Ảnh chi tiết không được để trống',
             'hinhanhchitiet.*.mimes' => 'Ảnh chi tiết phải là JPG, JPEG, PNG',

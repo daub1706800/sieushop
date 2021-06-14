@@ -178,10 +178,10 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="{{ route('advertise.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-balance-scale"></i>
                                 <p>
-                                    Comming soon
+                                    Quảng cáo
                                 </p>
                             </a>
                         </li>
