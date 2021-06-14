@@ -29,7 +29,7 @@
 
                 <hr class="invis">
             </div><!-- end blog-list -->
-            @if($key % 5 == 0)
+            @if(($key+1) % 5 == 0)
                 <div class="row">
                     <div class="col-lg-10 offset-lg-1">
                         <div class="banner-spot clearfix">
