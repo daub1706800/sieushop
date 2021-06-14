@@ -42,12 +42,6 @@ class GiaoDienController extends Controller{
                         ->limit(5)  
                         ->get();
                         
-        $videoheader = DB::table('videotintuc')
-                        ->orderBy('id', 'desc')
-                        ->where('xuatbanvideotintuc', 1)
-                        ->where('loaivideotintuc', 1)
-                        ->limit(5)  
-                        ->get();
 
         $content = DB::table('tintuc')
                     ->where('xuatbantintuc',1)
@@ -68,7 +62,7 @@ class GiaoDienController extends Controller{
                         ->limit(3)
                         ->get();
 
-        return view('frontend.home', compact('sidebar','header','hinhanhheader','content','videotintuc','videoheader'));
+        return view('frontend.home', compact('sidebar','header','hinhanhheader','content','videotintuc'));
     }
     public function index_product()
     {
