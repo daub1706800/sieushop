@@ -42,6 +42,18 @@
 
                                 <hr class="invis">
                             </div><!-- end blog-list -->
+                            @if($key % 5 == 0)
+                                <div class="row">
+                                    <div class="col-lg-10 offset-lg-1">
+                                        <div class="banner-spot clearfix">
+                                            <div class="banner-img">
+                                                <!-- <img src="TemplateTechBlog/upload/banner_02.jpg" alt="" class="img-fluid"> -->
+                                                <img src="https://ivyprep.edu.vn/wp-content/uploads/banner-web-3-1024x324.jpg" alt="" class="img-fluid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         @endforeach
                         {{$tinchuyenmuc->links()}}
                             <!-- <div class="row">

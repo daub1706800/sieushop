@@ -65,4 +65,26 @@ function openCategory(evt, catName) {
     // Show the current tab, and add an "active" class to the link that opened the tab
     document.getElementById(catName).style.display = "block";
     evt.currentTarget.className += " active";
-} 
+}
+// menu-dropdown Video
+// function openCategoryy(evtt, catNamee) {
+//     // Declare all variables
+//     var a, tabcontentt, tablinkss;
+
+//     // Get all elements with class="tabcontent" and hide them
+//     tabcontentt = document.getElementsByClassName("tabcontentt");
+//     for (a = 0; a < tabcontentt.length; a++) {
+//         tabcontentt[a].style.display = "none";
+//     }
+
+//     // Get all elements with class="tablinks" and remove the class "active"
+//     tablinkss = document.getElementsByClassName("tablinkss");
+//     for (a = 0; a < tablinkss.length; a++) {
+//         tablinkss[a].className = tablinkss[a].className.replace(" active", "");
+//     }
+
+//     // Show the current tab, and add an "active" class to the link that opened the tab
+//     document.getElementById(catNamee).style.display = "block";
+//     evtt.currentTarget.className += " active";
+// }
+// menu-dropdown Video

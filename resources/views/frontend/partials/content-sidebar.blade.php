@@ -4,7 +4,7 @@
         <div class="widget">
             <div class="banner-spot clearfix">
                 <div class="banner-img">
-                    <!-- <img src="TemplateTechBlog/upload/banner_07.jpg" alt="" class="img-fluid"> -->
+                    <!-- <img src="{{ asset('TemplateTechBlog/upload/banner_07.jpg') }}" alt="" class="img-fluid"> -->
                     <img src="https://nukeviet.vn/uploads/store/demo_images/2013_01/banner13.png" alt="" class="" height="600px">
                 </div><!-- end banner-img -->
             </div><!-- end banner -->
@@ -12,21 +12,19 @@
         <div class="widget">
             <h2 class="widget-title">Trend Videos</h2>
             <div class="trend-videos">
-                @foreach ($sidebar as $key => $row)
+                @foreach ($videotintuc as $key => $row)
                     <div class="blog-box">
                         <div class="post-media">
-                            <!-- <a href="tech-single.html" title="">
-                                <img src="TemplateTechBlog/upload/tech_video_01.jpg" alt="" class="img-fluid">
+                            <a href="{{route('loadvideo')}}" data-id="{{$row->id}}" id="loadvideo">
+                                <img src="{{$row->hinhdaidienvideo}}" alt="" class="img-fluid" style="object-fit:cover; height:150px">
                                 <div class="hovereffect">
                                     <span class="videohover"></span>
                                 </div>
-                            </a> -->
-                            <video height="150px" controls>
-                                    <source src="{{$row->videotintuc}}" type="video/mp4">
-                            </video>
+                            </a>
+                            
                         </div><!-- end media -->
                         <div class="blog-meta">
-                            <h4><a href="tech-single.html" title="">{{ Str::limit($row->tieudetintuc, 65) }}</a></h4>
+                            <h4><a href="tech-single.html" title="">{{ Str::limit($row->tieudevideo, 65) }}</a></h4>
                         </div><!-- end meta -->
                     </div><!-- end blog-box -->
 

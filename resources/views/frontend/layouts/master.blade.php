@@ -37,6 +37,24 @@
 <script src="{{ asset('TemplateTechBlog/js/tether.min.js') }}"></script>
 <script src="{{ asset('TemplateTechBlog/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('TemplateTechBlog/js/custom.js') }}"></script>
+<script>
+    $(document).on('click', '#loadvideo',function(play){
+        play.preventDefault();
+        var idvideo = $(this).data('id');
+        var that = $(this);
+        $.ajax({
+            url:$(this).attr('href'),
+            type: 'GET',
+            data:{
+                'idvideo':idvideo,
+            },
+            success: function(data) {
+                that.css('display', 'none');
+                that.parent().append(data);
+            }
+        })
+    })
+</script>
 @yield('js')
 </body>
 </html>

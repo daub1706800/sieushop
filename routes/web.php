@@ -44,6 +44,10 @@ Route::prefix('/')->group(function () {
         'as' => 'tinchuyenmuc',
         'uses' => 'App\Http\Controllers\GiaoDienController@tinchuyenmuc'
     ]);
+    Route::get('loadvideo', [
+        'as' => 'loadvideo',
+        'uses' => 'App\Http\Controllers\GiaoDienController@loadvideo'
+    ]);
     // phan nay danh cho giao dien
 
     // Route::get('contact', [
