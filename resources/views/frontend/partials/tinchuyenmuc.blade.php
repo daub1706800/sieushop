@@ -37,8 +37,6 @@
                                         <small class="firstsmall"><a class="bg-orange" href="{{route('tinchuyenmuc',['id'=>$row->idchuyenmuc])}}" title="">{{$row->tenchuyenmuc}}</a></small>
                                         <small><a href="#" title="">{{$row->ngaydangtintuc}}</a></small>
                                         <small><a href="tech-author.html" title="">by {{$row->hothanhvien}} {{$row->tenthanhvien}}</a></small>
-                                        <!-- <small><a href="{{route('detail')}}" title=""><i class="fa fa-eye"></i>
-                                                1114</a></small> -->
                                     </div><!-- end meta -->
                                 </div><!-- end blog-box -->
 

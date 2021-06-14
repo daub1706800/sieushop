@@ -58,7 +58,7 @@
                                 <input type="file" class="form-control-file" name="videotintuc">
                                 <video width="320px" height="240px" controls>
                                     <source src="{{$data->videotintuc}}" type="video/mp4">
-                                </video>
+                                </video><br>
                                 <label>Check nếu muốn bỏ video</label>
                                 <input type="checkbox" name="xoavideo" id="xoavideo" value="xoavideo">
                             </div>
