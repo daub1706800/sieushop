@@ -8,7 +8,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a class="navbar-brand" href="{{ route('home') }}">
-                <img src="TemplateTechBlog/images/version/tech-logo.png" alt="">
+                <img src="{{ asset('TemplateTechBlog/images/version/tech-logo.png') }}" alt="">
             </a>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
