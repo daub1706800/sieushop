@@ -37,13 +37,18 @@
                                     @foreach($header as $key => $row)
                                     <small><a href="#" title="">{{$row->tenchuyenmuc}}</a></small>
                                     @endforeach
+                                    <small><a href="#" title="">{{$row->tenchuyenmuc}}</a></small>
+                                    <small><a href="#" title="">{{$row->tenchuyenmuc}}</a></small>
+                                    <small><a href="#" title="">{{$row->tenchuyenmuc}}</a></small>
+                                    <small><a href="#" title="">{{$row->tenchuyenmuc}}</a></small>
+
                                 </div>
                                 @foreach($tinvideo as $key => $row)
                                     <div class="col-md-6">
                                         <div class="blog-box">
                                             <div class="post-media">
                                                 <a href="{{route('detailvideo',['id'=>$row->id])}}" title="">
-                                                    <img src="{{$row->hinhdaidienvideo}}" style="width:360px;height:202px" alt="" class="img-fluid">
+                                                    <img src="{{$row->hinhdaidienvideo}}" style="width:397.5px;height:202px" alt="" class="img-fluid">
                                                     <div class="hovereffect">
                                                         <span></span>
                                                     </div><!-- end hover -->

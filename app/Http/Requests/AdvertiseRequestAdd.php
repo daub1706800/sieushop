@@ -59,17 +59,14 @@ class AdvertiseRequestAdd extends FormRequest
         return [
             'loaibanner.required' => 'Loại banner không được bỏ trống',
             
-            'dulieuhinhanhquangcao.required' => 'Ảnh quảng cáo không được để trống',
             'dulieuhinhanhquangcao.*.mimes' => 'File ảnh phải là JPEG, JPG, PNG',
             'dulieuhinhanhquangcao.*.dimensions' => 'Độ phân giải tối đa cho phép: 500 x 1000 pixel và tỉ lệ ảnh 2:5',
             'dulieuhinhanhquangcao.*.max' => 'Kích thước ảnh tối đa cho phép là 2MB',
 
-            'dulieuhinhanhquangcao1.required' => 'Ảnh quảng cáo không được để trống',
             'dulieuhinhanhquangcao1.*.mimes' => 'File ảnh phải là JPEG, JPG, PNG',
             'dulieuhinhanhquangcao1.*.dimensions' => 'Độ phân giải ảnh tối đa cho phép: 1000 x 500 pixel và tỉ lệ ảnh 5:2',
             'dulieuhinhanhquangcao1.*.max' => 'Kích thước ảnh tối đa cho phép là 2MB',
 
-            'dulieuhinhanhquangcao2.required' => 'Ảnh quảng cáo không được để trống',
             'dulieuhinhanhquangcao2.*.mimes' => 'File ảnh phải là JPEG, JPG, PNG',
             'dulieuhinhanhquangcao2.*.dimensions' => 'Độ phân giải ảnh tối đa cho phép: 1000 x 1000 pixel và tỉ lệ ảnh 1:1',
             'dulieuhinhanhquangcao2.*.max' => 'Kích thước ảnh tối đa cho phép là 2MB',

@@ -42,12 +42,15 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Ảnh quảng cáo *</label>
-                                <input type="file" class="form-control-file @error('dulieuhinhanhquangcao') is-invalid @enderror @error('dulieuhinhanhquangcao.*') is-invalid @enderror"
+                                <input type="file" class="form-control-file @error('dulieuhinhanhquangcao.*') is-invalid @enderror @error('dulieuhinhanhquangcao1.*') is-invalid @enderror @error('dulieuhinhanhquangcao2.*') is-invalid @enderror"
                                         name="dulieuhinhanhquangcao[]" multiple>
-                                @error('dulieuhinhanhquangcao')
+                                @error('dulieuhinhanhquangcao.*')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror
-                                @error('dulieuhinhanhquangcao.*')
+                                @error('dulieuhinhanhquangcao1.*')
+                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                                @enderror
+                                @error('dulieuhinhanhquangcao2.*')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror
                             </div>

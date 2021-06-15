@@ -55,7 +55,8 @@ class AdvertiseController extends Controller
                 $dataImageUploadMultiple = $this->StorageUploadImageMultiple($fileItem, 'advertise/image');
                 
                 $advertise->advertiseimage()->create([
-                    'dulieuhinhanhquangcao' => $dataImageUploadMultiple['file_path']
+                    'dulieuhinhanhquangcao' => $dataImageUploadMultiple['file_path'],
+                    'loaibanner' => $request->loaibanner,
                 ]);
             }
         }
@@ -66,7 +67,8 @@ class AdvertiseController extends Controller
                 $dataImageUploadMultiple = $this->StorageUploadImageMultiple($fileItem, 'advertise/image');
                 
                 $advertise->advertiseimage()->create([
-                    'dulieuhinhanhquangcao' => $dataImageUploadMultiple['file_path']
+                    'dulieuhinhanhquangcao' => $dataImageUploadMultiple['file_path'],
+                    'loaibanner' => $request->loaibanner,
                 ]);
             }
         }
@@ -77,7 +79,8 @@ class AdvertiseController extends Controller
                 $dataImageUploadMultiple = $this->StorageUploadImageMultiple($fileItem, 'advertise/image');
                 
                 $advertise->advertiseimage()->create([
-                    'dulieuhinhanhquangcao' => $dataImageUploadMultiple['file_path']
+                    'dulieuhinhanhquangcao' => $dataImageUploadMultiple['file_path'],
+                    'loaibanner' => $request->loaibanner,
                 ]);
             }
         }
