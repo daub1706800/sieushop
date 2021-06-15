@@ -67,7 +67,9 @@
                         </ul>
                     </li>
 
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('tinvideo') }}">Video</a>
+                    </li>
                     
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('frontend.product.index') }}">Sản phẩm</a>

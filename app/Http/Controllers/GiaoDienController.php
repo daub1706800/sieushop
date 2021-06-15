@@ -215,6 +215,7 @@ class GiaoDienController extends Controller{
 
         return view('frontend.partials.tinchuyenmuc', compact('sidebar','header','hinhanhheader','tinchuyenmuc','videotintuc'));
     }
+
     public function loadvideo(Request $request){
 
         $data = DB::table('videotintuc')
@@ -228,4 +229,52 @@ class GiaoDienController extends Controller{
         return response()->json($output);
     }
     
+    public function tinvideo(){
+
+        $header = DB::table('chuyenmuc')
+                    ->orderBy('tenchuyenmuc')
+                    ->get();
+
+        $hinhanhheader = DB::table('tintuc')
+                            ->orderBy('id', 'desc')
+                            ->where('xuatbantintuc', 1)
+                            ->where('loaitintuc', 1)
+                            ->limit(5)  
+                            ->get();
+
+        $sidebar = DB::table('tintuc')
+                    ->where('loaitintuc',1)
+                    ->where('xuatbantintuc',1)
+                    ->orderBy('id', 'desc')
+                    ->Join('chuyenmuc', 'tintuc.idchuyenmuc', '=', 'chuyenmuc.id')
+                    ->Join('thongtin', 'tintuc.idtaikhoan', '=', 'thongtin.idtaikhoan')
+                    ->select('tintuc.*','chuyenmuc.tenchuyenmuc','thongtin.hothanhvien','thongtin.tenthanhvien')
+                    ->limit(3)
+                    ->get();
+
+        $tinvideo = DB::table('videotintuc')
+                        ->orderBy('id', 'desc')
+                        ->where('xuatbanvideotintuc', 1)
+                        ->where('loaivideotintuc', 1)
+                        ->Join('chuyenmuc', 'videotintuc.idchuyenmuc', '=', 'chuyenmuc.id')
+                        ->Join('thongtin', 'videotintuc.idtaikhoan', '=', 'thongtin.idtaikhoan')
+                        ->select('videotintuc.*','chuyenmuc.tenchuyenmuc','thongtin.hothanhvien','thongtin.tenthanhvien')
+                        ->paginate(2);
+
+        $videotintuc = DB::table('videotintuc')
+                        ->orderBy('id', 'desc')
+                        ->where('xuatbanvideotintuc', 1)
+                        ->where('loaivideotintuc', 1)
+                        ->Join('chuyenmuc', 'videotintuc.idchuyenmuc', '=', 'chuyenmuc.id')
+                        ->Join('thongtin', 'videotintuc.idtaikhoan', '=', 'thongtin.idtaikhoan')
+                        ->select('videotintuc.*','chuyenmuc.tenchuyenmuc','thongtin.hothanhvien','thongtin.tenthanhvien')
+                        ->limit(3)
+                        ->get();
+                        
+        return view('frontend.gadget.tinvideo', compact('sidebar','header','hinhanhheader','videotintuc','tinvideo'));
+    }
+
+    public function detailvideo(Request $request){
+        return view('frontend.detail.detailvideo');
+    }
 }

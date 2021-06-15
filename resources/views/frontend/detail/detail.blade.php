@@ -59,6 +59,11 @@
                             <div class="pp">
                                 {!!$detail->noidungtintuc!!}
                             </div><!-- end pp -->
+                            <div class="pp">
+                                <video width="720px" height="405px" controls>
+                                    <source src="{{$detail->videotintuc}}" type="video/mp4">
+                                </video><br>
+                            </div><!-- end pp -->
                         </div><!-- end content -->
 
                         <div class="blog-title-area">

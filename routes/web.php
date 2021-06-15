@@ -40,6 +40,10 @@ Route::prefix('/')->group(function () {
         'as' => 'detail',
         'uses' => 'App\Http\Controllers\GiaoDienController@detail'
     ]);
+    Route::get('detailvideo/{id}', [
+        'as' => 'detailvideo',
+        'uses' => 'App\Http\Controllers\GiaoDienController@detailvideo'
+    ]);
     Route::get('tinchuyenmuc/{id}', [
         'as' => 'tinchuyenmuc',
         'uses' => 'App\Http\Controllers\GiaoDienController@tinchuyenmuc'
@@ -47,6 +51,10 @@ Route::prefix('/')->group(function () {
     Route::get('loadvideo', [
         'as' => 'loadvideo',
         'uses' => 'App\Http\Controllers\GiaoDienController@loadvideo'
+    ]);
+    Route::get('tinvideo', [
+        'as' => 'tinvideo',
+        'uses' => 'App\Http\Controllers\GiaoDienController@tinvideo'
     ]);
     // phan nay danh cho giao dien
 

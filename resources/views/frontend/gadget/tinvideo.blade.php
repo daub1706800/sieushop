@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 
 @section('title')
-    <title>Sản phẩm</title>
+    <title>Tin Video Hấp Dẫn</title>
 @endsection
 
 @section('content')
@@ -10,13 +10,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                    <h2><i class="fa fa-gears bg-orange"></i> Sản phẩm <small class="hidden-xs-down hidden-sm-down">Nulla felis eros, varius sit amet volutpat non. </small></h2>
+                    <h2><i class="fa fa-gears bg-orange"></i> Video mới nhất <small class="hidden-xs-down hidden-sm-down">Nulla felis eros, varius sit amet volutpat non. </small></h2>
                 </div><!-- end col -->
                 <div class="col-lg-4 col-md-4 col-sm-12 hidden-xs-down hidden-sm-down">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item"><a href="#">Blog</a></li>
-                        <li class="breadcrumb-item active">Sản phẩm</li>
+                        <li class="breadcrumb-item active">Video</li>
                     </ol>
                 </div><!-- end col -->
             </div><!-- end row -->
@@ -32,24 +32,24 @@
                         <div class="blog-grid-system">
                             <div class="row">
 
-                                @foreach($gadget as $key => $row)
+                                @foreach($tinvideo as $key => $row)
                                     <div class="col-md-6">
                                         <div class="blog-box">
                                             <div class="post-media">
-                                                <a href="tech-single.html" title="">
-                                                    <img src="{{$row->hinhanhsanpham}}" style="width:800px;height:460px" alt="" class="img-fluid">
+                                                <a href="{{route('detailvideo',['id'=>$row->id])}}" title="">
+                                                    <img src="{{$row->hinhdaidienvideo}}" style="width:360px;height:202px" alt="" class="img-fluid">
                                                     <div class="hovereffect">
                                                         <span></span>
                                                     </div><!-- end hover -->
                                                 </a>
                                             </div><!-- end media -->
                                             <div class="blog-meta big-meta">
-                                                <span class="color-orange"><a href="tech-category-01.html" title="">{{$row->tenloaisanpham}}</a></span>
-                                                <h4><a href="tech-single.html" title="">{{$row->tensanpham}}</a></h4>
-                                                <p>{!! Str::limit($row->thongtinsanpham, 50) !!}</p>
+                                                <span class="color-orange"><a href="{{route('detailvideo',['id'=>$row->id])}}" title="">{{$row->tenchuyenmuc}}</a></span>
+                                                <h4><a href="{{route('detailvideo',['id'=>$row->id])}}" title="">{{Str::limit($row->tieudevideo,75)}}</a></h4>
+                                                <p>{!! Str::limit($row->tomtatvideo, 170) !!}</p>
                                                 <!-- <small><a href="tech-single.html" title="">14 July, 2017</a></small> -->
-                                                <small><a href="tech-author.html" title="">by {{$row->tencongty}}</a></small>
-                                                <small><a href="tech-single.html" title=""><i class="fa fa-eye"></i> 2887</a></small>
+                                                <small><a href="{{route('detailvideo',['id'=>$row->id])}}" title="">Tác giả:  {{$row->hothanhvien}} {{$row->tenthanhvien}}</a></small>
+                                                <small><a href="{{route('detailvideo',['id'=>$row->id])}}" title="">Nguồn: {{$row->nguonvideotintuc}}</a></small>
                                             </div><!-- end meta -->
                                         </div><!-- end blog-box -->
                                     </div><!-- end col -->
@@ -59,7 +59,7 @@
                             </div><!-- end row -->
                         </div><!-- end blog-grid-system -->
                     </div><!-- end page-wrapper -->
-                    {{$gadget->links()}}
+                    {{$tinvideo->links()}}
 
                     
                 </div><!-- end col -->
