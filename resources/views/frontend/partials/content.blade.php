@@ -5,8 +5,14 @@
         </div><!-- end blog-top -->
 
         @foreach ($content as $key => $row)
-            <div class="blog-list clearfix">
+            <?php
+                if($key==0 || $key==1 || $key==2)
+                    $an = "display:none";
+                else $an = "display:block";
+            ?>
             
+
+            <div class="blog-list clearfix" style="<?php echo $an; ?>">
                 <div class="blog-box row">
                     <div class="col-md-4">
                         <div class="post-media">
@@ -21,7 +27,7 @@
                         <h4><a href="{{route('detail',['id'=>$row->id])}}" title="">{{ Str::limit($row->tieudetintuc, 100) }}</a></h4>
                         <p>{!! Str::limit($row->tomtattintuc, 230) !!}</p>
                         <small class="firstsmall"><a class="bg-orange" href="{{route('tinchuyenmuc',['id'=>$row->idchuyenmuc])}}" title="">{{$row->tenchuyenmuc}}</a></small>
-                        <small><a href="#" title="">{{$row->ngaydangtintuc}}</a></small>
+                        <small><a href="#" title="">{{$row->updated_at}}</a></small>
                         <small><a href="tech-author.html" title="">by {{$row->hothanhvien}} {{$row->tenthanhvien}}</a></small>
                         
                     </div><!-- end meta -->
@@ -29,17 +35,19 @@
 
                 <hr class="invis">
             </div><!-- end blog-list -->
-            @if(($key+1) % 5 == 0)
+            @if(($key-2) % 5 == 0 && $key!=0 && $key!=1 && $key!=2)
                 <div class="row">
                     <div class="col-lg-10 offset-lg-1">
                         <div class="banner-spot clearfix">
                             <div class="banner-img">
                                 <!-- <img src="TemplateTechBlog/upload/banner_02.jpg" alt="" class="img-fluid"> -->
                                 <img src="https://ivyprep.edu.vn/wp-content/uploads/banner-web-3-1024x324.jpg" alt="" class="img-fluid">
+                                <!-- <img src="https://graphics.vietnamprinting.com/wp-content/uploads/2020/01/mau-banner-bong-da-vietnamprinting-muabannhanh.jpg" alt="" class="img-fluid"> -->
                             </div>
                         </div>
                     </div>
                 </div>
+                <hr class="invis">
             @endif
         @endforeach
             <!-- <div class="row">

@@ -22,6 +22,7 @@
             </div><!-- end row -->
         </div><!-- end container -->
     </div><!-- end page-title -->
+    
     <section class="section">
         <div class="container">
             <div class="row">
@@ -31,7 +32,12 @@
                     <div class="page-wrapper">
                         <div class="blog-grid-system">
                             <div class="row">
-
+                                <div class="tag-cloud-single">
+                                    <span>Chuyên mục</span>
+                                    @foreach($header as $key => $row)
+                                    <small><a href="#" title="">{{$row->tenchuyenmuc}}</a></small>
+                                    @endforeach
+                                </div>
                                 @foreach($tinvideo as $key => $row)
                                     <div class="col-md-6">
                                         <div class="blog-box">
