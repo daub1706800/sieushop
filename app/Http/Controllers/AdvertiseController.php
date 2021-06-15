@@ -59,6 +59,28 @@ class AdvertiseController extends Controller
                 ]);
             }
         }
+        elseif($request->hasFile('dulieuhinhanhquangcao1'))
+        {
+            foreach($request->dulieuhinhanhquangcao1 as $fileItem)
+            {
+                $dataImageUploadMultiple = $this->StorageUploadImageMultiple($fileItem, 'advertise/image');
+                
+                $advertise->advertiseimage()->create([
+                    'dulieuhinhanhquangcao' => $dataImageUploadMultiple['file_path']
+                ]);
+            }
+        }
+        else
+        {
+            foreach($request->dulieuhinhanhquangcao2 as $fileItem)
+            {
+                $dataImageUploadMultiple = $this->StorageUploadImageMultiple($fileItem, 'advertise/image');
+                
+                $advertise->advertiseimage()->create([
+                    'dulieuhinhanhquangcao' => $dataImageUploadMultiple['file_path']
+                ]);
+            }
+        }
 
         return redirect()->route('advertise.index');
     }

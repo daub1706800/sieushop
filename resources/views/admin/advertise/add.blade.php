@@ -5,9 +5,6 @@
 @endsection
 
 @section('css')
-    <!-- include summernote css -->
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <!-- include select2 css -->
     <link rel="stylesheet" href="{{asset('vendor/css/select2.css')}}">
     <style>
         .alert-custom{
@@ -31,9 +28,21 @@
                     <form action="{{ route('advertise.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-md-6">
+                                <label>Loại banner *</label>
+                                <select name="loaibanner" class="form-control loai-banner @error('loaibanner') is-invalid @enderror">
+                                    <option value=""></option>
+                                    <option value="0">Banner dọc - Độ phân giải tối đa 500 x 1000 pixel</option>
+                                    <option value="1">Banner ngang - Độ phân giải tối đa 1000 x 500 pixel</option>
+                                    <option value="2">Banner vuông - Độ phân giải tối đa 1000 x 1000 pixel</option>
+                                </select>
+                                @error('loaibanner')
+                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
                                 <label>Ảnh quảng cáo *</label>
-                                <input type="file" class="col-md-6 form-control-file @error('dulieuhinhanhquangcao') is-invalid @enderror @error('dulieuhinhanhquangcao.*') is-invalid @enderror"
+                                <input type="file" class="form-control-file @error('dulieuhinhanhquangcao') is-invalid @enderror @error('dulieuhinhanhquangcao.*') is-invalid @enderror"
                                         name="dulieuhinhanhquangcao[]" multiple>
                                 @error('dulieuhinhanhquangcao')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
@@ -59,7 +68,7 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary mb-5">Lưu</button>
+                            <button id="submit-banner" type="submit" class="btn btn-primary mb-5">Lưu</button>
                         </div>
                     </form>
                 </div>
@@ -72,71 +81,45 @@
 @endsection
 
 @section('js')
-    <!-- include summernote js -->
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <!-- include select2 js -->
     <script src="{{ asset('vendor/js/select2.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $(function(){
-                $('.summernote-tomtat').summernote({
-                    height: 200,                // set editor height
-                    minHeight: 200,             // set minimum height of editor
-                    maxHeight: 200,             // set maximum height of editor
-                    focus: false,                  // set focus to editable area after initializing summernote
-                    codemirror: { // codemirror options
-                        theme: 'monokai'
-                    },
-                    placeholder: "Nhập nội dung tóm tắt",
-                    toolbar: [
-                        ['style', ['style']],
-                        ['font', ['bold', 'underline', 'clear']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['table', ['table']],
-                        // ['insert', ['link', 'picture', 'video']],
-                        ['view', ['help']]
-                    ]
-                });
+            if (!$('.form-control-file').val()) {
+                $('#submit-banner').attr('disabled','disable');
+            }
+            $(document).on('change', '.loai-banner', function () {
+                var loai_banner = $(this).val();
+                if (loai_banner == 0) {
+                    $('.form-control-file').attr('name', 'dulieuhinhanhquangcao[]');
+                }
+                else if (loai_banner == 1) {
+                    $('.form-control-file').attr('name', 'dulieuhinhanhquangcao1[]');
+                }
+                else
+                {
+                    $('.form-control-file').attr('name', 'dulieuhinhanhquangcao2[]');
+                }
+                
+                
+            });
+
+            $(document).on('change', '.form-control-file', function () {
+                if ($(this).val()) {
+                    $('#submit-banner').removeAttr('disabled');
+                }
+                else
+                {
+                    $('#submit-banner').attr('disabled','disable');
+                }
             });
 
             $(function(){
-                $('.summernote-noidung').summernote({
-                    height: 400,                // set editor height
-                    minHeight: 400,             // set minimum height of editor
-                    maxHeight: 400,             // set maximum height of editor
-                    focus: false,                  // set focus to editable area after initializing summernote
-                    codemirror: { // codemirror options
-                        theme: 'monokai'
-                    },
-                    placeholder: "Nhập nội dung chính",
-                    toolbar: [
-                        ['style', ['style']],
-                        ['font', ['bold', 'underline', 'clear']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['table', ['table']],
-                        ['insert', ['link', 'picture', 'video']],
-                        ['view', ['help']]
-                    ]
-                });
-            });
-
-            $(function(){
-                $(".category-selected").select2({
+                $(".loai-banner").select2({
                     tags: false,
-                    placeholder : 'Chọn chuyên mục',
+                    placeholder : 'Chọn loại banner',
                     theme: "classic",
-                    width: "100%"
-                });
-            });
-
-            $(function(){
-                $(".company-selected").select2({
-                    tags: false,
-                    placeholder : 'Chọn công ty',
-                    theme: "classic",
-                    width: "100%"
+                    width: "100%",
+                    // multiple: true
                 });
             });
         });

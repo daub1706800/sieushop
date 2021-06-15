@@ -17,6 +17,7 @@ class CreateHinhanhquangcaoTable extends Migration
             $table->id();
             $table->bigInteger('idquangcao');
             $table->string('dulieuhinhanhquangcao');
+            $table->smallInteger('loaibanner')->default(0)->comment('0-dọc; 1-ngang; 2-vuông');
             $table->timestamps();
         });
     }
