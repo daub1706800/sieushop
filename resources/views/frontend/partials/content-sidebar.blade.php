@@ -24,7 +24,7 @@
                             
                         </div><!-- end media -->
                         <div class="blog-meta">
-                            <h4><a href="tech-single.html" title="">{{ Str::limit($row->tieudevideo, 65) }}</a></h4>
+                            <h4><a href="{{ route('detailvideo', ['id' => $row->id]) }}" title="">{{ Str::limit($row->tieudevideo, 65) }}</a></h4>
                         </div><!-- end meta -->
                     </div><!-- end blog-box -->
 
