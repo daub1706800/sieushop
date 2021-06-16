@@ -11,6 +11,9 @@
             margin-top: 5px;
             padding: 3px 5px;
         }
+        .custome{
+            min-width: 150px;
+        }
     </style>
 @endsection
 
@@ -28,15 +31,52 @@
                     <form action="{{ route('advertise.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                            <div class="form-group col-md-6">
-                                <label>Loại banner *</label>
-                                <select name="loaibanner" class="form-control loai-banner @error('loaibanner') is-invalid @enderror">
-                                    <option value=""></option>
-                                    <option value="0">Banner dọc - Độ phân giải tối đa 500 x 1000 pixel</option>
-                                    <option value="1">Banner ngang - Độ phân giải tối đa 1000 x 500 pixel</option>
-                                    <option value="2">Banner vuông - Độ phân giải tối đa 1000 x 1000 pixel</option>
-                                </select>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <label class="ml-2">Loại banner quảng cáo *</label>
+                                    <div class="form-check ml-5 mr-5"
+                                        data-toggle="popover" data-placement="bottom" data-html="true" data-boundary='scrollParent'
+                                        data-content="<img width='250' style='width:50px' src='{{ asset('TemplateTechBlog/upload/banner_01.jpg') }}'>">
+                                        <input class="form-check-input" type="radio" name="loaibanner"
+                                            id="banner1" value="1">
+                                        <label class="form-check-label" for="banner1">
+                                            Ngang
+                                        </label>
+                                    </div>
+                                    <div class="form-check mr-5"
+                                        data-toggle="popover" data-placement="bottom" data-html="true" data-boundary='scrollParent'
+                                        data-content="<img width='100' height='200' src='{{ asset('TemplateTechBlog/upload/banner_07.jpg') }}'>">
+                                        <input class="form-check-input" type="radio" name="loaibanner"
+                                            id="banner2" value="0">
+                                        <label class="form-check-label" for="banner2">
+                                            Dọc
+                                        </label>
+                                    </div>
+                                    <div class="form-check"
+                                        data-toggle="popover" data-placement="bottom" data-html="true" data-boundary='scrollParent'
+                                        data-content="<img width='100' height='100' src='{{ asset('TemplateTechBlog/upload/banner_03.jpg') }}'>">
+                                        <input class="form-check-input" type="radio" name="loaibanner"
+                                            id="banner3" value="2">
+                                        <label class="form-check-label" for="banner3">
+                                            Vuông
+                                        </label>
+                                    </div>
+                                </div>
                                 @error('loaibanner')
+                                <div style="margin-top: 11px;" class="alert alert-danger alert-custom">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="checkbox" id="loaiquangcao" name="loaiquangcao" value="1">
+                                <label for="loaiquangcao">Quảng cáo sự kiện?</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label>Tiêu đề quảng cáo *</label>
+                                <input type="text" class="form-control @error('tieudequangcao') is-invalid @enderror"
+                                        name="tieudequangcao" value="{{ old('tieudequangcao') }}" placeholder="Tiêu đề quảng cáo">
+                                @error('tieudequangcao')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -53,22 +93,7 @@
                                 @error('dulieuhinhanhquangcao2.*')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-12">
-                                <label>Tiêu đề quảng cáo *</label>
-                                <input type="text" class="form-control @error('tieudequangcao') is-invalid @enderror"
-                                        name="tieudequangcao" value="{{ old('tieudequangcao') }}" placeholder="Tiêu đề quảng cáo">
-                                @error('tieudequangcao')
-                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            
-                            <div class="form-group col-md-6">
-                                <input type="checkbox" id="loaiquangcao" name="loaiquangcao" value="1">
-                                <label for="loaiquangcao">Quảng cáo sự kiện?</label>
-                            </div>
+                            </div>                            
                         </div>
                         <div class="text-center">
                             <button id="submit-banner" type="submit" class="btn btn-primary mb-5">Lưu</button>
@@ -90,20 +115,18 @@
             if (!$('.form-control-file').val()) {
                 $('#submit-banner').attr('disabled','disable');
             }
-            $(document).on('change', '.loai-banner', function () {
-                var loai_banner = $(this).val();
-                if (loai_banner == 0) {
+            $(document).on('change', 'input[type=radio][name=loaibanner]', function () {
+                // var loai_banner = $(this).val();
+                if (this.value == 0) {
                     $('.form-control-file').attr('name', 'dulieuhinhanhquangcao[]');
                 }
-                else if (loai_banner == 1) {
+                else if (this.value == 1) {
                     $('.form-control-file').attr('name', 'dulieuhinhanhquangcao1[]');
                 }
                 else
                 {
                     $('.form-control-file').attr('name', 'dulieuhinhanhquangcao2[]');
                 }
-                
-                
             });
 
             $(document).on('change', '.form-control-file', function () {
@@ -116,15 +139,13 @@
                 }
             });
 
-            $(function(){
-                $(".loai-banner").select2({
-                    tags: false,
-                    placeholder : 'Chọn loại banner',
-                    theme: "classic",
-                    width: "100%",
-                    // multiple: true
+            $(function () {
+                $('[data-toggle="popover"]').popover({
+                    trigger: 'focus',
+                    delay: { "show": 100, "hide": 100 }
                 });
-            });
+                
+            })
         });
     </script>
 @endsection
