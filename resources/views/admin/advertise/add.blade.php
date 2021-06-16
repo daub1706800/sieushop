@@ -30,59 +30,61 @@
                 <div class="col-md-12">
                     <form action="{{ route('advertise.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
-                        <div class="row">
-                            <div class="col-md-6">
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label>Tiêu đề quảng cáo *</label>
+                                    <input type="text" class="form-control @error('tieudequangcao') is-invalid @enderror"
+                                            name="tieudequangcao" value="{{ old('tieudequangcao') }}" placeholder="Tiêu đề quảng cáo">
+                                    @error('tieudequangcao')
+                                    <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-2">
                                 <div class="row">
-                                    <label class="ml-2">Loại banner quảng cáo *</label>
+                                    <label class="ml-2">Loại banner *</label>
                                     <div class="form-check ml-5 mr-5"
                                         data-toggle="popover" data-placement="bottom" data-html="true" data-boundary='scrollParent'
-                                        data-content="<img width='250' style='width:50px' src='{{ asset('TemplateTechBlog/upload/banner_01.jpg') }}'>">
+                                        data-content="<img width='240' height='30' src='{{ asset('TemplateTechBlog/upload/banner_01.jpg') }}'>">
                                         <input class="form-check-input" type="radio" name="loaibanner"
                                             id="banner1" value="1">
-                                        <label class="form-check-label" for="banner1">
-                                            Ngang
-                                        </label>
+                                        <label class="form-check-label" for="banner1">Ngang</label>
                                     </div>
                                     <div class="form-check mr-5"
                                         data-toggle="popover" data-placement="bottom" data-html="true" data-boundary='scrollParent'
-                                        data-content="<img width='100' height='200' src='{{ asset('TemplateTechBlog/upload/banner_07.jpg') }}'>">
+                                        data-content="<img width='90' height='180' src='{{ asset('TemplateTechBlog/upload/banner_07.jpg') }}'>">
                                         <input class="form-check-input" type="radio" name="loaibanner"
                                             id="banner2" value="0">
-                                        <label class="form-check-label" for="banner2">
-                                            Dọc
-                                        </label>
+                                        <label class="form-check-label" for="banner2">Dọc</label>
                                     </div>
                                     <div class="form-check"
                                         data-toggle="popover" data-placement="bottom" data-html="true" data-boundary='scrollParent'
                                         data-content="<img width='100' height='100' src='{{ asset('TemplateTechBlog/upload/banner_03.jpg') }}'>">
                                         <input class="form-check-input" type="radio" name="loaibanner"
                                             id="banner3" value="2">
-                                        <label class="form-check-label" for="banner3">
-                                            Vuông
-                                        </label>
+                                        <label class="form-check-label" for="banner3">Vuông</label>
                                     </div>
                                 </div>
                                 @error('loaibanner')
-                                <div style="margin-top: 11px;" class="alert alert-danger alert-custom">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group col-md-6">
-                                <input type="checkbox" id="loaiquangcao" name="loaiquangcao" value="1">
-                                <label for="loaiquangcao">Quảng cáo sự kiện?</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-12">
-                                <label>Tiêu đề quảng cáo *</label>
-                                <input type="text" class="form-control @error('tieudequangcao') is-invalid @enderror"
-                                        name="tieudequangcao" value="{{ old('tieudequangcao') }}" placeholder="Tiêu đề quảng cáo">
-                                @error('tieudequangcao')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror
                             </div>
+                            <div class="col-md-6 mt-2">
+                                <div class="row">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="loaiquangcao" name="loaiquangcao" value="1">
+                                        <label class="form-check-label font-weight-bold" for="loaiquangcao">
+                                            Quảng cáo sự kiện ?
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="form-group col-md-6">
                                 <label>Ảnh quảng cáo *</label>
-                                <input type="file" class="form-control-file @error('dulieuhinhanhquangcao.*') is-invalid @enderror @error('dulieuhinhanhquangcao1.*') is-invalid @enderror @error('dulieuhinhanhquangcao2.*') is-invalid @enderror"
+                                <input type="file" class="form-control-file"
                                         name="dulieuhinhanhquangcao[]" multiple>
                                 @error('dulieuhinhanhquangcao.*')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
@@ -95,7 +97,7 @@
                                 @enderror
                             </div>                            
                         </div>
-                        <div class="text-center">
+                        <div class="col-md-8 text-center">
                             <button id="submit-banner" type="submit" class="btn btn-primary mb-5">Lưu</button>
                         </div>
                     </form>
