@@ -32,6 +32,7 @@ class AdvertiseRequestAdd extends FormRequest
                 'bail',
                 'mimes:jpeg,jpg,png',
                 Rule::dimensions()->maxWidth(200)->maxHeight(500)->ratio(2/5),
+                'max:2048'
             ], // banner dọc 200 x 500
 
             'dulieuhinhanhquangcao1' => 'nullable',
@@ -39,6 +40,7 @@ class AdvertiseRequestAdd extends FormRequest
                 'bail',
                 'mimes:jpeg,jpg,png',
                 Rule::dimensions()->maxWidth(600)->maxHeight(200)->ratio(3/1),
+                'max:2048'
             ], // banner ngang 600 x 200
 
             'dulieuhinhanhquangcao2' => 'nullable',
@@ -46,6 +48,7 @@ class AdvertiseRequestAdd extends FormRequest
                 'bail',
                 'mimes:jpeg,jpg,png',
                 Rule::dimensions()->maxWidth(250)->maxHeight(250)->ratio(1/1),
+                'max:2048'
             ], // banner vuông 250 x 250
 
             'tieudequangcao' => 'required|min:10|max:255',
