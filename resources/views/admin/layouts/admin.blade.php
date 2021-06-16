@@ -77,9 +77,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
             url : "{{ route('count-badge') }}",
             type : "get",
             success:function (data) {
-                $('.news-badge').text(data.news);
-                $('.newsvideo-badge').text(data.newsvideo);
-                if (data.accounts != "") {
+                if (data.news == 0) {
+                    $('.news-badge').css('display', 'none');
+                }
+                else
+                {
+                    $('.news-badge').text(data.news);
+                }
+                if (data.newsvideo == 0) {
+                    $('.newsvideo-badge').css('display', 'none');
+                }
+                else
+                {
+                    $('.newsvideo-badge').text(data.newsvideo);
+                }
+                if (data.accounts == 0) {
+                    $('.account-badge').css('display', 'none');
+                }
+                else
+                {
                     $('.account-badge').text(data.accounts);
                 }
             }

@@ -31,24 +31,22 @@ class AdvertiseRequestAdd extends FormRequest
             'dulieuhinhanhquangcao.*' => [
                 'bail',
                 'mimes:jpeg,jpg,png',
-                Rule::dimensions()->maxWidth(500)->maxHeight(1000)->ratio(2/5),
-            ], // banner dọc 500 x 1000
+                Rule::dimensions()->maxWidth(200)->maxHeight(500)->ratio(2/5),
+            ], // banner dọc 200 x 500
 
             'dulieuhinhanhquangcao1' => 'nullable',
-            // 'dulieuhinhanhquangcao1.*' => 'bail|mimes:jpeg,jpg,png|dimensions:ratio=2/5, max_width=400, max_height=200|max:2048', // banner ngang
             'dulieuhinhanhquangcao1.*' => [
                 'bail',
                 'mimes:jpeg,jpg,png',
-                Rule::dimensions()->maxWidth(1000)->maxHeight(500)->ratio(5/2),
-            ], // banner ngang
+                Rule::dimensions()->maxWidth(600)->maxHeight(200)->ratio(3/1),
+            ], // banner ngang 600 x 200
 
             'dulieuhinhanhquangcao2' => 'nullable',
-            // 'dulieuhinhanhquangcao2.*' => 'bail|mimes:jpeg,jpg,png|dimensions:ratio=1, max_width=1000, max_height=1000|max:2048', // banner vuông
             'dulieuhinhanhquangcao2.*' => [
                 'bail',
                 'mimes:jpeg,jpg,png',
-                Rule::dimensions()->maxWidth(1000)->maxHeight(1000)->ratio(1/1),
-            ], // banner vuông
+                Rule::dimensions()->maxWidth(250)->maxHeight(250)->ratio(1/1),
+            ], // banner vuông 250 x 250
 
             'tieudequangcao' => 'required|min:10|max:255',
         ];
@@ -60,15 +58,15 @@ class AdvertiseRequestAdd extends FormRequest
             'loaibanner.required' => 'Loại banner không được bỏ trống',
             
             'dulieuhinhanhquangcao.*.mimes' => 'File ảnh phải là JPEG, JPG, PNG',
-            'dulieuhinhanhquangcao.*.dimensions' => 'Độ phân giải tối đa cho phép: 500 x 1000 pixel và tỉ lệ ảnh 2:5',
+            'dulieuhinhanhquangcao.*.dimensions' => 'Độ phân giải tối đa cho phép: 200 x 500 pixel và tỉ lệ ảnh 2:5',
             'dulieuhinhanhquangcao.*.max' => 'Kích thước ảnh tối đa cho phép là 2MB',
 
             'dulieuhinhanhquangcao1.*.mimes' => 'File ảnh phải là JPEG, JPG, PNG',
-            'dulieuhinhanhquangcao1.*.dimensions' => 'Độ phân giải ảnh tối đa cho phép: 1000 x 500 pixel và tỉ lệ ảnh 5:2',
+            'dulieuhinhanhquangcao1.*.dimensions' => 'Độ phân giải ảnh tối đa cho phép: 600 x 200 pixel và tỉ lệ ảnh 3:1',
             'dulieuhinhanhquangcao1.*.max' => 'Kích thước ảnh tối đa cho phép là 2MB',
 
             'dulieuhinhanhquangcao2.*.mimes' => 'File ảnh phải là JPEG, JPG, PNG',
-            'dulieuhinhanhquangcao2.*.dimensions' => 'Độ phân giải ảnh tối đa cho phép: 1000 x 1000 pixel và tỉ lệ ảnh 1:1',
+            'dulieuhinhanhquangcao2.*.dimensions' => 'Độ phân giải ảnh tối đa cho phép: 250 x 250 pixel và tỉ lệ ảnh 1:1',
             'dulieuhinhanhquangcao2.*.max' => 'Kích thước ảnh tối đa cho phép là 2MB',
 
             'tieudequangcao.required' => 'Tiêu đề quảng cáo không được để trống',

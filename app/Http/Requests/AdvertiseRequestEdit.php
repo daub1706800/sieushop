@@ -40,7 +40,7 @@ class AdvertiseRequestEdit extends FormRequest
                 'mimes:jpeg,jpg,png',
                 Rule::dimensions()->maxWidth(600)->maxHeight(200)->ratio(3/1),
                 'max:2048',
-            ], // banner ngang
+            ], // banner ngang 600 x 200
 
             'dulieuhinhanhquangcao2' => 'nullable',
             'dulieuhinhanhquangcao2.*' => [
@@ -48,7 +48,7 @@ class AdvertiseRequestEdit extends FormRequest
                 'mimes:jpeg,jpg,png',
                 Rule::dimensions()->maxWidth(250)->maxHeight(250)->ratio(1/1),
                 'max:2048',
-            ], // banner vuông
+            ], // banner vuông 250 x 250
             
             'tieudequangcao' => 'required|min:10|max:255',
         ];
