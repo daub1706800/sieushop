@@ -28,7 +28,7 @@
                                     else $an = "";
                                 ?>
                                 <div class="carousel-item <?php echo $an; ?>">
-                                    <img class="d-block w-100" src="{{$row->dulieuhinhanhquangcao}}">
+                                    <a class="d-block w-100" href="https://google.com" target="_blank"><img src="{{$row->dulieuhinhanhquangcao}}"/></a>
                                 </div>
                             @endforeach
                         </div>
@@ -215,7 +215,7 @@
                                     else $an = "";
                                 ?>
                                 <div class="carousel-item <?php echo $an; ?>">
-                                    <img class="d-block w-100" src="{{$row->dulieuhinhanhquangcao}}">
+                                    <a class="d-block w-100" href="https://google.com" target="_blank"><img src="{{$row->dulieuhinhanhquangcao}}"/></a>
                                 </div>
                             @endforeach
                         </div>
