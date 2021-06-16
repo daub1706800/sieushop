@@ -37,11 +37,6 @@
                                     @foreach($header as $key => $row)
                                     <small><a href="#" title="">{{$row->tenchuyenmuc}}</a></small>
                                     @endforeach
-                                    <small><a href="#" title="">{{$row->tenchuyenmuc}}</a></small>
-                                    <small><a href="#" title="">{{$row->tenchuyenmuc}}</a></small>
-                                    <small><a href="#" title="">{{$row->tenchuyenmuc}}</a></small>
-                                    <small><a href="#" title="">{{$row->tenchuyenmuc}}</a></small>
-
                                 </div>
                                 @foreach($tinvideo as $key => $row)
                                     <div class="col-md-6">

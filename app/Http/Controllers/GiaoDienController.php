@@ -127,16 +127,6 @@ class GiaoDienController extends Controller{
     {
         $id = $request->id;
 
-        $sidebar = DB::table('tintuc')
-                    ->where('loaitintuc',1)
-                    ->where('xuatbantintuc',1)
-                    ->orderBy('id', 'desc')
-                    ->Join('chuyenmuc', 'tintuc.idchuyenmuc', '=', 'chuyenmuc.id')
-                    ->Join('thongtin', 'tintuc.idtaikhoan', '=', 'thongtin.idtaikhoan')
-                    ->select('tintuc.*','chuyenmuc.tenchuyenmuc','thongtin.hothanhvien','thongtin.tenthanhvien')
-                    ->limit(3)
-                    ->get();
-
         $header = DB::table('chuyenmuc')
                     ->orderBy('tenchuyenmuc')
                     ->get();
@@ -158,6 +148,7 @@ class GiaoDienController extends Controller{
         $detailtinlienquan = DB::table('tintuc')
                     ->orderBy('tintuc.id', 'desc')
                     ->where('idchuyenmuc', $detail->idchuyenmuc)
+                    ->where('xuatbantintuc',1)
                     ->Join('chuyenmuc', 'tintuc.idchuyenmuc', '=', 'chuyenmuc.id')
                     ->Join('thongtin', 'tintuc.idtaikhoan', '=', 'thongtin.idtaikhoan')
                     ->select('tintuc.*','chuyenmuc.tenchuyenmuc','thongtin.hothanhvien','thongtin.tenthanhvien')
@@ -175,7 +166,7 @@ class GiaoDienController extends Controller{
                         ->limit(3)
                         ->get();
 
-        return view('frontend.detail.detail', compact('header','hinhanhheader','sidebar','detail','videotintuc','detailtinlienquan'));
+        return view('frontend.detail.detail', compact('header','hinhanhheader','detail','videotintuc','detailtinlienquan'));
     }
     public function tinchuyenmuc(request $request)
     {
@@ -251,16 +242,6 @@ class GiaoDienController extends Controller{
                             ->limit(5)  
                             ->get();
 
-        $sidebar = DB::table('tintuc')
-                    ->where('loaitintuc',1)
-                    ->where('xuatbantintuc',1)
-                    ->orderBy('id', 'desc')
-                    ->Join('chuyenmuc', 'tintuc.idchuyenmuc', '=', 'chuyenmuc.id')
-                    ->Join('thongtin', 'tintuc.idtaikhoan', '=', 'thongtin.idtaikhoan')
-                    ->select('tintuc.*','chuyenmuc.tenchuyenmuc','thongtin.hothanhvien','thongtin.tenthanhvien')
-                    ->limit(3)
-                    ->get();
-
         $tinvideo = DB::table('videotintuc')
                         ->orderBy('id', 'desc')
                         ->where('xuatbanvideotintuc', 1)
@@ -280,7 +261,7 @@ class GiaoDienController extends Controller{
                         ->limit(3)
                         ->get();
                         
-        return view('frontend.gadget.tinvideo', compact('sidebar','header','hinhanhheader','videotintuc','tinvideo'));
+        return view('frontend.gadget.tinvideo', compact('header','hinhanhheader','videotintuc','tinvideo'));
     }
 
     public function detailvideo(Request $request){
@@ -308,6 +289,7 @@ class GiaoDienController extends Controller{
         $detailvideolienquan = DB::table('videotintuc')
                                 ->orderBy('videotintuc.id', 'desc')
                                 ->where('idchuyenmuc', $detailvideo->idchuyenmuc)
+                                ->where('xuatbanvideotintuc',1)
                                 ->Join('chuyenmuc', 'videotintuc.idchuyenmuc', '=', 'chuyenmuc.id')
                                 ->Join('thongtin', 'videotintuc.idtaikhoan', '=', 'thongtin.idtaikhoan')
                                 ->select('videotintuc.*','chuyenmuc.tenchuyenmuc','thongtin.hothanhvien','thongtin.tenthanhvien')
