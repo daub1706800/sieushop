@@ -1,5 +1,5 @@
 <?php
-
+12
 use App\Models\Company;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
