@@ -646,7 +646,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 'as' => 'tintuc.Tintuc',
                 'uses' => 'App\Http\Controllers\TintucController@printTintuc',
                 'middleware' => 'can:news-list'
-            ]);
+            ]);áháh
             Route::get('/history/{id}', [
                 'as' => 'tintuc.viewhistoryTintuc',
                 'uses' => 'App\Http\Controllers\TintucController@viewhistoryTintuc',
