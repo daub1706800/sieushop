@@ -479,7 +479,7 @@ Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
                 'as'   => 'admin.stage-info.add',
                 'uses' => 'App\Http\Controllers\AdminStageController@stage_info_add'
             ]);
-            Route::post('/store-info/store/{stage_id}', [
+            Route::post('/store-info/store/{stage_id}/{product_id}', [
                 'as'   => 'admin.stage-info.store',
                 'uses' => 'App\Http\Controllers\AdminStageController@stage_info_store',
             ]);

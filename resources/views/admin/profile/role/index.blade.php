@@ -82,14 +82,14 @@
                 <div class="col-md-12">
                     <h4><b>Thêm vai trò</b></h4><hr>
                 </div>
-                <form action="{{route('profile.role.store')}}" method="post">
+                <form action="{{ route('profile.role.store') }}" method="post">
                     @csrf
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Tên vai trò *</label>
                                 <input type="text" class="form-control @error('tenvaitro') is-invalid @enderror"
-                                        name="tenvaitro" placeholder="Tên vai trò">
+                                        name="tenvaitro" placeholder="Tên vai trò" value="{{ old('tenvaitro') }}">
                                 @error('tenvaitro')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror
@@ -99,7 +99,7 @@
                             <div class="form-group">
                                 <label>Mô tả *</label>
                                 <textarea name="motavaitro" class="form-control @error('motavaitro') is-invalid @enderror"
-                                        rows="3" placeholder="Mô tả"></textarea>
+                                        rows="3" placeholder="Mô tả">{{ old('motavaitro') }}</textarea>
                                 @error('motavaitro')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror

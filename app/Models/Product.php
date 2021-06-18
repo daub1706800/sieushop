@@ -45,4 +45,9 @@ class Product extends Model
     {
         return $this->belongsTo(Profile::class, 'idtaikhoan', 'idtaikhoan');
     }
+
+    public function image()
+    {
+        return $this->hasMany(Image::class, 'idsanpham', 'id');
+    }
 }

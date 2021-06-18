@@ -27,6 +27,7 @@ class CreateTintucTable extends Migration
             $table->smallInteger('loaitintuc')->default('0')->comment('1-nổi bật, 0-không nổi bật');
             $table->smallInteger('duyettintuc')->default('0')->comment('1-đã duyệt, 0-chưa duyệt');
             $table->smallInteger('xuatbantintuc')->default('0')->comment('1-duyệt xuất bản, 0-chưa được xuất bản');
+            $table->timestamp('ngayxuatban')->nullable();
             $table->smallInteger('lydogo')->default('0')->comment('1-có, 0-không');
             $table->timestamps();
         });

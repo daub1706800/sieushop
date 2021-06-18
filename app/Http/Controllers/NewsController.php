@@ -16,6 +16,8 @@ use App\Models\Profile;
 use App\Traits\StorageImageTrait;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class NewsController extends Controller
@@ -38,115 +40,161 @@ class NewsController extends Controller
         $this->company = $company;
         $this->newshistory = $newshistory;
         $this->newslog = $newslog;
+        Carbon::setLocale('vi'); // hiển thị ngôn ngữ tiếng việt.
     }
 
     public function index()
     {
-        $news = $this->news->all();
+        try {
+            $news = $this->news->all();
 
-        return view('admin.news.index', compact('news'));
+            foreach ($news as $value) {
+                if ($value->ngayxuatban) {
+                    $value->ngayxuatban = Carbon::create($value->ngayxuatban)->diffForHumans();
+                }
+            }
+
+            return view('admin.news.index', compact('news'));
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function add()
     {
-        $categories = $this->category->orderBy('tenchuyenmuc', 'asc')->get();
+        try {
+            $categories = $this->category->orderBy('tenchuyenmuc', 'asc')->get();
 
-        $companies = $this->company->all();
+            $companies = $this->company->all();
 
-        return view('admin.news.add', compact('categories', 'companies'));
+            return view('admin.news.add', compact('categories', 'companies'));
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function store(NewsRequest $request)
     {
-        $loaitintuc = 0;
+        try {
+            DB::beginTransaction();
 
-        if ($request->loaitintuc) {
-            $loaitintuc = 1;
+            $loaitintuc = 0;
+
+            if ($request->loaitintuc) {
+                $loaitintuc = 1;
+            }
+
+            $dataNews = [
+                'idchuyenmuc'   => $request->idchuyenmuc,
+                'idcongty'      => $request->idcongty,
+                'idtaikhoan'    => auth()->id(),
+                'tieudetintuc'  => $request->tieudetintuc,
+                'tomtattintuc'  => $request->tomtattintuc,
+                // 'ngaydangtintuc'=> date('Y-m-d H:i:s'),
+                'noidungtintuc' => $request->noidungtintuc,
+                'loaitintuc'    => $loaitintuc,
+            ];
+
+            if ($request->hasFile('hinhanhtintuc')) {
+
+                $dataImageUpload = $this->StorageUploadImage($request, 'hinhanhtintuc', 'news/image');
+
+                $dataNews['hinhanhtintuc'] = $dataImageUpload['file_path'];
+            }
+            
+            if($request->hasFile('videotintuc'))
+            {
+                $dataVideoUpload = $this->StorageUploadImage($request, 'videotintuc', 'news/video');
+
+                $dataNews['videotintuc'] = $dataVideoUpload['file_path'];
+            }
+
+            $this->news->create($dataNews);
+
+            DB::commit();
+
+            return redirect()->route('news.index');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
-
-        $dataNews = [
-            'idchuyenmuc'   => $request->idchuyenmuc,
-            'idcongty'      => $request->idcongty,
-            'idtaikhoan'    => auth()->id(),
-            'tieudetintuc'  => $request->tieudetintuc,
-            'tomtattintuc'  => $request->tomtattintuc,
-            // 'ngaydangtintuc'=> date('Y-m-d H:i:s'),
-            'noidungtintuc' => $request->noidungtintuc,
-            'loaitintuc'    => $loaitintuc,
-        ];
-
-        if ($request->hasFile('hinhanhtintuc')) {
-
-            $dataImageUpload = $this->StorageUploadImage($request, 'hinhanhtintuc', 'news/image');
-
-            $dataNews['hinhanhtintuc'] = $dataImageUpload['file_path'];
-        }
-        
-        if($request->hasFile('videotintuc'))
-        {
-            $dataVideoUpload = $this->StorageUploadImage($request, 'videotintuc', 'news/video');
-
-            $dataNews['videotintuc'] = $dataVideoUpload['file_path'];
-        }
-
-        $this->news->create($dataNews);
-
-        return redirect()->route('news.index');
     }
 
     public function edit($id)
     {
-        $news = $this->news->find($id);
+        try {
+            $news = $this->news->FindOrFail($id);
 
-        $categories = $this->category->orderBy('tenchuyenmuc', 'asc')->get();
+            $categories = $this->category->orderBy('tenchuyenmuc', 'asc')->get();
 
-        $companies = $this->company->all();
+            $companies = $this->company->all();
 
-        return view('admin.news.edit', compact('news', 'categories', 'companies'));
+            return view('admin.news.edit', compact('news', 'categories', 'companies'));
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function update(NewsRequestEdit $request, $id)
     {
-        $loaitintuc = 0;
+        try {
+            DB::beginTransaction();
 
-        if ($request->loaitintuc) {
-            $loaitintuc = 1;
+            $loaitintuc = 0;
+
+            if ($request->loaitintuc) {
+                $loaitintuc = 1;
+            }
+
+            $dataNews = [
+                'idchuyenmuc'   => $request->idchuyenmuc,
+                'tieudetintuc'  => $request->tieudetintuc,
+                'tomtattintuc'  => $request->tomtattintuc,
+                'noidungtintuc' => $request->noidungtintuc,
+                'loaitintuc'    => $loaitintuc,
+                'duyettintuc' => 0
+            ];
+
+            if ($request->hasFile('hinhanhtintuc')) {
+
+                $dataImageUpload = $this->StorageUploadImage($request, 'hinhanhtintuc', 'news/image');
+
+                $dataNews['hinhanhtintuc'] = $dataImageUpload['file_path'];
+            }
+
+
+            if($request->hasFile('videotintuc'))
+            {
+                $dataVideoUpload = $this->StorageUploadImage($request, 'videotintuc', 'news/video');
+
+                $dataNews['videotintuc'] = $dataVideoUpload['file_path'];
+            }
+
+            $this->news->FindOrFail($id)->update($dataNews);
+
+            DB::commit();
+
+            return redirect()->route('news.index');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
-
-        $dataNews = [
-            'idchuyenmuc'   => $request->idchuyenmuc,
-            'tieudetintuc'  => $request->tieudetintuc,
-            'tomtattintuc'  => $request->tomtattintuc,
-            'noidungtintuc' => $request->noidungtintuc,
-            'loaitintuc'    => $loaitintuc,
-            'duyettintuc' => 0
-        ];
-
-        if ($request->hasFile('hinhanhtintuc')) {
-
-            $dataImageUpload = $this->StorageUploadImage($request, 'hinhanhtintuc', 'news/image');
-
-            $dataNews['hinhanhtintuc'] = $dataImageUpload['file_path'];
-        }
-
-
-        if($request->hasFile('videotintuc'))
-        {
-            $dataVideoUpload = $this->StorageUploadImage($request, 'videotintuc', 'news/video');
-
-            $dataNews['videotintuc'] = $dataVideoUpload['file_path'];
-        }
-
-        $this->news->find($id)->update($dataNews);
-
-        return redirect()->route('news.index');
     }
 
     public function delete($id)
     {
-        $this->news->find($id)->delete();
+        try {
+            DB::beginTransaction();
 
-        return redirect()->route('news.index');
+            $this->news->FindOrFail($id)->delete();
+
+            DB::commit();
+
+            return redirect()->route('news.index');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function update_duyet(Request $request, $id)
@@ -158,20 +206,29 @@ class NewsController extends Controller
             'noidungdanhgia.max' => 'Nội dung đánh giá không được vượt quá 255 ký tự',
         ]);
 
-        $this->newslog->create([
-            'idtintuc' => $id,
-            'idtaikhoan' => auth()->id(),
-            'noidungdanhgia' => 'Duyệt tin: ' . $request->noidungdanhgia,
-            'thoigian' => Carbon::now()->format('Y-m-d H:i:s')
-        ]);
+        try {
+            DB::beginTransaction();
 
-        $this->news->find($id)->update([
-            'duyettintuc' => 1,
-            'xuatbantintuc' => 0,
-            'lydogo' => 0,
-        ]);
+            $this->newslog->create([
+                'idtintuc' => $id,
+                'idtaikhoan' => auth()->id(),
+                'noidungdanhgia' => 'Duyệt tin: ' . $request->noidungdanhgia,
+                'thoigian' => Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+    
+            $this->news->FindOrFail($id)->update([
+                'duyettintuc' => 1,
+                'xuatbantintuc' => 0,
+                'lydogo' => 0,
+            ]);
 
-        return redirect()->route('news.index');
+            DB::commit();
+    
+            return redirect()->route('news.index');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function update_xuatban(Request $request, $id)
@@ -183,39 +240,53 @@ class NewsController extends Controller
             'noidungdanhgia.max' => 'Nội dung đánh giá không được vượt quá 255 ký tự',
         ]);
 
-        $this->newslog->create([
-            'idtintuc' => $id,
-            'idtaikhoan' => auth()->id(),
-            'noidungdanhgia' => 'Xuất bản: ' . $request->noidungdanhgia,
-            'thoigian' => Carbon::now()->format('Y-m-d H:i:s')
-        ]);
+        try {
+            DB::beginTransaction();
+            
+            $this->newslog->create([
+                'idtintuc' => $id,
+                'idtaikhoan' => auth()->id(),
+                'noidungdanhgia' => 'Xuất bản: ' . $request->noidungdanhgia,
+                'thoigian' => Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+    
+            $this->news->FindOrFail($id)->update([
+                'xuatbantintuc' => 1,
+                'ngayxuatban' => Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+    
+            DB::commit();
 
-        $this->news->find($id)->update([
-            'xuatbantintuc' => 1,
-        ]);
-
-        return redirect()->route('news.index');
+            return redirect()->route('news.index');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function history(Request $request)
     {
-        $newshistories = $this->newshistory->where('idtintuc', $request->idNews)->get();
+        try {
+            $newshistories = $this->newshistory->where('idtintuc', $request->idNews)->get();
 
-        $news = $this->news->where('id', $request->idNews)->first();
+            $news = $this->news->where('id', $request->idNews)->first();
 
-        $output = '';
+            $output = '';
 
-        foreach ($newshistories as $value) {
+            foreach ($newshistories as $value) {
 
-            $date = Carbon::createFromFormat('Y-m-d H:i:s', $value->thoigian)->format('H:i:s d-m-Y');
+                $date = Carbon::createFromFormat('Y-m-d H:i:s', $value->thoigian)->format('H:i:s d-m-Y');
 
-            $output .= '<div class="row"><p>Vào lúc '.$date.'</p><p class="pl-2">--- '.$value->lydogo.'</p></div>';
+                $output .= '<div class="row"><p>Vào lúc '.$date.'</p><p class="pl-2">--- '.$value->lydogo.'</p></div>';
+            }
+
+            return response()->json([
+                'output' => $output,
+                'news' => $news->tieudetintuc
+            ]);
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
-
-        return response()->json([
-            'output' => $output,
-            'news' => $news->tieudetintuc
-        ]);
     }
 
     public function remove(Request $request, $id)
@@ -228,85 +299,121 @@ class NewsController extends Controller
             'lydogo.max' => 'Lý do thu hồi không được vượt quá 255 ký tự',
         ]);
 
-        $this->newshistory->create([
-            'idtaikhoan' => auth()->id(),
-            'idtintuc' => $id,
-            'lydogo' => $request->lydogo,
-            'thoigian' => Carbon::now()->format('Y-m-d H:i:s')
-        ]);
+        try {
+            DB::beginTransaction();
 
-        $this->news->find($id)->update([
-            'duyettintuc' => 0,
-            'xuatbantintuc' => 0,
-        ]);
+            $this->newshistory->create([
+                'idtaikhoan' => auth()->id(),
+                'idtintuc' => $id,
+                'lydogo' => $request->lydogo,
+                'thoigian' => Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+    
+            $this->news->find($id)->update([
+                'duyettintuc' => 0,
+                'xuatbantintuc' => 0,
+                'ngayxuatban' => null
+            ]);
 
-        return redirect()->route('news.index');
+            DB::commit();
+    
+            return redirect()->route('news.index');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function view(Request $request)
     {
-        $news = $this->news->find($request->idNews);
+        try {
+            $news = $this->news->FindOrFail($request->idNews);
 
-        $category = $this->category->where('id', $news->idchuyenmuc)->first();
+            $category = $this->category->where('id', $news->idchuyenmuc)->first();
 
-        $author = $this->profile->where('idtaikhoan', $news->idtaikhoan)->first();
+            $author = $this->profile->where('idtaikhoan', $news->idtaikhoan)->first();
 
-        $ngaydang = Carbon::createFromFormat('Y-m-d H:i:s', $news->ngaydangtintuc)->format('d-m-Y');
+            $ngaydang = Carbon::createFromFormat('Y-m-d H:i:s', $news->ngaydangtintuc)->format('d-m-Y');
 
-        $output = '';
+            $output = '';
 
-        if ($news->videotintuc) {
-            $output = '<video style="width:440px; height:300px" controls>
-                        <source src="'.$news->dulieuvideo.'" type="video/mp4">
-                        Trình duyệt của bạn không hỗ trợ thẻ video trong HTML5.
-                    </video>';
+            if ($news->videotintuc) {
+                $output = '<video style="width:440px; height:300px" controls>
+                            <source src="'.$news->dulieuvideo.'" type="video/mp4">
+                            Trình duyệt của bạn không hỗ trợ thẻ video trong HTML5.
+                        </video>';
+            }
+
+            $array = [
+                'news' => $news,
+                'author' => $author->hothanhvien . ' ' . $author->tenthanhvien,
+                'category' => $category->tenchuyenmuc,
+                'ngaydang' => $ngaydang,
+                'video' => $output
+            ];
+
+            return response()->json($array);   
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
-
-        $array = [
-            'news' => $news,
-            'author' => $author->hothanhvien . ' ' . $author->tenthanhvien,
-            'category' => $category->tenchuyenmuc,
-            'ngaydang' => $ngaydang,
-            'video' => $output
-        ];
-
-        return response()->json($array);
     }
 
     public function log($id)
     {
-        $news = $this->news->find($id);
+        try {
+            $news = $this->news->FindOrFail($id);
 
-        $newslogs = $this->newslog->where('idtintuc', $id)->get();
+            $newslogs = $this->newslog->where('idtintuc', $id)->get();
 
-        $company = $this->news->find($id)->company;
+            $company = $this->news->FindOrFail($id)->company;
 
-        return view('admin.news.log', compact('newslogs', 'company', 'news'));
+            return view('admin.news.log', compact('newslogs', 'company', 'news'));
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function change_status(Request $request)
     {
-        if ($request->status == 1) {
-            $this->news->find($request->id)->update([
-                'loaitintuc' => 0
-            ]);
-            
-            return response()->json($status=0);
-        }
-        else
-        {
-            $this->news->find($request->id)->update([
-                'loaitintuc' => 1
-            ]);
+        try {
+            DB::beginTransaction();
 
-            return response()->json($status=1);
+            if ($request->status == 1) {
+                $this->news->FindOrFail($request->id)->update([
+                    'loaitintuc' => 0
+                ]);
+                
+                return response()->json($status=0);
+            }
+            else
+            {
+                $this->news->FindOrFail($request->id)->update([
+                    'loaitintuc' => 1
+                ]);
+    
+                return response()->json($status=1);
+            }
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
     }
 
     public function delete_video(Request $request)
     {
-        $this->news->find($request->id)->update([
-            'videotintuc' => null
-        ]);
+        try {
+            DB::beginTransaction();
+
+            $this->news->FindOrFail($request->id)->update([
+                'videotintuc' => null
+            ]);
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 }

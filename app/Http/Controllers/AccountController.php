@@ -28,17 +28,22 @@ class AccountController extends Controller
 
     public function index()
     {
-        $users = $this->user->all();
+        try {
+            $users = $this->user->all();
 
-        $roles  = $this->role->all();
+            $roles  = $this->role->all();
 
-        return view('admin.account.index', compact('users', 'roles'));
+            return view('admin.account.index', compact('users', 'roles'));
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function store(AccountRequest $request)
     {
         try {
             DB::beginTransaction();
+
             $data = [
                 'idcongty'     => auth()->user()->idcongty,
                 'email'        => $request->email,
@@ -48,7 +53,6 @@ class AccountController extends Controller
 
             $user = $this->user->create($data);
 
-            // Insert table thongtin
             $this->profile->create([
                 'idtaikhoan' => $user->id
             ]);
@@ -68,12 +72,21 @@ class AccountController extends Controller
 
     public function edit($id)
     {
-        $user     = $this->user->find($id);
-        $roles    = $this->role->all();
-        // Lấy vai trò của tài khoản
-        $roleUser = $user->roles;
-
-        return view('admin.account.edit', compact('user', 'roles', 'roleUser'));
+        try {
+            $user = $this->user->FindOrFail($id);
+            if ($user->idcongty) {
+                $roles = $this->role->where('idcongty', $user->idcongty)->orWhere('loaivaitro', 2)->get();
+            }
+            else
+            {
+                $roles = $this->role->where('loaivaitro', 2)->get();
+            }
+            $roleUser = $user->roles;
+    
+            return view('admin.account.edit', compact('user', 'roles', 'roleUser'));
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function update(Request $request, $id)
@@ -83,14 +96,14 @@ class AccountController extends Controller
 
             if(!empty($request->password))
             {
-                $this->user->find($id)->update([
+                $this->user->FindOrFail($id)->update([
                     'recovery-password' => bcrypt($request->password)
                 ]);
             }
 
             if(!empty($request->idvaitro))
             {
-                $user = $this->user->find($id);
+                $user = $this->user->FindOrFail($id);
                 // Update data to table taikhoan_vaitro
                 $user->roles()->sync($request->idvaitro);
             }
@@ -107,11 +120,21 @@ class AccountController extends Controller
 
     public function delete($id)
     {
-        $this->profile->where('idtaikhoan', $id)->delete();
+        try {
+            DB::beginTransaction();
 
-        $this->user->find($id)->delete();
+            $this->profile->where('idtaikhoan', $id)->delete();
 
-        return redirect()->route('account.index');
+            $this->user->FindOrFail($id)->delete();
+
+            DB::commit();
+
+            return redirect()->route('account.index');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
+        
     }
 
     public function random_password()
@@ -123,12 +146,19 @@ class AccountController extends Controller
 
     public function verify($id)
     {
-        $verified = Carbon::now();
+        try {
+            DB::beginTransaction();
 
-        $this->user->find($id)->update([
-            'email_verified_at' => $verified
-        ]);
+            $this->user->FindOrFail($id)->update([
+                'email_verified_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ]);
 
-        return redirect()->route('account.index');
+            DB::commit();
+
+            return redirect()->route('account.index');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 }

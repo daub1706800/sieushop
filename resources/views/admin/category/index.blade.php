@@ -85,7 +85,7 @@
                             <div class="form-group">
                                 <label>Danh mục *</label>
                                 <input type="text" class="form-control @error('tenchuyenmuc') is-invalid @enderror"
-                                        name="tenchuyenmuc" placeholder="Danh mục">
+                                        name="tenchuyenmuc" placeholder="Danh mục" value="{{ old('tenchuyenmuc') }}">
                                 @error('tenchuyenmuc')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror

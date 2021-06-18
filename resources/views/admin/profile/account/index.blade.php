@@ -50,7 +50,7 @@
                                     <td>{{ $user->email }}</td>
                                     <td>
                                         @foreach ( $user->roles as $value )
-                                            <p>{{ $value->motavaitro }}</p>
+                                            <p>- {{ $value->motavaitro }}</p>
                                         @endforeach
                                     </td>
                                     <td>
@@ -95,7 +95,7 @@
                             <div class="form-group">
                                 <label>Email *</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                        name="email" placeholder="Email">
+                                        name="email" placeholder="Email" value="{{ old('email') }}">
                                 @error('email')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror
@@ -126,7 +126,7 @@
                                 <label>Vai trò *</label><br>
                                 <select class="form-control role-selected @error('idvaitro') is-invalid @enderror"
                                         name="idvaitro[]" multiple>
-                                    @foreach($roles as $role)
+                                    @foreach( $roles as $role )
                                     <option value="{{ $role->id }}">{{ $role->motavaitro }}</option>
                                     @endforeach
                                 </select>

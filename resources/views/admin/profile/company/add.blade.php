@@ -99,8 +99,8 @@
                                         <label>Sở / Ngành *</label>
                                         <select class="form-control department-selected @error('idso') is-invalid @enderror" name="idso">
                                             <option value=""></option>
-                                            @foreach($departments as $department)
-                                            <option value="{{$department->id}}">{{$department->tenso}}</option>
+                                            @foreach( $departments as $department )
+                                            <option value="{{ $department->id }}">{{ $department->tenso }}</option>
                                             @endforeach
                                         </select>
                                         @error('idso')
@@ -111,8 +111,8 @@
                                         <label>Lĩnh vực *</label>
                                         <select class="form-control field-selected @error('idlinhvuc') is-invalid @enderror" name="idlinhvuc">
                                             <option value=""></option>
-                                            @foreach($fields as $field)
-                                                <option value="{{$field->id}}">{{$field->tenlinhvuc}}</option>
+                                            @foreach( $fields as $field )
+                                                <option value="{{ $field->id }}">{{ $field->tenlinhvuc }}</option>
                                             @endforeach
                                         </select>
                                         @error('idlinhvuc')

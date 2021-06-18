@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductCategoryRequest;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ProductCategoryController extends Controller
 {
@@ -17,47 +19,82 @@ class ProductCategoryController extends Controller
 
     public function index()
     {
-        $productcategories = $this->productcategory->where('idcongty', auth()->user()->idcongty)->get();
+        try {
+            $productcategories = $this->productcategory->where('idcongty', auth()->user()->idcongty)->get();
 
-        return view('admin.product-category.index', compact('productcategories'));
+            return view('admin.product-category.index', compact('productcategories'));            
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function store(ProductCategoryRequest $request)
     {
-        $data = [
-            'idcongty'        => auth()->user()->idcongty,
-            'tenloaisanpham'  => $request->tenloaisanpham,
-            'motaloaisanpham' => $request->motaloaisanpham,
-        ];
+        try {
+            DB::beginTransaction();
 
-        $this->productcategory->create($data);
+            $data = [
+                'idcongty'        => auth()->user()->idcongty,
+                'tenloaisanpham'  => $request->tenloaisanpham,
+                'motaloaisanpham' => $request->motaloaisanpham,
+            ];
+    
+            $this->productcategory->create($data);
 
-        return redirect()->route('productcategory.index');
+            DB::commit();
+    
+            return redirect()->route('productcategory.index');            
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function edit($id)
     {
-        $productcategory = $this->productcategory->find($id);
+        try {
+            $productcategory = $this->productcategory->FindOrFail($id);
 
-        return view('admin.product-category.edit', compact('productcategory'));
+            return view('admin.product-category.edit', compact('productcategory'));           
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function update(ProductCategoryRequest $request, $id)
     {
-        $data = [
-            'tenloaisanpham'  => $request->tenloaisanpham,
-            'motaloaisanpham' => $request->motaloaisanpham,
-        ];
+        try {
+            DB::beginTransaction();
 
-        $this->productcategory->find($id)->update($data);
+            $data = [
+                'tenloaisanpham'  => $request->tenloaisanpham,
+                'motaloaisanpham' => $request->motaloaisanpham,
+            ];
+    
+            $this->productcategory->FindOrFail($id)->update($data);
 
-        return redirect()->route('productcategory.index');
+            DB::commit();
+    
+            return redirect()->route('productcategory.index');            
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function delete($id)
     {
-        $this->productcategory->find($id)->delete();
+        try {
+            DB::beginTransaction();
 
-        return redirect()->route('productcategory.index');
+            $this->productcategory->FindOrFail($id)->delete();
+
+            DB::commit();
+
+            return redirect()->route('productcategory.index');            
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 }

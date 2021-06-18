@@ -8,6 +8,8 @@ use App\Models\Department;
 use App\Models\Field;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CompanyController extends Controller
 {
@@ -26,73 +28,103 @@ class CompanyController extends Controller
 
     public function index()
     {
-        $companys = $this->company->all();
+        try {
+            $companys = $this->company->all();
 
-        $fields = $this->field->all();
-
-        $departments = $this->department->all();
-
-        return view('admin.company.index', compact('companys', 'fields', 'departments'));
+            $fields = $this->field->all();
+    
+            $departments = $this->department->all();
+    
+            return view('admin.company.index', compact('companys', 'fields', 'departments'));
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function edit($id)
     {
-        $company = $this->company->find($id);
+        try {
+            $company = $this->company->FindOrFail($id);
 
-        $fields = $this->field->all();
-
-        $departments = $this->department->all();
-
-        return view('admin.company.edit', compact('company', 'fields', 'departments'));
+            $fields = $this->field->all();
+    
+            $departments = $this->department->all();
+    
+            return view('admin.company.edit', compact('company', 'fields', 'departments'));
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function update(CompanyRequest $request, $id)
     {
-        $data = [
-            'idso'               => $request->idso,
-            'idlinhvuc'          => $request->idlinhvuc,
-            'tencongty'          => $request->tencongty,
-            'diachicongty'       => $request->diachicongty,
-            'emailcongty'        => $request->emailcongty,
-            'dienthoaicongty'    => $request->dienthoaicongty,
-            'faxcongty'          => $request->faxcongty,
-            'webcongty'          => $request->webcongty,
-            'sdkkdcongty'        => $request->sdkkdcongty,
-            'ngaycapdkkdcongty'  => $request->ngaycapdkkdcongty,
-            'noicapdkkdcongty'   => $request->noicapdkkdcongty,
-            'masothuecongty'     => $request->masothuecongty,
-            'ngaythanhlapcongty' => $request->ngaythanhlapcongty,
-        ];
+        try {
+            DB::beginTransaction();
 
-        $this->company->find($id)->update($data);
+            $data = [
+                'idso'               => $request->idso,
+                'idlinhvuc'          => $request->idlinhvuc,
+                'tencongty'          => $request->tencongty,
+                'diachicongty'       => $request->diachicongty,
+                'emailcongty'        => $request->emailcongty,
+                'dienthoaicongty'    => $request->dienthoaicongty,
+                'faxcongty'          => $request->faxcongty,
+                'webcongty'          => $request->webcongty,
+                'sdkkdcongty'        => $request->sdkkdcongty,
+                'ngaycapdkkdcongty'  => $request->ngaycapdkkdcongty,
+                'noicapdkkdcongty'   => $request->noicapdkkdcongty,
+                'masothuecongty'     => $request->masothuecongty,
+                'ngaythanhlapcongty' => $request->ngaythanhlapcongty,
+            ];
+    
+            $this->company->FindOrFail($id)->update($data);
 
-        return redirect()->route('company.index');
+            DB::commit();
+    
+            return redirect()->route('company.index');           
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function delete($id)
     {
-        $this->company->find($id)->delete();
+        try {
+            DB::beginTransaction();
 
-        return redirect()->route('company.index');
+            $this->company->FindOrFail($id)->delete();
+
+            DB::commit();
+
+            return redirect()->route('company.index');            
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function view(Request $request)
     {
-        $company = $this->company->find($request->idCompany);
+        try {
+            $company = $this->company->FindOrFail($request->idCompany);
 
-        $department = $company->department;
-
-        $field = $company->field;
-
-        $subdomain = $company->subdomain . '.' . config('app.short_url');
-
-        $arr = [
-            'company' => $company,
-            'department' => $department,
-            'field' => $field,
-            'subdomain' => $subdomain
-        ];
-
-        return response()->json($arr);
+            $department = $company->department;
+    
+            $field = $company->field;
+    
+            $subdomain = $company->subdomain . '.' . config('app.short_url');
+    
+            $arr = [
+                'company' => $company,
+                'department' => $department,
+                'field' => $field,
+                'subdomain' => $subdomain
+            ];
+    
+            return response()->json($arr);            
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 }

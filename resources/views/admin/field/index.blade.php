@@ -38,19 +38,19 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($fields as $key => $field)
+                                    @foreach( $fields as $key => $field )
                                     <tr>
                                         <th scope="row">{{$field->id}}</th>
-                                        <td>{{$field->tenlinhvuc}}</td>
-                                        <td>{{$field->motalinhvuc}}</td>
+                                        <td>{{ $field->tenlinhvuc }}</td>
+                                        <td>{{ $field->motalinhvuc }}</td>
                                         <td>
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{route('field.edit', ['id' => $field->id])}}">Chỉnh sửa</a>
-                                                    @if($field->category->isEmpty() && $field->company->isEmpty())
-                                                    <a class="dropdown-item" href="{{route('field.delete', ['id' => $field->id])}}">Xóa</a>
+                                                    <a class="dropdown-item" href="{{ route('field.edit', ['id' => $field->id]) }}">Chỉnh sửa</a>
+                                                    @if( $field->category->isEmpty() && $field->company->isEmpty() )
+                                                    <a class="dropdown-item" href="{{ route('field.delete', ['id' => $field->id]) }}">Xóa</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -77,7 +77,7 @@
                     <div class="col-md-12">
                         <h4><b>Thêm lĩnh vực</b></h4><hr>
                     </div>
-                    <form action="{{route('field.store')}}" method="post">
+                    <form action="{{ route('field.store') }}" method="post">
                         @csrf
                         <div class="row">
                             <div class="col-md-12">

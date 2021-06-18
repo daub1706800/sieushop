@@ -20,7 +20,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-            <form action="{{route('account.update', ['id' => $user->id])}}" method="post">
+            <form action="{{ route('account.update', ['id' => $user->id]) }}" method="post">
                     @csrf
                     <div class="form-group">
                         <label>Họ tên *</label>
@@ -43,9 +43,10 @@
                     <div class="form-group">
                         <label>Vai trò *</label><br>
                         <select class="form-control role-selected"
-                            name="idvaitro[]" multiple>
-                            @foreach($roles as $role)
-                            <option {{ $roleUser->contains('id', $role->id) ? "selected" : ""}}
+                            name="idvaitro[]" >
+                            <option value=""></option>
+                            @foreach( $roles as $role )
+                            <option {{ $user->roles->contains('id', $role->id) ? "selected" : ""}}
                                 value="{{ $role->id }}">{{ $role->motavaitro }}</option>
                             @endforeach
                         </select>
@@ -72,7 +73,8 @@
                     tags: false,
                     placeholder : 'Chọn vai trò',
                     theme: "classic",
-                    width: "100%"
+                    width: "100%",
+                    multiple: true
                 });
             });
         });

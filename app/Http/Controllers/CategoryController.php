@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Components\Recusive;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
 {
@@ -21,46 +23,84 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = $this->category->get();
+        try {
+            $categories = $this->category->get();
 
-        $fields = $this->field->all();
-
-        return view('admin.category.index', compact('categories','fields'));
+            $fields = $this->field->all();
+    
+            return view('admin.category.index', compact('categories','fields'));
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function store(CategoryRequest $request)
     {
-        $this->category->create([
-           'tenchuyenmuc' => $request->tenchuyenmuc,
-           'idlinhvuc'    => $request->idlinhvuc
-        ]);
+        try {
+            DB::beginTransaction();
 
-        return redirect()->route('category.index');
+            $this->category->create([
+                'tenchuyenmuc' => $request->tenchuyenmuc,
+                'idlinhvuc'    => $request->idlinhvuc
+            ]);
+
+            DB::commit();
+     
+            return redirect()->route('category.index');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
+        
     }
 
     public function edit($id)
     {
-        $category = $this->category->find($id);
+        try {
+            $category = $this->category->FindOrFail($id);
 
-        $fields = $this->field->all();
+            $fields = $this->field->all();
 
-        return view('admin.category.edit', compact('category','fields'));
+            return view('admin.category.edit', compact('category','fields'));
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function update(CategoryRequest $request, $id)
     {
-        $this->category->find($id)->update([
-            'tenchuyenmuc'  => $request->tenchuyenmuc,
-            'idlinhvuc' => $request->idlinhvuc
-        ]);
+        try {
+            DB::beginTransaction();
+
+            $this->category->FindOrFail($id)->update([
+                'tenchuyenmuc'  => $request->tenchuyenmuc,
+                'idlinhvuc' => $request->idlinhvuc
+            ]);
+
+            DB::commit();
+            
+            return redirect()->route('category.index');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
         
-        return redirect()->route('category.index');
     }
 
     public function delete($id)
     {
-        $this->category->find($id)->delete();
+        try {
+            DB::beginTransaction();
 
-        return redirect()->route('category.index');
+            $this->category->FindOrFail($id)->delete();
+
+            DB::commit();
+
+            return redirect()->route('category.index');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
+        
     }
 }

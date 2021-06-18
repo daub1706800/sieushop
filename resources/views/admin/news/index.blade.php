@@ -6,6 +6,11 @@
 
 @section('css')
     <link rel="stylesheet" href="{{asset('AdminLTE/dist/css/mystyle2.css')}}">
+    <style>
+        .tinnoibat{
+            transform: scale(1.5, 1.5);
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -32,6 +37,7 @@
                                     <th scope="col">Chuyên mục</th>
                                     <th scope="col">Người đăng</th>
                                     <th scope="col">Ngày đăng</th>
+                                    <th scope="col">Xuất bản</th>
                                     <th scope="col">Công ty</th>
                                     <th scope="col">Tin nổi bật</th>
                                     <th scope="col">Trạng thái</th>
@@ -42,7 +48,7 @@
                                     @foreach($news as $key => $item)
                                     <tr>
                                         <th scope="row">{{ $item->id }}</th>
-                                        <td>
+                                        <td style="width:200px;">
                                             <a href="" class="tieudetintuc"
                                                 data-toggle="modal" data-target="#exampleModal"
                                                 data-id="{{ $item->id }}">{{ $item->tieudetintuc }}</a>
@@ -50,9 +56,10 @@
                                         <td>{{ $item->category->tenchuyenmuc }}</td>
                                         <td>{{ $item->profile->tenthanhvien .' '. $item->profile->hothanhvien }}</td>
                                         <td>{{ $item->ngaydangtintuc }}</td>
+                                        <td>{{ $item->ngayxuatban }}</td>
                                         <td>{{ $item->company->tencongty }}</td>
                                         <td class="text-center">
-                                            <input type="checkbox" id="tinnoibat" data-id="{{ $item->id }}" value="{{ $item->loaitintuc }}" {{ $item->loaitintuc == 1 ? "checked" : "" }}>
+                                            <input type="checkbox" class="tinnoibat" data-id="{{ $item->id }}" value="{{ $item->loaitintuc }}" {{ $item->loaitintuc == 1 ? "checked" : "" }}>
                                         </td>
                                         <td style="width:120px;">
                                             @if ($item->duyettintuc == 0 && $item->xuatbantintuc == 0 && $item->lydogo == 0)
@@ -144,18 +151,14 @@
     <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="col-md-4">
+                <div class="col-md-12">
                     <h5 class="modal-title tieudeNews" id="exampleModalLongTitle"
                         style="font-size: 18px; font-weight: bold; color: red"></h5>
                 </div>
-                <div class="col-md-4 offset-md-4 text-right">
-                    <p class="modal-title ngaydang"
-                        style="font-size: 15px;"></p>
-                </div>
             </div>
             <div class="modal-body">
-                <div class="col-md-12 show-history">
-
+                <div class="col-md-12">
+                    <div class="ml-2 show-history"></div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -172,11 +175,6 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function(){
-            $('.item-news').on('click', function() {
-                let url = $(this).data('url');
-                window.location = url;
-            });
-
             $(document).on('click', '.tieudetintuc', function() {
                 var idNews = $(this).data('id');
                 $.ajax({
@@ -229,8 +227,9 @@
                 }
             });
 
-            $(document).on('click', '#tinnoibat', function() {
+            $(document).on('click', '.tinnoibat', function() {
                 var id = $(this).data('id');
+                var that = $(this);
                 if ($(this).val() == 1) {
                     var status = 1;
                 }
@@ -251,7 +250,7 @@
                             title: 'Chuyển đổi thành công'
                         });
 
-                        $('#tinnoibat').val(data);
+                        that.val(data);
                     }
                 });
             });

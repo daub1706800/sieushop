@@ -6,6 +6,11 @@
 
 @section('css')
     <link rel="stylesheet" href="{{asset('AdminLTE/dist/css/mystyle2.css')}}">
+    <style>
+        .tinnoibat{
+            transform: scale(1.5, 1.5);
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -32,6 +37,7 @@
                                     <th scope="col">Chuyên mục</th>
                                     <th scope="col">Người đăng</th>
                                     <th scope="col">Ngày đăng</th>
+                                    <th scope="col">Xuất bản</th>
                                     <th scope="col">Tin nổi bật</th>
                                     <th scope="col">Trạng thái</th>
                                     <th scope="col"></th>
@@ -41,7 +47,7 @@
                                     @foreach($newsvideo as $key => $item)
                                     <tr>
                                         <th scope="row">{{ $item->id }}</th>
-                                        <td>
+                                        <td style="width:200px;">
                                             <a href="" class="tieudetintuc"
                                                 data-toggle="modal" data-target="#exampleModal"
                                                 data-id="{{ $item->id }}">{{ $item->tieudevideo }}</a>
@@ -49,8 +55,9 @@
                                         <td>{{ $item->category->tenchuyenmuc }}</td>
                                         <td>{{ $item->profile->tenthanhvien .' '. $item->profile->hothanhvien }}</td>
                                         <td>{{ $item->ngaydangvideo }}</td>
+                                        <td>{{ $item->ngayxuatban }}</td>
                                         <td class="text-center">
-                                            <input type="checkbox" id="tinnoibat" data-id="{{ $item->id }}" value="{{ $item->loaivideotintuc }}" {{ $item->loaivideotintuc == 1 ? "checked" : "" }}>
+                                            <input type="checkbox" class="tinnoibat" data-id="{{ $item->id }}" value="{{ $item->loaivideotintuc }}" {{ $item->loaivideotintuc == 1 ? "checked" : "" }}>
                                         </td>
                                         <td style="width:120px;">
                                             @if ($item->duyetvideotintuc == 0 && $item->xuatbanvideotintuc == 0 && $item->trangthaithuhoi == 0)
@@ -227,8 +234,9 @@
                 }
             });
 
-            $(document).on('click', '#tinnoibat', function() {
+            $(document).on('click', '.tinnoibat', function() {
                 var id = $(this).data('id');
+                var that = $(this);
                 if ($(this).val() == 1) {
                     var status = 1;
                 }
@@ -249,7 +257,7 @@
                             title: 'Chuyển đổi thành công'
                         });
 
-                        $('#tinnoibat').val(data);
+                        that.val(data);
                     }
                 });
             });

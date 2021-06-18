@@ -22,14 +22,14 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6">
-                <form action="{{route('storage.update', ['id' => $storage->id]) }}" method="post">
+                <form action="{{ route('storage.update', ['id' => $storage->id]) }}" method="post">
                     @csrf
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Tên kho *</label>
                             <input type="text" name="tenkho"
                                 class="form-control @error('tenkho') is-invalid @enderror"
-                                value="{{ $storage->tenkho }}">
+                                value="{{ old('tenkho', $storage->tenkho) }}">
                         </div>
                         @error('tenkho')
                         <div class="alert alert-danger alert-custom">{{ $message }}</div>
@@ -40,7 +40,7 @@
                             <label>Tải trọng (tấn) *</label>
                             <input type="text" name="taitrongkho"
                                 class="form-control @error('taitrongkho') is-invalid @enderror"
-                                value="{{ $storage->taitrongkho }}">
+                                value="{{ old('taitrongkho', $storage->taitrongkho) }}">
                         </div>
                         @error('taitrongkho')
                         <div class="alert alert-danger alert-custom">{{ $message }}</div>
@@ -51,7 +51,7 @@
                             <label>Diện tích (m2) *</label>
                             <input type="text" name="dientichkho"
                                 class="form-control @error('dientichkho') is-invalid @enderror"
-                                value="{{ $storage->dientichkho }}">
+                                value="{{ old('dientichkho', $storage->dientichkho) }}">
                         </div>
                         @error('dientichkho')
                         <div class="alert alert-danger alert-custom">{{ $message }}</div>
@@ -62,7 +62,7 @@
                             <label>Số nhân viên *</label>
                             <input type="text" name="sonhanvienkho"
                                 class="form-control @error('sonhanvienkho') is-invalid @enderror"
-                                value="{{ $storage->sonhanvienkho }}">
+                                value="{{ old('sonhanvienkho', $storage->sonhanvienkho) }}">
                         </div>
                         @error('sonhanvienkho')
                         <div class="alert alert-danger alert-custom">{{ $message }}</div>
@@ -73,7 +73,7 @@
                             <label>Địa chỉ *</label>
                             <input type="text" name="diachikho"
                                 class="form-control @error('diachikho') is-invalid @enderror"
-                                value="{{ $storage->diachikho }}">
+                                value="{{ old('diachikho', $storage->diachikho) }}">
                         </div>
                         @error('diachikho')
                         <div class="alert alert-danger alert-custom">{{ $message }}</div>
@@ -83,7 +83,7 @@
                         <div class="form-group">
                             <label>Ghi chú *</label>
                             <textarea class="form-control @error('ghichukho') is-invalid @enderror" rows="5"
-                                name="ghichukho">{{ $storage->ghichukho }}</textarea>
+                                name="ghichukho">{{ old('ghichukho', $storage->ghichukho) }}</textarea>
                         </div>
                         @error('ghichukho')
                         <div class="alert alert-danger alert-custom">{{ $message }}</div>

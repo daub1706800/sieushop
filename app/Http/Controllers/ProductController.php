@@ -16,8 +16,6 @@ use Illuminate\Http\Request;
 use Milon\Barcode\Facades\DNS1DFacade;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Validator;
 
 class ProductController extends Controller
 {
@@ -39,24 +37,31 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = $this->product->where('idcongty', auth()->user()->idcongty)->get();
+        try {
+            $products = $this->product->where('idcongty', auth()->user()->idcongty)->get();
 
-        return view('admin.product.index', compact('products'));
+            return view('admin.product.index', compact('products'));            
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function add()
     {
-        $storages = $this->storage->where('idcongty', auth()->user()->idcongty)->get();
+        try {
+            $storages = $this->storage->where('idcongty', auth()->user()->idcongty)->get();
 
-        $productcategories = $this->productcategory->where('idcongty', auth()->user()->idcongty)->get();
-
-        return view('admin.product.add', compact('storages', 'productcategories'));
+            $productcategories = $this->productcategory->where('idcongty', auth()->user()->idcongty)->get();
+    
+            return view('admin.product.add', compact('storages', 'productcategories'));            
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function store(ProductAddRequest $request)
     {
-        try
-        {
+        try {
             DB::beginTransaction();
 
             $data = [
@@ -99,9 +104,7 @@ class ProductController extends Controller
             DB::commit();
 
             return redirect()->route('product.index');
-        }
-        catch (\Exception $exception)
-        {
+        } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
@@ -109,23 +112,26 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        $product = $this->product->find($id);
+        try {
+            $product = $this->product->FindOrFail($id);
 
-        $company = $product->company;
-
-        $storages = $this->storage->where('idcongty', $company->id)->get();
-
-        $productcategories = $this->productcategory->where('idcongty', $company->id)->get();
-
-        $images = Image::where('idsanpham', $id)->get();
-
-        return view('admin.product.edit', compact('product', 'storages', 'productcategories', 'images'));
+            $company = $product->company;
+    
+            $storages = $this->storage->where('idcongty', $company->id)->get();
+    
+            $productcategories = $this->productcategory->where('idcongty', $company->id)->get();
+    
+            $images = Image::where('idsanpham', $id)->get();
+    
+            return view('admin.product.edit', compact('product', 'storages', 'productcategories', 'images'));            
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function update(ProductEditRequest $request, $id)
     {
-        try
-        {
+        try {
             DB::beginTransaction();
 
             if ($request->mavachsanpham)
@@ -165,9 +171,9 @@ class ProductController extends Controller
                 $data['hinhanhsanpham'] = $dataImageUpload['file_path'];
             }
 
-            $this->product->find($id)->update($data);
+            $this->product->FindOrFail($id)->update($data);
 
-            $product = $this->product->find($id);
+            $product = $this->product->FindOrFail($id);
 
             // Insert data to table hinhanh
             if($request->hasFile('hinhanhchitiet'))
@@ -184,114 +190,136 @@ class ProductController extends Controller
                     ]);
                 }
             }
+
             DB::commit();
 
             return redirect()->route('product.index');
-        }
-        catch (\Exception $exception) {
-
+        } catch (\Exception $exception) {
             DB::rollBack();
-
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
     }
 
     public function delete($id)
     {
-        $this->product->find($id)->delete();
+        try {
+            DB::beginTransaction();
+            $this->product->FindOrFail($id)->delete();
 
-        return back();
+            DB::commit();
+
+            return back();            
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function view(Request $request)
     {
-        $product = $this->product->find($request->idProduct);
+        try {
+            $product = $this->product->FindOrFail($request->idProduct);
 
-        $company = $product->company;
-
-        $storage = $product->storage;
-
-        $profile = $product->profile->hothanhvien . ' ' . $product->profile->tenthanhvien;
-
-        $productcategory = $product->productcategory;
-
-        $date = Carbon::createFromFormat('Y-m-d H:i:s', $product->created_at)->format('d-m-Y');
-
-        $output = '<div class="row">
-                        <p><b>Công ty:</b></p>
-                        <p class="pl-2">'.$company->tencongty.'</p>
-                    </div>
-                    <div class="row">
-                        <p><b>Kho:</b></p>
-                        <p class="pl-2">'.$storage->tenkho.'</p>
-                    </div>
-                    <div class="row">
-                        <p><b>Người tạo:</b></p>
-                        <p class="pl-2">'.$profile.'</p>
-                    </div>
-                    <div class="row">
-                        <p><b>Hình ảnh:</b></p>
-                        <img src="'.$product->hinhanhsanpham.'" style="width:200px; height: 200px" class="pl-2">
-                    </div>
-                    <div class="row mt-3">
-                        <p><b>Thông tin:</b></p>
-                        <p class="pl-2">'.$product->thongtinsanpham.'</p>
-                    </div>
-                    <div class="row">
-                        <p><b>Xuất xứ:</b></p>
-                        <p class="pl-2">'.$product->xuatxu.'</p>
-                    </div>
-                    <div class="row">
-                        <p><b>Loại sản phẩm:</b></p>
-                        <p class="pl-2">'.$productcategory->tenloaisanpham.'</p>
-                    </div>
-                    <div class="row">
-                        <p><b>Chủng loại:</b></p>
-                        <p class="pl-2">'.$product->chungloaisanpham.'</p>
-                    </div>
-                    <div class="row">
-                        <p><b>Đơn giá:</b></p>
-                        <p class="pl-2">'.$product->dongiasanpham.'</p>
-                    </div>
-                    <div class="row">
-                        <p><b>Khối lượng:</b></p>
-                        <p class="pl-2">'.$product->khoiluongsanpham.'</p>
-                    </div>
-                    <div class="row">
-                        <p><b>Đơn vị tính:</b></p>
-                        <p class="pl-2">'.$product->donvitinhsanpham.'</p>
-                    </div>
-                    <div class="row">
-                        <p><b>Mã vạch:</b></p>
-                        <p class="pl-2">'.$product->mavachsanpham.'</p>
-                    </div>';
-
-        $stages = $this->stage->where('idsanpham', $request->idProduct)->get();
-
-        if (!$stages->isEmpty()) {
-            $output .= '<hr>
-                        <div class="text-center">
-                            <h4><b>Giai đoạn</b></h4>
-                        </div>';
-
-            foreach ($stages as $key => $stage) {
-                $output .= '<div class="row">
-                                <p><b>'.$stage->tengiaidoan.':</b></p>
-                                <p class="pl-2">'.$stage->motagiaidoan.'</p>
+            $company = $product->company;
+    
+            $storage = $product->storage;
+    
+            $profile = $product->profile->hothanhvien . ' ' . $product->profile->tenthanhvien;
+    
+            $productcategory = $product->productcategory;
+    
+            $date = Carbon::createFromFormat('Y-m-d H:i:s', $product->created_at)->format('d-m-Y');
+    
+            $output = '<div class="row">
+                            <p><b>Công ty:</b></p>
+                            <p class="pl-2">'.$company->tencongty.'</p>
+                        </div>
+                        <div class="row">
+                            <p><b>Kho:</b></p>
+                            <p class="pl-2">'.$storage->tenkho.'</p>
+                        </div>
+                        <div class="row">
+                            <p><b>Người tạo:</b></p>
+                            <p class="pl-2">'.$profile.'</p>
+                        </div>
+                        <div class="row">
+                            <p><b>Hình ảnh:</b></p>
+                            <div class="col-md-12 text-center">
+                                <img src="'.$product->hinhanhsanpham.'" style="width:200px; height: 200px" class="pl-2">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <p><b>Hình ảnh chi tiết:</b></p>';
+                            
+            foreach ($product->image as $value) {
+                $output .= '<div class="col-md-12 text-center">
+                                <img src="'.$value->dulieuhinh.'" style="width:200px; height: 200px" class="m-2">
                             </div>';
-                foreach ($stage->stageInfo as $key => $item) {
-                    $output .= '<div class="row ml-3">
-                                    <p><b>'.$item->tencongviec.':</b></p>
-                                    <p class="pl-2">'.$item->motacongviec.'</p>
+            }  
+
+            $output .= '</div>
+                        <div class="row mt-3">
+                            <p><b>Thông tin:</b></p>
+                            <p class="pl-2">'.$product->thongtinsanpham.'</p>
+                        </div>
+                        <div class="row">
+                            <p><b>Xuất xứ:</b></p>
+                            <p class="pl-2">'.$product->xuatxu.'</p>
+                        </div>
+                        <div class="row">
+                            <p><b>Loại sản phẩm:</b></p>
+                            <p class="pl-2">'.$productcategory->tenloaisanpham.'</p>
+                        </div>
+                        <div class="row">
+                            <p><b>Chủng loại:</b></p>
+                            <p class="pl-2">'.$product->chungloaisanpham.'</p>
+                        </div>
+                        <div class="row">
+                            <p><b>Đơn giá:</b></p>
+                            <p class="pl-2">'.$product->dongiasanpham.'</p>
+                        </div>
+                        <div class="row">
+                            <p><b>Khối lượng:</b></p>
+                            <p class="pl-2">'.$product->khoiluongsanpham.'</p>
+                        </div>
+                        <div class="row">
+                            <p><b>Đơn vị tính:</b></p>
+                            <p class="pl-2">'.$product->donvitinhsanpham.'</p>
+                        </div>
+                        <div class="row">
+                            <p><b>Mã vạch:</b></p>
+                            <p class="pl-2">'.$product->mavachsanpham.'</p>
+                        </div>';
+    
+            $stages = $this->stage->where('idsanpham', $request->idProduct)->get();
+    
+            if (!$stages->isEmpty()) {
+                $output .= '<hr>
+                            <div class="text-center">
+                                <h4><b>Giai đoạn</b></h4>
+                            </div>';
+    
+                foreach ($stages as $key => $stage) {
+                    $output .= '<div class="row">
+                                    <p><b>'.$stage->tengiaidoan.':</b></p>
+                                    <p class="pl-2">'.$stage->motagiaidoan.'</p>
                                 </div>';
+                    foreach ($stage->stageInfo as $key => $item) {
+                        $output .= '<div class="row ml-3">
+                                        <p><b>'.$item->tencongviec.':</b></p>
+                                        <p class="pl-2">'.$item->motacongviec.'</p>
+                                    </div>';
+                    }
                 }
             }
+    
+            return response()->json([
+                'output' => $output,
+                'tensanpham' => $product->tensanpham,
+                'date' => $date
+            ]);            
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
-
-        return response()->json([
-            'output' => $output,
-            'tensanpham' => $product->tensanpham,
-            'date' => $date
-        ]);
     }
 }

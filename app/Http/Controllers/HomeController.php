@@ -23,10 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // if (auth()->user()->loaitaikhoan != 0) {
-        //     return view('admin.home');
-        //     // dd("Đây là trang admin");
-        // }
         return view('frontend.home');
     }
 }

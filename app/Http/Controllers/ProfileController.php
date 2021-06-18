@@ -13,13 +13,14 @@ use App\Models\Department;
 use App\Models\Field;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Models\UserRole;
 use App\Traits\StorageImageTrait;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
 {
@@ -46,215 +47,281 @@ class ProfileController extends Controller
     // Profile
     public function index()
     {
-        $profile = $this->profile->where('idtaikhoan', auth()->id())->first();
+        try {
+            $profile = $this->profile->where('idtaikhoan', auth()->id())->first();
 
-        $company = $this->company->find(auth()->user()->idcongty);
-
-        return view('admin.profile.index', compact('profile', 'company'));
+            $company = $this->company->FindOrFail(auth()->user()->idcongty);
+    
+            return view('admin.profile.index', compact('profile', 'company'));            
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function update(ProfileRequest $request, $id)
     {
-        $data = [
-            'hothanhvien' => $request->hothanhvien,
-            'tenthanhvien' => $request->tenthanhvien,
-            'gioitinhthanhvien' => $request->gioitinhthanhvien,
-            'namsinh' => $request->namsinh,
-            'diachi' => $request->diachi,
-            'dienthoai' => $request->dienthoai
-        ];
+        try {
+            DB::beginTransaction();
 
-        $this->profile->find($id)->update($data);
-
-        $user = $this->user->find(auth()->id());
-
-        // Nếu hinhanhthanhvien == Null
-        if(empty($user->profile->hinhanhthanhvien))
-        {
-            // Sex == Nam
-            if($user->profile->gioitinhthanhvien == 1)
+            $data = [
+                'hothanhvien' => $request->hothanhvien,
+                'tenthanhvien' => $request->tenthanhvien,
+                'gioitinhthanhvien' => $request->gioitinhthanhvien,
+                'namsinh' => $request->namsinh,
+                'diachi' => $request->diachi,
+                'dienthoai' => $request->dienthoai
+            ];
+    
+            $this->profile->FindOrFail($id)->update($data);
+    
+            $user = $this->user->FindOrFail(auth()->id());
+    
+            // Nếu hinhanhthanhvien == Null
+            if(empty($user->profile->hinhanhthanhvien))
             {
-                $image = "adminLTE/dist/img/avatar.png";
+                // Sex == Nam
+                if($user->profile->gioitinhthanhvien == 1)
+                {
+                    $image = "adminLTE/dist/img/avatar.png";
+                }
+                // Sex == Nữ
+                elseif($user->profile->gioitinhthanhvien == 2)
+                {
+                    $image = "adminLTE/dist/img/avatar2.png";
+                }
+                // Sex == Khác
+                else
+                {
+                    $image = "adminLTE/dist/img/AdminLTELogo.png";
+                }
+                $info = [
+                    'ho'       => $user->profile->hothanhvien,
+                    'name'     => $user->profile->tenthanhvien,
+                    'image'    => $image,
+                ];
             }
-            // Sex == Nữ
-            elseif($user->profile->gioitinhthanhvien == 2)
-            {
-                $image = "adminLTE/dist/img/avatar2.png";
-            }
-            // Sex == Khác
             else
             {
-                $image = "adminLTE/dist/img/AdminLTELogo.png";
+                $info = [
+                    'ho'       => $user->profile->hothanhvien,
+                    'name'     => $user->profile->tenthanhvien,
+                    'image'    => $user->profile->hinhanhthanhvien,
+                ];
             }
-            $info = [
-                'ho'       => $user->profile->hothanhvien,
-                'name'     => $user->profile->tenthanhvien,
-                'image'    => $image,
-            ];
-        }
-        else
-        {
-            $info = [
-                'ho'       => $user->profile->hothanhvien,
-                'name'     => $user->profile->tenthanhvien,
-                'image'    => $user->profile->hinhanhthanhvien,
-            ];
-        }
+    
+            session()->put('info', $info);
+    
+            if (auth()->user()->idcongty) {
+                return redirect()->route('profile.index');
+            }
 
-        session()->put('info', $info);
-
-        if (auth()->user()->idcongty) {
-            return redirect()->route('profile.index');
+            DB::commit();
+    
+            return redirect()->route('profile.company.create');            
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
-
-        return redirect()->route('profile.company.create');
     }
 
     public function changeAvatar(Request $request, $id)
     {
-        $validated = Validator::make($request->all(), [
-            'file' => 'bail|mimes:jpeg,jpg,png|dimensions:max_width=960, max_height=960|max:2048',
-        ], [
-            'file.mimes' => 'File ảnh phải là kiểu jpeg, jpg, png',
-            'file.dimensions' => 'Độ phân giải ảnh không vượt quá 960x960 pixel',
-            'file.max' => 'Kích thước ảnh không vượt quá 2MB',
-        ]);
-
-        if(!$validated->passes())
-        {
-            return response()->json([
-                'status' => 0,
-                'error' => $validated->errors(),
+        try {
+            $validated = Validator::make($request->all(), [
+                'file' => [
+                    'bail',
+                    'mimes:jpeg,jpg,png',
+                    Rule::dimensions()->maxWidth(2048)->maxHeight(2048)->ratio(1/1),
+                    'max:2048'
+                ],
+            ], [
+                'file.mimes' => 'File ảnh phải là kiểu jpeg, jpg, png',
+                'file.dimensions' => 'Ảnh đại diện phải có tỉ lệ 1:1 và độ phân giải không vượt quá 2048x2048 pixel',
+                'file.max' => 'Kích thước ảnh không vượt quá 2MB',
             ]);
-        }
+    
+            if(!$validated->passes())
+            {
+                return response()->json([
+                    'status' => 0,
+                    'error' => $validated->errors(),
+                ]);
+            }
+    
+            $dataUploadImage = $this->StorageUploadImage($request, 'file', 'profile');
+    
+            if (!empty($dataUploadImage)) {
+                DB::beginTransaction();
 
-        $dataUploadImage = $this->StorageUploadImage($request, 'file', 'profile');
+                $this->profile->FindOrFail($id)->update([
+                    'hinhanhthanhvien' => $dataUploadImage['file_path']
+                ]);
+    
+                $user = $this->user->FindOrFail(auth()->id());
+    
+                $info = [
+                    'ho'       => $user->profile->hothanhvien,
+                    'name'     => $user->profile->tenthanhvien,
+                    'image'    => $user->profile->hinhanhthanhvien,
+                ];
+    
+                session()->put('info', $info);
 
-        if (!empty($dataUploadImage)) {
-            $this->profile->find($id)->update([
-                'hinhanhthanhvien' => $dataUploadImage['file_path']
-            ]);
-
-            $user = $this->user->find(auth()->id());
-
-            $info = [
-                'ho'       => $user->profile->hothanhvien,
-                'name'     => $user->profile->tenthanhvien,
-                'image'    => $user->profile->hinhanhthanhvien,
-            ];
-
-            session()->put('info', $info);
-
-            return response([
-                'status' => 1,
-                'message' => 'success'
-            ], 200);
+                DB::commit();
+    
+                return response([
+                    'status' => 1,
+                    'message' => 'success'
+                ], 200);
+            }            
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
     }
 
     // Company
     public function index_company()
     {
-        $company = $this->company->find(auth()->user()->idcongty);
+        try {
+            $company = $this->company->FindOrFail(auth()->user()->idcongty);
 
-        $fields = $this->field->all();
-
-        $departments = $this->department->all();
-
-        return view('admin.profile.company.index', compact('company', 'fields', 'departments'));
+            $fields = $this->field->all();
+    
+            $departments = $this->department->all();
+    
+            return view('admin.profile.company.index', compact('company', 'fields', 'departments'));            
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function create_company()
     {
-        if (!auth()->user()->email_verified_at) {
-            return redirect()->route('dasboard.verify');
+        try {
+            if (!auth()->user()->email_verified_at) {
+                return redirect()->route('dasboard.verify');
+            }
+            elseif (auth()->user()->idcongty) {
+                return redirect()->route('profile.company.index');
+            }
+    
+            $fields = $this->field->all();
+    
+            $departments = $this->department->all();
+    
+            return view('admin.profile.company.add', compact('fields', 'departments'));            
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
-        elseif (auth()->user()->idcongty) {
-            return redirect()->route('profile.company.index');
-        }
-
-        $fields = $this->field->all();
-
-        $departments = $this->department->all();
-
-        return view('admin.profile.company.add', compact('fields', 'departments'));
     }
 
     public function store_company(CompanyRequest $request)
     {
-        $data = [
-            'idso' => $request->idso,
-            'idlinhvuc' => $request->idlinhvuc,
-            'tencongty' => $request->tencongty,
-            'diachicongty' => $request->diachicongty,
-            'emailcongty' => $request->emailcongty,
-            'dienthoaicongty' => $request->dienthoaicongty,
-            'faxcongty' => $request->faxcongty,
-            'webcongty' => $request->webcongty,
-            'sdkkdcongty' => $request->sdkkdcongty,
-            'ngaycapdkkdcongty' => $request->ngaycapdkkdcongty,
-            'noicapdkkdcongty' => $request->noicapdkkdcongty,
-            'masothuecongty' => $request->masothuecongty,
-            'ngaythanhlapcongty' => $request->ngaythanhlapcongty,
-        ];
+        try {
+            DB::beginTransaction();
 
-        $idcongty = $this->company->insertGetId($data);
+            $data = [
+                'idso' => $request->idso,
+                'idlinhvuc' => $request->idlinhvuc,
+                'tencongty' => $request->tencongty,
+                'diachicongty' => $request->diachicongty,
+                'emailcongty' => $request->emailcongty,
+                'dienthoaicongty' => $request->dienthoaicongty,
+                'faxcongty' => $request->faxcongty,
+                'webcongty' => $request->webcongty,
+                'sdkkdcongty' => $request->sdkkdcongty,
+                'ngaycapdkkdcongty' => $request->ngaycapdkkdcongty,
+                'noicapdkkdcongty' => $request->noicapdkkdcongty,
+                'masothuecongty' => $request->masothuecongty,
+                'ngaythanhlapcongty' => $request->ngaythanhlapcongty,
+            ];
+    
+            $idcongty = $this->company->insertGetId($data);
+    
+            $this->user->FindOrFail(auth()->id())->update([
+                'idcongty' => $idcongty,
+                'loaitaikhoan' => 1
+            ]);
+    
+            $role = $this->role->where('loaivaitro', 2)->first();
+    
+            UserRole::create([
+                'idtaikhoan' => auth()->id(),
+                'idvaitro' => $role->id,
+            ]);
+    
+            session()->put('idcongty', $idcongty);
 
-        $this->user->find(auth()->id())->update([
-            'idcongty' => $idcongty,
-            'loaitaikhoan' => 1
-        ]);
-
-        $role = $this->role->where('loaivaitro', 2)->first();
-
-        DB::table('taikhoan_vaitro')->insert([
-            'idtaikhoan' => auth()->id(),
-            'idvaitro' => $role->id,
-        ]);
-
-        session()->put('idcongty', $idcongty);
-
-        return redirect()->route('profile.index');
+            DB::commit();
+    
+            return redirect()->route('profile.index');            
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function update_company(CompanyRequest $request, $id)
     {
-        $data = [
-            'idso' => $request->idso,
-            'idlinhvuc' => $request->idlinhvuc,
-            'tencongty' => $request->tencongty,
-            'diachicongty' => $request->diachicongty,
-            'emailcongty' => $request->emailcongty,
-            'dienthoaicongty' => $request->dienthoaicongty,
-            'faxcongty' => $request->faxcongty,
-            'webcongty' => $request->webcongty,
-            'sdkkdcongty' => $request->sdkkdcongty,
-            'ngaycapdkkdcongty' => $request->ngaycapdkkdcongty,
-            'noicapdkkdcongty' => $request->noicapdkkdcongty,
-            'masothuecongty' => $request->masothuecongty,
-            'ngaythanhlapcongty' => $request->ngaythanhlapcongty,
-        ];
+        try {
+            DB::beginTransaction();
 
-        $this->company->find($id)->update($data);
+            $data = [
+                'idso' => $request->idso,
+                'idlinhvuc' => $request->idlinhvuc,
+                'tencongty' => $request->tencongty,
+                'diachicongty' => $request->diachicongty,
+                'emailcongty' => $request->emailcongty,
+                'dienthoaicongty' => $request->dienthoaicongty,
+                'faxcongty' => $request->faxcongty,
+                'webcongty' => $request->webcongty,
+                'sdkkdcongty' => $request->sdkkdcongty,
+                'ngaycapdkkdcongty' => $request->ngaycapdkkdcongty,
+                'noicapdkkdcongty' => $request->noicapdkkdcongty,
+                'masothuecongty' => $request->masothuecongty,
+                'ngaythanhlapcongty' => $request->ngaythanhlapcongty,
+            ];
+    
+            $this->company->FindOrFail($id)->update($data);
 
-        return redirect()->route('profile.company.index', ['id' => $id]);
+            DB::commit();
+    
+            return redirect()->route('profile.company.index', ['id' => $id]);            
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function delete_company($id)
     {
-        $this->company->find($id)->delete();
+        try {
+            DB::beginTransaction();
 
-        return redirect()->route('profile.index');
+            $this->company->FindOrFail($id)->delete();
+
+            DB::commit();
+
+            return redirect()->route('profile.index');           
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     // Account
     public function index_account()
     {
-        $users = $this->user->where('idcongty', auth()->user()->idcongty)->get();
+        try {
+            $users = $this->user->where('idcongty', auth()->user()->idcongty)->get();
 
-        $roles  = $this->role->where('idcongty', auth()->user()->idcongty)->get();
-
-        return view('admin.profile.account.index', compact('users', 'roles'));
+            $roles  = $this->role->where('idcongty', auth()->user()->idcongty)->get();
+    
+            return view('admin.profile.account.index', compact('users', 'roles'));            
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function store_account(AccountRequest $request)
@@ -281,24 +348,25 @@ class ProfileController extends Controller
             DB::commit();
 
             return redirect()->route('profile.account.index');
-
         } catch (\Exception $exception) {
-
             DB::rollBack();
-
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
     }
 
     public function edit_account($id)
     {
-        $user     = $this->user->find($id);
+        try {
+            $user     = $this->user->FindOrFail($id);
 
-        $roles    = $this->role->where('idcongty', auth()->user()->idcongty)->get();
-
-        $roleUser = $user->roles;
-
-        return view('admin.profile.account.edit', compact('user', 'roles', 'roleUser'));
+            $roles    = $this->role->where('idcongty', auth()->user()->idcongty)->get();
+    
+            $roleUser = $user->roles;
+    
+            return view('admin.profile.account.edit', compact('user', 'roles', 'roleUser'));            
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function update_account(Request $request, $id)
@@ -308,7 +376,7 @@ class ProfileController extends Controller
 
             if(!empty($request->password))
             {
-                $this->user->find($id)->update([
+                $this->user->FindOrFail($id)->update([
                     'password' => bcrypt($request->password)
                 ]);
             }
@@ -323,90 +391,135 @@ class ProfileController extends Controller
             DB::commit();
 
             return redirect()->route('profile.account.index');
-
         } catch (\Exception $exception) {
-
             DB::rollBack();
-
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
     }
 
     public function delete_account($id)
     {
-        $this->user->find($id)->delete();
+        try {
+            DB::beginTransaction();
 
-        return redirect()->route('profile.account.index');
+            $this->user->FindOrFail($id)->delete();
+
+            DB::commit();
+
+            return redirect()->route('profile.account.index');            
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function random_password()
     {
-        $password = Str::random(10);
+        try {
+            $password = Str::random(10);
 
-        return response()->json($password);
+            return response()->json($password);            
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     // Role
     public function index_role()
     {
-        $roles = $this->role->where('idcongty', auth()->user()->idcongty)->get();
+        try {
+            $roles = $this->role->where('idcongty', auth()->user()->idcongty)->get();
 
-        $permissionParents = $this->permission->where('parent_id', 0)->where('trangthai', 1)->get();
-
-        return view('admin.profile.role.index', compact('roles', 'permissionParents'));
+            $permissionParents = $this->permission->where('parent_id', 0)->where('trangthai', 1)->get();
+    
+            return view('admin.profile.role.index', compact('roles', 'permissionParents'));            
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function store_role(RoleRequest $request)
     {
-        $role = $this->role->create([
-            'idcongty'   => auth()->user()->idcongty,
-            'tenvaitro'  => $request->tenvaitro,
-            'motavaitro' => $request->motavaitro,
-        ]);
+        try {
+            DB::beginTransaction();
 
-        // insert data to table vaitro_quyen
-        $role->permissions()->attach($request->idquyen);
+            $role = $this->role->create([
+                'idcongty'   => auth()->user()->idcongty,
+                'tenvaitro'  => $request->tenvaitro,
+                'motavaitro' => $request->motavaitro,
+            ]);
+    
+            // insert data to table vaitro_quyen
+            $role->permissions()->attach($request->idquyen);
 
-        return redirect()->route('profile.role.index');
+            DB::commit();
+    
+            return redirect()->route('profile.role.index');            
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function edit_role($id)
     {
-        $role = $this->role->find($id);
+        try {
+            $role = $this->role->FindOrFail($id);
 
-        $roles = $this->role->all();
-
-        $permissionParents = $this->permission
-                            ->where('parent_id', 0)
-                            ->where('trangthai', 1)
-                            ->get();
-        $rolePermissions = $role->permissions;
-
-        return view('admin.profile.role.edit', compact('role', 'roles', 'permissionParents', 'rolePermissions'));
+            $roles = $this->role->all();
+    
+            $permissionParents = $this->permission
+                                ->where('parent_id', 0)
+                                ->where('trangthai', 1)
+                                ->get();
+            $rolePermissions = $role->permissions;
+    
+            return view('admin.profile.role.edit', compact('role', 'roles', 'permissionParents', 'rolePermissions'));            
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function update_role(RoleRequest $request, $id)
     {
-        $this->role->find($id)->update([
-            'tenvaitro'  => $request->tenvaitro,
-            'motavaitro' => $request->motavaitro,
-        ]);
+        try {
+            DB::beginTransaction();
 
-        $role = $this->role->find($id);
+            $this->role->FindOrFail($id)->update([
+                'tenvaitro'  => $request->tenvaitro,
+                'motavaitro' => $request->motavaitro,
+            ]);
+    
+            $role = $this->role->FindOrFail($id);
+    
+            $role->permissions()->sync($request->idquyen);
 
-        $role->permissions()->sync($request->idquyen);
-
-        return redirect()->route('profile.role.index');
+            DB::commit();
+    
+            return redirect()->route('profile.role.index');            
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function delete_role($id)
     {
-        $role = $this->role->find($id);
+        try {
+            DB::beginTransaction();
 
-        $role->delete();
+            $role = $this->role->FindOrFail($id);
 
-        $role->permissions()->detach();
+            $role->delete();
+    
+            $role->permissions()->detach();
 
-        return redirect()->route('profile.role.index');
+            DB::commit();
+    
+            return redirect()->route('profile.role.index');            
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 }

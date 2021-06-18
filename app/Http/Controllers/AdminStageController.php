@@ -9,6 +9,8 @@ use App\Models\Stage;
 use App\Models\StageInfo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class AdminStageController extends Controller
@@ -26,183 +28,267 @@ class AdminStageController extends Controller
 
     public function index($product_id)
     {
-        $product = $this->product->find($product_id);
+        try {
+            $product = $this->product->FindOrFail($product_id);
 
-        $stages  = $this->stage->where('idsanpham', $product_id)->get();
-
-        return view('admin.admin-stage.index', compact('product_id', 'stages', 'product'));
+            $stages  = $this->stage->where('idsanpham', $product_id)->get();
+    
+            return view('admin.admin-stage.index', compact('product_id', 'stages', 'product'));
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function store(StageRequest $request, $product_id)
     {
-        $this->stage->create([
-            'idsanpham' => $product_id,
-            'idtaikhoan' => auth()->id(),
-            'tengiaidoan' => $request->tengiaidoan,
-            'motagiaidoan' => $request->motagiaidoan,
-        ]);
+        try {
+            DB::beginTransaction();
 
-        return back();
+            $this->stage->create([
+                'idsanpham' => $product_id,
+                'idtaikhoan' => auth()->id(),
+                'tengiaidoan' => $request->tengiaidoan,
+                'motagiaidoan' => $request->motagiaidoan,
+            ]);
+    
+            DB::commit();
+        
+            return back();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function edit($id, $product_id)
     {
-        $stage = $this->stage->find($id);
+        try {
+            $stage = $this->stage->FindOrFail($id);
 
-        return view('admin.admin-stage.edit', compact('stage', 'product_id'));
+            return view('admin.admin-stage.edit', compact('stage', 'product_id'));
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
+        
     }
 
     public function update(StageRequest $request, $id)
     {
         $validated = $request->validated();
 
-        $this->stage->find($id)->update([
-            'tengiaidoan' => $request->tengiaidoan,
-            'motagiaidoan' => $request->motagiaidoan
-        ]);
+        try {
+            DB::beginTransaction();
 
-        return redirect()->route('admin.stage.index', ['product_id' => $request->product_id]);
+            $this->stage->FindOrFail($id)->update([
+                'tengiaidoan' => $request->tengiaidoan,
+                'motagiaidoan' => $request->motagiaidoan
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('admin.stage.index', ['product_id' => $request->product_id]);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function delete($id)
     {
-        $this->stage->find($id)->delete();
-
-        return back();
+        try {
+            DB::beginTransaction();
+        
+            $this->stage->FindOrFail($id)->delete();
+        
+            DB::commit();
+        
+            return back();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function stage_info_index($stage_id, $product_id)
     {
-        $stage = $this->stage->find($stage_id);
+        try {
+            $stage = $this->stage->FindOrFail($stage_id);
 
-        $stageInfos = $this->stageInfo->where('idgiaidoan', $stage_id)->get();
-
-        $arr = [];
-
-        foreach ($stageInfos as $key => $stageInfo) {
-            $newDatethoigianbatdau = Carbon::create($stageInfo->thoigianbatdau);
-            $newDatethoigianhoanthanh = Carbon::create($stageInfo->thoigianhoanthanh);
-            if ($newDatethoigianbatdau->addDays($stageInfo->thoigiandukien) >= $newDatethoigianhoanthanh) {
-                $check = "Sớm";
+            $stageInfos = $this->stageInfo->where('idgiaidoan', $stage_id)->get();
+    
+            $arr = [];
+    
+            foreach ($stageInfos as $key => $stageInfo) {
+                $newDatethoigianbatdau = Carbon::create($stageInfo->thoigianbatdau);
+                $newDatethoigianhoanthanh = Carbon::create($stageInfo->thoigianhoanthanh);
+                if ($newDatethoigianbatdau->addDays($stageInfo->thoigiandukien) >= $newDatethoigianhoanthanh) {
+                    $check = "Sớm";
+                }
+                else
+                {
+                    $check = "Trễ";
+                }
+                $arr += [
+                    $key => [
+                        'id' => $stageInfo->id,
+                        'idgiaidoan' => $stageInfo->idgiaidoan,
+                        'tencongviec' => $stageInfo->tencongviec,
+                        'motacongviec' => $stageInfo->motacongviec,
+                        'thoigianbatdau' => $stageInfo->thoigianbatdau,
+                        'thoigiandukien' => $stageInfo->thoigiandukien,
+                        'thoigianhoanthanh' => $stageInfo->thoigianhoanthanh,
+                        'trehan' => $stageInfo->trehan,
+                        'check' => $check
+                    ],
+                ];
             }
-            else
-            {
-                $check = "Trễ";
-            }
-            $arr += [
-                $key => [
-                    'id' => $stageInfo->id,
-                    'idgiaidoan' => $stageInfo->idgiaidoan,
-                    'tencongviec' => $stageInfo->tencongviec,
-                    'motacongviec' => $stageInfo->motacongviec,
-                    'thoigianbatdau' => $stageInfo->thoigianbatdau,
-                    'thoigiandukien' => $stageInfo->thoigiandukien,
-                    'thoigianhoanthanh' => $stageInfo->thoigianhoanthanh,
-                    'trehan' => $stageInfo->trehan,
-                    'check' => $check
-                ],
-            ];
+    
+            return view('admin.admin-stage.index-stage-info', compact('stage', 'arr', 'product_id'));
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
-
-        return view('admin.admin-stage.index-stage-info', compact('stage', 'arr', 'product_id'));
     }
 
     public function stage_info_add($stage_id, $product_id)
     {
-        $stage = $this->stage->find($stage_id);
+        try {
+            $stage = $this->stage->FindOrFail($stage_id);
 
-        return view('admin.admin-stage.add-stage-info', compact('stage', 'product_id'));
+            return view('admin.admin-stage.add-stage-info', compact('stage', 'product_id'));
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function stage_info_store(Request $request, $stage_id, $product_id)
     {
-        $count = count($request->tencongviec);
+        try {
+            $count = count($request->tencongviec);
 
-        $validated = Validator::make($request->all(), [
-            'tencongviec.*' => 'bail|required|max:255',
-            'thoigianbatdau.*' => 'required',
-            'thoigiandukien.*' => 'required|numeric',
-            'thoigianhoanthanh.*' => 'nullable|date_format:"Y-m-d"|after_or_equal:thoigianbatdau.*',
-            'motacongviec.*' => 'bail|required|min:10',
-        ], [
-            'tencongviec.*.required' => 'Tên không được để trống',
-            'tencongviec.*.max' => 'Tên không được vượt quá 255 ký tự',
-            'thoigianbatdau.*.required' => 'Thời gian bắt đầu không được để trống',
-            'thoigiandukien.*.required' => 'Thời gian dự kiến không được để trống',
-            'thoigiandukien.*.numeric' => 'Thời gian dự kiến phải là kiểu số nguyên',
-            'thoigianhoanthanh.*.date_format' => 'Thời gian hoàn thành phải có kiểu Y-m-d',
-            'thoigianhoanthanh.*.after_or_equal' => 'Thời gian hoàn thành không được sớm hơn thời gian bắt đầu',
-            'motacongviec.*.required' => 'Mô tả công việc không được để trống',
-            'motacongviec.*.min' => 'Mô tả công việc ít nhất 10 ký tự',
-        ]);
-
-        if(!$validated->passes())
-        {
-            // array_push($validated_arr, $validated->errors());
-            return response()->json([
-                'status' => 0,
-                'error' => $validated->errors(),
+            $validated = Validator::make($request->all(), [
+                'tencongviec.*' => 'bail|required|max:255',
+                'thoigianbatdau.*' => 'required',
+                'thoigiandukien.*' => 'required|numeric',
+                'thoigianhoanthanh.*' => 'nullable|date_format:"Y-m-d"|after_or_equal:thoigianbatdau.*',
+                'motacongviec.*' => 'bail|required|min:10',
+            ], [
+                'tencongviec.*.required' => 'Tên không được để trống',
+                'tencongviec.*.max' => 'Tên không được vượt quá 255 ký tự',
+                'thoigianbatdau.*.required' => 'Thời gian bắt đầu không được để trống',
+                'thoigiandukien.*.required' => 'Thời gian dự kiến không được để trống',
+                'thoigiandukien.*.numeric' => 'Thời gian dự kiến phải là kiểu số nguyên',
+                'thoigianhoanthanh.*.date_format' => 'Thời gian hoàn thành phải có kiểu Y-m-d',
+                'thoigianhoanthanh.*.after_or_equal' => 'Thời gian hoàn thành không được sớm hơn thời gian bắt đầu',
+                'motacongviec.*.required' => 'Mô tả công việc không được để trống',
+                'motacongviec.*.min' => 'Mô tả công việc ít nhất 10 ký tự',
             ]);
-        }
-        else
-        {
-            for($i = 0; $i < $count; $i++)
+
+            if(!$validated->passes())
             {
-                $this->stageInfo->create([
-                    'idgiaidoan'        => $stage_id,
-                    'tencongviec'       => $request->tencongviec[$i],
-                    'motacongviec'      => $request->motacongviec[$i],
-                    'thoigianbatdau'    => $request->thoigianbatdau[$i],
-                    'thoigiandukien'    => $request->thoigiandukien[$i],
-                    'thoigianhoanthanh' => $request->thoigianhoanthanh[$i],
-                    'trehan'            => $request->trehan[$i]
+                return response()->json([
+                    'status' => 0,
+                    'error' => $validated->errors(),
                 ]);
             }
-            return response()->json([
-                'status' => 1,
-                'url' => route('admin.stage-info.index', ['stage_id' => $stage_id, 'product_id' => $product_id])
-            ]);
+            else
+            {
+                DB::beginTransaction();
+
+                for($i = 0; $i < $count; $i++)
+                {
+                    $this->stageInfo->create([
+                        'idgiaidoan'        => $stage_id,
+                        'tencongviec'       => $request->tencongviec[$i],
+                        'motacongviec'      => $request->motacongviec[$i],
+                        'thoigianbatdau'    => $request->thoigianbatdau[$i],
+                        'thoigiandukien'    => $request->thoigiandukien[$i],
+                        'thoigianhoanthanh' => $request->thoigianhoanthanh[$i],
+                        'trehan'            => $request->trehan[$i]
+                    ]);
+                }
+
+                DB::commit();
+                
+                return response()->json([
+                    'status' => 1,
+                    'url' => route('admin.stage-info.index', ['stage_id' => $stage_id, 'product_id' => $product_id])
+                ]);
+            }
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
     }
 
     public function stage_info_edit($stageInfo_id, $stage_id, $product_id)
     {
-        $stageInfo = $this->stageInfo->find($stageInfo_id);
+        try {
+            DB::beginTransaction();
 
-        return view('admin.admin-stage.edit-stage-info', compact('stageInfo', 'stage_id', 'product_id'));
+            $stageInfo = $this->stageInfo->FindOrFail($stageInfo_id);
+
+            DB::commit();
+        
+            return view('admin.admin-stage.edit-stage-info', compact('stageInfo', 'stage_id', 'product_id'));
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function stage_info_update(StageInfoRequest $request, $stageInfo_id, $stage_id, $product_id)
     {
-        $this->stageInfo->find($stageInfo_id)->update([
-            'tencongviec'       => $request->tencongviec,
-            'motacongviec'      => $request->motacongviec,
-            'thoigianbatdau'    => $request->thoigianbatdau,
-            'thoigiandukien'    => $request->thoigiandukien,
-            'thoigianhoanthanh' => $request->thoigianhoanthanh,
-            'trehan'            => $request->trehan,
-        ]);
+        try {
+            DB::beginTransaction();
 
-        return redirect()->route('admin.stage-info.index', ['stage_id' => $stage_id, 'product_id' => $product_id]);
+            $this->stageInfo->FindOrFail($stageInfo_id)->update([
+                'tencongviec'       => $request->tencongviec,
+                'motacongviec'      => $request->motacongviec,
+                'thoigianbatdau'    => $request->thoigianbatdau,
+                'thoigiandukien'    => $request->thoigiandukien,
+                'thoigianhoanthanh' => $request->thoigianhoanthanh,
+                'trehan'            => $request->trehan,
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('admin.stage-info.index', ['stage_id' => $stage_id, 'product_id' => $product_id]);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function stage_info_delete($stageInfo_id, $stage_id, $product_id)
     {
-        $this->stageInfo->find($stageInfo_id)->delete();
+        try {
+            DB::beginTransaction();
 
-        return redirect()->route('admin.stage-info.index', ['stage_id' => $stage_id, 'product_id' => $product_id]);
+            $this->stageInfo->FindOrFail ($stageInfo_id)->delete();
+
+            DB::commit();
+            
+            return redirect()->route('admin.stage-info.index', ['stage_id' => $stage_id, 'product_id' => $product_id]);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function stage_info_count(Request $request)
     {
-        $stages = $this->stageInfo->where('idgiaidoan', $request->stage_id)->get();
-        $count = count($stages);
-        $arr = array();
-        $arr = [
-            'count'   => $count
-        ];
+        try {
+            $stages = $this->stageInfo->where('idgiaidoan', $request->stage_id)->get();
+            $count = count($stages);
+            $arr = array();
+            $arr = [
+                'count'   => $count
+            ];
 
-        return response()->json($count);
+            return response()->json($count);
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function stage_info_render_add(Request $request)

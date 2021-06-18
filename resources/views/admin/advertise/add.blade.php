@@ -11,8 +11,8 @@
             margin-top: 5px;
             padding: 3px 5px;
         }
-        .custome{
-            min-width: 150px;
+        .form-check-input{
+            transform: scale(1.5, 1.5);
         }
     </style>
 @endsection
@@ -147,7 +147,7 @@
                     delay: { "show": 100, "hide": 100 }
                 });
                 
-            })
+            });
         });
     </script>
 @endsection

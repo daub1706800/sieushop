@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RoleRequest;
 use App\Models\Role;
 use App\Models\Permission;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class RoleController extends Controller
 {
@@ -20,61 +21,95 @@ class RoleController extends Controller
 
     public function index()
     {
-        $roles = $this->role->all();
+        try {
+            $roles = $this->role->all();
 
-        $permissionParents = $this->permission->where('parent_id', 0)->get();
-
-        return view('admin.role.index', compact('roles', 'permissionParents'));
+            $permissionParents = $this->permission->where('parent_id', 0)->get();
+    
+            return view('admin.role.index', compact('roles', 'permissionParents'));            
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function store(RoleRequest $request)
     {
-        $role = $this->role->create([
-            'tenvaitro'  => $request->tenvaitro,
-            'motavaitro' => $request->motavaitro,
-        ]);
+        try {
+            DB::beginTransaction();
 
-        // insert data to table vaitro_quyen
-        $role->permissions()->attach($request->idquyen);
+            $role = $this->role->create([
+                'tenvaitro'  => $request->tenvaitro,
+                'motavaitro' => $request->motavaitro,
+            ]);
+    
+            // insert data to table vaitro_quyen
+            $role->permissions()->attach($request->idquyen);
 
-        return redirect()->route('role.index');
+            DB::commit();
+    
+            return redirect()->route('role.index');            
+        } catch (\Exception $exception) {
+            DB::rollback();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function edit($id)
     {
-        $role = $this->role->find($id);
+        try {
+            $role = $this->role->FindOrFail($id);
 
-        $roles = $this->role->all();
-
-        $permissionParents = $this->permission->where('parent_id', 0)->get();
-
-        $rolePermissions = $role->permissions;
-
-        return view('admin.role.edit', compact('role', 'roles', 'permissionParents', 'rolePermissions'));
+            $roles = $this->role->all();
+    
+            $permissionParents = $this->permission->where('parent_id', 0)->get();
+    
+            $rolePermissions = $role->permissions;
+    
+            return view('admin.role.edit', compact('role', 'roles', 'permissionParents', 'rolePermissions'));            
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function update(RoleRequest $request, $id)
     {
-        $this->role->find($id)->update([
-            'tenvaitro'  => $request->tenvaitro,
-            'motavaitro' => $request->motavaitro,
-        ]);
+        try {
+            DB::beginTransaction();
+            $this->role->FindOrFail($id)->update([
+                'tenvaitro'  => $request->tenvaitro,
+                'motavaitro' => $request->motavaitro,
+            ]);
+    
+            $role = $this->role->FindOrFail($id);
+    
+            $role->permissions()->sync($request->idquyen);
 
-        $role = $this->role->find($id);
-
-        $role->permissions()->sync($request->idquyen);
-
-        return redirect()->route('role.index');
+            DB::commit();
+    
+            return redirect()->route('role.index');            
+        } catch (\Exception $exception) {
+            DB::rollback();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function delete($id)
     {
-        $role = $this->role->find($id);
+        try {
+            DB::beginTransaction();
 
-        $role->delete();
-        
-        $role->permissions()->detach();
+            $role = $this->role->FindOrFail($id);
 
-        return redirect()->route('role.index');
+            $role->delete();
+            
+            $role->permissions()->detach();
+
+            DB::commit();
+    
+            return redirect()->route('role.index');            
+        } catch (\Exception $exception) {
+            DB::rollback();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 }

@@ -22,13 +22,13 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <form action="{{route('department.update', ['id' => $department->id])}}" method="post">
+                <form action="{{ route('department.update', ['id' => $department->id]) }}" method="post">
                     @csrf
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Sở ngành *</label>
                             <input type="text" class="form-control @error('tenso') is-invalid @enderror"
-                                    name="tenso" value="{{$department->tenso}}">
+                                    name="tenso" value="{{ old('tenso', $department->tenso) }}">
                             @error('tenso')
                             <div class="alert alert-danger alert-custom">{{ $message }}</div>
                             @enderror
@@ -36,7 +36,7 @@
                         <div class="form-group">
                             <label>Địa chỉ *</label>
                             <input type="text" class="form-control @error('diachiso') is-invalid @enderror"
-                                    name="diachiso" value="{{$department->diachiso}}">
+                                    name="diachiso" value="{{ old('diachiso', $department->diachiso) }}">
                             @error('diachiso')
                             <div class="alert alert-danger alert-custom">{{ $message }}</div>
                             @enderror
@@ -44,7 +44,7 @@
                         <div class="form-group">
                             <label>Email *</label>
                             <input type="text" class="form-control @error('emailso') is-invalid @enderror"
-                                    name="emailso" value="{{$department->emailso}}">
+                                    name="emailso" value="{{ old('emailso', $department->emailso) }}">
                             @error('emailso')
                             <div class="alert alert-danger alert-custom">{{ $message }}</div>
                             @enderror
@@ -53,7 +53,7 @@
                         <div class="form-group">
                             <label>Điện thoại</label>
                             <input type="text" class="form-control @error('dienthoaiso') is-invalid @enderror"
-                                    name="dienthoaiso" value="{{$department->dienthoaiso}}">
+                                    name="dienthoaiso" value="{{ old('dienthoaiso', $department->dienthoaiso) }}">
                             @error('dienthoaiso')
                             <div class="alert alert-danger alert-custom">{{ $message }}</div>
                             @enderror
@@ -61,7 +61,7 @@
                         <div class="form-group">
                             <label>Fax</label>
                             <input type="text" class="form-control @error('faxso') is-invalid @enderror"
-                                    name="faxso" value="{{$department->faxso}}">
+                                    name="faxso" value="{{ old('faxso', $department->faxso) }}">
                             @error('faxso')
                             <div class="alert alert-danger alert-custom">{{ $message }}</div>
                             @enderror
@@ -69,7 +69,7 @@
                         <div class="form-group">
                             <label>Website *</label>
                             <input type="text" class="form-control @error('webso') is-invalid @enderror"
-                                    name="webso" value="{{$department->webso}}">
+                                    name="webso" value="{{ old('webso', $department->webso) }}">
                             @error('webso')
                             <div class="alert alert-danger alert-custom">{{ $message }}</div>
                             @enderror

@@ -7,6 +7,8 @@ use App\Models\Profile;
 use App\Models\Storage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class StorageController extends Controller
 {
@@ -21,76 +23,113 @@ class StorageController extends Controller
 
     public function index()
     {
-        $storages = $this->storage->where('idcongty', auth()->user()->idcongty)->get();
-        return view('admin.storage.index', compact('storages'));
+        try {
+            $storages = $this->storage->where('idcongty', auth()->user()->idcongty)->get();
+        
+            return view('admin.storage.index', compact('storages'));            
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
-
-    // public function add()
-    // {
-    //     return view('admin.storage.add');
-    // }
 
     public function store(StorageRequest $request)
     {
-        $data = [
-            'idcongty'      => auth()->user()->idcongty,
-            'idtaikhoan'    => auth()->id(),
-            'tenkho'        => $request->tenkho,
-            'diachikho'     => $request->diachikho,
-            'taitrongkho'   => $request->taitrongkho,
-            'dientichkho'   => $request->dientichkho,
-            'sonhanvienkho' => $request->sonhanvienkho,
-            'ghichukho'     => $request->ghichukho,
-        ];
+        try {
+            DB::beginTransaction();
 
-        $this->storage->create($data);
+            $data = [
+                'idcongty'      => auth()->user()->idcongty,
+                'idtaikhoan'    => auth()->id(),
+                'tenkho'        => $request->tenkho,
+                'diachikho'     => $request->diachikho,
+                'taitrongkho'   => $request->taitrongkho,
+                'dientichkho'   => $request->dientichkho,
+                'sonhanvienkho' => $request->sonhanvienkho,
+                'ghichukho'     => $request->ghichukho,
+            ];
+    
+            $this->storage->create($data);
 
-        return redirect()->route('storage.index');
+            DB::commit();
+    
+            return redirect()->route('storage.index');            
+        } catch (\Exception $exception) {
+            DB::rollback();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function edit($id)
     {
-        $storage = $this->storage->find($id);
-        return view('admin.storage.edit', compact('storage'));
+        try {
+            $storage = $this->storage->FindOrFail($id);
+        
+            return view('admin.storage.edit', compact('storage'));            
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function update(StorageRequest $request, $id)
     {
-        $data = [
-            'tenkho'        => $request->tenkho,
-            'diachikho'     => $request->diachikho,
-            'taitrongkho'   => $request->taitrongkho,
-            'dientichkho'   => $request->dientichkho,
-            'sonhanvienkho' => $request->sonhanvienkho,
-            'ghichukho'     => $request->ghichukho,
-        ];
+        try {
+            DB::beginTransaction();
 
-        $this->storage->find($id)->update($data);
+            $data = [
+                'tenkho'        => $request->tenkho,
+                'diachikho'     => $request->diachikho,
+                'taitrongkho'   => $request->taitrongkho,
+                'dientichkho'   => $request->dientichkho,
+                'sonhanvienkho' => $request->sonhanvienkho,
+                'ghichukho'     => $request->ghichukho,
+            ];
+    
+            $this->storage->FindOrFail($id)->update($data);
 
-        return redirect()->route('storage.index');
+            DB::commit();
+    
+            return redirect()->route('storage.index');           
+        } catch (\Exception $exception) {
+            DB::rollback();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function delete($id)
     {
-        $this->storage->find($id)->delete();
-        return redirect()->route('storage.index');
+        try {
+            DB::beginTransaction();
+
+            $this->storage->FindOrFail($id)->delete();
+
+            DB::commit();
+        
+            return redirect()->route('storage.index');            
+        } catch (\Exception $exception) {
+            DB::rollback();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function view(Request $request)
     {
-        $storage = $this->storage->find($request->idStorage);
+        try {
+            $storage = $this->storage->FindOrFail($request->idStorage);
 
-        $company = $storage->company->tencongty;
-
-        $profile = $this->profile->where('idtaikhoan', auth()->id())->first();
-
-        $date = Carbon::createFromFormat('Y-m-d H:i:s',$storage->created_at)->format('d-m-Y');
-
-        return response()->json([
-            'storage' => $storage,
-            'company' => $company,
-            'author' => $profile->hothanhvien . ' ' . $profile->tenthanhvien,
-            'date' => $date
-        ]);
+            $company = $storage->company->tencongty;
+    
+            $profile = $this->profile->where('idtaikhoan', auth()->id())->first();
+    
+            $date = Carbon::createFromFormat('Y-m-d H:i:s',$storage->created_at)->format('d-m-Y');
+    
+            return response()->json([
+                'storage' => $storage,
+                'company' => $company,
+                'author' => $profile->hothanhvien . ' ' . $profile->tenthanhvien,
+                'date' => $date
+            ]);            
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 }

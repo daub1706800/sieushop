@@ -26,6 +26,7 @@ class CreateVideotintucTable extends Migration
             $table->smallInteger('loaivideotintuc')->default(0)->comment('1-nổi bật, 0-không nổi bật');
             $table->smallInteger('duyetvideotintuc')->default(0)->comment('1-đã duyệt, 0-chưa duyệt');
             $table->smallInteger('xuatbanvideotintuc')->default(0)->comment('1-xuất bản, 0-chưa xuất bản');
+            $table->timestamp('ngayxuatban')->nullable();
             $table->smallInteger('trangthaithuhoi')->default(0)->comment('1-có, 0-không');
             $table->timestamps();
         });

@@ -22,12 +22,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                <form action="{{route('field.update', ['id' => $field->id])}}" method="post">
+                <form action="{{ route('field.update', ['id' => $field->id]) }}" method="post">
                     @csrf
                     <div class="form-group">
                         <label>Lĩnh vực *</label>
                         <input type="text" class="form-control @error('tenlinhvuc') is-invalid @enderror"
-                                name="tenlinhvuc" value="{{$field->tenlinhvuc}}" placeholder="Tên lĩnh vực">
+                                name="tenlinhvuc" value="{{ old('tenlinhvuc', $field->tenlinhvuc) }}" placeholder="Tên lĩnh vực">
                         @error('tenlinhvuc')
                         <div class="alert alert-danger alert-custom">{{ $message }}</div>
                         @enderror
@@ -35,7 +35,7 @@
                     <div class="form-group">
                         <label>Mô tả *</label>
                         <textarea class="form-control @error('motalinhvuc') is-invalid @enderror"
-                            name="motalinhvuc" rows="3" placeholder="Mô tả lĩnh vực">{{$field->motalinhvuc}}</textarea>
+                            name="motalinhvuc" rows="3" placeholder="Mô tả lĩnh vực">{{ old('motalinhvuc', $field->motalinhvuc) }}</textarea>
                         @error('motalinhvuc')
                         <div class="alert alert-danger alert-custom">{{ $message }}</div>
                         @enderror

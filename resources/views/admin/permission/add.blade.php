@@ -45,20 +45,12 @@
                         <div class="col-md-12">
                             <h5><b>Tạo quyền cho chức năng</b></h5>
                         </div>
-                        <form action="{{route('permission.store')}}" method="post">
+                        <form action="{{ route('permission.store') }}" method="post">
                             @csrf
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Tên chức năng</label>
-                                    <div id="show-permission">
-                                        {{-- <select class="form-control module-new-select" name="module_parent[]">
-                                            @foreach ( config('permissions.module_parent') as $itemParent )
-                                            <option class="check-permission" value="{{ $itemParent['name'] }}-{{ $itemParent['display'] }}">
-                                                {{ $itemParent['display'] }}
-                                            </option>
-                                            @endforeach
-                                        </select> --}}
-                                    </div>
+                                    <div id="show-permission"></div>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -87,12 +79,12 @@
                             <h5><b>Thêm quyền cho chức năng</b></h5>
                         </div>
                         <form id="changeform" method="post">
-                            <input type="hidden" id="csrf" value="{{csrf_token()}}">
+                            <input type="hidden" id="csrf" value="{{ csrf_token() }}">
                             <div class="form-group col-md-12">
                                 <label>Tên chức năng</label>
                                 <select class="form-control module-old-select" name="module_parent"
                                         id="module_parent">
-                                    @if ($updatePermissions != "")
+                                    @if ( $updatePermissions != "" )
                                     @foreach ( $updatePermissions as $itemParent )
                                     <option value="{{ $itemParent->tenquyen }}-{{ $itemParent->id }}">
                                         {{ $itemParent->motaquyen }}
@@ -137,7 +129,7 @@
                                 <thead>
                                     <tr>
                                         <th class="text-right text-white bg-success">Chức năng</th>
-                                        @for ($i = 0; $i < count(config('permissions.module_childrent')); $i++)
+                                        @for ( $i = 0; $i < count(config('permissions.module_childrent')); $i++ )
                                         <th  class="text-center text-white bg-success"></th>
                                         @endfor
                                     </tr>
@@ -153,7 +145,7 @@
                                         </td>
                                         @foreach ( $permission->permissionChildrent as $key => $item )
                                         <td class="text-center"><a href="#">{{ $item->motaquyen }}</a></td>
-                                        @if ($key + 1 == count($permission->permissionChildrent) && $key < count(config('permissions.module_childrent'))-1)
+                                        @if ($key + 1 == count( $permission->permissionChildrent ) && $key < count(config('permissions.module_childrent'))-1)
                                         <td></td>
                                         <td></td>
                                         @endif
@@ -177,8 +169,7 @@
 @section('js')
     <!-- Select2 Plugin -->
     <script src="{{ asset('vendor/js/select2.js') }}"></script>
-    {{-- <script src="{{ asset('vendor/bootstrap-notify-master/bootstrap-notify.min.js') }}"></script> --}}
-    <script src="{{ asset('vendor/bootstrap-notify-master/bootstrap-notify.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function(){
             $(function(){
@@ -241,6 +232,18 @@
             });
             /* ! Check permission */
 
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1000,
+                timerProgressBar: false,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+
             /* Change status permission */
             $('.trangthaiquyen').on('change', function(){
                 var permission_id = $(this).val();
@@ -252,21 +255,9 @@
                         data : {permission_id:permission_id},
                         success:function(data)
                         {
-                            $.notify({
-                                icon: 'fas fa-toggle-on',
-                                message: 'Đã bật'
-                            },{
-                                animate: {
-                                    enter: 'animated bounceIn',
-                                    exit: 'animated bounceOut'
-                                },
-                                type: 'on',
-                                allow_dismiss: false,
-                                placement: {
-                                    from: "bottom",
-                                    align: "right"
-                                },
-
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Chuyển đổi thành công'
                             });
                         }
                     });
@@ -279,20 +270,9 @@
                         data : {permission_id:permission_id},
                         success:function(data)
                         {
-                            $.notify({
-                                icon: 'fas fa-toggle-off',
-                                message: 'Đã tắt'
-                            },{
-                                animate: {
-                                    enter: 'animated bounceIn',
-                                    exit: 'animated bounceOut'
-                                },
-                                type: 'off',
-                                allow_dismiss: false,
-                                placement: {
-                                    from: "bottom",
-                                    align: "right"
-                                },
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Chuyển đổi thành công'
                             });
                         }
                     });

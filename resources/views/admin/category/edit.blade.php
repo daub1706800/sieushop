@@ -23,12 +23,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                <form action="{{route('category.update', ['id' => $category->id])}}" method="post">
+                <form action="{{ route('category.update', ['id' => $category->id]) }}" method="post">
                     @csrf
                     <div class="form-group">
                         <label>Danh mục *</label>
                         <input type="text" class="form-control @error('tenchuyenmuc') is-invalid @enderror"
-                                name="tenchuyenmuc" value="{{$category->tenchuyenmuc}}" placeholder="Tên danh mục">
+                                name="tenchuyenmuc" value="{{ old('tenchuyenmuc', $category->tenchuyenmuc) }}" placeholder="Tên danh mục">
                         @error('tenchuyenmuc')
                         <div class="alert alert-danger alert-custom">{{ $message }}</div>
                         @enderror
@@ -37,8 +37,8 @@
                         <label>Lĩnh vực *</label>
                         <select class="form-control deparment-selected @error('idlinhvuc') is-invalid @enderror"
                             name="idlinhvuc">
-                            @foreach($fields as $field)
-                                <option value="{{$field->id}}" {{$category->idlinhvuc == $field->id ? "selected" : ""}} >{{$field->tenlinhvuc}}</option>
+                            @foreach( $fields as $field )
+                                <option value="{{ $field->id }}" {{ $category->idlinhvuc == $field->id ? "selected":"" }} >{{ $field->tenlinhvuc }}</option>
                             @endforeach
                         </select>
                         @error('idlinhvuc')

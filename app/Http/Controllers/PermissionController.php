@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class PermissionController extends Controller
 {
@@ -16,168 +18,216 @@ class PermissionController extends Controller
 
     public function add()
     {
-        $updatePermissions = $this->permission->where('parent_id', 0)->get();
+        try {
+            $updatePermissions = $this->permission->where('parent_id', 0)->get();
 
-        $permissions = $this->permission->where('parent_id', 0)->get();
-
-        return view('admin.permission.add', compact('permissions', 'updatePermissions'));
+            $permissions = $this->permission->where('parent_id', 0)->get();
+    
+            return view('admin.permission.add', compact('permissions', 'updatePermissions'));            
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function store(Request $request)
     {
-        if($request->module_childrent)
-        {
-            foreach($request->module_parent as $itemParent)
+        try {
+            DB::beginTransaction();
+
+            if($request->module_childrent)
             {
-                $arrParent = explode ( '-', $itemParent);
-
-                $permission = $this->permission->create([
-                    'tenquyen'  => $arrParent[0],
-                    'motaquyen' => $arrParent[1],
-                    'parent_id' => 0,
-                ]);
-
-                foreach( $request->module_childrent as $itemChild)
+                foreach($request->module_parent as $itemParent)
                 {
-                    $arrChild  = explode ( '-', $itemChild);
-
-                    $this->permission->create([
-                        'tenquyen'  => $permission->tenquyen . '-' . $arrChild[0],
-                        'motaquyen' => $arrChild[1],
-                        'parent_id' => $permission->id,
+                    $arrParent = explode ( '-', $itemParent);
+    
+                    $permission = $this->permission->create([
+                        'tenquyen'  => $arrParent[0],
+                        'motaquyen' => $arrParent[1],
+                        'parent_id' => 0,
                     ]);
+    
+                    foreach( $request->module_childrent as $itemChild)
+                    {
+                        $arrChild  = explode ( '-', $itemChild);
+    
+                        $this->permission->create([
+                            'tenquyen'  => $permission->tenquyen . '-' . $arrChild[0],
+                            'motaquyen' => $arrChild[1],
+                            'parent_id' => $permission->id,
+                        ]);
+                    }
                 }
             }
-        }
 
-        return redirect()->route('permission.add');
+            DB::commit();
+    
+            return redirect()->route('permission.add');            
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function change_status_on(Request $request)
     {
-        $this->permission->find($request->permission_id)->update([
-            'trangthai' => 1,
-        ]);
+        try {
+            DB::beginTransaction();
+            
+            $this->permission->FindOrFail($request->permission_id)->update([
+                'trangthai' => 1,
+            ]);
+            
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function change_status_off(Request $request)
     {
-        $this->permission->find($request->permission_id)->update([
-            'trangthai' => 0,
-        ]);
+        try {
+            DB::beginTransaction();
+
+            $this->permission->FindOrFail($request->permission_id)->update([
+                'trangthai' => 0,
+            ]);
+            
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function check_permission_checked(Request $request)
     {
-        // Tách giá trị từ Request
-        $arrParent = explode ( '-', $request->data);
+        try {
+            // Tách giá trị từ Request
+            $arrParent = explode ( '-', $request->data);
 
-        $persmissionChilds = $this->permission->where('parent_id', $arrParent[1])->pluck('tenquyen');
+            $persmissionChilds = $this->permission->where('parent_id', $arrParent[1])->pluck('tenquyen');
 
-        // Tách giá trị từ mảng persmissionChilds mảng 2 chiều
-        $arrChilds = array();
-        foreach($persmissionChilds as $persmissionChild)
-        {
-            $arrChilds[] = explode ( '-', $persmissionChild);
-        }
-
-
-        // Tách lấy giá trị permission mảng 1 chiều
-        $arrChild = array();
-        foreach($arrChilds as $arr)
-        {
-            $arrChild[] = $arr[1];
-        }
-
-        // Tách config('permissions.module_childrent') thành mảng 1 chiều
-        $arrModule_childrent = array();
-        foreach(config('permissions.module_childrent') as $module_childrent)
-        {
-            $arrModule_childrent[] = $module_childrent['name'];
-        }
-
-        // So sánh permission và $arrModule_childrent lấy mảng có giá trị trùng
-        $arrSames = array_intersect($arrChild, $arrModule_childrent);
-
-        $output = '';
-
-        foreach(config('permissions.module_childrent') as $item)
-        {
-            if(in_array($item['name'],  $arrSames))
+            // Tách giá trị từ mảng persmissionChilds mảng 2 chiều
+            $arrChilds = array();
+            foreach($persmissionChilds as $persmissionChild)
             {
-                $output .= '<div class="col-md-3">
-                                <label><input type="checkbox" name="module_childrent[]" onclick="return false"
-                                        value="'.$item['name'].'-'.$item['display'].'" checked>
-                                        '.$item['display'].'</label></div>';
+                $arrChilds[] = explode ( '-', $persmissionChild);
             }
-            else
+
+
+            // Tách lấy giá trị permission mảng 1 chiều
+            $arrChild = array();
+            foreach($arrChilds as $arr)
             {
-                $output .= '<div class="col-md-3">
-                                <label><input type="checkbox" name="module_childrent[]"
-                                            value="'.$item['name'].'-'.$item['display'].'">
+                $arrChild[] = $arr[1];
+            }
+
+            // Tách config('permissions.module_childrent') thành mảng 1 chiều
+            $arrModule_childrent = array();
+            foreach(config('permissions.module_childrent') as $module_childrent)
+            {
+                $arrModule_childrent[] = $module_childrent['name'];
+            }
+
+            // So sánh permission và $arrModule_childrent lấy mảng có giá trị trùng
+            $arrSames = array_intersect($arrChild, $arrModule_childrent);
+
+            $output = '';
+
+            foreach(config('permissions.module_childrent') as $item)
+            {
+                if(in_array($item['name'],  $arrSames))
+                {
+                    $output .= '<div class="col-md-3">
+                                    <label><input type="checkbox" name="module_childrent[]" onclick="return false"
+                                            value="'.$item['name'].'-'.$item['display'].'" checked>
                                             '.$item['display'].'</label></div>';
+                }
+                else
+                {
+                    $output .= '<div class="col-md-3">
+                                    <label><input type="checkbox" name="module_childrent[]"
+                                                value="'.$item['name'].'-'.$item['display'].'">
+                                                '.$item['display'].'</label></div>';
+                }
             }
-        }
 
-        return response()->json($output);
+            return response()->json($output);
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function update(Request $request)
     {
-        $arrParent = explode ( '-', $request->module_parent);
-        $id        = $arrParent[1];
-        $name      = $arrParent[0];
+        try {
+            DB::beginTransaction();
 
-        // dd($request->module_childrent);
-        foreach( $request->module_childrent as $itemChild)
-        {
-            $arrChild  = explode ( '-', $itemChild);
-            $permission = $this->permission->where('tenquyen', $name . '-' . $arrChild[0])->get();
-            // dd($permission);
-            // dd($permission->isEmpty());
-            if($permission->isEmpty())
+            $arrParent = explode ( '-', $request->module_parent);
+            $id        = $arrParent[1];
+            $name      = $arrParent[0];
+    
+            foreach( $request->module_childrent as $itemChild)
             {
-                $this->permission->create([
-                    'tenquyen'  => $name . '-' . $arrChild[0],
-                    'motaquyen' => $arrChild[1],
-                    'parent_id' => $id,
-                ]);
+                $arrChild  = explode ( '-', $itemChild);
+    
+                $permission = $this->permission->where('tenquyen', $name . '-' . $arrChild[0])->get();
+                
+                if($permission->isEmpty())
+                {
+                    $this->permission->create([
+                        'tenquyen'  => $name . '-' . $arrChild[0],
+                        'motaquyen' => $arrChild[1],
+                        'parent_id' => $id,
+                    ]);
+                }
+                else
+                {
+                    $check = "Đã có";
+                }
             }
-            else
-            {
-                $check = "Đã có";
-            }
+
+            DB::commit();
+
+            return response([
+                'code' => 200,
+                'message' => $check,
+            ], 200);            
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
-        return response([
-            'code' => 200,
-            'message' => $check,
-        ], 200);
     }
 
     public function check_permission()
     {
-        $permissionParent = $this->permission->where('parent_id', 0)->get();
+        try {
+            $permissionParent = $this->permission->where('parent_id', 0)->get();
 
-        $arrPermission_parent = array();
-        foreach($permissionParent as $value)
-        {
-            $arrPermission_parent[] = $value->tenquyen;
-        }
-
-        $output = '<select class="form-control module-new-select" name="module_parent[]" multiple>';
-
-        foreach(config('permissions.module_parent') as $item)
-        {
-            if(in_array($item['name'], $arrPermission_parent) == false)
+            $arrPermission_parent = array();
+            foreach($permissionParent as $value)
             {
-                $output .= '<option class="check-permission" value="'.$item['name'].'-'.$item['display'].'">
-                            '.$item['display'].'
-                            </option>';
+                $arrPermission_parent[] = $value->tenquyen;
             }
+    
+            $output = '<select class="form-control module-new-select" name="module_parent[]" multiple>';
+    
+            foreach(config('permissions.module_parent') as $item)
+            {
+                if(in_array($item['name'], $arrPermission_parent) == false)
+                {
+                    $output .= '<option class="check-permission" value="'.$item['name'].'-'.$item['display'].'">
+                                '.$item['display'].'
+                                </option>';
+                }
+            }
+    
+            $output .= '</select>';
+    
+            return response()->json($output);           
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
-
-        $output .= '</select>';
-
-        return response()->json($output);
     }
 }

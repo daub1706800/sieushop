@@ -89,14 +89,14 @@
                 <div class="col-md-12">
                     <h4><b>Thêm Sở/Ngành</b></h4><hr>
                 </div>
-                <form action="{{route('department.store')}}" method="post">
+                <form action="{{ route('department.store') }}" method="post">
                     @csrf
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Sở ngành *</label>
                                 <input type="text" class="form-control @error('tenso') is-invalid @enderror"
-                                        name="tenso" placeholder="Sở ngành">
+                                        name="tenso" placeholder="Sở ngành" value="{{ old('tenso') }}">
                                 @error('tenso')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror
@@ -106,7 +106,7 @@
                             <div class="form-group">
                                 <label>Địa chỉ *</label>
                                 <input type="text" class="form-control @error('diachiso') is-invalid @enderror"
-                                    name="diachiso" placeholder="Địa chỉ">
+                                    name="diachiso" placeholder="Địa chỉ" value="{{ old('diachiso') }}">
                                 @error('diachiso')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror
@@ -116,7 +116,7 @@
                             <div class="form-group">
                                 <label>Email *</label>
                                 <input type="text" class="form-control @error('emailso') is-invalid @enderror"
-                                        name="emailso" placeholder="Email">
+                                        name="emailso" placeholder="Email" value="{{ old('emailso') }}">
                                 @error('emailso')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror
@@ -126,7 +126,7 @@
                             <div class="form-group">
                                 <label>Điện thoại</label>
                                 <input type="text" class="form-control @error('dienthoaiso') is-invalid @enderror"
-                                        name="dienthoaiso" placeholder="Điện thoại">
+                                        name="dienthoaiso" placeholder="Điện thoại" value="{{ old('dienthoaiso') }}">
                                 @error('dienthoaiso')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror
@@ -136,7 +136,7 @@
                             <div class="form-group">
                                 <label>Fax</label>
                                 <input type="text" class="form-control @error('faxso') is-invalid @enderror"
-                                        name="faxso" placeholder="Fax">
+                                        name="faxso" placeholder="Fax" value="{{ old('faxso') }}">
                                 @error('faxso')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror
@@ -146,7 +146,7 @@
                             <div class="form-group">
                                 <label>Website * (https:// hoặc http://)</label>
                                 <input type="text" class="form-control @error('webso') is-invalid @enderror"
-                                        name="webso" placeholder="Website">
+                                        name="webso" placeholder="Website" value="{{ old('webso') }}">
                                 @error('webso')
                                 <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 @enderror

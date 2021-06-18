@@ -27,12 +27,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8">
-                <form action="{{route('profile.role.update', ['id' => $role->id])}}" method="post">
+                <form action="{{ route('profile.role.update', ['id' => $role->id]) }}" method="post">
                     @csrf
                     <div class="form-group">
                         <label>Tên vai trò *</label>
                         <input type="text" class="form-control @error('tenvaitro') is-invalid @enderror"
-                                name="tenvaitro" value="{{ $role->tenvaitro }}"
+                                name="tenvaitro" value="{{ old('tenvaitro', $role->tenvaitro) }}"
                                 placeholder="Tên vai trò">
                         @error('tenvaitro')
                         <div class="alert alert-danger alert-custom">{{ $message }}</div>
@@ -41,7 +41,7 @@
                     <div class="form-group">
                         <label>Mô tả *</label>
                         <textarea name="motavaitro" rows="3" placeholder="Mô tả"
-                                class="form-control @error('motavaitro') is-invalid @enderror">{{ $role->motavaitro }}</textarea>
+                                class="form-control @error('motavaitro') is-invalid @enderror">{{ old('motavaitro', $role->motavaitro) }}</textarea>
                         @error('motavaitro')
                         <div class="alert alert-danger alert-custom">{{ $message }}</div>
                         @enderror

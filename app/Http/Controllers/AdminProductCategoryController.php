@@ -8,6 +8,8 @@ use App\Models\Company;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AdminProductCategoryController extends Controller
 {
@@ -24,52 +26,88 @@ class AdminProductCategoryController extends Controller
 
     public function index()
     {
-        $productcategories = $this->productcategory->all();
+        try {
+            $productcategories = $this->productcategory->all();
 
-        $companies = $this->company->all();
-
-        return view('admin.admin-product-category.index', compact('productcategories', 'companies'));
+            $companies = $this->company->all();
+    
+            return view('admin.admin-product-category.index', compact('productcategories', 'companies'));
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function store(AdminProductCategoryRequest $request)
     {
-        $data = [
-            'idcongty'        => $request->idcongty,
-            'tenloaisanpham'  => $request->tenloaisanpham,
-            'motaloaisanpham' => $request->motaloaisanpham,
-        ];
+        try {
+            DB::beginTransaction();
 
-        $this->productcategory->create($data);
+            $data = [
+                'idcongty'        => $request->idcongty,
+                'tenloaisanpham'  => $request->tenloaisanpham,
+                'motaloaisanpham' => $request->motaloaisanpham,
+            ];
+    
+            $this->productcategory->create($data);
+    
+            DB::commit();
 
-        return redirect()->route('admin.productcategory.index');
+            return redirect()->route('admin.productcategory.index');
+        } catch (\Exception $exception) {
+            DB::rollback();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function edit($id)
     {
-        $productcategory = $this->productcategory->find($id);
+        try {
+            $productcategory = $this->productcategory->FindOrFail($id);
 
-        $companies = $this->company->all();
-
-        return view('admin.admin-product-category.edit', compact('productcategory', 'companies'));
+            $companies = $this->company->all();
+    
+            return view('admin.admin-product-category.edit', compact('productcategory', 'companies'));
+        } catch (\Exception $exception) {
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function update(AdminProductCategoryRequest $request, $id)
     {
-        $data = [
-            'idcongty'        => $request->idcongty,
-            'tenloaisanpham'  => $request->tenloaisanpham,
-            'motaloaisanpham' => $request->motaloaisanpham,
-        ];
+        try {
+            DB::beginTransaction();
 
-        $this->productcategory->find($id)->update($data);
-
-        return redirect()->route('admin.productcategory.index');
+            $data = [
+                'idcongty'        => $request->idcongty,
+                'tenloaisanpham'  => $request->tenloaisanpham,
+                'motaloaisanpham' => $request->motaloaisanpham,
+            ];
+    
+            $this->productcategory->FindOrFail($id)->update($data);
+            
+            DB::commit();
+    
+            return redirect()->route('admin.productcategory.index');
+        } catch (\Exception $exception) {
+            DB::rollback();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
     }
 
     public function delete($id)
     {
-        $this->productcategory->find($id)->delete();
+        try {
+            DB::beginTransaction();
 
-        return redirect()->route('admin.productcategory.index');
+            $this->productcategory->FindOrFail($id)->delete();
+
+            DB::commit();
+
+            return redirect()->route('admin.productcategory.index');
+        } catch (\Exception $exception) {
+            DB::rollback();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
+        
     }
 }

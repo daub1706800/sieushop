@@ -27,7 +27,7 @@ class StageInfoRequest extends FormRequest
             'tencongviec' => 'bail|required|min:5|max:50',
             'thoigianbatdau' => 'required',
             'thoigiandukien' => 'required|numeric',
-            'thoigianhoanthanh' => 'nullable|date_format:"Y-m-d"|before_or_equal:thoigianbatdau.*',
+            'thoigianhoanthanh' => 'nullable|date_format:"Y-m-d"|after_or_equal:thoigianbatdau.*',
             'motacongviec' => 'bail|required|min:20|max:150',
         ];
     }

@@ -48,7 +48,7 @@ class TintucController extends Controller{
                     ->select('tintuc.*','chuyenmuc.tenchuyenmuc','congty.tencongty','thongtin.hothanhvien','thongtin.tenthanhvien')
                     ->get();
         foreach($data as $row){
-            $xuatban = $row->updated_at;
+            $xuatban = $row->ngayxuatban;
             if($xuatban==null){
                 $xuatban = "";
                 $row->ago = $xuatban;
@@ -295,7 +295,7 @@ class TintucController extends Controller{
         $noidungdanhgia = $request->noidungdanhgia;
         $data = array();
         $data['xuatbantintuc'] = '1';
-        $data['updated_at'] = date('Y-m-d H:i:s');
+        $data['ngayxuatban'] = date('Y-m-d H:i:s');
         DB::table('tintuc')->where('id',$id)->update($data);
         $data2 = array();
         $data2['idtintuc'] = $id;
@@ -312,7 +312,7 @@ class TintucController extends Controller{
         $data['duyettintuc'] = 0;
         $data['xuatbantintuc'] = 0;
         $data['lydogo'] = 1;
-        $data['updated_at'] = null;
+        $data['ngayxuatban'] = null;
         DB::table('tintuc')->where('id',$request->id)->update($data);
         $data2 = array();
         $data2['idtintuc'] = $request->id;
