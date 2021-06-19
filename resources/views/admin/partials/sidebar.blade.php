@@ -42,158 +42,19 @@
                 or any other icon font library -->
                 @if (session()->get('info'))
                     @if (session()->get('info')['ho'] != "" && auth()->user()->idcongty == null && auth()->user()->loaitaikhoan != 2)
-                    <li class="nav-item">
-                        <a href="{{route('profile.company.create')}}" class="nav-link">
-                            <i class="nav-icon fas fa-building"></i>
-                            <p>
-                                Tạo công ty
-                            </p>
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a href="{{route('profile.company.create')}}" class="nav-link">
+                                <i class="nav-icon fas fa-building"></i>
+                                <p>
+                                    Tạo công ty
+                                </p>
+                            </a>
+                        </li>
                     @endif
                 @endif
                 <!-- Admin's Module -->
                 @if(auth()->user()->loaitaikhoan == 2)
-                <!-- Dasboard 1 -->
-                <li class="nav-item li-dropdown">
-                    <a href="#" class="nav-link content-dropdown">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Bảng điều khiển
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{route('department.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-balance-scale"></i>
-                                <p>
-                                    Sở ngành
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('field.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Lĩnh vực
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('category.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-th-list"></i>
-                                <p>
-                                    Chuyên mục
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('company.index') }}" class="nav-link">
-                                <i class="nav-icon fas fa-building"></i>
-                                <p>
-                                    Công ty
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('admin.storage.index') }}" class="nav-link">
-                                <i class="nav-icon fas fa-warehouse"></i>
-                                <p>
-                                    Kho
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('news.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-newspaper"></i>
-                                <p>
-                                    Tin tức
-                                    <span class="badge badge-info right news-badge"></span>
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('admin.video.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-video"></i>
-                                <p>
-                                    Tin tức Video
-                                    <span class="badge badge-info right newsvideo-badge"></span>
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('admin.productcategory.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-list"></i>
-                                <p>
-                                    Loại sản phẩm
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.product.index') }}" class="nav-link">
-                                <i class="nav-icon fab fa-product-hunt"></i>
-                                <p>
-                                    Sản phẩm
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('account.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-user"></i>
-                                <p>
-                                    Tài khoản
-                                    <span class="badge badge-info right account-badge"></span>
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('role.index')}}" class="nav-link">
-                                <i class="nav-icon fas fa-user-tag"></i>
-                                <p>
-                                    Vai trò
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('permission.add')}}" class="nav-link">
-                                <i class="nav-icon fas fa-user-shield"></i>
-                                <p>
-                                    Quyền
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- /.Dasboard 1 -->
-
-                <!-- Dasboard 2 -->
-                <li class="nav-item li-dropdown">
-                    <a href="#" class="nav-link content-dropdown">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Bảng điều khiển
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('advertise.index') }}" class="nav-link">
-                                <i class="nav-icon fas fa-balance-scale"></i>
-                                <p>
-                                    Quảng cáo
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- /.Dasboard 2 -->
-                @endif
-                <!-- /.Admin's Module -->
-
-                <!-- Company's Module -->
-                @if( auth()->user()->loaitaikhoan == 1 )
-                    @if ( auth()->user()->idcongty != null && session()->get('info')['name'] != null || session()->get('idcongty') != null && session()->get('info')['name'] != null)
+                    <!-- Dasboard 1 -->
                     <li class="nav-item li-dropdown">
                         <a href="#" class="nav-link content-dropdown">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -204,7 +65,39 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{route('storage.index') }}" class="nav-link">
+                                <a href="{{route('department.index')}}" class="nav-link">
+                                    <i class="nav-icon fas fa-balance-scale"></i>
+                                    <p>
+                                        Sở ngành
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('field.index')}}" class="nav-link">
+                                    <i class="nav-icon fas fa-th"></i>
+                                    <p>
+                                        Lĩnh vực
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('category.index')}}" class="nav-link">
+                                    <i class="nav-icon fas fa-th-list"></i>
+                                    <p>
+                                        Chuyên mục
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('company.index') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-building"></i>
+                                    <p>
+                                        Công ty
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.storage.index') }}" class="nav-link">
                                     <i class="nav-icon fas fa-warehouse"></i>
                                     <p>
                                         Kho
@@ -212,7 +105,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('tintuc.Tintuc')}}" class="nav-link">
+                                <a href="{{route('news.index')}}" class="nav-link">
                                     <i class="nav-icon fas fa-newspaper"></i>
                                     <p>
                                         Tin tức
@@ -221,7 +114,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('video.index')}}" class="nav-link">
+                                <a href="{{route('admin.video.index')}}" class="nav-link">
                                     <i class="nav-icon fas fa-video"></i>
                                     <p>
                                         Tin tức Video
@@ -230,7 +123,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('productcategory.index')}}" class="nav-link">
+                                <a href="{{route('admin.productcategory.index')}}" class="nav-link">
                                     <i class="nav-icon fas fa-list"></i>
                                     <p>
                                         Loại sản phẩm
@@ -238,7 +131,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('product.index') }}" class="nav-link">
+                                <a href="{{ route('admin.product.index') }}" class="nav-link">
                                     <i class="nav-icon fab fa-product-hunt"></i>
                                     <p>
                                         Sản phẩm
@@ -246,7 +139,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('profile.account.index') }}" class="nav-link">
+                                <a href="{{route('account.index')}}" class="nav-link">
                                     <i class="nav-icon fas fa-user"></i>
                                     <p>
                                         Tài khoản
@@ -255,33 +148,162 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('profile.role.index') }}" class="nav-link">
+                                <a href="{{route('role.index')}}" class="nav-link">
                                     <i class="nav-icon fas fa-user-tag"></i>
                                     <p>
                                         Vai trò
                                     </p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{route('permission.add')}}" class="nav-link">
+                                    <i class="nav-icon fas fa-user-shield"></i>
+                                    <p>
+                                        Quyền
+                                    </p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
+                    <!-- /.Dasboard 1 -->
+
+                    <!-- Dasboard 2 -->
+                    <li class="nav-item li-dropdown">
+                        <a href="#" class="nav-link content-dropdown">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Bảng điều khiển
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('advertise.index') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-balance-scale"></i>
+                                    <p>
+                                        Quảng cáo
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- /.Dasboard 2 -->
+                @endif
+                <!-- /.Admin's Module -->
+
+                <!-- Company's Module -->
+                @if( auth()->user()->loaitaikhoan == 1 )
+                    @if ( auth()->user()->idcongty != null && session()->get('info')['name'] != null || session()->get('idcongty') != null && session()->get('info')['name'] != null)
+                        <li class="nav-item li-dropdown">
+                            <a href="#" class="nav-link content-dropdown">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Bảng điều khiển
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                @canany(['storage-list'])
+                                <li class="nav-item">
+                                    <a href="{{route('storage.index') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-warehouse"></i>
+                                        <p>
+                                            Kho
+                                        </p>
+                                    </a>
+                                </li>
+                                @endcanany
+
+                                @canany(['news-list'])
+                                <li class="nav-item">
+                                    <a href="{{route('tintuc.Tintuc')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-newspaper"></i>
+                                        <p>
+                                            Tin tức
+                                            <span class="badge badge-info right news-badge"></span>
+                                        </p>
+                                    </a>
+                                </li>
+                                @endcanany
+
+                                @canany(['newsvideo-list'])
+                                <li class="nav-item">
+                                    <a href="{{route('video.index')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-video"></i>
+                                        <p>
+                                            Tin tức Video
+                                            <span class="badge badge-info right newsvideo-badge"></span>
+                                        </p>
+                                    </a>
+                                </li>
+                                @endcanany
+
+                                @canany(['procat-list'])
+                                <li class="nav-item">
+                                    <a href="{{route('productcategory.index')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-list"></i>
+                                        <p>
+                                            Loại sản phẩm
+                                        </p>
+                                    </a>
+                                </li>
+                                @endcanany
+
+                                @canany(['product-list'])
+                                <li class="nav-item">
+                                    <a href="{{ route('product.index') }}" class="nav-link">
+                                        <i class="nav-icon fab fa-product-hunt"></i>
+                                        <p>
+                                            Sản phẩm
+                                        </p>
+                                    </a>
+                                </li>
+                                @endcanany
+
+                                @canany(['account-list'])
+                                <li class="nav-item">
+                                    <a href="{{ route('profile.account.index') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-user"></i>
+                                        <p>
+                                            Tài khoản
+                                            <span class="badge badge-info right account-badge"></span>
+                                        </p>
+                                    </a>
+                                </li>
+                                @endcanany
+
+                                @canany(['role-list'])
+                                <li class="nav-item">
+                                    <a href="{{ route('profile.role.index') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-user-tag"></i>
+                                        <p>
+                                            Vai trò
+                                        </p>
+                                    </a>
+                                </li>
+                                @endcanany
+                            </ul>
+                        </li>
+
                     @elseif(auth()->user()->idcongty == null)
-                    <li class="nav-item">
-                        <a href="{{route('profile.company.create')}}" class="nav-link">
-                            <i class="nav-icon fas fa-exclamation-circle"></i>
-                            <p>
-                                Đăng ký Công ty mới !
-                            </p>
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a href="{{route('profile.company.create')}}" class="nav-link">
+                                <i class="nav-icon fas fa-exclamation-circle"></i>
+                                <p>
+                                    Đăng ký Công ty mới !
+                                </p>
+                            </a>
+                        </li>
+
                     @elseif (session()->get('info')['name'] == null)
-                    <li class="nav-item">
-                        <a href="{{route('profile.index')}}" class="nav-link">
-                            <i class="nav-icon fas fa-exclamation-circle"></i>
-                            <p>
-                                Cập nhật thông tin !
-                            </p>
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a href="{{route('profile.index')}}" class="nav-link">
+                                <i class="nav-icon fas fa-exclamation-circle"></i>
+                                <p>
+                                    Cập nhật thông tin !
+                                </p>
+                            </a>
+                        </li>
                     @endif
                 @endif
                 <!-- /.Company's Module -->

@@ -531,10 +531,6 @@ Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
                 'as'   => 'account.delete',
                 'uses' => 'App\Http\Controllers\AccountController@delete'
             ]);
-            Route::get('/random-password', [
-                'as'   => 'account.random-password',
-                'uses' => 'App\Http\Controllers\AccountController@random_password'
-            ]);
             Route::get('/verify/{id}', [
                 'as'   => 'account.verify',
                 'uses' => 'App\Http\Controllers\AccountController@verify'
@@ -604,7 +600,7 @@ Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
 });
 
 /* Route Company */
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
     Route::prefix('dasboard')->group(function() {
         Route::get('/', function () {
             return view('admin.home');
@@ -650,12 +646,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/history/{id}', [
                 'as' => 'tintuc.viewhistoryTintuc',
                 'uses' => 'App\Http\Controllers\TintucController@viewhistoryTintuc',
-                'middleware' => 'can:news-list'
             ]);
             Route::get('/log/{id}', [
                 'as' => 'tintuc.viewlogTintuc',
                 'uses' => 'App\Http\Controllers\TintucController@viewlogTintuc',
-                'middleware' => 'can:news-list'
             ]);
             Route::get('/add-news', [
                 'as' => 'tintuc.addTintuc',
@@ -665,12 +659,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/add-news', [
                 'as' => 'tintuc.doaddTintuc',
                 'uses' => 'App\Http\Controllers\TintucController@doaddTintuc',
+                'middleware' => 'can:news-add'
             ]);
             Route::get('/delete-news/{id}', [
                 'as' => 'tintuc.deleteTintuc',
                 'uses' => 'App\Http\Controllers\TintucController@deleteTintuc',
                 'middleware' => 'can:news-delete'
-    
             ]);
             Route::get('/edit/{id}', [
                 'as' => 'tintuc.detailTintuc',
@@ -722,19 +716,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::prefix('video')->group(function () {
             Route::get('/', [
                 'as'   => 'video.index',
-                'uses' => 'App\Http\Controllers\NewsVideoController@index'
+                'uses' => 'App\Http\Controllers\NewsVideoController@index',
+                'middleware' => 'can:newsvideo-list'
             ]);
             Route::get('/add', [
                 'as'   => 'video.add',
-                'uses' => 'App\Http\Controllers\NewsVideoController@add'
+                'uses' => 'App\Http\Controllers\NewsVideoController@add',
+                'middleware' => 'can:newsvideo-add'
             ]);
             Route::post('/store', [
                 'as'   => 'video.store',
-                'uses' => 'App\Http\Controllers\NewsVideoController@store'
+                'uses' => 'App\Http\Controllers\NewsVideoController@store',
+                'middleware' => 'can:newsvideo-add'
             ]);
             Route::get('/edit/{id}', [
                 'as'   => 'video.edit',
-                'uses' => 'App\Http\Controllers\NewsVideoController@edit'
+                'uses' => 'App\Http\Controllers\NewsVideoController@edit',
+                'middleware' => 'can:newsvideo-view'
             ]);
             Route::post('/update/{id}', [
                 'as'   => 'video.update',
@@ -742,15 +740,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ]);
             Route::get('/delete/{id}', [
                 'as'   => 'video.delete',
-                'uses' => 'App\Http\Controllers\NewsVideoController@delete'
+                'uses' => 'App\Http\Controllers\NewsVideoController@delete',
+                'middleware' => 'can:newsvideo-delete'
             ]);
             Route::get('/duyet/{id}', [
                 'as'   => 'video.update-duyet',
-                'uses' => 'App\Http\Controllers\NewsVideoController@update_duyet'
+                'uses' => 'App\Http\Controllers\NewsVideoController@update_duyet',
+                'middleware' => 'can:newsvideo-browse'
             ]);
             Route::get('/xuatban/{id}', [
                 'as'   => 'video.update-xuatban',
-                'uses' => 'App\Http\Controllers\NewsVideoController@update_xuatban'
+                'uses' => 'App\Http\Controllers\NewsVideoController@update_xuatban',
+                'middleware' => 'can:newsvideo-publish'
             ]);
             Route::post('/history', [
                 'as'   => 'video.history',
@@ -758,7 +759,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ]);
             Route::get('/remove/{id}', [
                 'as'   => 'video.remove',
-                'uses' => 'App\Http\Controllers\NewsVideoController@remove'
+                'uses' => 'App\Http\Controllers\NewsVideoController@remove',
+                'middleware' => 'can:newsvideo-recall'
             ]);
             Route::post('/view', [
                 'as'   => 'video.view',
@@ -803,7 +805,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/', [
                 'as'   => 'profile.account.index',
                 'uses' => 'App\Http\Controllers\ProfileController@index_account',
-                'middleware' => 'can:account-list'
             ]);
             Route::post('/store', [
                 'as'   => 'profile.account.store',
@@ -818,16 +819,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/update/{id}', [
                 'as'   => 'profile.account.update',
                 'uses' => 'App\Http\Controllers\ProfileController@update_account',
-                'middleware' => 'can:account-update'
+                // 'middleware' => 'can:account-update'
             ]);
             Route::get('/delete/{id}', [
                 'as'   => 'profile.account.delete',
                 'uses' => 'App\Http\Controllers\ProfileController@delete_account',
                 'middleware' => 'can:account-delete'
             ]);
-            Route::get('/random-password', [
-                'as'   => 'profile.account.random-password',
-                'uses' => 'App\Http\Controllers\ProfileController@random_password',
+            Route::get('/verify/{id}', [
+                'as'   => 'profile.account.verify',
+                'uses' => 'App\Http\Controllers\ProfileController@verify'
+            ]);
+            Route::get('/delete-role', [
+                'as'   => 'profile.account.delete-role',
+                'uses' => 'App\Http\Controllers\ProfileController@delete_role_user'
             ]);
         });
     
@@ -836,7 +841,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/', [
                 'as'   => 'profile.role.index',
                 'uses' => 'App\Http\Controllers\ProfileController@index_role',
-                'middleware' => 'can:role-list'
             ]);
             Route::post('/store', [
                 'as'   => 'profile.role.store',
@@ -865,7 +869,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/', [
                 'as'   => 'storage.index',
                 'uses' => 'App\Http\Controllers\StorageController@index',
-                'middleware' => 'can:storage-list'
             ]);
             Route::post('/store', [
                 'as'   => 'storage.store',
@@ -898,7 +901,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/', [
                 'as'   => 'productcategory.index',
                 'uses' => 'App\Http\Controllers\ProductCategoryController@index',
-                'middleware' => 'can:procat-list'
             ]);
             Route::post('/store', [
                 'as'   => 'productcategory.store',
@@ -927,7 +929,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/', [
                 'as'   => 'product.index',
                 'uses' => 'App\Http\Controllers\ProductController@index',
-                'middleware' => 'can:product-list'
             ]);
             Route::get('/add', [
                 'as'   => 'product.add',
@@ -964,7 +965,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/{product_id}', [
                 'as'   => 'stage.index',
                 'uses' => 'App\Http\Controllers\StageController@index',
-                // 'middleware' => 'can:product-list'
             ]);
             Route::post('/{product_id}', [
                 'as'   => 'stage.store',
@@ -973,7 +973,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/edit/{id}/{product_id}', [
                 'as'   => 'stage.edit',
                 'uses' => 'App\Http\Controllers\StageController@edit',
-                // 'middleware' => 'can:product-view'
+                'middleware' => 'can:stage-view'
             ]);
             Route::post('/update/{id}', [
                 'as'   => 'stage.update',

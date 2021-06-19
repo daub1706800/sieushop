@@ -39,7 +39,8 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Tên vai trò</th>
                                     <th scope="col">Mô tả</th>
-                                    <th scope="col"></th>
+                                    <th scope="col" style="width:40%">Quyền</th>
+                                    <th scope="col" style="width:10%"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -48,6 +49,13 @@
                                         <th scope="row">{{ $role->id }}</th>
                                         <td>{{ $role->tenvaitro }}</td>
                                         <td>{{ $role->motavaitro }}</td>
+                                        <td>
+                                            <div style="overflow: auto; width:100%; height: 75px;">
+                                                @foreach ( $role->permissions as $value)
+                                                    <span class="badge badge-primary">{{ $value->tenquyen }}</span>
+                                                @endforeach
+                                            </div>
+                                        </td>
                                         <td>
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
@@ -112,8 +120,8 @@
                         </div>
                         <div class="col-md-12">
                             <label>Chọn quyền *</label>
-                            <div class="table-responsive-md">
-                                <table class="table table-borderless table-primary table-hover">
+                            <div class="overflow-auto mb-3" style="height: 300px;">
+                                <table class="table table-borderless table-sm table-primary table-hover">
                                     <thead class="table-warning">
                                         <tr>
                                             <th></th>
@@ -170,6 +178,13 @@
                     $('#btn-modal-click').click();
                 }
             });
+            // $(function () {
+            //     $('#dtDynamicVerticalScrollExample').DataTable({
+            //         "scrollY": "50vh",
+            //         "scrollCollapse": true,
+            //     });
+            //     $('.dataTables_length').addClass('bs-select');
+            // });
         });
     </script>
 @endsection

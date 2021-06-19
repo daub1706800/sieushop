@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AccountRequest;
+use App\Http\Requests\AccountRequestEdit;
 use App\Http\Requests\CompanyRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\RoleRequest;
@@ -15,6 +16,7 @@ use App\Models\Permission;
 use App\Models\Role;
 use App\Models\UserRole;
 use App\Traits\StorageImageTrait;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -343,7 +345,22 @@ class ProfileController extends Controller
             ]);
 
             // Insert data to table taikhoan_vaitro
-            $user->roles()->attach($request->idvaitro);
+            foreach ($request->idvaitro as $key => $value) {
+                if ($request->thoigianketthuc[$key] == null) {
+
+                    $thoigianketthuc = Carbon::now()->addYears(1000)->format('Y-m-d');
+                }
+                else
+                {
+                    $thoigianketthuc = Carbon::create($request->thoigianketthuc[$key])->format('Y-m-d');
+                }
+                DB::table('taikhoan_vaitro')->insert([
+                    'idtaikhoan' => $user->id,
+                    'idvaitro' => $value,
+                    'thoigianbatdau' => Carbon::create($request->thoigianbatdau[$key])->format('Y-m-d'),
+                    'thoigianketthuc' => $thoigianketthuc,
+                ]);
+            }
 
             DB::commit();
 
@@ -362,14 +379,24 @@ class ProfileController extends Controller
             $roles    = $this->role->where('idcongty', auth()->user()->idcongty)->get();
     
             $roleUser = $user->roles;
-    
-            return view('admin.profile.account.edit', compact('user', 'roles', 'roleUser'));            
+
+            $data1 = [];
+            
+            foreach ($roleUser as $key => $value) {
+                $data = DB::table('taikhoan_vaitro')->where('idvaitro', $value->id)->where('idtaikhoan', $user->id)->first();
+                $data1[$key]['id'] = $value->id;
+                $data1[$key]['motavaitro'] = $value->motavaitro;
+                $data1[$key]['thoigianbatdau'] = Carbon::create($data->thoigianbatdau)->format('d-m-Y');
+                $data1[$key]['thoigianketthuc'] = Carbon::create($data->thoigianketthuc)->format('d-m-Y');
+            }
+            
+            return view('admin.profile.account.edit', compact('user', 'roles', 'data1'));            
         } catch (\Exception $exception) {
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
     }
 
-    public function update_account(Request $request, $id)
+    public function update_account(AccountRequestEdit $request, $id)
     {
         try {
             DB::beginTransaction();
@@ -383,9 +410,28 @@ class ProfileController extends Controller
 
             if(!empty($request->idvaitro))
             {
-                $user = $this->user->find($id);
-                // Update data to table taikhoan_vaitro
-                $user->roles()->sync($request->idvaitro);
+                $user = $this->user->FindOrFail($id);
+
+                // Delete data to table taikhoan_vaitro
+                DB::table('taikhoan_vaitro')->where('idtaikhoan', $user->id)->delete();
+
+                // Create data to table taikhoan_vaitro
+                foreach ($request->idvaitro as $key => $value) {
+                    if ($request->thoigianketthuc[$key] == null) {
+
+                        $thoigianketthuc = Carbon::now()->addYears(1000)->format('Y-m-d');
+                    }
+                    else
+                    {
+                        $thoigianketthuc = Carbon::create($request->thoigianketthuc[$key])->format('Y-m-d');
+                    }
+                    DB::table('taikhoan_vaitro')->insert([
+                        'idtaikhoan' => $user->id,
+                        'idvaitro' => $value,
+                        'thoigianbatdau' => Carbon::create($request->thoigianbatdau[$key])->format('Y-m-d'),
+                        'thoigianketthuc' => $thoigianketthuc,
+                    ]);
+                }
             }
 
             DB::commit();
@@ -413,13 +459,38 @@ class ProfileController extends Controller
         }
     }
 
-    public function random_password()
+    public function verify($id)
     {
         try {
-            $password = Str::random(10);
+            DB::beginTransaction();
 
-            return response()->json($password);            
+            $this->user->FindOrFail($id)->update([
+                'email_verified_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('profile.account.index');
         } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
+        }
+    }
+
+    public function delete_role_user(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            DB::table('taikhoan_vaitro')->where('idtaikhoan', $request->id_user)
+                                    ->where('idvaitro', $request->id_role)->delete();
+            DB::commit();
+
+            return response()->json([
+                'code' => 200
+            ]);
+        } catch (\Exception $exception) {
+            DB::rollBack();
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
     }

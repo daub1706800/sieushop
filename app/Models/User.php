@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -82,16 +84,21 @@ class User extends Authenticatable implements MustVerifyEmail
     public function checkPermission($permissionCheck)
     {
         // Lấy tất cả vai trò của user
-        $roles = auth()->user()->roles;
+        $userRoles = auth()->user()->roles;
 
-        foreach($roles as $role)
+        $date_now = Carbon::now()->format('Y-m-d');
+
+        foreach($userRoles as $userRole)
         {
-            // Lấy tất cả các quyền từng vai trò của user
-            $permissions = $role->permissions;
+            $data = DB::table('taikhoan_vaitro')->where('idvaitro', $userRole->id)->where('idtaikhoan', auth()->id())->first();
+            if ($data->thoigianbatdau <= $date_now && $data->thoigianketthuc >= $date_now) {
+                // Lấy tất cả các quyền từng vai trò của user
+                $permissions = $userRole->permissions;
 
-            if($permissions->contains('tenquyen', $permissionCheck))
-            {
-                return true;
+                if($permissions->contains('tenquyen', $permissionCheck))
+                {
+                    return true;
+                }
             }
         }
         return false;

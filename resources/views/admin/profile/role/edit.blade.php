@@ -50,8 +50,8 @@
                         <label>Chọn tất cả quyền <input type="checkbox" class="check-all"></label>
                     </div>
                     <label>Chọn quyền *</label>
-                    <div class="table-responsive-md">
-                        <table class="table table-borderless table-primary table-hover">
+                    <div class="mb-3" style="overflow:auto; width:100%; height: 300px">
+                        <table class="table table-borderless table-sm table-primary table-hover">
                             <thead class="table-warning">
                                 <tr>
                                     <th></th>
@@ -61,7 +61,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($permissionParents as $permissionParent)
+                            @foreach($permissionParents as $permissionParent)
                                 <tr>
                                     <td class="table-warning text-right">
                                         <label>Module {{ $permissionParent->motaquyen }}
@@ -76,7 +76,7 @@
                                     </td>
                                     @endforeach
                                 </tr>
-                                @endforeach
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

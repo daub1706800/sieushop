@@ -169,9 +169,11 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-md-12 text-center mb-3">
-                        <button class="btn btn-primary" type="submit">Lưu chỉnh sửa</button>
-                    </div>
+                    @can('company-update')
+                        <div class="col-md-12 text-center mb-3">
+                            <button class="btn btn-primary" type="submit">Lưu chỉnh sửa</button>
+                        </div> 
+                    @endcan
                 </div>
             </form>
         </div>

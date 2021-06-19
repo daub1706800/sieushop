@@ -137,13 +137,6 @@ class AccountController extends Controller
         
     }
 
-    public function random_password()
-    {
-        $password = Str::random(10);
-
-        return response()->json($password);
-    }
-
     public function verify($id)
     {
         try {
