@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class AccountRequest extends FormRequest
+class AdminAccountRequestAdd extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,12 +30,13 @@ class AccountRequest extends FormRequest
             'idvaitro' => ['required'],
             'idvaitro.*' => [
                 Rule::exists('vaitro', 'id')->where(function ($query) {
-                    return $query->where('idcongty', auth()->user()->idcongty);
+                    return $query->where('idcongty', request('idcongty'))->orWhere('loaivaitro', 2);
                 }),
             ],
             'thoigianbatdau' => ['nullable'],
             'thoigianbatdau.*' => ['after_or_equal:today'],
             'thoigianketthuc.*' => ['nullable', 'after_or_equal:thoigianbatdau.*'],
+            'idcongty' => ['required', 'exists:congty,id']
         ];
     }
 
@@ -57,6 +58,8 @@ class AccountRequest extends FormRequest
             'thoigianbatdau.required' => 'Thời gian bắt đầu không được bỏ trống',
             'thoigianbatdau.*.after_or_equal' => 'Thời gian bắt đầu phải bằng hoặc trễ hơn ngày hiện tại',
             'thoigianketthuc.*.after_or_equal' => 'Thời gian kết thúc phải bằng hoặc trễ hơn thời gian bắt đầu',
+            'idcongty.required' => 'Công ty không được để trống',
+            'idcongty.exists' => 'Công ty không tồn tại',
         ];
     }
 }

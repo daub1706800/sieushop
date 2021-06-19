@@ -535,6 +535,14 @@ Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
                 'as'   => 'account.verify',
                 'uses' => 'App\Http\Controllers\AccountController@verify'
             ]);
+            Route::get('/delete-role', [
+                'as'   => 'account.delete-role',
+                'uses' => 'App\Http\Controllers\AccountController@delete_role'
+            ]);
+            Route::get('/change-role', [
+                'as'   => 'account.change-role',
+                'uses' => 'App\Http\Controllers\AccountController@change_role'
+            ]);
         });
     
         /* Module Vai trò */
@@ -819,7 +827,7 @@ Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
             Route::post('/update/{id}', [
                 'as'   => 'profile.account.update',
                 'uses' => 'App\Http\Controllers\ProfileController@update_account',
-                // 'middleware' => 'can:account-update'
+                'middleware' => 'can:account-update'
             ]);
             Route::get('/delete/{id}', [
                 'as'   => 'profile.account.delete',

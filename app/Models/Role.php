@@ -26,5 +26,8 @@ class Role extends Model
         return $this->belongsTo(Company::class,'idcongty', 'id');
     }
 
-
+    public function user_roles($user_id)
+    {
+        return $this->hasMany(UserRole::class, 'idvaitro', 'id')->where('idtaikhoan', $user_id);
+    }
 }

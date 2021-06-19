@@ -7,15 +7,7 @@
 @section('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
     <link rel="stylesheet" href="{{asset('adminLTE/dist/css/mystyle2.css')}}">
-    <style>
-        .alert-custom{
-            margin-top: 5px;
-            padding: 3px 5px;
-        }
-        .badge-role{
-            transform: scale(1.2, 1.2);
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/company/account/index/account.css') }}">
 @endsection
 
 @section('content')
@@ -75,16 +67,23 @@
                                     </td>
                                     <td>
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
+                                            @if ($user->email_verified_at == null)
+                                                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">Tùy chọn
+                                                </button>
+                                            @else
+                                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">Tùy chọn
+                                                </button>
+                                            @endif
                                             <div class="dropdown-menu">
                                                 @if ($user->email_verified_at == null)
-                                                    <a class="dropdown-item" href="{{ route('profile.account.verify', ['id' => $user->id]) }}">Kích hoạt email</a>
+                                                    <a class="dropdown-item text-success" href="{{ route('profile.account.verify', ['id' => $user->id]) }}">Kích hoạt email</a>
                                                 @endif
-                                                    <a class="dropdown-item" href="{{ route('profile.account.edit', ['id' => $user->id]) }}">Chỉnh sửa</a>
+                                                    <a class="dropdown-item text-info" href="{{ route('profile.account.edit', ['id' => $user->id]) }}">Chỉnh sửa</a>
                                                 @if($user->storage->isEmpty() && $user->stage->isEmpty()
                                                     && $user->product->isEmpty() && $user->news->isEmpty())
-                                                    <a class="dropdown-item" href="{{ route('profile.account.delete', ['id' => $user->id]) }}">Xóa</a>
+                                                    <a class="dropdown-item text-danger" href="{{ route('profile.account.delete', ['id' => $user->id]) }}">Xóa</a>
                                                 @endif
                                             </div>
                                         </div>
@@ -185,119 +184,6 @@
 @endsection
 @section('js')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Bootstrap Date-Picker Plugin -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $(function () {
-                var errors = $('.alert-danger').html();
-                if (errors != null) {
-                    $('#btn-modal-click').click();
-                }
-            });
-            $(function(){
-                var date_input1=$('input[name="thoigianbatdau[]"]'); //our date input has the name "date"
-                var date_input2=$('input[name="thoigianketthuc[]"]'); //our date input has the name "date"
-                var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-                var options={
-                    format: 'dd-mm-yyyy',
-                    container: container,
-                    todayHighlight: true,
-                    autoclose: true,
-                };
-                date_input1.datepicker(options);
-                date_input2.datepicker(options);
-            });
-
-            function formatDate(date) {
-                var d = new Date(date),
-                    month = '' + (d.getMonth() + 1),
-                    day = '' + d.getDate(),
-                    year = d.getFullYear();
-
-                if (month.length < 2) 
-                    month = '0' + month;
-                if (day.length < 2) 
-                    day = '0' + day;
-
-                return [day, month, year].join('-');
-            }
-
-            $(document).on('change', 'input[name="idvaitro[]"]', function () {
-                if (this.checked) {
-                    $('#batdau' + $(this).val()).val(formatDate(new Date()));
-                    $('#batdau' + $(this).val()).removeAttr('disabled');
-                    $('#ketthuc' + $(this).val()).removeAttr('disabled');
-                    $('#badge' + $(this).val()).removeClass('badge-secondary');
-                    $('#badge' + $(this).val()).addClass('badge-primary');
-                }
-                else
-                {
-                    $('#batdau' + $(this).val()).val(null);
-                    $('#ketthuc' + $(this).val()).val(null);
-                    $('#batdau' + $(this).val()).attr('disabled', 'disable');
-                    $('#ketthuc' + $(this).val()).attr('disabled', 'disable');
-                    $('#badge' + $(this).val()).removeClass('badge-primary');
-                    $('#badge' + $(this).val()).addClass('badge-secondary');
-                }
-            });
-
-            $(document).on('blur', 'input[name="thoigianbatdau[]"]', function () {
-                $(this).val(formatDate(new Date()));
-            });
-
-            $(function () {
-                $('[data-toggle="tooltip"]').tooltip()
-            });
-
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 1000,
-                timerProgressBar: false,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            });
-
-            $(document).on('click', '.badge-delete', function (e) {
-                e.preventDefault();
-                var roleID = $(this).attr('data-id-role');
-                var userID = $(this).attr('data-id-user');
-                var url = $(this).attr('href');
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url : url,
-                            type: "get",
-                            data: {
-                                'id_role':roleID,
-                                'id_user':userID,
-                            },
-                            success:function(data) {
-                                if (data.code == 200) {
-                                    Toast.fire({
-                                        icon: 'success',
-                                        title: 'Xóa thành công'
-                                    }).then((result) => {
-                                        location.reload();
-                                    });
-                                }
-                            }
-                        });
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="{{ asset('AdminLTE/company/account/index/account.js') }}"></script>
 @endsection

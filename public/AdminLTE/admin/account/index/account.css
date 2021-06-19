@@ -1,0 +1,7 @@
+.alert-custom{
+    margin-top: 5px;
+    padding: 3px 5px;
+}
+.badge-role{
+    transform: scale(1.2,1.2);
+}
