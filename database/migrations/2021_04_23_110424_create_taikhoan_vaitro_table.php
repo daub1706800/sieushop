@@ -17,8 +17,8 @@ class CreateTaikhoanVaitroTable extends Migration
             $table->id();
             $table->bigInteger('idtaikhoan');
             $table->bigInteger('idvaitro');
-            $table->dateTime('thoigianbatdau')->nullable();
-            $table->dateTime('thoigianketthuc')->nullable();
+            $table->dateTime('thoigianbatdau');
+            $table->dateTime('thoigianketthuc');
             $table->timestamps();
         });
     }

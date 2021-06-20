@@ -4,16 +4,9 @@
     <title>Sản phẩm | Thêm mới</title>
 @endsection
 @section('css')
-    <!-- include summernote css -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <!-- include select2 css -->
     <link rel="stylesheet" href="{{asset('vendor/css/select2.css')}}">
-    <style>
-        .alert-custom{
-            margin-top: 5px;
-            padding: 3px 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/company/product/add/product.css') }}">
 @endsection
 @section('content')
 <div class="content-wrapper">
@@ -163,49 +156,7 @@
 </div>
 @endsection
 @section('js')
-    <!-- include summernote js -->
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <!-- include select2 js -->
     <script src="{{ asset('vendor/js/select2.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $(function(){
-                $('.summernote').summernote({
-                    height: 400,                // set editor height
-                    minHeight: 400,             // set minimum height of editor
-                    maxHeight: 400,             // set maximum height of editor
-                    focus: false,                  // set focus to editable area after initializing summernote
-                    codemirror: { // codemirror options
-                        theme: 'monokai'
-                    },
-                    placeholder: "Nhập mô tả cho công việc",
-                    toolbar: [
-                        ['style', ['style']],
-                        ['font', ['bold', 'underline', 'clear']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['table', ['table']],
-                        // ['insert', ['link', 'picture', 'video']],
-                        ['view', ['help']]
-                    ]
-                });
-            });
-            $(function(){
-                $(".storage-selected").select2({
-                    tags: false,
-                    placeholder : 'Chọn vai trò',
-                    theme: "classic",
-                    width: "100%"
-                });
-            });
-            $(function(){
-                $(".productcategories-selected").select2({
-                    tags: false,
-                    placeholder : 'Chọn vai trò',
-                    theme: "classic",
-                    width: "100%"
-                });
-            });
-        });
-    </script>
+    <script src="{{ asset('AdminLTE/company/product/add/product.js') }}"></script>
 @endsection

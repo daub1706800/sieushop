@@ -6,11 +6,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{asset('AdminLTE/dist/css/mystyle2.css')}}">
-    <style>
-        .loaiquangcao{
-            transform: scale(1.5, 1.5);
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/admin/advertise/index/advertise.css') }}">
 @endsection
 
 @section('content')
@@ -46,7 +42,8 @@
                                         <th scope="row">{{ $item->id }}</th>
                                         <td>{{ $item->tieudequangcao }}</td>
                                         <td class="text-center" >
-                                            <input type="checkbox" class="loaiquangcao" data-id="{{ $item->id }}" value="{{ $item->loaiquangcao }}" {{ $item->loaiquangcao == 1 ? "checked" : "" }}>
+                                            <input type="checkbox" class="loaiquangcao" data-id="{{ $item->id }}" data-url="{{ route('advertise.change-status') }}"
+                                                value="{{ $item->loaiquangcao }}" {{ $item->loaiquangcao == 1 ? "checked" : "" }}>
                                         </td>
                                         <td>
                                             @if ($item->advertiseimage->first()->loaibanner == 0)
@@ -63,8 +60,8 @@
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('advertise.edit', ['id' => $item->id]) }}">Chỉnh sửa</a>
-                                                    <a class="dropdown-item" href="{{ route('advertise.delete', ['id' => $item->id]) }}">Xóa</a>
+                                                    <a class="dropdown-item text-info" href="{{ route('advertise.edit', ['id' => $item->id]) }}">Chỉnh sửa</a>
+                                                    <a class="dropdown-item text-danger" href="{{ route('advertise.delete', ['id' => $item->id]) }}">Xóa</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -85,48 +82,5 @@
 
 @section('js')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        $(document).ready(function(){
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 1000,
-                timerProgressBar: false,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            });
-
-            $(document).on('click', '.loaiquangcao', function() {
-                var id = $(this).data('id');
-                var that = $(this);
-                if ($(this).val() == 1) {
-                    var status = 1;
-                }
-                else
-                {
-                    var status = 0;
-                }
-                $.ajax({
-                    url : "{{ route('advertise.change-status') }}",
-                    type: "get",
-                    data: {
-                        "id":id,
-                        "status":status
-                    },
-                    success:function(data) {
-                        Toast.fire({
-                            icon: 'success',
-                            title: 'Chuyển đổi thành công'
-                        });
-
-                        that.val(data);
-                        
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="{{ asset('AdminLTE/admin/advertise/index/advertise.js') }}"></script>
 @endsection

@@ -368,26 +368,30 @@ class AdminNewsVideoController extends Controller
     public function change_status(Request $request)
     {
         try {
-            DB::beginTransaction();
-
             if ($request->status == 1) {
+                
+                DB::beginTransaction();
+
                 $this->newsvideo->FindOrFail($request->id)->update([
                     'loaivideotintuc' => 0
                 ]);
+
+                DB::commit();
                 
                 return response()->json($status=0);
             }
             else
             {
+                DB::beginTransaction();
+
                 $this->newsvideo->FindOrFail($request->id)->update([
                     'loaivideotintuc' => 1
                 ]);
+
+                DB::commit();
     
                 return response()->json($status=1);
             }
-
-            DB::commit();
-
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());

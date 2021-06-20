@@ -39,10 +39,10 @@
                                     <tr>
                                         <th scope="row">{{ $company->id }}</th>
                                         <td>
-                                            {{-- <a href="{{ route('company.view') }}">{{ $company->tencongty }}</a> --}}
                                             <a href="" class="company-item"
                                                 data-toggle="modal" data-target="#exampleModal"
-                                                data-id="{{ $company->id }}">{{ $company->tencongty }}</a>
+                                                data-id="{{ $company->id }}" data-url="{{ route('company.view') }}">
+                                                {{ $company->tencongty }}</a>
                                         </td>
                                         <td>{{ $company->diachicongty }}</td>
                                         <td>{{ $company->emailcongty }}</td>
@@ -53,10 +53,10 @@
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('company.edit', ['id'=>$company->id]) }}">Chỉnh sửa</a>
+                                                    <a class="dropdown-item text-info" href="{{ route('company.edit', ['id'=>$company->id]) }}">Chỉnh sửa</a>
                                                     @if($company->news->isEmpty() && $company->user->isEmpty() && $company->product->isEmpty()
                                                         && $company->procat->isEmpty() && $company->storage->isEmpty())
-                                                    <a class="dropdown-item" href="{{ route('company.edit', ['id'=>$company->id]) }}">Xóa</a>
+                                                    <a class="dropdown-item text-danger" href="{{ route('company.edit', ['id'=>$company->id]) }}">Xóa</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -152,36 +152,5 @@
 @endsection
 
 @section('js')
-    <script>
-        $(document).ready(function(){
-            $(document).on('click', '.company-item', function() {
-                var idCompany = $(this).data('id');
-                $.ajax({
-                    url : "{{ route('company.view') }}",
-                    type : "post",
-                    data : {
-                        "idCompany":idCompany,
-                        "_token": "{{ csrf_token() }}"
-                    },
-                    success:function(data) {
-                        console.log(data.company);
-                        $('.congty').text(data.company.tencongty);
-                        $('.ngaythanhlap').text('Thành lập ngày ' + data.company.ngaythanhlapcongty);
-                        $('.tenso').text(data.department.tenso);
-                        $('.linhvuc').text(data.field.tenlinhvuc);
-                        $('.diachi').text(data.company.diachicongty);
-                        $('.email').text(data.company.emailcongty);
-                        $('.dienthoai').text(data.company.dienthoaicongty);
-                        $('.fax').text(data.company.faxcongty);
-                        $('.website').text(data.company.webcongty);
-                        $('.sdkkd').text(data.company.sdkkdcongty);
-                        $('.ngaycap').text(data.company.ngaycapdkkdcongty);
-                        $('.noicap').text(data.company.noicapdkkdcongty);
-                        $('.masothue').text(data.company.masothuecongty);
-                        $('.subdomain').text(data.subdomain);
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="{{ asset('AdminLTE/admin/company/index/company.js') }}"></script>
 @endsection

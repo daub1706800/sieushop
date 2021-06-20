@@ -69,8 +69,7 @@ class AccountController extends Controller
                 'idtaikhoan' => $user->id
             ]);
 
-            // Insert data to table taikhoan_vaitro
-            if ($request->idcongty) {
+            if ($request->idcongty && $request->idvaitro) {
                 foreach ($request->idvaitro as $key => $value) {
                     if ($request->thoigianketthuc[$key] == null) {
     
@@ -80,6 +79,7 @@ class AccountController extends Controller
                     {
                         $thoigianketthuc = Carbon::create($request->thoigianketthuc[$key])->format('Y-m-d');
                     }
+                    // Insert data to table taikhoan_vaitro
                     DB::table('taikhoan_vaitro')->insert([
                         'idtaikhoan' => $user->id,
                         'idvaitro' => $value,
@@ -89,7 +89,6 @@ class AccountController extends Controller
                 }
             }
             
-
             DB::commit();
 
             return redirect()->route('account.index');
@@ -105,7 +104,13 @@ class AccountController extends Controller
         try {
             $user = $this->user->FindOrFail($id);
 
-            $roles = $this->role->where('idcongty', $user->idcongty)->orWhere('loaivaitro', 2)->get();
+            if ($user->idcongty) {
+                $roles = $this->role->where('idcongty', $user->idcongty)->orWhere('loaivaitro', 2)->get();
+            }
+            else
+            {
+                $roles = $this->role->where('loaivaitro', 2)->get();
+            }
     
             return view('admin.account.edit', compact('user', 'roles'));
         } catch (\Exception $exception) {
@@ -125,7 +130,7 @@ class AccountController extends Controller
                 ]);
             }
 
-            if(!empty($request->idvaitro))
+            if($request->idvaitro)
             {
                 $user = $this->user->FindOrFail($id);
 
@@ -133,7 +138,6 @@ class AccountController extends Controller
                     // Delete data to table taikhoan_vaitro
                     DB::table('taikhoan_vaitro')->where('idtaikhoan', $user->id)
                                                 ->where('idvaitro', $value)->delete();
-                    
                     if ($request->thoigianketthuc[$key] == null) {
 
                         $thoigianketthuc = Carbon::now()->addYears(1000)->format('Y-m-d');
@@ -174,7 +178,9 @@ class AccountController extends Controller
 
             DB::commit();
 
-            return redirect()->route('account.index');
+            return response()->json([
+                'code' => 200
+            ]);
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());

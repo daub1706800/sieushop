@@ -46,7 +46,8 @@
                                         <td>
                                             <a href="" class="product-item"
                                                 data-toggle="modal" data-target="#exampleModal"
-                                                data-id="{{ $product->id }}">{{ $product->tensanpham }}</a>
+                                                data-id="{{ $product->id }}" data-url="{{ route('admin.product.view') }}">
+                                                {{ $product->tensanpham }}</a>
                                         </td>
                                         <td>{{ $product->productcategory->tenloaisanpham }}</td>
                                         <td>{{ $product->chungloaisanpham }}</td>
@@ -57,10 +58,10 @@
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('admin.product.edit', ['id' => $product->id]) }}">Chỉnh sửa sản phẩm</a>
-                                                    <a class="dropdown-item" href="{{ route('admin.stage.index', ['product_id' => $product->id]) }}">Danh sách giai đoạn</a>
+                                                    <a class="dropdown-item text-info" href="{{ route('admin.product.edit', ['id' => $product->id]) }}">Chỉnh sửa sản phẩm</a>
+                                                    <a class="dropdown-item text-warning" href="{{ route('admin.stage.index', ['product_id' => $product->id]) }}">Danh sách giai đoạn</a>
                                                     @if($product->comment->isEmpty() && $product->stage->isEmpty())
-                                                    <a class="dropdown-item" href="{{ route('admin.product.delete', ['id' => $product->id]) }}">Xóa</a>
+                                                    <a class="dropdown-item text-danger" href="{{ route('admin.product.delete', ['id' => $product->id]) }}">Xóa</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -109,24 +110,5 @@
 @endsection
 
 @section('js')
-    <script>
-        $(document).ready(function(){
-            $(document).on('click', '.product-item', function() {
-                var idProduct = $(this).data('id');
-                $.ajax({
-                    url : "{{ route('admin.product.view') }}",
-                    type : "post",
-                    data : {
-                        "idProduct":idProduct,
-                        "_token": "{{ csrf_token() }}"
-                    },
-                    success:function(data) {
-                        $('.tensanpham').text(data.tensanpham);
-                        $('.ngaytao').text('Tạo ngày ' + data.date);
-                        $('#view-product').html(data.output);
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="{{ asset('AdminLTE/admin/product/index/product.js') }}"></script>
 @endsection

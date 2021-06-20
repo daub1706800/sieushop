@@ -3,14 +3,11 @@
 @section('title')
     <title>Sở ngành | Danh sách</title>
 @endsection
+
 @section('css')
-    <style>
-        .alert-custom{
-            margin-top: 5px;
-            padding: 3px 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/admin/department/index/department.css') }}">
 @endsection
+
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -48,7 +45,8 @@
                                     <td>
                                         <a href="" class="department-item"
                                             data-toggle="modal" data-target="#exampleModalScrollable"
-                                            data-id="{{ $department->id }}">{{ $department->tenso }}</a>
+                                            data-id="{{ $department->id }}" data-url="{{ route('department.view') }}">
+                                            {{ $department->tenso }}</a>
                                     </td>
                                     <td>{{ $department->diachiso }}</td>
                                     <td>{{ $department->emailso }}</td>
@@ -60,9 +58,9 @@
                                             <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                     aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="{{route('department.edit', ['id' => $department->id])}}">Chỉnh sửa</a>
+                                                <a class="dropdown-item text-info" href="{{route('department.edit', ['id' => $department->id])}}">Chỉnh sửa</a>
                                                 @if($department->company->isEmpty())
-                                                <a class="dropdown-item" href="{{route('department.delete', ['id' => $department->id])}}">Xóa</a>
+                                                <a class="dropdown-item text-danger" href="{{route('department.delete', ['id' => $department->id])}}">Xóa</a>
                                                 @endif
                                             </div>
                                         </div>
@@ -210,37 +208,7 @@
     </div>
 </div>
 @endsection
-@section('js')
-    <script>
-        $(document).ready(function() {
-            $(function () {
-                var errors = $('.alert-custom').html();
-                if (errors != null) {
-                    $('#btn-modal-click').click();
-                }
-            });
 
-            $(document).on('click', '.department-item', function() {
-                var idDepartment = $(this).data('id');
-                $.ajax({
-                    url : "{{ route('department.view') }}",
-                    type : "post",
-                    data : {
-                        "idDepartment":idDepartment,
-                        "_token": "{{ csrf_token() }}"
-                    },
-                    success:function(data) {
-                        console.log(data);
-                        $('.tenso').text(data.department.tenso);
-                        $('.taongay').text('Ngày tạo ' + data.date);
-                        $('.diachi').text(data.department.diachiso);
-                        $('.email').text(data.department.emailso);
-                        $('.dienthoai').text(data.department.dienthoaiso);
-                        $('.fax').text(data.department.faxso);
-                        $('.website').text(data.department.webso);
-                    }
-                });
-            });
-        });
-    </script>
+@section('js')
+    <script src="{{ asset('AdminLTE/admin/department/index/department.js') }}"></script>
 @endsection

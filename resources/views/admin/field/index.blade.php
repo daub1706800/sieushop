@@ -3,14 +3,11 @@
 @section('title')
     <title>Lĩnh vực | Danh sách</title>
 @endsection
+
 @section('css')
-    <style>
-        .alert-custom{
-            margin-top: 5px;
-            padding: 3px 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/admin/field/index/field.css') }}">
 @endsection
+
 @section('content')
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -48,9 +45,9 @@
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('field.edit', ['id' => $field->id]) }}">Chỉnh sửa</a>
+                                                    <a class="dropdown-item text-info" href="{{ route('field.edit', ['id' => $field->id]) }}">Chỉnh sửa</a>
                                                     @if( $field->category->isEmpty() && $field->company->isEmpty() )
-                                                    <a class="dropdown-item" href="{{ route('field.delete', ['id' => $field->id]) }}">Xóa</a>
+                                                    <a class="dropdown-item text-danger" href="{{ route('field.delete', ['id' => $field->id]) }}">Xóa</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -112,15 +109,7 @@
         </div>
     </div>
 @endsection
+
 @section('js')
-    <script>
-        $(document).ready(function() {
-            $(function () {
-                var errors = $('.alert-custom').html();
-                if (errors != null) {
-                    $('#btn-modal-click').click();
-                }
-            });
-        });
-    </script>
+    <script src="{{ asset('AdminLTE/admin/field/index/field.js') }}"></script>
 @endsection

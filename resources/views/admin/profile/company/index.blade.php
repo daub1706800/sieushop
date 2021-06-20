@@ -8,12 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
     <link rel="stylesheet" href="{{asset('adminLTE/dist/css/mystyle2.css')}}"/>
     <link rel="stylesheet" href="{{asset('vendor/css/select2.css')}}">
-    <style>
-        .alert-custom{
-            margin-top: 5px;
-            padding: 3px 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/company/company/index/company.css') }}">
 @endsection
 
 @section('content')
@@ -183,53 +178,7 @@
 @endsection
 
 @section('js')
-    <!-- Bootstrap Date-Picker Plugin -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-    <!-- Select2 Plugin -->
     <script src="{{ asset('vendor/js/select2.js') }}"></script>
-    <script>
-        $(document).ready(function(){
-            $(function(){
-                var date_input=$('input[name="ngaythanhlapcongty"]'); //our date input has the name "date"
-                var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-                var options={
-                    format: 'yyyy-mm-dd',
-                    container: container,
-                    todayHighlight: true,
-                    autoclose: true,
-                };
-                date_input.datepicker(options);
-            });
-
-            $(function(){
-                var date_input=$('input[name="ngaycapdkkdcongty"]'); //our date input has the name "date"
-                var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-                var options={
-                    format: 'yyyy-mm-dd',
-                    container: container,
-                    todayHighlight: true,
-                    autoclose: true,
-                };
-                date_input.datepicker(options);
-            });
-
-            $(function(){
-                $(".field-selected").select2({
-                    tags: false,
-                    theme: "classic",
-                    width: "100%",
-                    // multiple: true
-                });
-            });
-
-            $(function(){
-                $(".department-selected").select2({
-                    tags: false,
-                    theme: "classic",
-                    width: "100%",
-                    // multiple: true
-                });
-            });
-        });
-    </script>
+    <script src="{{ asset('AdminLTE/company/company/index/company.js') }}"></script>
 @endsection

@@ -127,7 +127,7 @@ Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
                 'as'   => 'department.delete',
                 'uses' => 'App\Http\Controllers\DepartmentController@delete'
             ]);
-            Route::post('/view', [
+            Route::get('/view', [
                 'as'   => 'department.view',
                 'uses' => 'App\Http\Controllers\DepartmentController@view'
             ]);
@@ -199,7 +199,7 @@ Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
                 'as'   => 'company.delete',
                 'uses' => 'App\Http\Controllers\CompanyController@delete'
             ]);
-            Route::post('/view', [
+            Route::get('/view', [
                 'as'   => 'company.view',
                 'uses' => 'App\Http\Controllers\CompanyController@view'
             ]);
@@ -239,7 +239,7 @@ Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
                 'as'   => 'news.update-xuatban',
                 'uses' => 'App\Http\Controllers\NewsController@update_xuatban'
             ]);
-            Route::post('/history', [
+            Route::get('/history', [
                 'as'   => 'news.history',
                 'uses' => 'App\Http\Controllers\NewsController@history'
             ]);
@@ -247,7 +247,7 @@ Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
                 'as'   => 'news.remove',
                 'uses' => 'App\Http\Controllers\NewsController@remove'
             ]);
-            Route::post('/view', [
+            Route::get('/view', [
                 'as'   => 'news.view',
                 'uses' => 'App\Http\Controllers\NewsController@view'
             ]);
@@ -299,7 +299,7 @@ Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
                 'as'   => 'admin.video.update-xuatban',
                 'uses' => 'App\Http\Controllers\AdminNewsVideoController@update_xuatban'
             ]);
-            Route::post('/history', [
+            Route::get('/history', [
                 'as'   => 'admin.video.history',
                 'uses' => 'App\Http\Controllers\AdminNewsVideoController@history'
             ]);
@@ -307,7 +307,7 @@ Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
                 'as'   => 'admin.video.remove',
                 'uses' => 'App\Http\Controllers\AdminNewsVideoController@remove'
             ]);
-            Route::post('/view', [
+            Route::get('/view', [
                 'as'   => 'admin.video.view',
                 'uses' => 'App\Http\Controllers\AdminNewsVideoController@view'
             ]);
@@ -383,7 +383,7 @@ Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
                 'as'   => 'admin.storage.delete',
                 'uses' => 'App\Http\Controllers\AdminStorageController@delete'
             ]);
-            Route::post('/view', [
+            Route::get('/view', [
                 'as'   => 'admin.storage.view',
                 'uses' => 'App\Http\Controllers\AdminStorageController@view'
             ]);
@@ -439,11 +439,11 @@ Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
                 'as'   => 'admin.product.delete',
                 'uses' => 'App\Http\Controllers\AdminProductController@delete'
             ]);
-            Route::post('/view', [
+            Route::get('/view', [
                 'as'   => 'admin.product.view',
                 'uses' => 'App\Http\Controllers\AdminProductController@view'
             ]);
-            Route::post('/input-change', [
+            Route::get('/input-change', [
                 'as'   => 'admin.product.input-change',
                 'uses' => 'App\Http\Controllers\AdminProductController@input_change'
             ]);
@@ -761,7 +761,7 @@ Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
                 'uses' => 'App\Http\Controllers\NewsVideoController@update_xuatban',
                 'middleware' => 'can:newsvideo-publish'
             ]);
-            Route::post('/history', [
+            Route::get('/history', [
                 'as'   => 'video.history',
                 'uses' => 'App\Http\Controllers\NewsVideoController@history'
             ]);
@@ -770,7 +770,7 @@ Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
                 'uses' => 'App\Http\Controllers\NewsVideoController@remove',
                 'middleware' => 'can:newsvideo-recall'
             ]);
-            Route::post('/view', [
+            Route::get('/view', [
                 'as'   => 'video.view',
                 'uses' => 'App\Http\Controllers\NewsVideoController@view'
             ]);
@@ -898,7 +898,7 @@ Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
                 'uses' => 'App\Http\Controllers\StorageController@delete',
                 'middleware' => 'can:storage-delete'
             ]);
-            Route::post('/view', [
+            Route::get('/view', [
                 'as'   => 'storage.view',
                 'uses' => 'App\Http\Controllers\StorageController@view',
             ]);
@@ -962,7 +962,7 @@ Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
                 'uses' => 'App\Http\Controllers\ProductController@delete',
                 'middleware' => 'can:product-delete'
             ]);
-            Route::post('/view', [
+            Route::get('/view', [
                 'as'   => 'product.view',
                 'uses' => 'App\Http\Controllers\ProductController@view',
             ]);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RoleRequest;
+use App\Models\Company;
 use App\Models\Role;
 use App\Models\Permission;
 use Illuminate\Support\Facades\DB;
@@ -12,11 +13,13 @@ class RoleController extends Controller
 {
     private $role;
     private $permission;
+    private $company;
 
-    public function __construct(Role $role, Permission $permission)
+    public function __construct(Role $role, Permission $permission, Company $company)
     {
         $this->role       = $role;
         $this->permission = $permission;
+        $this->company = $company;
     }
 
     public function index()
@@ -24,9 +27,11 @@ class RoleController extends Controller
         try {
             $roles = $this->role->all();
 
-            $permissionParents = $this->permission->where('parent_id', 0)->get();
+            $permissionParents = $this->permission->where('parent_id', 0)->where('trangthai', 1)->get();
+
+            $companies = $this->company->all();
     
-            return view('admin.role.index', compact('roles', 'permissionParents'));            
+            return view('admin.role.index', compact('roles', 'permissionParents', 'companies'));            
         } catch (\Exception $exception) {
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
         }
@@ -38,6 +43,7 @@ class RoleController extends Controller
             DB::beginTransaction();
 
             $role = $this->role->create([
+                'idcongty' => $request->idcongty,
                 'tenvaitro'  => $request->tenvaitro,
                 'motavaitro' => $request->motavaitro,
             ]);
@@ -75,6 +81,7 @@ class RoleController extends Controller
     {
         try {
             DB::beginTransaction();
+            
             $this->role->FindOrFail($id)->update([
                 'tenvaitro'  => $request->tenvaitro,
                 'motavaitro' => $request->motavaitro,
@@ -106,7 +113,9 @@ class RoleController extends Controller
 
             DB::commit();
     
-            return redirect()->route('role.index');            
+            return response()->json([
+                'code' => 200
+            ]);            
         } catch (\Exception $exception) {
             DB::rollback();
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());

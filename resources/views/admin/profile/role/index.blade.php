@@ -5,15 +5,7 @@
 @endsection
 
 @section('css')
-    <style>
-        .check-all, .checkbox-parent, .checkbox-childrent{
-            transform: scale(1.3);
-        }
-        .alert-custom{
-            margin-top: 5px;
-            padding: 3px 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/company/role/index/role.css') }}">
 @endsection
 
 @section('content')
@@ -61,9 +53,9 @@
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('profile.role.edit', ['id' => $role->id]) }}">Chỉnh sửa</a>
+                                                    <a class="dropdown-item text-info" href="{{ route('profile.role.edit', ['id' => $role->id]) }}">Chỉnh sửa</a>
                                                     @if($role->user->isEmpty())
-                                                    <a class="dropdown-item" href="{{ route('profile.role.delete', ['id' => $role->id]) }}">Xóa</a>
+                                                    <a class="dropdown-item text-danger delete-role" href="{{ route('profile.role.delete', ['id' => $role->id]) }}">Xóa</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -162,29 +154,6 @@
 </div>
 @endsection
 @section('js')
-    <script>
-        $(document).ready(function(){
-            $('.checkbox-parent').on('click', function(){
-                $(this).parents('tr').find('.checkbox-childrent').prop('checked', $(this).prop('checked'));
-            });
-
-            $('.check-all').on('click', function(){
-                $(this).parents().find('.checkbox-parent').prop('checked', $(this).prop('checked'));
-                $(this).parents().find('.checkbox-childrent').prop('checked', $(this).prop('checked'));
-            });
-            $(function () {
-                var errors = $('.alert-custom').html();
-                if (errors != null) {
-                    $('#btn-modal-click').click();
-                }
-            });
-            // $(function () {
-            //     $('#dtDynamicVerticalScrollExample').DataTable({
-            //         "scrollY": "50vh",
-            //         "scrollCollapse": true,
-            //     });
-            //     $('.dataTables_length').addClass('bs-select');
-            // });
-        });
-    </script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('AdminLTE/company/role/index/role.js') }}"></script>
 @endsection

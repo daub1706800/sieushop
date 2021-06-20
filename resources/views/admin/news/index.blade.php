@@ -6,11 +6,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{asset('AdminLTE/dist/css/mystyle2.css')}}">
-    <style>
-        .tinnoibat{
-            transform: scale(1.5, 1.5);
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/admin/news/index/news.css') }}">
 @endsection
 
 @section('content')
@@ -51,7 +47,8 @@
                                         <td style="width:200px;">
                                             <a href="" class="tieudetintuc"
                                                 data-toggle="modal" data-target="#exampleModal"
-                                                data-id="{{ $item->id }}">{{ $item->tieudetintuc }}</a>
+                                                data-id="{{ $item->id }}" data-url="{{ route('news.view') }}">
+                                                {{ $item->tieudetintuc }}</a>
                                         </td>
                                         <td>{{ $item->category->tenchuyenmuc }}</td>
                                         <td>{{ $item->profile->tenthanhvien .' '. $item->profile->hothanhvien }}</td>
@@ -59,7 +56,8 @@
                                         <td>{{ $item->ngayxuatban }}</td>
                                         <td>{{ $item->company->tencongty }}</td>
                                         <td class="text-center">
-                                            <input type="checkbox" class="tinnoibat" data-id="{{ $item->id }}" value="{{ $item->loaitintuc }}" {{ $item->loaitintuc == 1 ? "checked" : "" }}>
+                                            <input type="checkbox" class="tinnoibat" data-id="{{ $item->id }}" data-url="{{ route('news.change-status') }}"
+                                                value="{{ $item->loaitintuc }}" {{ $item->loaitintuc == 1 ? "checked" : "" }}>
                                         </td>
                                         <td style="width:120px;">
                                             @if ($item->duyettintuc == 0 && $item->xuatbantintuc == 0 && $item->lydogo == 0)
@@ -77,7 +75,8 @@
                                             @if (!$item->newshistory->isEmpty())
                                                 <a href="" class="viewhistory"
                                                     data-toggle="modal" data-target="#exampleModal2"
-                                                    data-id="{{ $item->id }}">Lịch sử thu hồi</a>
+                                                    data-id="{{ $item->id }}" data-url="{{ route('news.history') }}">
+                                                    Lịch sử thu hồi</a>
                                             @endif
                                         </td>
                                         <td>
@@ -85,10 +84,10 @@
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('news.log', ['id' => $item->id]) }}">Lịch sử tin tức</a>
-                                                    <a class="dropdown-item" href="{{ route('news.edit', ['id' => $item->id]) }}">Chỉnh sửa</a>
+                                                    <a class="dropdown-item text-warning" href="{{ route('news.log', ['id' => $item->id]) }}">Lịch sử tin tức</a>
+                                                    <a class="dropdown-item text-info" href="{{ route('news.edit', ['id' => $item->id]) }}">Chỉnh sửa</a>
                                                     @if ($item->xuatbantintuc == 0)
-                                                    <a class="dropdown-item" href="{{ route('news.delete', ['id' => $item->id]) }}">Xóa</a>
+                                                    <a class="dropdown-item text-danger" href="{{ route('news.delete', ['id' => $item->id]) }}">Xóa</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -173,87 +172,5 @@
 
 @section('js')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        $(document).ready(function(){
-            $(document).on('click', '.tieudetintuc', function() {
-                var idNews = $(this).data('id');
-                $.ajax({
-                    url : "{{ route('news.view') }}",
-                    type : "post",
-                    data : {
-                        "idNews":idNews,
-                        "_token": "{{ csrf_token() }}"
-                    },
-                    success:function(data) {
-                        // console.log(data);
-                        $('.chuyenmuc').html(data.category);
-                        $('.ngaydang').html('Viết ngày ' + data.ngaydang);
-                        $('.tieude').html(data.news.tieudetintuc);
-                        $('.tomtat').html(data.news.tomtattintuc);
-                        $('.hinhanh').attr('src',data.news.hinhanhtintuc);
-                        $('.noidung').html(data.news.noidungtintuc);
-                        $('.video').html(data.video);
-                        $('.tacgia').html(data.author);
-                    }
-                });
-            });
-
-            $(document).on('click', '.viewhistory', function() {
-                var idNews = $(this).data('id');
-                $.ajax({
-                    url : "{{ route('news.history') }}",
-                    type : "post",
-                    data : {
-                        "idNews":idNews,
-                        "_token": "{{ csrf_token() }}"
-                    },
-                    success:function(data) {
-                        // console.log(data);
-                        $('.tieudeNews').text(data.news);
-                        $('.show-history').html(data.output);
-                    }
-                });
-            });
-
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 1000,
-                timerProgressBar: false,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            });
-
-            $(document).on('click', '.tinnoibat', function() {
-                var id = $(this).data('id');
-                var that = $(this);
-                if ($(this).val() == 1) {
-                    var status = 1;
-                }
-                else
-                {
-                    var status = 0;
-                }
-                $.ajax({
-                    url : "{{ route('news.change-status') }}",
-                    type: "get",
-                    data: {
-                        "id":id,
-                        "status":status
-                    },
-                    success:function(data) {
-                        Toast.fire({
-                            icon: 'success',
-                            title: 'Chuyển đổi thành công'
-                        });
-
-                        that.val(data);
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="{{ asset('AdminLTE/admin/news/index/news.js') }}"></script>
 @endsection

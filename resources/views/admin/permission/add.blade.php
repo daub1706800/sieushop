@@ -6,27 +6,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{asset('vendor/css/select2.css')}}">
-    <style>
-        input[type="checkbox"][readonly] {
-            pointer-events: none;
-        }
-        .alert-on {
-            background-color: rgb(83, 158, 33);
-            border-color: rgba(83, 158, 33, 0.979);
-            border-radius: 3px;
-            color: rgb(255, 255, 255);
-            padding: 10px;
-            width: auto;
-        }
-        .alert-off {
-            background-color: rgb(192, 0, 0);
-            border-color: rgba(192, 0, 0, 0.973);
-            border-radius: 3px;
-            color: rgb(255, 255, 255);
-            padding: 10px;
-            width: auto;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/admin/permission/permission.css') }}">
 @endsection
 
 @section('content')
@@ -50,7 +30,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Tên chức năng</label>
-                                    <div id="show-permission"></div>
+                                    <div id="show-permission" data-url="{{ route('permission.check-permission') }}"></div>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -83,7 +63,7 @@
                             <div class="form-group col-md-12">
                                 <label>Tên chức năng</label>
                                 <select class="form-control module-old-select" name="module_parent"
-                                        id="module_parent">
+                                        id="module_parent" data-url={{ route('permission.check-permission-checked') }}>
                                     @if ( $updatePermissions != "" )
                                     @foreach ( $updatePermissions as $itemParent )
                                     <option value="{{ $itemParent->tenquyen }}-{{ $itemParent->id }}">
@@ -112,7 +92,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12 text-center">
-                                <button type="submit" id="update-permission" class="btn btn-primary mb-5">Thêm quyền</button>
+                                <button type="submit" id="update-permission" data-url="{{ route('permission.update') }}" class="btn btn-primary mb-5">Thêm quyền</button>
                             </div>
                         </form>
                     </div>
@@ -141,7 +121,9 @@
                                             <i>{{ $permission->motaquyen }}</i>
                                             <input style="transform: scale(1.2, 1.2);" type="checkbox"
                                                 class="trangthaiquyen" value="{{ $permission->id }}"
-                                                {{ $permission->trangthai == 1 ? 'checked' : '' }}>
+                                                {{ $permission->trangthai == 1 ? 'checked' : '' }}
+                                                data-url-on="{{ route('permission.change-status-on') }}"
+                                                data-url-off="{{ route('permission.change-status-off') }}">
                                         </td>
                                         @foreach ( $permission->permissionChildrent as $key => $item )
                                         <td class="text-center"><a href="#">{{ $item->motaquyen }}</a></td>
@@ -167,161 +149,7 @@
 @endsection
 
 @section('js')
-    <!-- Select2 Plugin -->
     <script src="{{ asset('vendor/js/select2.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        $(document).ready(function(){
-            $(function(){
-                $(".module-new-select").select2({
-                    tags: false,
-                    theme: "classic",
-                    width: "100%",
-                    multiple: true
-                });
-            });
-
-            $(function(){
-                $(".module-old-select").select2({
-                    tags: false,
-                    theme: "classic",
-                    width: "100%",
-                    // multiple: true
-                });
-            });
-
-            /* Check permission checked */
-            check_permission_checked();
-            function check_permission_checked()
-            {
-                var dataPermission = $('#module_parent').val();
-                if(dataPermission)
-                {
-                    $.ajax({
-                        url  : "{{ route('permission.check-permission-checked') }}",
-                        type : "get",
-                        data : {data:dataPermission},
-                        success:function(data)
-                        {
-                            $('#module_childrent').html(data);
-                        }
-                    });
-                }
-            }
-
-            $('#module_parent').on('change', function(){
-                // var dataPermission = $(this).val();
-                check_permission_checked();
-            });
-            /* ! Check permission checked */
-
-            /* Check permission */
-            $.ajax({
-                url  : "{{ route('permission.check-permission') }}",
-                type : "get",
-                success:function(data)
-                {
-                    $('#show-permission').html(data);
-                    $(".module-new-select").select2({
-                        tags: false,
-                        theme: "classic",
-                        width: "100%",
-                        // multiple: true
-                    });
-                }
-            });
-            /* ! Check permission */
-
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 1000,
-                timerProgressBar: false,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            });
-
-            /* Change status permission */
-            $('.trangthaiquyen').on('change', function(){
-                var permission_id = $(this).val();
-                if(this.checked)
-                {
-                    $.ajax({
-                        url  : "{{ route('permission.change-status-on') }}",
-                        type : "get",
-                        data : {permission_id:permission_id},
-                        success:function(data)
-                        {
-                            Toast.fire({
-                                icon: 'success',
-                                title: 'Chuyển đổi thành công'
-                            });
-                        }
-                    });
-                }
-                else
-                {
-                    $.ajax({
-                        url  : "{{ route('permission.change-status-off') }}",
-                        type : "get",
-                        data : {permission_id:permission_id},
-                        success:function(data)
-                        {
-                            Toast.fire({
-                                icon: 'success',
-                                title: 'Chuyển đổi thành công'
-                            });
-                        }
-                    });
-                }
-            });
-            /* ! Change status permission */
-
-            /* Update permission */
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('#csrf').val()
-                }
-            });
-            $('#update-permission').on('click', function (e){
-                e.preventDefault();
-                $.ajax({
-                    url  : "{{ route('permission.update') }}",
-                    type : "post",
-                    data : new FormData($('#changeform')[0]),
-                    processData: false,
-                    contentType: false,
-                    success:function (data)
-                    {
-                        if (data.message =! null)
-                        {
-                            $.notify({
-                                icon: 'far fa-times-circle',
-                                message: 'Quyền đã tồn tại'
-                            },{
-                                animate: {
-                                    enter: 'animated bounceIn',
-                                    exit: 'animated bounceOut'
-                                },
-                                type: 'off',
-                                allow_dismiss: false,
-                                placement: {
-                                    from: "bottom",
-                                    align: "right"
-                                },
-                            });
-                        }
-                        else
-                        {
-                            location.reload();
-                        }
-                    }
-                });
-            });
-            /* ! Update permission */
-        });
-    </script>
+    <script src="{{ asset('AdminLTE/admin/permission/permission.js') }}"></script>
 @endsection

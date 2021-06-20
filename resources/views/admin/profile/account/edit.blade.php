@@ -96,7 +96,7 @@
                                                     <tr>
                                                         <td style="width:50%">{{ $role->motavaitro }}</td>
                                                         <td style="width:50%">
-                                                            {!! $value->thoigianbatdau . ' <b>-</b> ' . $value->thoigianketthuc !!}
+                                                            {!! date('d-m-Y', strtotime($value->thoigianbatdau)) . ' <b>-</b> ' . date('d-m-Y', strtotime($value->thoigianketthuc)) !!}
                                                         </td>
                                                     </tr>
                                                 @endforeach

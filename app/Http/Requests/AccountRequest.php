@@ -25,7 +25,7 @@ class AccountRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['bail', 'required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['bail', 'required', 'string', 'email:rfc,dns', 'max:255', 'unique:users'],
             'password' => ['bail', 'required', 'string', 'min:8', 'confirmed', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/'],
             'idvaitro' => ['required'],
             'idvaitro.*' => [

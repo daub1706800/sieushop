@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class AdminAccountRequestEdit extends FormRequest
@@ -29,7 +30,8 @@ class AdminAccountRequestEdit extends FormRequest
             'idvaitro' => 'nullable',
             'idvaitro.*' => [
                 Rule::exists('vaitro', 'id')->where(function ($query) {
-                    return $query->where('idcongty', $this->idcongty)->orWhere('loaivaitro', 2);
+                    return $query->where('idcongty', $this->idcongty)->whereNotIn('id', DB::table('vaitro')->where('loaivaitro', 1)->pluck('id')->toArray())
+                    ->orWhere('loaivaitro', 2);
                 }),
             ],
             'thoigianbatdau.*' => ['nullable','after_or_equal:today'],

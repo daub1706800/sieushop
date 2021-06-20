@@ -3,14 +3,11 @@
 @section('title')
     <title>Loại sản phẩm | Danh sách</title>
 @endsection
+
 @section('css')
-    <style>
-        .alert-custom{
-            margin-top: 5px;
-            padding: 3px 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/company/product-category/index/product-category.css') }}">
 @endsection
+
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -49,9 +46,9 @@
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('productcategory.edit', ['id' => $productcategory->id]) }}">Chỉnh sửa</a>
+                                                    <a class="dropdown-item text-info" href="{{ route('productcategory.edit', ['id' => $productcategory->id]) }}">Chỉnh sửa</a>
                                                     @if($productcategory->product->isEmpty())
-                                                    <a class="dropdown-item" href="{{ route('productcategory.delete', ['id' => $productcategory->id]) }}">Xóa</a>
+                                                    <a class="dropdown-item text-danger" href="{{ route('productcategory.delete', ['id' => $productcategory->id]) }}">Xóa</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -85,20 +82,20 @@
                             <label>Tên loại sản phẩm *</label>
                             <input type="text" class="form-control @error('tenloaisanpham') is-invalid @enderror"
                                     name="tenloaisanpham" placeholder="Tên loại sản phẩm" value="{{ old('tenloaisanpham') }}">
+                            @error('tenloaisanpham')
+                            <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                            @enderror
                         </div>
-                        @error('tenloaisanpham')
-                        <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Mô tả *</label>
                             <textarea class="form-control @error('motaloaisanpham') is-invalid @enderror" rows="3"
                                     placeholder="Mô tả" name="motaloaisanpham">{{ old('motaloaisanpham') }}</textarea>
+                            @error('motaloaisanpham')
+                            <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                            @enderror
                         </div>
-                        @error('motaloaisanpham')
-                        <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="col-md-12 text-center">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -110,14 +107,7 @@
     </div>
 </div>
 @endsection
+
 @section('js')
-    <script>
-        $(document).ready(function(){
-            var error = $('.alert-custom').html();
-            if(error != null)
-            {
-                $('#btn-modal-click').click();
-            }
-        });
-    </script>
+    <script src="{{ asset('AdminLTE/company/product-category/index/product-category.js') }}"></script>
 @endsection

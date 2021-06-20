@@ -5,16 +5,9 @@
 @endsection
 
 @section('css')
-    <!-- include summernote css -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <!-- include select2 css -->
     <link rel="stylesheet" href="{{asset('vendor/css/select2.css')}}">
-    <style>
-        .alert-custom{
-            margin-top: 5px;
-            padding: 3px 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/company/newsvideo/add/newsvideo.css') }}">
 @endsection
 
 @section('content')
@@ -96,8 +89,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="checkbox" name="loaivideotintuc" value="1">
-                            <label>Tin nổi bật</label>
+                            <input type="checkbox" id="loaivideotintuc" name="loaivideotintuc" value="1">
+                            <label for="loaivideotintuc">Tin nổi bật</label>
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary mb-5">Lưu</button>
@@ -113,42 +106,7 @@
 @endsection
 
 @section('js')
-    <!-- include summernote js -->
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <!-- include select2 js -->
     <script src="{{ asset('vendor/js/select2.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $(function(){
-                $('.summernote-tomtat').summernote({
-                    height: 200,                // set editor height
-                    minHeight: 200,             // set minimum height of editor
-                    maxHeight: 200,             // set maximum height of editor
-                    focus: false,                  // set focus to editable area after initializing summernote
-                    codemirror: { // codemirror options
-                        theme: 'monokai'
-                    },
-                    placeholder: "Nhập nội dung tóm tắt",
-                    toolbar: [
-                        ['style', ['style']],
-                        ['font', ['bold', 'underline', 'clear']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['table', ['table']],
-                        // ['insert', ['link', 'picture', 'video']],
-                        ['view', ['help']]
-                    ]
-                });
-            });
-
-            $(function(){
-                $(".category-selected").select2({
-                    tags: false,
-                    placeholder : 'Chọn chuyên mục',
-                    theme: "classic",
-                    width: "100%"
-                });
-            });
-        });
-    </script>
+    <script src="{{ asset('AdminLTE/company/newsvideo/add/newsvideo.js') }}"></script>
 @endsection

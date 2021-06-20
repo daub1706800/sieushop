@@ -4,12 +4,7 @@
 <title>Giai đoạn sản phẩm | Danh sách</title>
 @endsection
 @section('css')
-    <style>
-        .alert-custom{
-            margin-top: 5px;
-            padding: 3px 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/admin/stage/index/stage.css') }}">
 @endsection
 @section('content')
 <div class="content-wrapper">
@@ -64,9 +59,9 @@
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('admin.stage.edit', ['id' => $stage->id, 'product_id' => $product_id]) }}">Chỉnh sửa</a>
+                                                    <a class="dropdown-item text-info" href="{{ route('admin.stage.edit', ['id' => $stage->id, 'product_id' => $product_id]) }}">Chỉnh sửa</a>
                                                     @if ($stage->stageInfo->isEmpty())
-                                                    <a class="dropdown-item" href="{{ route('admin.stage.delete', ['id' => $stage->id]) }}">Xóa</a>
+                                                    <a class="dropdown-item text-danger" href="{{ route('admin.stage.delete', ['id' => $stage->id]) }}">Xóa</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -92,28 +87,26 @@
             <div class="modal-body">
                 <h4><b>Thêm giai đoạn</b></h4><hr>
                 <form action="{{ route('admin.stage.store', ['product_id' => $product->id]) }}" method="post">
-                    {{-- <input type="hidden" id="csrf" value="{{csrf_token()}}"> --}}
                     @csrf
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Tên giai đoạn *</label>
                             <input type="text" class="form-control @error('tengiaidoan') is-invalid @enderror"
                                     name="tengiaidoan" placeholder="Tên giai đoạn" value="{{ old('tengiaidoan') }}">
-                            {{-- <input type="hidden" id="idsp" name="idsp" value="{{ $product_id }}"> --}}
+                            @error('tengiaidoan')
+                            <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                            @enderror
                         </div>
-                        @error('tengiaidoan')
-                        <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Mô tả *</label>
                             <textarea class="form-control @error('motagiaidoan') is-invalid @enderror" rows="3"
                                 name="motagiaidoan" placeholder="Mô tả giai đoạn">{{ old('motagiaidoan') }}</textarea>
+                            @error('motagiaidoan')
+                            <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                            @enderror
                         </div>
-                        @error('motagiaidoan')
-                        <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="col-md-12 text-center">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -126,14 +119,5 @@
 </div>
 @endsection
 @section('js')
-    <script>
-        $(document).ready(function (){
-            $(function () {
-                var errors = $('.alert-custom').html();
-                if (errors != null) {
-                    $('#btn-modal-click').click();
-                }
-            });
-        });
-    </script>
+    <script src="{{ asset('AdminLTE/admin/stage/index/stage.js') }}"></script>
 @endsection

@@ -4,16 +4,9 @@
     <title>Sản phẩm | Thêm mới</title>
 @endsection
 @section('css')
-    <!-- include summernote css -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <!-- include select2 css -->
     <link rel="stylesheet" href="{{asset('vendor/css/select2.css')}}">
-    <style>
-        .alert-custom{
-            margin-top: 5px;
-            padding: 3px 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/admin/product/add/product.css') }}">
 @endsection
 @section('content')
 <div class="content-wrapper">
@@ -32,7 +25,7 @@
                             <div class="form-group">
                                 <label>Công ty *</label>
                                 <select class="form-control company-selected @error('idcongty') is-invalid @enderror"
-                                        name="idcongty">
+                                        name="idcongty" data-url="{{ route('admin.product.input-change') }}">
                                     <option value="">Chọn công ty</option>
                                     @foreach($companies as $company)
                                     <option value="{{ $company->id }}">{{ $company->tencongty }}</option>
@@ -176,74 +169,7 @@
 </div>
 @endsection
 @section('js')
-    <!-- include summernote js -->
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <!-- include select2 js -->
     <script src="{{ asset('vendor/js/select2.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $(function(){
-                $('.summernote').summernote({
-                    height: 400,                // set editor height
-                    minHeight: 400,             // set minimum height of editor
-                    maxHeight: 400,             // set maximum height of editor
-                    focus: false,                  // set focus to editable area after initializing summernote
-                    codemirror: { // codemirror options
-                        theme: 'monokai'
-                    },
-                    placeholder: "Nhập mô tả cho công việc",
-                    toolbar: [
-                        ['style', ['style']],
-                        ['font', ['bold', 'underline', 'clear']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['table', ['table']],
-                        // ['insert', ['link', 'picture', 'video']],
-                        ['view', ['help']]
-                    ]
-                });
-            });
-            $(function(){
-                $(".storage-selected").select2({
-                    tags: false,
-                    placeholder : 'Chọn kho',
-                    theme: "classic",
-                    width: "100%"
-                });
-            });
-            $(function(){
-                $(".productcategories-selected").select2({
-                    tags: false,
-                    placeholder : 'Chọn loại sản phẩm',
-                    theme: "classic",
-                    width: "100%"
-                });
-            });
-            $(function(){
-                $(".company-selected").select2({
-                    tags: false,
-                    placeholder : 'Chọn công ty',
-                    theme: "classic",
-                    width: "100%"
-                });
-            });
-
-            $(document).on('change', '.company-selected', function() {
-                var idCompany = $(this).val();
-                $.ajax({
-                    url : "{{ route('admin.product.input-change') }}",
-                    type: "post",
-                    data: {
-                        'idCompany':idCompany,
-                        "_token": "{{ csrf_token() }}"
-                    },
-                    success:function(data) {
-                        // console.log(data);
-                        $('.storage-selected').html(data.storage);
-                        $('.productcategories-selected').html(data.productcategory);
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="{{ asset('AdminLTE/admin/product/add/product.js') }}"></script>
 @endsection

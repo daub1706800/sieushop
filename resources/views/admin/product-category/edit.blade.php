@@ -3,13 +3,11 @@
 @section('title')
     <title>Loại sản phẩm | Chỉnh sửa</title>
 @endsection
+
 @section('css')
-    <style>
-        .alert-custom{
-            padding: 3px 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/company/product-category/edit/product-category.css') }}">
 @endsection
+
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -26,7 +24,7 @@
                         <div class="form-group">
                             <label>Danh mục *</label>
                             <input type="text" class="form-control @error('tenloaisanpham') is-invalid @enderror"
-                                name="tenloaisanpham" value="{{ $productcategory->tenloaisanpham }}" placeholder="Tên loại sản phẩm">
+                                name="tenloaisanpham" value="{{ old('tenloaisanpham', $productcategory->tenloaisanpham) }}" placeholder="Tên loại sản phẩm">
                             @error('tenloaisanpham')
                             <div class="alert alert-danger alert-custom">{{ $message }}</div>
                             @enderror
@@ -34,7 +32,7 @@
                         <div class="form-group">
                             <label>Mô tả *</label>
                             <textarea class="form-control @error('motaloaisanpham') is-invalid @enderror" rows="3"
-                                placeholder="Mô tả" name="motaloaisanpham">{{ $productcategory->motaloaisanpham }}</textarea>
+                                placeholder="Mô tả" name="motaloaisanpham">{{ old('motaloaisanpham', $productcategory->motaloaisanpham) }}</textarea>
                             @error('motaloaisanpham')
                             <div class="alert alert-danger alert-custom">{{ $message }}</div>
                             @enderror

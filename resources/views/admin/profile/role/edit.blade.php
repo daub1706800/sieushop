@@ -5,15 +5,7 @@
 @endsection
 
 @section('css')
-    <style>
-        .check-all, .checkbox-parent, .checkbox-childrent{
-            transform: scale(1.3);
-        }
-        .alert-custom{
-            margin-top: 5px;
-            padding: 3px 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/company/role/edit/role.css') }}">
 @endsection
 
 @section('content')
@@ -94,16 +86,5 @@
 @endsection
 
 @section('js')
-    <script>
-        $(document).ready(function(){
-            $('.checkbox-parent').on('click', function(){
-                $(this).parents('tr').find('.checkbox-childrent').prop('checked', $(this).prop('checked'));
-            });
-
-            $('.check-all').on('click', function(){
-                $(this).parents().find('.checkbox-parent').prop('checked', $(this).prop('checked'));
-                $(this).parents().find('.checkbox-childrent').prop('checked', $(this).prop('checked'));
-            });
-        });
-    </script>
+    <script src="{{ asset('AdminLTE/company/role/edit/role.js') }}"></script>
 @endsection

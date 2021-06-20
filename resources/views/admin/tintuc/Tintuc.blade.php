@@ -5,11 +5,7 @@
 @endsection
 
 @section('css')
-    <style>
-        .flex{
-            width: 500px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/company/news/index/news.css') }}">
 @endsection
 
 @section('content')

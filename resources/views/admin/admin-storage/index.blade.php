@@ -4,14 +4,8 @@
     <title>Kho | Danh sách</title>
 @endsection
 @section('css')
-    <!-- include select2 css -->
     <link rel="stylesheet" href="{{asset('vendor/css/select2.css')}}">
-    <style>
-        .alert-custom{
-            margin-top: 5px;
-            padding: 3px 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/admin/storage/index/storage.css') }}">
 @endsection
 @section('content')
 <div class="content-wrapper">
@@ -52,7 +46,8 @@
                                         <td>
                                             <a href="" class="storage-item"
                                                 data-toggle="modal" data-target="#exampleModalScrollable"
-                                                data-id="{{ $storage->id }}">{{ $storage->tenkho }}
+                                                data-id="{{ $storage->id }}" data-url="{{ route('admin.storage.view') }}">
+                                                {{ $storage->tenkho }}</a>
                                         </td>
                                         <td>{{ $storage->diachikho }}</td>
                                         <td>{{ $storage->taitrongkho }}</td>
@@ -65,9 +60,9 @@
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('admin.storage.edit', ['id' => $storage->id]) }}">Chỉnh sửa</a>
+                                                    <a class="dropdown-item text-info" href="{{ route('admin.storage.edit', ['id' => $storage->id]) }}">Chỉnh sửa</a>
                                                     @if($storage->product->isEmpty())
-                                                    <a class="dropdown-item" href="{{ route('admin.storage.delete', ['id' => $storage->id]) }}">Xóa</a>
+                                                    <a class="dropdown-item text-danger" href="{{ route('admin.storage.delete', ['id' => $storage->id]) }}">Xóa</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -239,51 +234,7 @@
 </div>
 @endsection
 @section('js')
-    <!-- include select2 js -->
     <script src="{{ asset('vendor/js/select2.js') }}"></script>
-    <script>
-        $(document).ready(function(){
-            $(function(){
-                var error = $('.alert-custom').html();
-                if(error != null)
-                {
-                    $('#btn-modal-click').click();
-                }
-            });
-
-            $(function(){
-                $(".company-selected").select2({
-                    tags: false,
-                    placeholder : 'Chọn công ty',
-                    theme: "classic",
-                    width: "100%"
-                });
-            });
-
-            $(document).on('click', '.storage-item', function() {
-                var idStorage = $(this).data('id');
-                $.ajax({
-                    url : "{{ route('admin.storage.view') }}",
-                    type : "post",
-                    data : {
-                        "idStorage":idStorage,
-                        "_token": "{{ csrf_token() }}"
-                    },
-                    success:function(data) {
-                        // console.log(data);
-                        $('.tenkho').text(data.storage.tenkho);
-                        $('.diachikho').text(data.storage.diachikho);
-                        $('.taitrongkho').text(data.storage.taitrongkho + ' (tấn)');
-                        $('.dientichkho').text(data.storage.dientichkho + ' (mét vuông)');
-                        $('.sonhanvien').text(data.storage.sonhanvienkho);
-                        $('.ghichukho').text(data.storage.ghichukho);
-                        $('.nguoitao').text(data.author);
-                        $('.congty').text(data.company);
-                        $('.taongay').text('Tạo ngày ' + data.date);
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="{{ asset('AdminLTE/admin/storage/index/storage.js') }}"></script>
 @endsection
 

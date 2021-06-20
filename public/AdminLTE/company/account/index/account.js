@@ -15,6 +15,7 @@ $(document).ready(function() {
             container: container,
             todayHighlight: true,
             autoclose: true,
+            orientation: 'bottom'
         };
         date_input1.datepicker(options);
         date_input2.datepicker(options);
@@ -96,6 +97,38 @@ $(document).ready(function() {
                         'id_role':roleID,
                         'id_user':userID,
                     },
+                    success:function(data) {
+                        if (data.code == 200) {
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Xóa thành công'
+                            }).then((result) => {
+                                location.reload();
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+    $(document).on('click', '.delete-user', function (e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        Swal.fire({
+            title: 'Bạn có chắc ?',
+            text: "Bạn sẽ không thể hoàn tác điều này !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url : url,
+                    type: "get",
                     success:function(data) {
                         if (data.code == 200) {
                             Toast.fire({

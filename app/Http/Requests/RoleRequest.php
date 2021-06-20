@@ -24,14 +24,17 @@ class RoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'tenvaitro' => 'bail|required|max:255',
-            'motavaitro' => 'bail|required|min:10',
+            'idcongty' => ['sometimes', 'required', 'exists:congty,id'],
+            'tenvaitro' => ['required', 'max:255'],
+            'motavaitro' => ['required', 'min:10'],
         ];
     }
 
     public function messages()
     {
         return [
+            'idcongty.required' => 'Công ty không được bỏ trống',
+            'idcongty.exists' => 'Công ty không tồn tại',
             'tenvaitro.required' => 'Tên không được để trống',
             'tenvaitro.max' => 'Tên không được vượt quá 255 ký tự',
             'motavaitro.required' => 'Mô tả không được để trống',

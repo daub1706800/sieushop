@@ -5,15 +5,7 @@
 @endsection
 
 @section('css')
-    <style>
-        .check-all, .checkbox-parent, .checkbox-childrent{
-            transform: scale(1.3);
-        }
-        .alert-custom{
-            margin-top: 5px;
-            padding: 3px 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/admin/role/edit/role.css') }}">
 @endsection
 
 @section('content')
@@ -50,8 +42,8 @@
                         <label>Chọn tất cả quyền <input type="checkbox" class="check-all"></label>
                     </div>
                     <label>Chọn quyền *</label>
-                    <div class="table-responsive-md">
-                        <table class="table table-borderless table-primary table-hover">
+                    <div class="mb-3" style="overflow:auto; width:100%; height: 300px">
+                        <table class="table table-borderless table-sm table-primary table-hover">
                             <thead class="table-warning">
                                 <tr>
                                     <th></th>
@@ -94,16 +86,5 @@
 @endsection
 
 @section('js')
-    <script>
-        $(document).ready(function(){
-            $('.checkbox-parent').on('click', function(){
-                $(this).parents('tr').find('.checkbox-childrent').prop('checked', $(this).prop('checked'));
-            });
-
-            $('.check-all').on('click', function(){
-                $(this).parents().find('.checkbox-parent').prop('checked', $(this).prop('checked'));
-                $(this).parents().find('.checkbox-childrent').prop('checked', $(this).prop('checked'));
-            });
-        });
-    </script>
+    <script src="{{ asset('AdminLTE/admin/role/edit/role.js') }}"></script>
 @endsection

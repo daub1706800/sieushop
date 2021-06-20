@@ -251,6 +251,8 @@ class ProfileController extends Controller
             UserRole::create([
                 'idtaikhoan' => auth()->id(),
                 'idvaitro' => $role->id,
+                'thoigianbatdau' => Carbon::now()->format('Y-m-d'),
+                'thoigianketthuc' => Carbon::now()->addYears(1000)->format('Y-m-d'),
             ]);
     
             session()->put('idcongty', $idcongty);
@@ -442,7 +444,9 @@ class ProfileController extends Controller
 
             DB::commit();
 
-            return redirect()->route('profile.account.index');            
+            return response()->json([
+                'code' => 200
+            ]);            
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
@@ -577,7 +581,9 @@ class ProfileController extends Controller
 
             DB::commit();
     
-            return redirect()->route('profile.role.index');            
+            return response()->json([
+                'code' => 200
+            ]);            
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());

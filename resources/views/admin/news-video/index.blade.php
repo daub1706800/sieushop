@@ -6,11 +6,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{asset('AdminLTE/dist/css/mystyle2.css')}}">
-    <style>
-        .tinnoibat{
-            transform: scale(1.5, 1.5);
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/company/newsvideo/index/newsvideo.css') }}">
 @endsection
 
 @section('content')
@@ -50,14 +46,16 @@
                                         <td style="width:200px;">
                                             <a href="" class="tieudetintuc"
                                                 data-toggle="modal" data-target="#exampleModal"
-                                                data-id="{{ $item->id }}">{{ $item->tieudevideo }}</a>
+                                                data-id="{{ $item->id }}" data-url="{{ route('video.view') }}">
+                                                {{ $item->tieudevideo }}</a>
                                         </td>
                                         <td>{{ $item->category->tenchuyenmuc }}</td>
                                         <td>{{ $item->profile->tenthanhvien .' '. $item->profile->hothanhvien }}</td>
                                         <td>{{ $item->ngaydangvideo }}</td>
                                         <td>{{ $item->ngayxuatban }}</td>
                                         <td class="text-center">
-                                            <input type="checkbox" class="tinnoibat" data-id="{{ $item->id }}" value="{{ $item->loaivideotintuc }}" {{ $item->loaivideotintuc == 1 ? "checked" : "" }}>
+                                            <input type="checkbox" class="tinnoibat" data-id="{{ $item->id }}" data-url="{{ route('video.change-status') }}"
+                                                value="{{ $item->loaivideotintuc }}" {{ $item->loaivideotintuc == 1 ? "checked" : "" }}>
                                         </td>
                                         <td style="width:120px;">
                                             @if ($item->duyetvideotintuc == 0 && $item->xuatbanvideotintuc == 0 && $item->trangthaithuhoi == 0)
@@ -75,7 +73,8 @@
                                             @if (!$item->newshistory->isEmpty())
                                                 <a href="" class="viewhistory"
                                                     data-toggle="modal" data-target="#exampleModal2"
-                                                    data-id="{{ $item->id }}">Lịch sử thu hồi</a>
+                                                    data-id="{{ $item->id }}" data-url="{{ route('video.history') }}">
+                                                    Lịch sử thu hồi</a>
                                             @endif
                                         </td>
                                         <td>
@@ -83,10 +82,10 @@
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('video.log', ['id' => $item->id]) }}">Lịch sử tin tức</a>
-                                                    <a class="dropdown-item" href="{{ route('video.edit', ['id' => $item->id]) }}">Chỉnh sửa</a>
+                                                    <a class="dropdown-item text-warning" href="{{ route('video.log', ['id' => $item->id]) }}">Lịch sử tin tức</a>
+                                                    <a class="dropdown-item text-info" href="{{ route('video.edit', ['id' => $item->id]) }}">Chỉnh sửa</a>
                                                     @if ($item->xuatbantintuc == 0)
-                                                    <a class="dropdown-item" href="{{ route('video.delete', ['id' => $item->id]) }}">Xóa</a>
+                                                    <a class="dropdown-item text-danger" href="{{ route('video.delete', ['id' => $item->id]) }}">Xóa</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -175,92 +174,5 @@
 
 @section('js')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        $(document).ready(function(){
-            $('.item-news').on('click', function() {
-                let url = $(this).data('url');
-                window.location = url;
-            });
-
-            $(document).on('click', '.tieudetintuc', function() {
-                var idNews = $(this).data('id');
-                $.ajax({
-                    url : "{{ route('video.view') }}",
-                    type : "post",
-                    data : {
-                        "idNews":idNews,
-                        "_token": "{{ csrf_token() }}"
-                    },
-                    success:function(data) {
-                        // console.log(data);
-                        $('.chuyenmuc').html(data.category);
-                        $('.ngaydang').html('Viết ngày ' + data.ngaydang);
-                        $('.tieude').html(data.newsvideo.tieudevideo);
-                        $('.tomtat').html(data.newsvideo.tomtatvideo);
-                        $('.hinhanh').attr('src',data.newsvideo.hinhdaidienvideo);
-                        $('.noidung').html('Nguồn: ' + data.newsvideo.nguonvideotintuc);
-                        $('.video').html(data.video);
-                        $('.tacgia').html(data.author);
-                    }
-                });
-            });
-
-            $(document).on('click', '.viewhistory', function() {
-                var idNews = $(this).data('id');
-                $.ajax({
-                    url : "{{ route('video.history') }}",
-                    type : "post",
-                    data : {
-                        "idNews":idNews,
-                        "_token": "{{ csrf_token() }}"
-                    },
-                    success:function(data) {
-                        // console.log(data);
-                        $('.tieudeNews').text(data.newsvideo);
-                        $('.show-history').html(data.output);
-                    }
-                });
-            });
-
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 1000,
-                timerProgressBar: false,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            });
-
-            $(document).on('click', '.tinnoibat', function() {
-                var id = $(this).data('id');
-                var that = $(this);
-                if ($(this).val() == 1) {
-                    var status = 1;
-                }
-                else
-                {
-                    var status = 0;
-                }
-                $.ajax({
-                    url : "{{ route('video.change-status') }}",
-                    type: "get",
-                    data: {
-                        "id":id,
-                        "status":status
-                    },
-                    success:function(data) {
-                        Toast.fire({
-                            icon: 'success',
-                            title: 'Chuyển đổi thành công'
-                        });
-
-                        that.val(data);
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="{{ asset('AdminLTE/company/newsvideo/index/newsvideo.js') }}"></script>
 @endsection

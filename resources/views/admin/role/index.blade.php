@@ -5,15 +5,8 @@
 @endsection
 
 @section('css')
-    <style>
-        .check-all, .checkbox-parent, .checkbox-childrent{
-            transform: scale(1.3);
-        }
-        .alert-custom{
-            margin-top: 5px;
-            padding: 3px 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{asset('vendor/css/select2.css')}}">
+    <link rel="stylesheet" href="{{ asset('AdminLTE/admin/role/index/role.css') }}">
 @endsection
 
 @section('content')
@@ -39,34 +32,42 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Tên vai trò</th>
                                     <th scope="col">Mô tả</th>
-                                    <th scope="col">Tạo bởi</th>
-                                    <th scope="col"></th>
+                                    <th scope="col" style="width:35%">Quyền</th>
+                                    <th scope="col" style="width:20%">Tạo bởi</th>
+                                    <th scope="col" style="width:10%"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($roles as $key => $role)
-                                    <tr>
-                                        <th scope="row">{{ $role->id }}</th>
-                                        <td>{{ $role->tenvaitro }}</td>
-                                        <td>{{ $role->motavaitro }}</td>
-                                        @if ( $role->idcongty )
-                                        <td>{{ $role->company->tencongty }}</td>
-                                        @else
-                                        <td>Hệ thống</td>
-                                        @endif
-                                        <td>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('role.edit', ['id' => $role->id]) }}">Chỉnh sửa</a>
-                                                    @if(!empty($role->idcongty) && $role->user->isEmpty())
-                                                    <a class="dropdown-item" href="{{ route('role.edit', ['id' => $role->id]) }}">Xóa</a>
-                                                    @endif
+                                        <tr>
+                                            <th scope="row">{{ $role->id }}</th>
+                                            <td>{{ $role->tenvaitro }}</td>
+                                            <td>{{ $role->motavaitro }}</td>
+                                            <td>
+                                                <div style="overflow: auto; width:100%; height: 75px;">
+                                                    @foreach ( $role->permissions as $value)
+                                                        <span class="badge badge-primary">{{ $value->tenquyen }}</span>
+                                                    @endforeach
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                            @if ( $role->idcongty )
+                                                <td>{{ $role->company->tencongty }}</td>
+                                            @else
+                                                <td>Hệ thống</td>
+                                            @endif
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
+                                                            aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
+                                                    <div class="dropdown-menu">
+                                                            <a class="dropdown-item text-info" href="{{ route('role.edit', ['id' => $role->id]) }}">Chỉnh sửa</a>
+                                                        @if(!empty($role->idcongty) && $role->user->isEmpty())
+                                                            <a class="dropdown-item text-danger delete-role" href="{{ route('role.delete', ['id' => $role->id]) }}">Xóa</a>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -113,13 +114,27 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
+                                <label>Chọn công ty *</label>
+                                <select name="idcongty" class="form-control company-selected @error('idcongty') is-invalid @enderror">
+                                    <option value=""></option>
+                                    @foreach($companies as $company)
+                                        <option value="{{ $company->id }}">{{ $company->tencongty }}</option>
+                                    @endforeach
+                                </select>
+                                @error('idcongty')
+                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
                                 <label>Chọn tất cả quyền <input type="checkbox" class="check-all"></label>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <label>Chọn quyền *</label>
-                            <div class="table-responsive-md">
-                                <table class="table table-borderless table-primary table-hover">
+                            <div class="overflow-auto mb-3" style="height: 300px;">
+                                <table class="table table-borderless table-sm table-primary table-hover">
                                     <thead class="table-warning">
                                         <tr>
                                             <th></th>
@@ -160,22 +175,7 @@
 </div>
 @endsection
 @section('js')
-    <script>
-        $(document).ready(function(){
-            $('.checkbox-parent').on('click', function(){
-                $(this).parents('tr').find('.checkbox-childrent').prop('checked', $(this).prop('checked'));
-            });
-
-            $('.check-all').on('click', function(){
-                $(this).parents().find('.checkbox-parent').prop('checked', $(this).prop('checked'));
-                $(this).parents().find('.checkbox-childrent').prop('checked', $(this).prop('checked'));
-            });
-        });
-        $(function () {
-                var errors = $('.alert-custom').html();
-                if (errors != null) {
-                    $('#btn-modal-click').click();
-                }
-            });
-    </script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('vendor/js/select2.js') }}"></script>
+    <script src="{{ asset('AdminLTE/admin/role/index/role.js') }}"></script>
 @endsection

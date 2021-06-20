@@ -4,12 +4,7 @@
     <title>{{ $stage->tengiaidoan }} | Chỉnh sửa</title>
 @endsection
 @section('css')
-    <style>
-        .alert-custom{
-            margin-top: 5px;
-            padding: 3px 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/admin/stage/edit/stage.css') }}">
 @endsection
 @section('content')
 <div class="content-wrapper">

@@ -3,15 +3,12 @@
 @section('title')
     <title>Chuyên mục | Danh sách</title>
 @endsection
+
 @section('css')
     <link rel="stylesheet" href="{{asset('vendor/css/select2.css')}}">
-    <style>
-        .alert-custom{
-            margin-top: 5px;
-            padding: 3px 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/admin/category/index/category.css') }}">
 @endsection
+
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -49,9 +46,9 @@
                                             <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                     aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="{{route('category.edit', ['id' => $category->id])}}">Chỉnh sửa</a>
+                                                <a class="dropdown-item text-info" href="{{route('category.edit', ['id' => $category->id])}}">Chỉnh sửa</a>
                                                 @if($category->news->isEmpty())
-                                                <a class="dropdown-item" href="{{route('category.delete', ['id' => $category->id])}}">Xóa</a>
+                                                <a class="dropdown-item text-danger" href="{{route('category.delete', ['id' => $category->id])}}">Xóa</a>
                                                 @endif
                                             </div>
                                         </div>
@@ -119,23 +116,5 @@
 @endsection
 @section('js')
     <script src="{{ asset('vendor/js/select2.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $(function(){
-                $(".deparment-selected").select2({
-                    tags: false,
-                    placeholder : 'Chọn vai trò',
-                    theme: "classic",
-                    width: "100%",
-                    // multiple: true
-                })
-            });
-            $(function () {
-                var errors = $('.alert-custom').html();
-                if (errors != null) {
-                    $('#btn-modal-click').click();
-                }
-            });
-        });
-    </script>
+    <script src="{{ asset('AdminLTE/admin/category/index/category.js') }}"></script>
 @endsection

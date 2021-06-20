@@ -3,14 +3,11 @@
 @section('title')
     <title>Kho | Danh sách</title>
 @endsection
+
 @section('css')
-    <style>
-        .alert-custom{
-            margin-top: 5px;
-            padding: 3px 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/company/storage/index/storage.css') }}">
 @endsection
+
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -49,7 +46,8 @@
                                         <td>
                                             <a href="" class="storage-item"
                                                 data-toggle="modal" data-target="#exampleModalScrollable"
-                                                data-id="{{ $storage->id }}">{{ $storage->tenkho }}</a>
+                                                data-id="{{ $storage->id }}" data-url="{{ route('storage.view') }}">
+                                                {{ $storage->tenkho }}</a>
                                         </td>
                                         <td>{{ $storage->diachikho }}</td>
                                         <td>{{ $storage->taitrongkho }}</td>
@@ -61,9 +59,9 @@
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('storage.edit', ['id' => $storage->id]) }}">Chỉnh sửa</a>
+                                                    <a class="dropdown-item text-info" href="{{ route('storage.edit', ['id' => $storage->id]) }}">Chỉnh sửa</a>
                                                     @if($storage->product->isEmpty())
-                                                    <a class="dropdown-item" href="{{ route('storage.delete', ['id' => $storage->id]) }}">Xóa</a>
+                                                    <a class="dropdown-item text-danger" href="{{ route('storage.delete', ['id' => $storage->id]) }}">Xóa</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -98,10 +96,10 @@
                             <input type="text" class="form-control @error('tenkho') is-invalid @enderror"
                                 name="tenkho" value="{{ old('tenkho') }}"
                                 placeholder="Tên kho">
+                            @error('tenkho')
+                            <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                            @enderror
                         </div>
-                        @error('tenkho')
-                        <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
@@ -109,10 +107,10 @@
                             <input type="text" class="form-control @error('taitrongkho') is-invalid @enderror"
                                 name="taitrongkho" value="{{ old('taitrongkho') }}"
                                 placeholder="Tải trọng kho">
+                            @error('taitrongkho')
+                            <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                            @enderror
                         </div>
-                        @error('taitrongkho')
-                        <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
@@ -120,10 +118,10 @@
                             <input type="text" class="form-control @error('dientichkho') is-invalid @enderror"
                                 name="dientichkho" value="{{ old('dientichkho') }}"
                                 placeholder="Diện tích kho">
+                            @error('dientichkho')
+                            <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                            @enderror
                         </div>
-                        @error('dientichkho')
-                        <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
@@ -131,10 +129,10 @@
                             <input type="text" value="{{ old('sonhanvienkho') }}"
                                 class="form-control @error('sonhanvienkho') is-invalid @enderror"
                                 name="sonhanvienkho" placeholder="Tổng số nhân viên kho">
+                            @error('sonhanvienkho')
+                            <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                            @enderror
                         </div>
-                        @error('sonhanvienkho')
-                        <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
@@ -142,20 +140,20 @@
                             <input type="text" class="form-control @error('diachikho') is-invalid @enderror"
                                 name="diachikho" value="{{ old('diachikho') }}"
                                 placeholder="Địa chỉ kho">
+                            @error('diachikho')
+                            <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                            @enderror
                         </div>
-                        @error('diachikho')
-                        <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Ghi chú *</label>
                             <textarea class="form-control @error('ghichukho') is-invalid @enderror" rows="5"
                                 name="ghichukho" placeholder="Ghi chú kho">{{ old('ghichukho') }}</textarea>
+                            @error('ghichukho')
+                            <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                            @enderror
                         </div>
-                        @error('ghichukho')
-                        <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="col-md-12 text-center">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -222,40 +220,7 @@
     </div>
 </div>
 @endsection
-@section('js')
-    <script>
-        $(document).ready(function(){
-            $(function() {
-                var error = $('.alert-custom').html();
-                if(error != null)
-                {
-                    $('#btn-modal-click').click();
-                }
-            });
 
-            $(document).on('click', '.storage-item', function() {
-                var idStorage = $(this).data('id');
-                $.ajax({
-                    url : "{{ route('storage.view') }}",
-                    type : "post",
-                    data : {
-                        "idStorage":idStorage,
-                        "_token": "{{ csrf_token() }}"
-                    },
-                    success:function(data) {
-                        // console.log(data);
-                        $('.tenkho').text(data.storage.tenkho);
-                        $('.diachikho').text(data.storage.diachikho);
-                        $('.taitrongkho').text(data.storage.taitrongkho + ' (tấn)');
-                        $('.dientichkho').text(data.storage.dientichkho + ' (mét vuông)');
-                        $('.sonhanvien').text(data.storage.sonhanvienkho);
-                        $('.ghichukho').text(data.storage.ghichukho);
-                        $('.nguoitao').text(data.author);
-                        $('.congty').text(data.company);
-                        $('.taongay').text('Tạo ngày ' + data.date);
-                    }
-                });
-            });
-        });
-    </script>
+@section('js')
+    <script src="{{ asset('AdminLTE/company/storage/index/storage.js') }}"></script>
 @endsection

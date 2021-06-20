@@ -25,9 +25,9 @@ class AdminAccountRequestAdd extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['bail', 'required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['bail', 'required', 'string', 'email:rfc,dns', 'max:255', 'unique:users'],
             'password' => ['bail', 'required', 'string', 'min:8', 'confirmed', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9]).*$/'],
-            'idvaitro' => ['required'],
+            'idvaitro' => ['required_if:new-company,1'],
             'idvaitro.*' => [
                 Rule::exists('vaitro', 'id')->where(function ($query) {
                     return $query->where('idcongty', request('idcongty'))->orWhere('loaivaitro', 2);
@@ -36,7 +36,7 @@ class AdminAccountRequestAdd extends FormRequest
             'thoigianbatdau' => ['nullable'],
             'thoigianbatdau.*' => ['after_or_equal:today'],
             'thoigianketthuc.*' => ['nullable', 'after_or_equal:thoigianbatdau.*'],
-            'idcongty' => ['required', 'exists:congty,id']
+            'idcongty' => ['required_if:new-company,1', 'exists:congty,id']
         ];
     }
 
@@ -53,12 +53,12 @@ class AdminAccountRequestAdd extends FormRequest
             'password.min' => 'Mật khẩu không được ít hơn 8 ký tự',
             'password.confirmed' => 'Nhập lại mật khẩu không chính xác',
             'password.regex' => 'Mật khẩu phải có ký tự hoa thường và số',
-            'idvaitro.required' => 'Vai trò không được bỏ trống',
+            'idvaitro.required_if' => 'Vai trò không được để trống',
             'idvaitro.*.exists' => 'Vai trò không tồn tại',
             'thoigianbatdau.required' => 'Thời gian bắt đầu không được bỏ trống',
             'thoigianbatdau.*.after_or_equal' => 'Thời gian bắt đầu phải bằng hoặc trễ hơn ngày hiện tại',
             'thoigianketthuc.*.after_or_equal' => 'Thời gian kết thúc phải bằng hoặc trễ hơn thời gian bắt đầu',
-            'idcongty.required' => 'Công ty không được để trống',
+            'idcongty.required_if' => 'Công ty không được để trống',
             'idcongty.exists' => 'Công ty không tồn tại',
         ];
     }

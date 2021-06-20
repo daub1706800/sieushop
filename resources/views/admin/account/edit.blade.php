@@ -7,6 +7,7 @@
 @section('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
     <link rel="stylesheet" href="{{asset('adminLTE/dist/css/mystyle2.css')}}">
+    <link rel="stylesheet" href="{{ asset('AdminLTE/admin/account/edit/account.css') }}">
 @endsection
 
 @section('content')
@@ -74,7 +75,7 @@
                                 </table>
                             </div>
                             <div class="text-center mb-5">
-                                <input type="hidden" name="idcongty" value="{{ $user->company->id }}">
+                                <input type="hidden" name="idcongty" value="{{ $user->idcongty ? $user->company->id:""  }}">
                                 <button type="submit" class="btn btn-primary">Lưu chỉnh sửa</button>
                             </div>
                         </div>
@@ -96,7 +97,7 @@
                                                 <tr>
                                                     <td style="width:50%">{{ $role->motavaitro }}</td>
                                                     <td style="width:50%">
-                                                        {!! $value->thoigianbatdau . ' <b>-</b> ' . $value->thoigianketthuc !!}
+                                                        {!! date('d-m-Y', strtotime($value->thoigianbatdau)) . ' <b>-</b> ' . date('d-m-Y', strtotime($value->thoigianketthuc)) !!}
                                                     </td>
                                                 </tr>
                                             @endforeach

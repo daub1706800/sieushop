@@ -5,16 +5,9 @@
 @endsection
 
 @section('css')
-    <!-- include datepicker3 css -->
     <link rel="stylesheet" href="{{ asset('vendor/css/datepicker3.css') }}"/>
-    <!-- include summernote css -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <style>
-        .alert-custom{
-            margin-top: 5px;
-            padding: 3px 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/admin/stage-info/edit/stage-info.css') }}">
 @endsection
 
 @section('content')
@@ -37,10 +30,10 @@
                                     <input type="text" class="form-control @error('tencongviec') is-invalid @enderror"
                                         name="tencongviec" placeholder="Tên công việc"
                                         value="{{ old('tencongviec', $stageInfo->tencongviec) }}">
+                                    @error('tencongviec')
+                                    <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                @error('tencongviec')
-                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -48,10 +41,10 @@
                                     <input type="text" class="form-control @error('thoigianbatdau') is-invalid @enderror"
                                         name="thoigianbatdau" placeholder="{{ now()->format('Y-m-d') }}"
                                         value="{{ old('thoigianbatdau', $stageInfo->thoigianbatdau) }}">
+                                    @error('thoigianbatdau')
+                                    <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                @error('thoigianbatdau')
-                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -59,10 +52,10 @@
                                     <input type="text" class="form-control @error('thoigiandukien') is-invalid @enderror"
                                         name="thoigiandukien" placeholder="{{ now()->format('d') }}"
                                         value="{{ old('thoigiandukien', $stageInfo->thoigiandukien) }}"/>
+                                    @error('thoigiandukien')
+                                    <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                @error('thoigiandukien')
-                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -70,10 +63,10 @@
                                     <input type="text" class="form-control validated-thoigianhoanthanh @error('thoigianhoanthanh') is-invalid @enderror"
                                         name="thoigianhoanthanh" placeholder="{{ now()->format('Y-m-d') }}"
                                         value="{{ old('thoigianhoanthanh', $stageInfo->thoigianhoanthanh) }}"/>
+                                    @error('thoigianhoanthanh')
+                                    <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                @error('thoigianhoanthanh')
-                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -86,10 +79,10 @@
                                 <div class="form-group">
                                     <label for="">Mô tả công việc *</label>
                                     <textarea name="motacongviec" class="form-control summernote @error('motacongviec') is-invalid @enderror">{{ old('motacongviec', $stageInfo->motacongviec) }}</textarea>
+                                    @error('motacongviec')
+                                    <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                @error('motacongviec')
-                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                                @enderror
                             </div>
                         </div>
                         <div class="col-md-12 text-center">
@@ -107,77 +100,7 @@
 
 @section('js')
     <script type="text/javascript" src="{{ asset("vendor/js/datepicker.js") }}"></script>
-    <!-- include summernote js -->
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    {{-- <script type="text/javascript" src="{{ asset("vendor/js/summernote.js") }}"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.summernote').summernote({
-                height: 200,                 // set editor height
-                minHeight: null,             // set minimum height of editor
-                maxHeight: null,             // set maximum height of editor
-                focus: false,                  // set focus to editable area after initializing summernote
-                codemirror: { // codemirror options
-                    theme: 'monokai'
-                },
-                placeholder: "Nhập mô tả cho công việc",
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'underline', 'clear']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['help']]
-                ]
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function(){
-            var date_input=$('input[name="thoigianbatdau"]');
-            var date_input2=$('input[name="thoigianhoanthanh"]');
-            var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-            var options={
-                format: 'yyyy-mm-dd',
-                container: container,
-                todayHighlight: true,
-                autoclose: true,
-            };
-            date_input.datepicker(options);
-            date_input2.datepicker(options);
-        });
-    </script>
-    <script>
-        $(document).ready(function(){
-            $(document).on('change', '.validated-thoigianhoanthanh', function() {
-                var ngayhoanthanh = $(this).val();
-                var ngaybatdau = $('input[name="thoigianbatdau"]').val();
-                var thoigiandukien = $('input[name="thoigiandukien"]').val();
-
-                if (ngaybatdau != "" && ngaybatdau <= ngayhoanthanh) {
-                    d = moment(ngayhoanthanh).diff(moment(ngaybatdau), 'days');
-                    console.log(d);
-                    console.log(thoigiandukien);
-                    if (Number(d) > Number(thoigiandukien))
-                    {
-                        var kq = Number(d) - Number(thoigiandukien);
-                        $('input[name="trehan"]').val(kq);
-                        $('.trangthai').text('Trễ hạn (ngày)');
-                    }
-                    else if (Number(d) <= Number(thoigiandukien))
-                    {
-                        var kq = Number(thoigiandukien) - Number(d);
-                        $('input[name="trehan"]').val(kq);
-                        $('.trangthai').text('Sớm hạn (ngày)');
-                    }
-                }
-                else
-                {
-                    $('input[name="trehan"]').val(0);
-                }
-            });
-        });
-    </script>
+    <script src="{{ asset('AdminLTE/admin/stage-info/edit/stage-info.js') }}"></script>
 @endsection

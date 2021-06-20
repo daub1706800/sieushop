@@ -3,16 +3,12 @@
 @section('title')
     <title>Loại sản phẩm | Chỉnh sửa</title>
 @endsection
+
 @section('css')
-    <!-- include select2 css -->
     <link rel="stylesheet" href="{{asset('vendor/css/select2.css')}}">
-    <style>
-        .alert-custom{
-            margin-top: 5px;
-            padding: 3px 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('AdminLTE/admin/product-category/edit/product-category.css') }}">
 @endsection
+
 @section('content')
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -58,20 +54,4 @@
     </div>
     <!-- /.content -->
 </div>
-@endsection
-@section('js')
-    <!-- include select2 js -->
-    <script src="{{ asset('vendor/js/select2.js') }}"></script>
-    <script>
-        $(document).ready(function(){
-            $(function(){
-                $(".company-selected").select2({
-                    tags: false,
-                    placeholder : 'Chọn công ty',
-                    theme: "classic",
-                    width: "100%"
-                });
-            });
-        });
-    </script>
 @endsection

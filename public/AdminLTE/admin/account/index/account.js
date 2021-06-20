@@ -27,6 +27,7 @@ $(document).ready(function() {
             container: container,
             todayHighlight: true,
             autoclose: true,
+            orientation: 'bottom'
         };
         date_input1.datepicker(options);
         date_input2.datepicker(options);
@@ -124,6 +125,39 @@ $(document).ready(function() {
         });
     });
 
+    $(document).on('click', '.delete-user', function (e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        var that = $(this);
+        Swal.fire({
+            title: 'Bạn có chắc ?',
+            text: "Bạn sẽ không thể hoàn tác điều này !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url : url,
+                    type: "get",
+                    success:function(data) {
+                        if (data.code == 200) {
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Xóa thành công'
+                            }).then((result) => {
+                                location.reload();
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    });
+
     $(document).on('change', '.company-selected', function () {
         var url = $(this).attr('data-url');
         var company_id = $(this).val();
@@ -143,5 +177,17 @@ $(document).ready(function() {
                 }
             }
         });
+    });
+
+    $(document).on('change', '#new-company', function () {
+        if (this.checked) {
+            $('.new-company').css('display', 'block');
+            $('.company-selected').removeAttr('disabled');
+        }
+        else
+        {
+            $('.new-company').css('display', 'none');
+            $('.company-selected').attr('disabled', 'disable');
+        }
     });
 });

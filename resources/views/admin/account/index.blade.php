@@ -48,13 +48,15 @@
                                     <td>{{ $user->email }}</td>
                                     <td>
                                         @foreach ($user->roles as $user_role)
-                                            @if ($user_role->loaivaitro == 1 || $user_role->loaivaitro == 2)
+                                            @if ($user_role->loaivaitro == 1)
+                                                <span class="badge badge-warning">{{ $user_role->motavaitro }}</span>
+                                            @elseif ($user_role->loaivaitro == 2)
                                                 <a href="{{ route('account.delete-role') }}" class="badge badge-danger badge-delete"
                                                     data-toggle="tooltip" data-placement="right" title="Xóa"
                                                     data-id-role="{{ $user_role->id }}" data-id-user="{{ $user->id }}">
                                                     {{ $user_role->motavaitro }}</a>
                                             @else
-                                                <a href="{{ route('account.delete-role') }}" class="badge badge-success badge-delete"
+                                                <a href="{{ route('account.delete-role') }}" class="badge badge-secondary badge-delete"
                                                     data-toggle="tooltip" data-placement="right" title="Xóa"
                                                     data-id-role="{{ $user_role->id }}" data-id-user="{{ $user->id }}">
                                                     {{ $user_role->motavaitro }}</a>
@@ -97,7 +99,7 @@
                                                 <a class="dropdown-item text-info" href="{{ route('account.edit', ['id' => $user->id]) }}">Chỉnh sửa</a>
                                                 @if($user->storage->isEmpty() && $user->stage->isEmpty() && $user->product->isEmpty()
                                                     && $user->news->isEmpty() )
-                                                <a class="dropdown-item text-danger" href="{{ route('account.delete', ['id' => $user->id]) }}">Xóa</a>
+                                                <a class="dropdown-item text-danger delete-user" href="{{ route('account.delete', ['id' => $user->id]) }}">Xóa</a>
                                                 @endif
                                             </div>
                                         </div>
@@ -140,7 +142,8 @@
                             <div class="form-group">
                                 <label>Email *</label>
                                 <input type="email" class="form-control"
-                                        name="email" placeholder="Email">
+                                        name="email" placeholder="Email"
+                                        value="{{ old('email') }}">
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -158,10 +161,18 @@
                             </div>
                         </div>
                         <div class="col-md-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" id="new-company" name="new-company">
+                                <label  for="new-company">
+                                    Tạo tài khoản cho công ty mới ?
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 new-company">
                             <div class="form-group">
                                 <label>Chọn công ty *</label>
                                 <select class="form-control company-selected @error('idvaitro') is-invalid @enderror"
-                                    name="idcongty" data-url="{{ route('account.change-role') }}">
+                                    name="idcongty" data-url="{{ route('account.change-role') }}" disabled>
                                     <option value=""></option>
                                     @foreach($companies as $company)
                                         <option value="{{ $company->id }}">{{ $company->tencongty }}</option>
@@ -172,7 +183,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-12 new-company">
                             <label>Gán vai trò *</label>
                             <div class="overflow-auto" style="height: 100px">
                                 <table class="table table-borderless table-sm">

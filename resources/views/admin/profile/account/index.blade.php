@@ -49,7 +49,7 @@
                                             @if ($value->loaivaitro == 2)
                                                 <span class="badge badge-danger">{{ $value->motavaitro }}</span>
                                             @else
-                                                <a href="{{ route('profile.account.delete-role') }}" class="badge badge-delete badge-success"
+                                                <a href="{{ route('profile.account.delete-role') }}" class="badge badge-delete badge-secondary"
                                                     data-toggle="tooltip" data-placement="right" title="Xóa" data-id-role="{{ $value->id }}"
                                                     data-id-user="{{ $user->id }}">
                                                 {{ $value->motavaitro }}</a>
@@ -83,7 +83,7 @@
                                                     <a class="dropdown-item text-info" href="{{ route('profile.account.edit', ['id' => $user->id]) }}">Chỉnh sửa</a>
                                                 @if($user->storage->isEmpty() && $user->stage->isEmpty()
                                                     && $user->product->isEmpty() && $user->news->isEmpty())
-                                                    <a class="dropdown-item text-danger" href="{{ route('profile.account.delete', ['id' => $user->id]) }}">Xóa</a>
+                                                    <a class="dropdown-item text-danger delete-user" href="{{ route('profile.account.delete', ['id' => $user->id]) }}">Xóa</a>
                                                 @endif
                                             </div>
                                         </div>
