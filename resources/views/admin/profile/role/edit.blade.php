@@ -72,9 +72,11 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary mb-3">Lưu chỉnh sửa</button>
-                    </div>
+                    @can('role-update')
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary mb-3">Lưu chỉnh sửa</button>
+                        </div>
+                    @endcan
                 </form>
             </div>
         </div>

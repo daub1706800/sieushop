@@ -41,9 +41,11 @@
                         <div class="alert alert-danger alert-custom">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Lưu chỉnh sửa</button>
-                    </div>
+                    @can('stage-update')
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Lưu chỉnh sửa</button>
+                        </div>
+                    @endcan
                 </form>
             </div>
         </div>

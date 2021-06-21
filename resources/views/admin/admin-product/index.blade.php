@@ -61,7 +61,7 @@
                                                     <a class="dropdown-item text-info" href="{{ route('admin.product.edit', ['id' => $product->id]) }}">Chỉnh sửa sản phẩm</a>
                                                     <a class="dropdown-item text-warning" href="{{ route('admin.stage.index', ['product_id' => $product->id]) }}">Danh sách giai đoạn</a>
                                                     @if($product->comment->isEmpty() && $product->stage->isEmpty())
-                                                    <a class="dropdown-item text-danger" href="{{ route('admin.product.delete', ['id' => $product->id]) }}">Xóa</a>
+                                                    <a class="dropdown-item text-danger delete-product" href="{{ route('admin.product.delete', ['id' => $product->id]) }}">Xóa</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -111,4 +111,5 @@
 
 @section('js')
     <script src="{{ asset('AdminLTE/admin/product/index/product.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection

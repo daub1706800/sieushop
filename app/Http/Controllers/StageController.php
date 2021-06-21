@@ -95,11 +95,17 @@ class StageController extends Controller
         try {
             DB::beginTransaction();
 
-            $this->stage->FindOrFail($id)->delete();
+            $stage = $this->stage->FindOrFail($id);
+
+            $stage->delete();
+
+            $stage->stageInfo()->delete();
 
             DB::commit();
 
-            return back();            
+            return response()->json([
+                'code' => 200
+            ]);            
         } catch (\Exception $exception) {
             DB::rollback();
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
@@ -257,7 +263,9 @@ class StageController extends Controller
 
             DB::commit();
 
-            return redirect()->route('stage-info.index', ['stage_id' => $stage_id, 'product_id' => $product_id]);            
+            return response()->json([
+                'code' => 200
+            ]);            
         } catch (\Exception $exception) {
             DB::rollback();
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());

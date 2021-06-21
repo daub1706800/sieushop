@@ -48,7 +48,7 @@ $(document).ready(function(){
                         if (data.code == 200) {
                             Toast.fire({
                                 icon: 'success',
-                                title: 'Xóa thành công'
+                                title: 'Xóa thành công !'
                             }).then((result) => {
                                 location.reload();
                             });

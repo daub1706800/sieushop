@@ -18,11 +18,13 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
-                <a id="btn-modal-click" href="" class="btn btn-primary float-right m-2"
-                    data-toggle="modal" data-target="#exampleModal"
-                    data-whatever="@getbootstrap"><i class="fas fa-plus"></i></a>
-                </div>
+                @can('storage-add')
+                    <div class="col-md-12">
+                        <a id="btn-modal-click" href="" class="btn btn-primary float-right m-2"
+                            data-toggle="modal" data-target="#exampleModal"
+                            data-whatever="@getbootstrap"><i class="fas fa-plus"></i></a>
+                    </div>
+                @endcan
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
@@ -58,12 +60,18 @@
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item text-info" href="{{ route('storage.edit', ['id' => $storage->id]) }}">Chỉnh sửa</a>
-                                                    @if($storage->product->isEmpty())
-                                                    <a class="dropdown-item text-danger" href="{{ route('storage.delete', ['id' => $storage->id]) }}">Xóa</a>
-                                                    @endif
-                                                </div>
+                                                @canany(['storage-view', 'storage-delete'])
+                                                    <div class="dropdown-menu">
+                                                        @can('storage-view')
+                                                            <a class="dropdown-item text-info" href="{{ route('storage.edit', ['id' => $storage->id]) }}">Chỉnh sửa</a>
+                                                        @endcan
+                                                        @can('storage-delete')
+                                                            @if($storage->product->isEmpty())
+                                                                <a class="dropdown-item text-danger delete-storage" href="{{ route('storage.delete', ['id' => $storage->id]) }}">Xóa</a>
+                                                            @endif
+                                                        @endcan
+                                                    </div>
+                                                @endcanany
                                             </div>
                                         </td>
                                     </tr>
@@ -222,5 +230,6 @@
 @endsection
 
 @section('js')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('AdminLTE/company/storage/index/storage.js') }}"></script>
 @endsection

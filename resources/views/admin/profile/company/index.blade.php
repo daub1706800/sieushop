@@ -31,20 +31,20 @@
                                     <input type="text" class="form-control @error('tencongty') is-invalid @enderror"
                                             value="{{ old('tencongty', $company->tencongty) }}" name="tencongty"
                                             placeholder="Tên công ty">
+                                        @error('tencongty')
+                                        <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                                        @enderror
                                 </div>
-                                @error('tencongty')
-                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Ngày thành lập *</label>
                                     <input type="text" class="form-control @error('ngaythanhlapcongty') is-invalid @enderror"
                                             value="{{ old('ngaythanhlapcongty', $company->ngaythanhlapcongty) }}" name="ngaythanhlapcongty">
+                                        @error('ngaythanhlapcongty')
+                                        <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                                        @enderror
                                 </div>
-                                @error('ngaythanhlapcongty')
-                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -57,10 +57,10 @@
                                         </option>
                                         @endforeach
                                     </select>
+                                    @error('idso')
+                                    <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                @error('idso')
-                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -73,60 +73,60 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    @error('idlinhvuc')
+                                    <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                @error('idlinhvuc')
-                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Email *</label>
                                     <input type="email" class="form-control @error('emailcongty') is-invalid @enderror"
                                             value="{{ old('emailcongty', $company->emailcongty) }}" name="emailcongty">
+                                        @error('emailcongty')
+                                        <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                                        @enderror
                                 </div>
-                                @error('emailcongty')
-                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Điện thoại</label>
                                     <input type="text" class="form-control @error('dienthoaicongty') is-invalid @enderror"
                                             value="{{ old('dienthoaicongty', $company->dienthoaicongty) }}" name="dienthoaicongty">
+                                        @error('dienthoaicongty')
+                                        <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                                        @enderror
                                 </div>
-                                @error('dienthoaicongty')
-                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Fax</label>
                                     <input type="text" class="form-control @error('faxcongty') is-invalid @enderror"
                                             value="{{ old('faxcongty', $company->faxcongty) }}" name="faxcongty">
+                                        @error('faxcongty')
+                                        <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                                        @enderror
                                 </div>
-                                @error('faxcongty')
-                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Website * (https:// hoặc http://)</label>
                                     <input type="text" class="form-control @error('webcongty') is-invalid @enderror"
                                             value="{{ old('webcongty', $company->webcongty) }}" name="webcongty">
+                                        @error('webcongty')
+                                        <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                                        @enderror
                                 </div>
-                                @error('webcongty')
-                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                                @enderror
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Địa chỉ *</label>
                                     <input type="text" class="form-control @error('diachicongty') is-invalid @enderror"
                                             value="{{ old('diachicongty', $company->diachicongty) }}" name="diachicongty">
+                                        @error('diachicongty')
+                                        <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                                        @enderror
                                 </div>
-                                @error('diachicongty')
-                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                                @enderror
                             </div>
                         </div>
                     </div>

@@ -96,7 +96,7 @@ class CategoryController extends Controller
 
             DB::commit();
 
-            return redirect()->route('category.index');
+            return response()->json(['code' => 200]);
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());

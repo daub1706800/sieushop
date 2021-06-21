@@ -19,9 +19,11 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
-                    <a href="{{ route('video.add') }}" class="btn btn-primary float-right m-2"><i class="fas fa-plus"></i></a></a>
-                </div>
+                @can('newsvideo-add')
+                    <div class="col-md-12">
+                        <a href="{{ route('video.add') }}" class="btn btn-primary float-right m-2"><i class="fas fa-plus"></i></a></a>
+                    </div>
+                @endcan
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
@@ -83,10 +85,14 @@
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
                                                     <a class="dropdown-item text-warning" href="{{ route('video.log', ['id' => $item->id]) }}">Lịch sử tin tức</a>
-                                                    <a class="dropdown-item text-info" href="{{ route('video.edit', ['id' => $item->id]) }}">Chỉnh sửa</a>
-                                                    @if ($item->xuatbantintuc == 0)
-                                                    <a class="dropdown-item text-danger" href="{{ route('video.delete', ['id' => $item->id]) }}">Xóa</a>
-                                                    @endif
+                                                    @can('newsvideo-view')
+                                                        <a class="dropdown-item text-info" href="{{ route('video.edit', ['id' => $item->id]) }}">Chỉnh sửa</a>
+                                                    @endcan
+                                                    @can('newsvideo-delete')
+                                                        @if ($item->xuatbanvideotintuc == 0)
+                                                            <a class="dropdown-item text-danger delete-newsvideo" href="{{ route('video.delete', ['id' => $item->id]) }}">Xóa</a>
+                                                        @endif
+                                                    @endcan
                                                 </div>
                                             </div>
                                         </td>

@@ -40,7 +40,9 @@
                                     @foreach($advertises as $key => $item)
                                     <tr>
                                         <th scope="row">{{ $item->id }}</th>
-                                        <td>{{ $item->tieudequangcao }}</td>
+                                        <td>
+                                            <a href="{{ route('advertise.edit', ['id' => $item->id]) }}">{{ $item->tieudequangcao }}</a>
+                                        </td>
                                         <td class="text-center" >
                                             <input type="checkbox" class="loaiquangcao" data-id="{{ $item->id }}" data-url="{{ route('advertise.change-status') }}"
                                                 value="{{ $item->loaiquangcao }}" {{ $item->loaiquangcao == 1 ? "checked" : "" }}>
@@ -55,15 +57,17 @@
                                             @endif
                                         </td>
                                         <td>{{ $item->ngaytaoquangcao }}</td>
-                                        <td>
-                                            <div class="btn-group">
+                                        <td class="text-center">
+                                            <a class="btn btn-sm btn-danger delete-advertise" href="{{ route('advertise.delete', ['id' => $item->id]) }}">
+                                                <i class="fas fa-trash-alt"></i></a>
+                                            {{-- <div class="btn-group">
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item text-info" href="{{ route('advertise.edit', ['id' => $item->id]) }}">Chỉnh sửa</a>
+                                                    <a href="{{ route('advertise.edit', ['id' => $item->id]) }}">Chỉnh sửa</a>
                                                     <a class="dropdown-item text-danger" href="{{ route('advertise.delete', ['id' => $item->id]) }}">Xóa</a>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </td>
                                     </tr>
                                     @endforeach

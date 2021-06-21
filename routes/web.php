@@ -100,7 +100,9 @@ Route::get('count-badge', [
 
 /* Route Administrator */
 Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
+    
     Route::prefix('admin')->group(function () {
+        
         Route::get('/', function () {
             return view('admin.home');
         })->name('admin.home');
@@ -127,10 +129,10 @@ Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
                 'as'   => 'department.delete',
                 'uses' => 'App\Http\Controllers\DepartmentController@delete'
             ]);
-            Route::get('/view', [
-                'as'   => 'department.view',
-                'uses' => 'App\Http\Controllers\DepartmentController@view'
-            ]);
+            // Route::get('/view', [
+            //     'as'   => 'department.view',
+            //     'uses' => 'App\Http\Controllers\DepartmentController@view'
+            // ]);
         });
     
         /* Module Lĩnh vực */
@@ -450,7 +452,7 @@ Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
         });
     
         /* Module Giai đoạn sản phẩm */
-        Route::prefix('stage')->group(function () {
+        Route::prefix('product/stage')->group(function () {
             Route::get('/{product_id}', [
                 'as'   => 'admin.stage.index',
                 'uses' => 'App\Http\Controllers\AdminStageController@index'
@@ -609,7 +611,9 @@ Route::middleware(['auth', 'verified', 'can:is-admin'])->group(function () {
 
 /* Route Company */
 Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
+    
     Route::prefix('dasboard')->group(function() {
+    
         Route::get('/', function () {
             return view('admin.home');
         })->name('dasboard.home');
@@ -637,11 +641,11 @@ Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
                 'uses' => 'App\Http\Controllers\ProfileController@update_company',
                 'middleware' => 'can:company-update'
             ]);
-            Route::get('/delete/{id}', [
-                'as'   => 'profile.company.delete',
-                'uses' => 'App\Http\Controllers\ProfileController@delete_company',
-                'middleware' => 'can:company-delete'
-            ]);
+            // Route::get('/delete/{id}', [
+            //     'as'   => 'profile.company.delete',
+            //     'uses' => 'App\Http\Controllers\ProfileController@delete_company',
+            //     'middleware' => 'can:company-delete'
+            // ]);
         });
     
         /* Module Tin tức */
@@ -667,7 +671,6 @@ Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
             Route::post('/add-news', [
                 'as' => 'tintuc.doaddTintuc',
                 'uses' => 'App\Http\Controllers\TintucController@doaddTintuc',
-                'middleware' => 'can:news-add'
             ]);
             Route::get('/delete-news/{id}', [
                 'as' => 'tintuc.deleteTintuc',
@@ -687,7 +690,6 @@ Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
             Route::post('/editloai', [
                 'as' => 'tintuc.editloaiTintuc',
                 'uses' => 'App\Http\Controllers\TintucController@editloaiTintuc',
-                'middleware' => 'can:news-update'
             ]);
             // Route::get('/delete-video/{id}', [
             //     'as' => 'tintuc.deleteVideo',
@@ -712,11 +714,11 @@ Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
             Route::get('/remove-news', [
                 'as' => 'tintuc.removeTintuc',
                 'uses' => 'App\Http\Controllers\TintucController@removeTintuc',
+                'middleware' => 'can:news-recall'
             ]);
             Route::get('/view/{id}', [
                 'as' => 'tintuc.viewTintuc',
                 'uses' => 'App\Http\Controllers\TintucController@viewTintuc',
-                'middleware' => 'can:news-view'
             ]);
         });
 
@@ -735,7 +737,6 @@ Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
             Route::post('/store', [
                 'as'   => 'video.store',
                 'uses' => 'App\Http\Controllers\NewsVideoController@store',
-                'middleware' => 'can:newsvideo-add'
             ]);
             Route::get('/edit/{id}', [
                 'as'   => 'video.edit',
@@ -744,7 +745,8 @@ Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
             ]);
             Route::post('/update/{id}', [
                 'as'   => 'video.update',
-                'uses' => 'App\Http\Controllers\NewsVideoController@update'
+                'uses' => 'App\Http\Controllers\NewsVideoController@update',
+                'middleware' => 'can:newsvideo-update'
             ]);
             Route::get('/delete/{id}', [
                 'as'   => 'video.delete',
@@ -780,11 +782,13 @@ Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
             ]);
             Route::get('/change-status', [
                 'as'   => 'video.change-status',
-                'uses' => 'App\Http\Controllers\NewsVideoController@change_status'
+                'uses' => 'App\Http\Controllers\NewsVideoController@change_status',
+                'middleware' => 'can:newsvideo-update'
             ]);
             Route::get('/delete-video', [
                 'as'   => 'video.delete-video',
-                'uses' => 'App\Http\Controllers\NewsVideoController@delete_video'
+                'uses' => 'App\Http\Controllers\NewsVideoController@delete_video',
+                'middleware' => 'can:newsvideo-update'
             ]);
         });
     
@@ -813,6 +817,7 @@ Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
             Route::get('/', [
                 'as'   => 'profile.account.index',
                 'uses' => 'App\Http\Controllers\ProfileController@index_account',
+                'middleware' => 'can:account-list'
             ]);
             Route::post('/store', [
                 'as'   => 'profile.account.store',
@@ -836,11 +841,13 @@ Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
             ]);
             Route::get('/verify/{id}', [
                 'as'   => 'profile.account.verify',
-                'uses' => 'App\Http\Controllers\ProfileController@verify'
+                'uses' => 'App\Http\Controllers\ProfileController@verify',
+                'middleware' => 'can:account-update'
             ]);
             Route::get('/delete-role', [
                 'as'   => 'profile.account.delete-role',
-                'uses' => 'App\Http\Controllers\ProfileController@delete_role_user'
+                'uses' => 'App\Http\Controllers\ProfileController@delete_role_user',
+                'middleware' => 'can:account-update'
             ]);
         });
     
@@ -849,6 +856,7 @@ Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
             Route::get('/', [
                 'as'   => 'profile.role.index',
                 'uses' => 'App\Http\Controllers\ProfileController@index_role',
+                'middleware' => 'can:role-list'
             ]);
             Route::post('/store', [
                 'as'   => 'profile.role.store',
@@ -877,6 +885,7 @@ Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
             Route::get('/', [
                 'as'   => 'storage.index',
                 'uses' => 'App\Http\Controllers\StorageController@index',
+                'middleware' => 'can:storage-list'
             ]);
             Route::post('/store', [
                 'as'   => 'storage.store',
@@ -909,6 +918,7 @@ Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
             Route::get('/', [
                 'as'   => 'productcategory.index',
                 'uses' => 'App\Http\Controllers\ProductCategoryController@index',
+                'middleware' => 'can:procat-list'
             ]);
             Route::post('/store', [
                 'as'   => 'productcategory.store',
@@ -937,6 +947,7 @@ Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
             Route::get('/', [
                 'as'   => 'product.index',
                 'uses' => 'App\Http\Controllers\ProductController@index',
+                'middleware' => 'can:product-list'
             ]);
             Route::get('/add', [
                 'as'   => 'product.add',
@@ -969,14 +980,16 @@ Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
         });
     
         /* Module Giai đoạn sản phẩm */
-        Route::prefix('stage')->group(function () {
+        Route::prefix('product/stage')->group(function () {
             Route::get('/{product_id}', [
                 'as'   => 'stage.index',
                 'uses' => 'App\Http\Controllers\StageController@index',
+                'middleware' => 'can:stage-list'
             ]);
             Route::post('/{product_id}', [
                 'as'   => 'stage.store',
                 'uses' => 'App\Http\Controllers\StageController@store',
+                'middleware' => 'can:stage-add'
             ]);
             Route::get('/edit/{id}/{product_id}', [
                 'as'   => 'stage.edit',
@@ -986,22 +999,22 @@ Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
             Route::post('/update/{id}', [
                 'as'   => 'stage.update',
                 'uses' => 'App\Http\Controllers\StageController@update',
-                // 'middleware' => 'can:product-update'
+                'middleware' => 'can:stage-update'
             ]);
             Route::get('/delete/{id}', [
                 'as'   => 'stage.delete',
                 'uses' => 'App\Http\Controllers\StageController@delete',
-                // 'middleware' => 'can:product-delete'
+                'middleware' => 'can:stage-delete'
             ]);
             Route::get('/stage-info/{stage_id}/{product_id}', [
                 'as'   => 'stage-info.index',
                 'uses' => 'App\Http\Controllers\StageController@stage_info_index',
-                // 'middleware' => 'can:product-list'
+                'middleware' => 'can:stageinfo-list'
             ]);
             Route::get('/stage-info/add/{stage_id}/{product_id}', [
                 'as'   => 'stage-info.add',
                 'uses' => 'App\Http\Controllers\StageController@stage_info_add',
-                // 'middleware' => 'can:product-add'
+                'middleware' => 'can:stageinfo-add'
             ]);
             Route::post('/store-info/store/{stage_id}/{product_id}', [
                 'as'   => 'stage-info.store',
@@ -1010,14 +1023,17 @@ Route::middleware(['auth', 'verified', 'can:is-company'])->group(function () {
             Route::get('/stage-info/edit/{stageInfo_id}/{stage_id}/{product_id}', [
                 'as'   => 'stage-info.edit',
                 'uses' => 'App\Http\Controllers\StageController@stage_info_edit',
+                'middleware' => 'can:stageinfo-view'
             ]);
             Route::post('/stage-info/update/{stageInfo_id}/{stage_id}/{product_id}', [
                 'as'   => 'stage-info.update',
                 'uses' => 'App\Http\Controllers\StageController@stage_info_update',
+                'middleware' => 'can:stageinfo-update'
             ]);
             Route::get('/stage-info/delete/{stageInfo_id}/{stage_id}/{product_id}', [
                 'as'   => 'stage-info.delete',
                 'uses' => 'App\Http\Controllers\StageController@stage_info_delete',
+                'middleware' => 'can:stageinfo-delete'
             ]);
             Route::get('/ajax/count-stage-info', [
                 'as' => 'stage-info.count',

@@ -20,10 +20,12 @@
     <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
-                <a id="btn-modal-click" href="" class="btn btn-primary float-right m-2"
-                    data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"><i class="fas fa-plus"></i></a>
-            </div>
+            @can('account-add')
+                <div class="col-md-12">
+                    <a id="btn-modal-click" href="" class="btn btn-primary float-right m-2"
+                        data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"><i class="fas fa-plus"></i></a>
+                </div>
+            @endcan
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
@@ -76,16 +78,24 @@
                                                     aria-haspopup="true" aria-expanded="false">Tùy chọn
                                                 </button>
                                             @endif
-                                            <div class="dropdown-menu">
-                                                @if ($user->email_verified_at == null)
-                                                    <a class="dropdown-item text-success" href="{{ route('profile.account.verify', ['id' => $user->id]) }}">Kích hoạt email</a>
-                                                @endif
-                                                    <a class="dropdown-item text-info" href="{{ route('profile.account.edit', ['id' => $user->id]) }}">Chỉnh sửa</a>
-                                                @if($user->storage->isEmpty() && $user->stage->isEmpty()
-                                                    && $user->product->isEmpty() && $user->news->isEmpty())
-                                                    <a class="dropdown-item text-danger delete-user" href="{{ route('profile.account.delete', ['id' => $user->id]) }}">Xóa</a>
-                                                @endif
-                                            </div>
+                                            @canany(['account-update', 'account-view', 'account-delete'])
+                                                <div class="dropdown-menu">
+                                                    @can('account-update')
+                                                        @if ($user->email_verified_at == null)
+                                                            <a class="dropdown-item text-success" href="{{ route('profile.account.verify', ['id' => $user->id]) }}">Kích hoạt email</a>
+                                                        @endif
+                                                    @endcan
+                                                    @can('account-view')
+                                                        <a class="dropdown-item text-info" href="{{ route('profile.account.edit', ['id' => $user->id]) }}">Chỉnh sửa</a>
+                                                    @endcan
+                                                    @can('account-delete')
+                                                        @if($user->storage->isEmpty() && $user->stage->isEmpty()
+                                                            && $user->product->isEmpty() && $user->news->isEmpty())
+                                                            <a class="dropdown-item text-danger delete-user" href="{{ route('profile.account.delete', ['id' => $user->id]) }}">Xóa</a>
+                                                        @endif
+                                                    @endcan
+                                                </div>
+                                            @endcanany
                                         </div>
                                     </td>
                                 </tr>

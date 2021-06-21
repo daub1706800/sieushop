@@ -106,6 +106,12 @@ $(document).ready(function() {
                                 location.reload();
                             });
                         }
+                    },
+                    error:function(xhr) {
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Xóa thất bại !'
+                        });
                     }
                 });
             }
@@ -133,7 +139,7 @@ $(document).ready(function() {
                         if (data.code == 200) {
                             Toast.fire({
                                 icon: 'success',
-                                title: 'Xóa thành công'
+                                title: 'Xóa thành công !'
                             }).then((result) => {
                                 location.reload();
                             });

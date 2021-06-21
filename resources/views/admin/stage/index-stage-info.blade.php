@@ -15,12 +15,16 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 row mb-3">
-                    <div class="col-md-6">
-                        <a href="{{ route('stage.index', ['product_id' => $product_id]) }}" class="btn btn-primary">Danh sách giai đoạn</a>
-                    </div>
-                    <div class="col-md-6">
-                        <a href="{{ route('stage-info.add',  ['stage_id' => $stage->id, 'product_id' => $product_id]) }}" class="btn btn-primary float-right">Thêm công việc</a>
-                    </div>
+                    @can('stage-list')
+                        <div class="col-md-6">
+                            <a href="{{ route('stage.index', ['product_id' => $product_id]) }}" class="btn btn-primary">Danh sách giai đoạn</a>
+                        </div>
+                    @endcan
+                    @can('stageinfo-add')
+                        <div class="col-md-6">
+                            <a href="{{ route('stage-info.add',  ['stage_id' => $stage->id, 'product_id' => $product_id]) }}" class="btn btn-primary float-right">Thêm công việc</a>
+                        </div>
+                    @endcan
                 </div>
                 <div class="col-md-12">
                     <div class="card">
@@ -35,7 +39,9 @@
                                     <th scope="col">Ngày hoàn thành</th>
                                     <th scope="col">Thời gian dự kiến</th>
                                     <th scope="col">Tình trạng</th>
-                                    <th></th>
+                                    @can('stageinfo-delete')
+                                        <th></th>
+                                    @endcan
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -43,19 +49,25 @@
                                     <tr>
                                         <th scope="row">{{ $stageInfo['id'] }}</th>
                                         <td>
-                                            <a href="{{ route('stage-info.edit', ['stageInfo_id' => $stageInfo['id'], 'stage_id' => $stage->id, 'product_id' => $product_id]) }}">
-                                                {{ $stageInfo['tencongviec'] }}</a>
+                                            @can('stageinfo-view')
+                                                <a href="{{ route('stage-info.edit', ['stageInfo_id' => $stageInfo['id'], 'stage_id' => $stage->id, 'product_id' => $product_id]) }}">
+                                                    {{ $stageInfo['tencongviec'] }}</a>
+                                            @elsecan('stageinfo-list')
+                                                {{ $stageInfo['tencongviec'] }}
+                                            @endcan
                                         </td>
                                         <td>{!! $stageInfo['motacongviec'] !!}</td>
                                         <td>{{ $stageInfo['thoigianbatdau'] }}</td>
                                         <td>{{ $stageInfo['thoigianhoanthanh'] }}</td>
                                         <td>{{ $stageInfo['thoigiandukien'] }} ngày</td>
                                         <td>{{ $stageInfo['check'] . ' ' . $stageInfo['trehan'] }} ngày</td>
-                                        <td>
-                                            <a class="btn btn-danger" href="{{ route('stage-info.delete', ['stageInfo_id' => $stageInfo['id'], 'stage_id' => $stage->id, 'product_id' => $product_id]) }}">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </a>
-                                        </td>
+                                        @can('stageinfo-delete')
+                                            <td>
+                                                <a class="btn btn-danger delete-stageinfo" href="{{ route('stage-info.delete', ['stageInfo_id' => $stageInfo['id'], 'stage_id' => $stage->id, 'product_id' => $product_id]) }}">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </a>
+                                            </td>
+                                        @endcan
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -69,4 +81,9 @@
     </div>
     <!-- /.content -->
 </div>
+@endsection
+
+@section('js')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('AdminLTE/company/stageinfo/index/stageinfo.js') }}"></script>
 @endsection

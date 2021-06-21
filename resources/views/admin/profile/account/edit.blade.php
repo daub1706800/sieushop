@@ -74,9 +74,11 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="text-center mb-5">
-                                    <button type="submit" class="btn btn-primary">Lưu chỉnh sửa</button>
-                                </div>
+                                @can('account-update')
+                                    <div class="text-center mb-5">
+                                        <button type="submit" class="btn btn-primary">Lưu chỉnh sửa</button>
+                                    </div>
+                                @endcan
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">

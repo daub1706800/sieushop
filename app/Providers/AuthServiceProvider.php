@@ -84,6 +84,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('news-delete', 'App\Policies\NewsPolicy@delete');
         Gate::define('news-browse', 'App\Policies\NewsPolicy@browse');
         Gate::define('news-publish', 'App\Policies\NewsPolicy@publish');
+        Gate::define('news-recall', 'App\Policies\NewsPolicy@recall');
 
         // NewsVideo
         Gate::define('newsvideo-list', 'App\Policies\NewsVideoPolicy@list');
@@ -93,6 +94,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('newsvideo-delete', 'App\Policies\NewsVideoPolicy@delete');
         Gate::define('newsvideo-browse', 'App\Policies\NewsVideoPolicy@browse');
         Gate::define('newsvideo-publish', 'App\Policies\NewsVideoPolicy@publish');
+        Gate::define('newsvideo-recall', 'App\Policies\NewsVideoPolicy@recall');
 
         // Stage
         Gate::define('stage-list', 'App\Policies\StagePolicy@list');

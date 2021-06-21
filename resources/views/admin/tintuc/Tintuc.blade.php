@@ -58,7 +58,7 @@
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
                                                 <div class="dropdown-menu">
-                                                    @can('news-update')
+                                                    @can('news-view')
                                                         <a class="dropdown-item" href="{{route('tintuc.detailTintuc',['id'=>$row->id])}}">Chi tiết</a>
                                                     @endcan
                                                     @can('news-delete')
@@ -96,17 +96,6 @@
                                             <p style="color:orange; font-weight:bold;">Tin đã được đăng</p>
                                             @endif
                                         </td>
-                                        <!-- <td>
-                                            @if ( $row->duyettintuc === 0 && $row->xuatbantintuc === 0 && $row->lydogo === 1)
-                                            <a style="color:black; font-weight:bold;" href="{{route('tintuc.viewhistoryTintuc',['id'=>$row->id])}}">Xem lịch sử tin</a>
-                                            @endif
-                                            @if ( $row->duyettintuc === 1 && $row->xuatbantintuc === 0 && $row->lydogo === 1)
-                                            <a style="color:black; font-weight:bold;" href="{{route('tintuc.viewhistoryTintuc',['id'=>$row->id])}}">Xem lịch sử tin</a>
-                                            @endif
-                                            @if ( $row->duyettintuc === 1 && $row->xuatbantintuc === 1 && $row->lydogo === 1)
-                                            <a style="color:black; font-weight:bold;" href="{{route('tintuc.viewhistoryTintuc',['id'=>$row->id])}}">Xem lịch sử tin</a>
-                                            @endif
-                                        </td> -->
                                     </tr>
                                 @endforeach
                                 </tbody>

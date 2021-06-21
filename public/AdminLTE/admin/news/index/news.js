@@ -77,4 +77,35 @@ $(document).ready(function(){
             }
         });
     });
+
+    $(document).on('click', '.delete-news', function(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Bạn có chắc ?',
+            text: "Bạn sẽ không thể hoàn tác điều này !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url : $(this).attr('href'),
+                    type: "get",
+                    success:function(data) {
+                        if (data.code == 200) {
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Xóa thành công !'
+                            }).then((result) => {
+                                location.reload();
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    });
 });

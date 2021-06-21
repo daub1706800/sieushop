@@ -131,27 +131,24 @@ $(document).ready(function(){
                 contentType: false,
                 success:function (data)
                 {
-                    if (data.message =! null)
+                    console.log(data.message);
+                    if (data.message)
                     {
-                        $.notify({
-                            icon: 'far fa-times-circle',
-                            message: 'Quyền đã tồn tại'
-                        },{
-                            animate: {
-                                enter: 'animated bounceIn',
-                                exit: 'animated bounceOut'
-                            },
-                            type: 'off',
-                            allow_dismiss: false,
-                            placement: {
-                                from: "bottom",
-                                align: "right"
-                            },
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Quyền đã tồn tại !'
+                        }).then((result) => {
+                            // location.reload();
                         });
                     }
                     else
                     {
-                        location.reload();
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Thêm thành thành công !'
+                        }).then((result) => {
+                            location.reload();
+                        });
                     }
                 }
             });

@@ -18,11 +18,13 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
-                <a id="btn-modal-click" href="" class="btn btn-primary float-right m-2"
-                    data-toggle="modal" data-target="#exampleModal"
-                    data-whatever="@getbootstrap"><i class="fas fa-plus"></i></a>
-                </div>
+                @can('procat-add')
+                    <div class="col-md-12">
+                        <a id="btn-modal-click" href="" class="btn btn-primary float-right m-2"
+                            data-toggle="modal" data-target="#exampleModal"
+                            data-whatever="@getbootstrap"><i class="fas fa-plus"></i></a>
+                    </div>
+                @endcan
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
@@ -45,12 +47,18 @@
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item text-info" href="{{ route('productcategory.edit', ['id' => $productcategory->id]) }}">Chỉnh sửa</a>
-                                                    @if($productcategory->product->isEmpty())
-                                                    <a class="dropdown-item text-danger" href="{{ route('productcategory.delete', ['id' => $productcategory->id]) }}">Xóa</a>
-                                                    @endif
-                                                </div>
+                                                @canany(['procat-view', 'procat-delete'])
+                                                    <div class="dropdown-menu">
+                                                        @can('procat-view')
+                                                            <a class="dropdown-item text-info" href="{{ route('productcategory.edit', ['id' => $productcategory->id]) }}">Chỉnh sửa</a>
+                                                        @endcan
+                                                        @can('procat-delete')
+                                                            @if($productcategory->product->isEmpty())
+                                                                <a class="dropdown-item text-danger delete-procat" href="{{ route('productcategory.delete', ['id' => $productcategory->id]) }}">Xóa</a>
+                                                            @endif
+                                                        @endcan
+                                                    </div>
+                                                @endcanany
                                             </div>
                                         </td>
                                     </tr>
@@ -109,5 +117,6 @@
 @endsection
 
 @section('js')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('AdminLTE/company/product-category/index/product-category.js') }}"></script>
 @endsection

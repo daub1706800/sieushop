@@ -162,12 +162,11 @@ class PermissionController extends Controller
     public function update(Request $request)
     {
         try {
-            DB::beginTransaction();
-
             $arrParent = explode ( '-', $request->module_parent);
-            $id        = $arrParent[1];
-            $name      = $arrParent[0];
-    
+            $id = $arrParent[1];
+            $name = $arrParent[0];
+            $exists = false;
+
             foreach( $request->module_childrent as $itemChild)
             {
                 $arrChild  = explode ( '-', $itemChild);
@@ -176,24 +175,27 @@ class PermissionController extends Controller
                 
                 if($permission->isEmpty())
                 {
+                    DB::beginTransaction();
+
                     $this->permission->create([
                         'tenquyen'  => $name . '-' . $arrChild[0],
                         'motaquyen' => $arrChild[1],
                         'parent_id' => $id,
                     ]);
+
+                    DB::commit();
+
+                    $exists = false;
                 }
                 else
                 {
-                    $check = "Đã có";
+                    $exists = true;
                 }
             }
 
-            DB::commit();
-
-            return response([
-                'code' => 200,
-                'message' => $check,
-            ], 200);            
+            return response()->json([
+                'message' => $exists
+            ]);
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());

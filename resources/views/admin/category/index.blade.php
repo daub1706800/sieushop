@@ -39,19 +39,19 @@
                                 @foreach($categories as $key => $category)
                                 <tr>
                                     <th scope="row">{{$category->id}}</th>
-                                    <td>{{$category->tenchuyenmuc}}</td>
-                                    <td>{{$category->field->tenlinhvuc}}</td>
                                     <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item text-info" href="{{route('category.edit', ['id' => $category->id])}}">Chỉnh sửa</a>
-                                                @if($category->news->isEmpty())
-                                                <a class="dropdown-item text-danger" href="{{route('category.delete', ['id' => $category->id])}}">Xóa</a>
-                                                @endif
-                                            </div>
-                                        </div>
+                                        <a href="{{route('category.edit', ['id' => $category->id])}}">
+                                            {{$category->tenchuyenmuc}}</a>
+                                    </td>
+                                    <td>{{$category->field->tenlinhvuc}}</td>
+                                    <td class="text-center">
+                                        @if($category->news->isEmpty())
+                                            <a class="btn btn-sm btn-danger delete-category" href="{{route('category.delete', ['id' => $category->id])}}">
+                                                <i class="fas fa-trash-alt"></i></a>
+                                        @else
+                                            <a class="btn btn-sm btn-secondary">
+                                                <i class="fas fa-trash-alt"></i></a>        
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
@@ -115,6 +115,7 @@
 </div>
 @endsection
 @section('js')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('vendor/js/select2.js') }}"></script>
     <script src="{{ asset('AdminLTE/admin/category/index/category.js') }}"></script>
 @endsection

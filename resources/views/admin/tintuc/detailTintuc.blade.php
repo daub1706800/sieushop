@@ -73,9 +73,11 @@
                             <label>Nội dung chính*</label>
                             <textarea class="form-control summernote-noidung" name="noidungtintuc">{!!$data->noidungtintuc!!}</textarea>
                         </div>
-                        @if($data->xuatbantintuc === 0)
-                            <button style="margin-left: 45%" type="submit" class="btn btn-primary mb-5">Lưu chỉnh sửa</button>
-                        @endif
+                        @can('news-update')
+                            @if($data->xuatbantintuc === 0)
+                                <button style="margin-left: 45%" type="submit" class="btn btn-primary mb-5">Lưu chỉnh sửa</button>
+                            @endif
+                        @endcan
                     </form>
                     
                     <form action="{{route('tintuc.editloaiTintuc')}}" method="post">
@@ -98,42 +100,47 @@
                     </form>
                 </div>
                 
-                @if($data->xuatbantintuc === 1 || $data->duyettintuc === 1)
-                    <form action="{{route('tintuc.removeTintuc')}}" style="margin-left: 10%">
-                        <div class="form-group">
-                            <input type="hidden" name="id" value="{{$data->id}}">
-                            <input type="hidden" class="form-control" value="{{$data2}}" name="idtaikhoango">
-                            <label for="lydogo">Lý do gỡ tin: </label>
-                            <input type="lydogo" class="form-control" placeholder="VD: Sai sót thông tin" name="lydogo" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Gỡ tin tức</button>
-                    </form>
-                @endif
+                @can('news-recall')
+                    @if($data->xuatbantintuc === 1 || $data->duyettintuc === 1)
+                        <form action="{{route('tintuc.removeTintuc')}}" style="margin-left: 10%">
+                            <div class="form-group">
+                                <input type="hidden" name="id" value="{{$data->id}}">
+                                <input type="hidden" class="form-control" value="{{$data2}}" name="idtaikhoango">
+                                <label for="lydogo">Lý do gỡ tin: </label>
+                                <input type="lydogo" class="form-control" placeholder="VD: Sai sót thông tin" name="lydogo" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Gỡ tin tức</button>
+                        </form>
+                    @endif
+                @endcan
 
+                @can('news-browse')
+                    @if($data->duyettintuc === 0 && $data->xuatbantintuc === 0)
+                        <form action="{{route('tintuc.acceptTintuc')}}" style="margin-left: 10%">
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" value="{{$data->id}}" name="id">
+                                <input type="hidden" class="form-control" value="{{$data2}}" name="idtaikhoandanhgia">
+                                <label for="noidungdanhgia">Ghi chú duyệt tin:</label>
+                                <input type="noidungdanhgia" class="form-control" placeholder="VD: Tin tốt" name="noidungdanhgia" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Duyệt tin tức</button>
+                        </form>
+                    @endif
+                @endcan
 
-                @if($data->duyettintuc === 0 && $data->xuatbantintuc === 0)
-                    <form action="{{route('tintuc.acceptTintuc')}}" style="margin-left: 10%">
-                        <div class="form-group">
-                            <input type="hidden" class="form-control" value="{{$data->id}}" name="id">
-                            <input type="hidden" class="form-control" value="{{$data2}}" name="idtaikhoandanhgia">
-                            <label for="noidungdanhgia">Ghi chú duyệt tin:</label>
-                            <input type="noidungdanhgia" class="form-control" placeholder="VD: Tin tốt" name="noidungdanhgia" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Duyệt tin tức</button>
-                    </form>
-                @endif
-
-                @if($data->duyettintuc === 1 && $data->xuatbantintuc === 0)
-                    <form action="{{route('tintuc.postTintuc')}}" style="margin-left: 10%">
-                        <div class="form-group">
-                            <input type="hidden" class="form-control" value="{{$data->id}}" name="id">
-                            <input type="hidden" class="form-control" value="{{$data2}}" name="idtaikhoandanhgia">
-                            <label for="noidungdanhgia">Ghi chú xuất bản: </label>
-                            <input type="noidungdanhgia" class="form-control" placeholder="VD: Tin tốt" name="noidungdanhgia" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Xuất bản tin tức</button>
-                    </form>
-                @endif  
+                @can('news-publish')
+                    @if($data->duyettintuc === 1 && $data->xuatbantintuc === 0)
+                        <form action="{{route('tintuc.postTintuc')}}" style="margin-left: 10%">
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" value="{{$data->id}}" name="id">
+                                <input type="hidden" class="form-control" value="{{$data2}}" name="idtaikhoandanhgia">
+                                <label for="noidungdanhgia">Ghi chú xuất bản: </label>
+                                <input type="noidungdanhgia" class="form-control" placeholder="VD: Tin tốt" name="noidungdanhgia" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Xuất bản tin tức</button>
+                        </form>
+                    @endif
+                @endcan
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->

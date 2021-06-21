@@ -87,7 +87,7 @@
                                                     <a class="dropdown-item text-warning" href="{{ route('news.log', ['id' => $item->id]) }}">Lịch sử tin tức</a>
                                                     <a class="dropdown-item text-info" href="{{ route('news.edit', ['id' => $item->id]) }}">Chỉnh sửa</a>
                                                     @if ($item->xuatbantintuc == 0)
-                                                    <a class="dropdown-item text-danger" href="{{ route('news.delete', ['id' => $item->id]) }}">Xóa</a>
+                                                    <a class="dropdown-item text-danger delete-news" href="{{ route('news.delete', ['id' => $item->id]) }}">Xóa</a>
                                                     @endif
                                                 </div>
                                             </div>

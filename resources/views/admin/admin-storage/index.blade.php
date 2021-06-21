@@ -44,10 +44,7 @@
                                     <tr>
                                         <th scope="row">{{ $storage->id }}</th>
                                         <td>
-                                            <a href="" class="storage-item"
-                                                data-toggle="modal" data-target="#exampleModalScrollable"
-                                                data-id="{{ $storage->id }}" data-url="{{ route('admin.storage.view') }}">
-                                                {{ $storage->tenkho }}</a>
+                                            <a href="{{ route('admin.storage.edit', ['id' => $storage->id]) }}">{{ $storage->tenkho }}</a>
                                         </td>
                                         <td>{{ $storage->diachikho }}</td>
                                         <td>{{ $storage->taitrongkho }}</td>
@@ -55,17 +52,14 @@
                                         <td>{{ $storage->sonhanvienkho }}</td>
                                         <td>{{ $storage->ghichukho }}</td>
                                         <td>{{ $storage->company->tencongty }}</td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item text-info" href="{{ route('admin.storage.edit', ['id' => $storage->id]) }}">Chỉnh sửa</a>
-                                                    @if($storage->product->isEmpty())
-                                                    <a class="dropdown-item text-danger" href="{{ route('admin.storage.delete', ['id' => $storage->id]) }}">Xóa</a>
-                                                    @endif
-                                                </div>
-                                            </div>
+                                        <td class="text-center">
+                                            @if($storage->product->isEmpty())
+                                                <a class="btn btn-sm btn-danger delete-storage" href="{{ route('admin.storage.delete', ['id' => $storage->id]) }}">
+                                                    <i class="fas fa-trash-alt"></i></a>
+                                            @else
+                                                <a class="btn btn-sm btn-secondary">
+                                                    <i class="fas fa-trash-alt"></i></a>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach
@@ -177,64 +171,11 @@
         </div>
     </div>
 </div>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="col-md-4">
-                    <h5 class="modal-title tenkho" id="exampleModalScrollableTitle"
-                        style="font-size: 18px; font-weight: bold; color: red">Modal title</h5>
-                </div>
-                <div class="col-md-4 offset-md-4 text-right">
-                    <p class="modal-title taongay"
-                        style="font-size: 15px;"></p>
-                </div>
-            </div>
-            <div class="modal-body">
-                <div class="col-md-12">
-                    <div class="row">
-                        <p><b>Công ty:</b></p>
-                        <p class="congty pl-2"></p>
-                    </div>
-                    <div class="row">
-                        <p><b>Địa chỉ kho:</b></p>
-                        <p class="diachikho pl-2"></p>
-                    </div>
-                    <div class="row">
-                        <p><b>Tải trọng:</b></p>
-                        <p class="taitrongkho pl-2"></p>
-                    </div>
-                    <div class="row">
-                        <p><b>Diện tích:</b></p>
-                        <p class="dientichkho pl-2"></p>
-                    </div>
-                    <div class="row">
-                        <p><b>Tổng số NV:</b></p>
-                        <p class="sonhanvien pl-2"></p>
-                    </div>
-                    <div class="row">
-                        <p><b>Người tạo:</b></p>
-                        <p class="nguoitao pl-2"></p>
-                    </div>
-                    <div class="row">
-                        <p><b>Ghi chú:</b></p>
-                        <p class="ghichukho pl-2"></p>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12 text-center">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
+
 @section('js')
     <script src="{{ asset('vendor/js/select2.js') }}"></script>
     <script src="{{ asset('AdminLTE/admin/storage/index/storage.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 

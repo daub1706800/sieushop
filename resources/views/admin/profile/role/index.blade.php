@@ -18,10 +18,12 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
-                    <a id="btn-modal-click" href="" class="btn btn-primary float-right mb-3" data-toggle="modal" data-target="#exampleModal"
-                        data-whatever="@getbootstrap"><i class="fas fa-plus"></i></a>
-                </div>
+                @can('role-add')
+                    <div class="col-md-12">
+                        <a id="btn-modal-click" href="" class="btn btn-primary float-right mb-3" data-toggle="modal" data-target="#exampleModal"
+                            data-whatever="@getbootstrap"><i class="fas fa-plus"></i></a>
+                    </div>
+                @endcan
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
@@ -52,12 +54,18 @@
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item text-info" href="{{ route('profile.role.edit', ['id' => $role->id]) }}">Chỉnh sửa</a>
-                                                    @if($role->user->isEmpty())
-                                                    <a class="dropdown-item text-danger delete-role" href="{{ route('profile.role.delete', ['id' => $role->id]) }}">Xóa</a>
-                                                    @endif
-                                                </div>
+                                                @canany(['role-view', 'role-delete'])
+                                                    <div class="dropdown-menu">
+                                                        @can('role-view')
+                                                            <a class="dropdown-item text-info" href="{{ route('profile.role.edit', ['id' => $role->id]) }}">Chỉnh sửa</a>
+                                                        @endcan
+                                                        @can('role-delete')
+                                                            @if($role->user->isEmpty())
+                                                                <a class="dropdown-item text-danger delete-role" href="{{ route('profile.role.delete', ['id' => $role->id]) }}">Xóa</a>
+                                                            @endif
+                                                        @endcan
+                                                    </div>
+                                                @endcanany
                                             </div>
                                         </td>
                                     </tr>

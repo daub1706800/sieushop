@@ -48,18 +48,17 @@
                                         <td>{{ $company->emailcongty }}</td>
                                         <td>{{ $company->dienthoaicongty }}</td>
                                         <td>{{ $company->ngaythanhlapcongty }}</td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item text-info" href="{{ route('company.edit', ['id'=>$company->id]) }}">Chỉnh sửa</a>
-                                                    @if($company->news->isEmpty() && $company->user->isEmpty() && $company->product->isEmpty()
-                                                        && $company->procat->isEmpty() && $company->storage->isEmpty())
-                                                    <a class="dropdown-item text-danger" href="{{ route('company.edit', ['id'=>$company->id]) }}">Xóa</a>
-                                                    @endif
-                                                </div>
-                                            </div>
+                                        <td class="text-center">
+                                            <a class="btn btn-sm btn-info" href="{{ route('company.edit', ['id'=>$company->id]) }}">
+                                                <i class="fas fa-pencil-alt"></i></a>
+                                            @if($company->news->isEmpty() && $company->user->isEmpty() && $company->product->isEmpty()
+                                                && $company->procat->isEmpty() && $company->storage->isEmpty())
+                                                <a class="btn btn-sm btn-danger delete-company" href="{{ route('company.edit', ['id'=>$company->id]) }}">
+                                                    <i class="fas fa-trash-alt"></i></a>
+                                            @else
+                                                <a class="btn btn-sm btn-secondary">
+                                                    <i class="fas fa-trash-alt"></i></a>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach
@@ -153,4 +152,5 @@
 
 @section('js')
     <script src="{{ asset('AdminLTE/admin/company/index/company.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection

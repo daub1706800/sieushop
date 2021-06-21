@@ -150,9 +150,11 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="text-center mb-4">
-                            <button type="submit" class="btn btn-primary">Lưu chỉnh sửa</button>
-                        </div>
+                        @can('product-update')
+                            <div class="text-center mb-4">
+                                <button type="submit" class="btn btn-primary">Lưu chỉnh sửa</button>
+                            </div>
+                        @endcan
                     </form>
                 </div>
             </div>

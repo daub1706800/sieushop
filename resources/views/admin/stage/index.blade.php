@@ -4,12 +4,7 @@
 <title>Giai đoạn sản phẩm | Danh sách</title>
 @endsection
 @section('css')
-    <style>
-        .alert-custom{
-            margin-top: 5px;
-            padding: 3px 5px;
-        }
-    </style>
+   <link rel="stylesheet" href="{{ asset('AdminLTE/company/stage/index/stage.css') }}">
 @endsection
 @section('content')
 <div class="content-wrapper">
@@ -28,13 +23,17 @@
                     </div>
                 </div>
                 <div class="col-md-12 row mb-3">
-                    <div class="col-md-6">
-                        <a href="{{ route('product.index') }}" class="btn btn-primary">Danh sách sản phẩm</a>
-                    </div>
-                    <div class="col-md-6">
-                        <a id="btn-modal-click" href="" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal"
-                            data-whatever="@getbootstrap"><i class="fas fa-plus"></i></a>
-                    </div>
+                    @can('product-list')
+                        <div class="col-md-6">
+                            <a href="{{ route('product.index') }}" class="btn btn-primary">Danh sách sản phẩm</a>
+                        </div>
+                    @endcan
+                    @can('stage-add')
+                        <div class="col-md-6">
+                            <a id="btn-modal-click" href="" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal"
+                                data-whatever="@getbootstrap"><i class="fas fa-plus"></i></a>
+                        </div>
+                    @endcan
                 </div>
                 <div class="col-md-12">
                     <div class="card">
@@ -53,9 +52,13 @@
                                     @foreach($stages as $stage)
                                     <tr>
                                         <th scope="row">{{ $stage->id }}</th>
-                                        <td><a href="{{ route('stage-info.index', ['stage_id' => $stage->id, 'product_id' => $product_id]) }}"
-                                                class="stage-info">
-                                            {{ $stage->tengiaidoan }}</a>
+                                        <td>
+                                            @can('stage-view') 
+                                                <a href="{{ route('stage.edit', ['id' => $stage->id, 'product_id' => $product_id]) }}"
+                                                    class="stage-info">{{ $stage->tengiaidoan }}</a>
+                                            @elsecan('stage-list')
+                                                {{ $stage->tengiaidoan }}
+                                            @endcan
                                         </td>
                                         <td>{{ $stage->motagiaidoan }}</td>
                                         <td>{{ $stage->thoigiantao }}</td>
@@ -63,12 +66,16 @@
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="{{ route('stage.edit', ['id' => $stage->id, 'product_id' => $product_id]) }}">Chỉnh sửa</a>
-                                                    @if ($stage->stageInfo->isEmpty())
-                                                    <a class="dropdown-item" href="{{ route('stage.delete', ['id' => $stage->id]) }}">Xóa</a>
-                                                    @endif
-                                                </div>
+                                                @canany(['stageinfo-list', 'stage-delete'])
+                                                    <div class="dropdown-menu">
+                                                        @can('stageinfo-list')
+                                                            <a class="dropdown-item text-info" href="{{ route('stage-info.index', ['stage_id' => $stage->id, 'product_id' => $product_id]) }}">Danh sách công việc</a>
+                                                        @endcan
+                                                        @can('stage-delete')
+                                                            <a class="dropdown-item text-danger delete-stage" href="{{ route('stage.delete', ['id' => $stage->id]) }}">Xóa</a>
+                                                        @endcan
+                                                    </div>
+                                                @endcanany
                                             </div>
                                         </td>
                                     </tr>
@@ -92,28 +99,26 @@
             <div class="modal-body">
                 <h4><b>Thêm giai đoạn</b></h4><hr>
                 <form action="{{ route('stage.store', ['product_id' => $product->id]) }}" method="post">
-                    {{-- <input type="hidden" id="csrf" value="{{csrf_token()}}"> --}}
                     @csrf
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Tên giai đoạn *</label>
                             <input type="text" class="form-control @error('tengiaidoan') is-invalid @enderror"
                                     name="tengiaidoan" placeholder="Tên giai đoạn" value="{{ old('tengiaidoan') }}">
-                            {{-- <input type="hidden" id="idsp" name="idsp" value="{{ $product_id }}"> --}}
+                                @error('tengiaidoan')
+                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                                @enderror
                         </div>
-                        @error('tengiaidoan')
-                        <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Mô tả *</label>
                             <textarea class="form-control @error('motagiaidoan') is-invalid @enderror" rows="3"
                                 name="motagiaidoan" placeholder="Mô tả giai đoạn">{{ old('motagiaidoan') }}</textarea>
+                            @error('motagiaidoan')
+                            <div class="alert alert-danger alert-custom">{{ $message }}</div>
+                            @enderror
                         </div>
-                        @error('motagiaidoan')
-                        <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="col-md-12 text-center">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -126,14 +131,6 @@
 </div>
 @endsection
 @section('js')
-    <script>
-        $(document).ready(function (){
-            $(function () {
-                var errors = $('.alert-custom').html();
-                if (errors != null) {
-                    $('#btn-modal-click').click();
-                }
-            });
-        });
-    </script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('AdminLTE/company/stage/index/stage.js') }}"></script>
 @endsection

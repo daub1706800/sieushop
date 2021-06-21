@@ -104,7 +104,9 @@ class StorageController extends Controller
 
             DB::commit();
         
-            return redirect()->route('storage.index');            
+            return response()->json([
+                'code' => 200
+            ]);
         } catch (\Exception $exception) {
             DB::rollback();
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());

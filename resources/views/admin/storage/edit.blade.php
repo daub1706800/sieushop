@@ -84,9 +84,11 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-md-12 text-center">
-                        <button type="submit" class="btn btn-primary mb-2">Lưu chỉnh sửa</button>
-                    </div>
+                    @can('storage-update')
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn btn-primary mb-2">Lưu chỉnh sửa</button>
+                        </div>
+                    @endcan
                 </form>
                 </div>
             </div>

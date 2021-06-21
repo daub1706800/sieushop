@@ -89,74 +89,82 @@
                             <input type="checkbox" id="loaivideotintuc" name="loaivideotintuc" value="1" {{ $newsvideo->loaivideotintuc == 1 ? "checked" : "" }}>
                             <label for="loaivideotintuc">Tin nổi bật</label>
                         </div>
-                        @if ($newsvideo->xuatbanvideotintuc != 1)
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary mb-5">Lưu chỉnh sửa</button>
-                        </div>  
-                        @endif
+                        @can('newsvideo-update')
+                            @if ($newsvideo->xuatbanvideotintuc != 1)
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary mb-5">Lưu chỉnh sửa</button>
+                                </div>  
+                            @endif
+                        @endcan
                     </form>
 
                     <div class="col-md-6">
-                        @if ($newsvideo->xuatbanvideotintuc == 1 || $newsvideo->duyetvideotintuc == 1)
-                        <form action="{{ route('video.remove', ['id' => $newsvideo->id]) }}">
-                            <div class="d-flex justify-content-start">
-                                <div class="form-group">
-                                    <label>Thu hồi tin tức *</label>
-                                    <input type="text" name="lydogo" class="form-control lydo @error('lydogo') is-invalid @enderror"
-                                            placeholder="Lý do: Thông tin sai">
-                                    
+                        @can('newsvideo-recall')
+                            @if ($newsvideo->xuatbanvideotintuc == 1 || $newsvideo->duyetvideotintuc == 1)
+                            <form action="{{ route('video.remove', ['id' => $newsvideo->id]) }}">
+                                <div class="d-flex justify-content-start">
+                                    <div class="form-group">
+                                        <label>Thu hồi tin tức *</label>
+                                        <input type="text" name="lydogo" class="form-control lydo @error('lydogo') is-invalid @enderror"
+                                                placeholder="Lý do: Thông tin sai">
+                                        
+                                    </div>
+                                    <div class="d-flex align-items-center" style="margin-top: 16px">
+                                        <button type="submit" class="btn btn-primary btn-lydo">Thu hồi</button>
+                                    </div>
                                 </div>
-                                <div class="d-flex align-items-center" style="margin-top: 16px">
-                                    <button type="submit" class="btn btn-primary btn-lydo">Thu hồi</button>
+                                @error('lydogo')
+                                <div class="d-flex justify-content-start">
+                                    <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 </div>
-                            </div>
-                            @error('lydogo')
-                            <div class="d-flex justify-content-start">
-                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                            </div>
-                            @enderror
-                        </form>
-                        @endif
+                                @enderror
+                            </form>
+                            @endif
+                        @endcan
 
-                        @if ($newsvideo->duyetvideotintuc == 0 && $newsvideo->xuatbanvideotintuc == 0 && $newsvideo->trangthaithuhoi == 0 || $newsvideo->trangthaithuhoi == 1)
-                        <form action="{{ route('video.update-duyet', ['id' => $newsvideo->id]) }}">
-                            <div class="d-flex justify-content-start">
-                                <div class="form-group">
-                                    <label>Duyệt tin *</label>
-                                    <input type="text" name="noidungdanhgia" class="form-control lydo @error('noidungdanhgia') is-invalid @enderror"
-                                            placeholder="Nội dung tin hay">
+                        @can('newsvideo-browse')
+                            @if ($newsvideo->duyetvideotintuc == 0 && $newsvideo->xuatbanvideotintuc == 0 && $newsvideo->trangthaithuhoi == 0 || $newsvideo->trangthaithuhoi == 1)
+                            <form action="{{ route('video.update-duyet', ['id' => $newsvideo->id]) }}">
+                                <div class="d-flex justify-content-start">
+                                    <div class="form-group">
+                                        <label>Duyệt tin *</label>
+                                        <input type="text" name="noidungdanhgia" class="form-control lydo @error('noidungdanhgia') is-invalid @enderror"
+                                                placeholder="Nội dung tin hay">
+                                    </div>
+                                    <div class="d-flex align-items-center" style="margin-top: 16px">
+                                        <button type="submit" class="btn btn-primary btn-lydo">Duyệt</button>
+                                    </div>
                                 </div>
-                                <div class="d-flex align-items-center" style="margin-top: 16px">
-                                    <button type="submit" class="btn btn-primary btn-lydo">Duyệt</button>
+                                @error('noidungdanhgia')
+                                <div class="d-flex justify-content-start">
+                                    <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 </div>
-                            </div>
-                            @error('noidungdanhgia')
-                            <div class="d-flex justify-content-start">
-                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                            </div>
-                            @enderror
-                        </form>
-                        @endif
+                                @enderror
+                            </form>
+                            @endif
+                        @endcan
 
-                        @if ($newsvideo->xuatbanvideotintuc == 0 && $newsvideo->duyetvideotintuc == 1)
-                        <form action="{{ route('video.update-xuatban', ['id' => $newsvideo->id]) }}">
-                            <div class="d-flex justify-content-start">
-                                <div class="form-group">
-                                    <label>Xuất bản tin *</label>
-                                    <input type="text" name="noidungdanhgia" class="form-control lydo @error('noidungdanhgia') is-invalid @enderror"
-                                            placeholder="Nội dung tin hay">
+                        @can('newsvideo-publish')
+                            @if ($newsvideo->xuatbanvideotintuc == 0 && $newsvideo->duyetvideotintuc == 1)
+                            <form action="{{ route('video.update-xuatban', ['id' => $newsvideo->id]) }}">
+                                <div class="d-flex justify-content-start">
+                                    <div class="form-group">
+                                        <label>Xuất bản tin *</label>
+                                        <input type="text" name="noidungdanhgia" class="form-control lydo @error('noidungdanhgia') is-invalid @enderror"
+                                                placeholder="Nội dung tin hay">
+                                    </div>
+                                    <div class="d-flex align-items-center" style="margin-top: 16px">
+                                        <button type="submit" class="btn btn-primary btn-lydo">Xuất bản</button>
+                                    </div>
                                 </div>
-                                <div class="d-flex align-items-center" style="margin-top: 16px">
-                                    <button type="submit" class="btn btn-primary btn-lydo">Xuất bản</button>
+                                @error('noidungdanhgia')
+                                <div class="d-flex justify-content-start">
+                                    <div class="alert alert-danger alert-custom">{{ $message }}</div>
                                 </div>
-                            </div>
-                            @error('noidungdanhgia')
-                            <div class="d-flex justify-content-start">
-                                <div class="alert alert-danger alert-custom">{{ $message }}</div>
-                            </div>
-                            @enderror
-                        </form>
-                        @endif
+                                @enderror
+                            </form>
+                            @endif
+                        @endcan
                     </div>
                 </div>
             </div>

@@ -88,6 +88,11 @@ class NewsPolicy
         return $user->checkPermission(config('permissions.access.news-publish'));
     }
 
+    public function recall(User $user)
+    {
+        return $user->checkPermission(config('permissions.access.news-recall'));
+    }
+
     /**
      * Determine whether the user can restore the model.
      *

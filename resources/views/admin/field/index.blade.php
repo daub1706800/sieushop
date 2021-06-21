@@ -38,19 +38,19 @@
                                     @foreach( $fields as $key => $field )
                                     <tr>
                                         <th scope="row">{{$field->id}}</th>
-                                        <td>{{ $field->tenlinhvuc }}</td>
-                                        <td>{{ $field->motalinhvuc }}</td>
                                         <td>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item text-info" href="{{ route('field.edit', ['id' => $field->id]) }}">Chỉnh sửa</a>
-                                                    @if( $field->category->isEmpty() && $field->company->isEmpty() )
-                                                    <a class="dropdown-item text-danger" href="{{ route('field.delete', ['id' => $field->id]) }}">Xóa</a>
-                                                    @endif
-                                                </div>
-                                            </div>
+                                            <a href="{{ route('field.edit', ['id' => $field->id]) }}">
+                                                {{ $field->tenlinhvuc }}</a>
+                                        </td>
+                                        <td>{{ $field->motalinhvuc }}</td>
+                                        <td class="text-center">
+                                            @if( $field->category->isEmpty() && $field->company->isEmpty() )
+                                                <a class="btn btn-sm btn-danger delete-field" href="{{ route('field.delete', ['id' => $field->id]) }}">
+                                                    <i class="fas fa-trash-alt"></i></a>
+                                            @else
+                                                <a class="btn btn-sm btn-secondary">
+                                                    <i class="fas fa-trash-alt"></i></a>        
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach
@@ -111,5 +111,6 @@
 @endsection
 
 @section('js')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('AdminLTE/admin/field/index/field.js') }}"></script>
 @endsection

@@ -181,7 +181,9 @@ class NewsVideoController extends Controller
 
             DB::commit();
 
-            return redirect()->route('video.index');
+            return response()->json([
+                'code' => 200
+            ]);
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
@@ -215,7 +217,7 @@ class NewsVideoController extends Controller
 
             DB::commit();
     
-            return redirect()->route('video.index');
+            return back();
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
@@ -308,7 +310,7 @@ class NewsVideoController extends Controller
 
             DB::commit();
     
-            return redirect()->route('video.index');
+            return back();
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
@@ -371,7 +373,10 @@ class NewsVideoController extends Controller
 
                 DB::commit();
                 
-                return response()->json($status=0);
+                return response()->json([
+                    'code' => 200,
+                    'status' => 0
+                ]);
             }
             else
             {
@@ -383,7 +388,10 @@ class NewsVideoController extends Controller
 
                 DB::commit();
     
-                return response()->json($status=1);
+                return response()->json([
+                    'code' => 200,
+                    'status' => 1
+                ]);
             }
         } catch (\Exception $exception) {
             DB::rollBack();

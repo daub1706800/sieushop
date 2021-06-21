@@ -86,8 +86,8 @@
                                                 <div class="dropdown-menu">
                                                     <a class="dropdown-item text-warning" href="{{ route('admin.video.log', ['id' => $item->id]) }}">Lịch sử tin tức</a>
                                                     <a class="dropdown-item text-info" href="{{ route('admin.video.edit', ['id' => $item->id]) }}">Chỉnh sửa</a>
-                                                    @if ($item->xuatbantintuc == 0)
-                                                    <a class="dropdown-item text-danger" href="{{ route('admin.video.delete', ['id' => $item->id]) }}">Xóa</a>
+                                                    @if ($item->xuatbanvideotintuc == 0)
+                                                    <a class="dropdown-item text-danger delete-newsvideo" href="{{ route('admin.video.delete', ['id' => $item->id]) }}">Xóa</a>
                                                     @endif
                                                 </div>
                                             </div>

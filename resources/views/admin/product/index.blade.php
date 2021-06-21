@@ -18,10 +18,12 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
-                    <a style="width:44px" href="{{route('product.add')}}" class="btn btn-primary float-right m-2">
-                        <i class="fas fa-plus"></i></a>
-                </div>
+                @can('product-add')
+                    <div class="col-md-12">
+                        <a href="{{route('product.add')}}" class="btn btn-primary float-right m-2">
+                            <i class="fas fa-plus"></i></a>
+                    </div>
+                @endcan
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
@@ -55,13 +57,21 @@
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item text-warning" href="{{ route('stage.index', ['product_id' => $product->id]) }}">Danh sách giai đoạn</a>
-                                                    <a class="dropdown-item text-info" href="{{ route('product.edit', ['id' => $product->id]) }}">Chỉnh sửa sản phẩm</a>
-                                                    @if($product->comment->isEmpty() && $product->stage->isEmpty())
-                                                    <a class="dropdown-item text-danger" href="{{ route('product.delete', ['id' => $product->id]) }}">Xóa</a>
-                                                    @endif
-                                                </div>
+                                                @canany(['product-view', 'product-delete', 'stage-list'])
+                                                    <div class="dropdown-menu">
+                                                        @can('stage-list')
+                                                            <a class="dropdown-item text-warning" href="{{ route('stage.index', ['product_id' => $product->id]) }}">Danh sách giai đoạn</a>
+                                                        @endcan
+                                                        @can('product-view')
+                                                            <a class="dropdown-item text-info" href="{{ route('product.edit', ['id' => $product->id]) }}">Chỉnh sửa sản phẩm</a>
+                                                        @endcan
+                                                        @can('product-delete')
+                                                            @if($product->comment->isEmpty() && $product->stage->isEmpty())
+                                                                <a class="dropdown-item text-danger delete-product" href="{{ route('product.delete', ['id' => $product->id]) }}">Xóa</a>
+                                                            @endif
+                                                        @endcan
+                                                    </div>
+                                                @endcanany
                                             </div>
                                         </td>
                                     </tr>
@@ -107,5 +117,6 @@
 @endsection
 
 @section('js')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('AdminLTE/company/product/index/product.js') }}"></script>
 @endsection

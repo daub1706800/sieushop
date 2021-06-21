@@ -39,20 +39,20 @@
                                     @foreach($productcategories as $key => $productcategory)
                                     <tr>
                                         <th scope="row">{{ $productcategory->id }}</th>
-                                        <td>{{ $productcategory->tenloaisanpham }}</td>
+                                        <td>
+                                            <a href="{{ route('admin.productcategory.edit', ['id' => $productcategory->id]) }}">
+                                                {{ $productcategory->tenloaisanpham }}</a>
+                                        </td>
                                         <td>{{ $productcategory->motaloaisanpham }}</td>
                                         <td>{{ $productcategory->company->tencongty }}</td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false">Tùy chọn</button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item text-info" href="{{ route('admin.productcategory.edit', ['id' => $productcategory->id]) }}">Chỉnh sửa</a>
-                                                    @if($productcategory->product->isEmpty())
-                                                    <a class="dropdown-item text-danger" href="{{ route('admin.productcategory.delete', ['id' => $productcategory->id]) }}">Xóa</a>
-                                                    @endif
-                                                </div>
-                                            </div>
+                                        <td class="text-center">
+                                            @if($productcategory->product->isEmpty())
+                                                <a class="btn btn-sm btn-danger delete-procat" href="{{ route('admin.productcategory.delete', ['id' => $productcategory->id]) }}">
+                                                    <i class="fas fa-trash-alt"></i></a>
+                                            @else
+                                                <a class="btn btn-sm btn-secondary">
+                                                    <i class="fas fa-trash-alt"></i></a>        
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach
@@ -123,4 +123,5 @@
 @section('js')
     <script src="{{ asset('vendor/js/select2.js') }}"></script>
     <script src="{{ asset('AdminLTE/admin/product-category/index/product-category.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection

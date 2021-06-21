@@ -204,11 +204,14 @@ class ProductController extends Controller
     {
         try {
             DB::beginTransaction();
+
             $this->product->FindOrFail($id)->delete();
 
             DB::commit();
 
-            return back();            
+            return response()->json([
+                'code' => 200
+            ]);
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());

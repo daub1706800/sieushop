@@ -89,6 +89,11 @@ class NewsVideoPolicy
         return $user->checkPermission(config('permissions.access.newsvideo-publish'));
     }
 
+    public function recall(User $user)
+    {
+        return $user->checkPermission(config('permissions.access.newsvideo-recall'));
+    }
+
     /**
      * Determine whether the user can restore the model.
      *

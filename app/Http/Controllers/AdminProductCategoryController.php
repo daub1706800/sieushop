@@ -103,7 +103,7 @@ class AdminProductCategoryController extends Controller
 
             DB::commit();
 
-            return redirect()->route('admin.productcategory.index');
+            return response()->json(['code' => 200]);
         } catch (\Exception $exception) {
             DB::rollback();
             Log::error('Message:' . $exception->getMessage() . '--- Line:' . $exception->getLine());
