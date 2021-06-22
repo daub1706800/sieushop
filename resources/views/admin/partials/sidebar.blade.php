@@ -65,6 +65,14 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
+                                <a href="{{ route('advertise.index') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-ad"></i>
+                                    <p>
+                                        Quảng cáo
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{route('department.index')}}" class="nav-link">
                                     <i class="nav-icon fas fa-balance-scale"></i>
                                     <p>
@@ -170,18 +178,18 @@
                     <!-- Dasboard 2 -->
                     <li class="nav-item li-dropdown">
                         <a href="#" class="nav-link content-dropdown">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <i class="nav-icon fas fa-chart-line"></i>
                             <p>
-                                Bảng điều khiển
+                                Thống kê
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('advertise.index') }}" class="nav-link">
-                                    <i class="nav-icon fas fa-balance-scale"></i>
+                                <a href="" class="nav-link">
+                                    <i class="nav-icon fas fa-newspaper"></i>
                                     <p>
-                                        Quảng cáo
+                                        Tin tức
                                     </p>
                                 </a>
                             </li>

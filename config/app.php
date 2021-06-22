@@ -186,7 +186,7 @@ return [
 
         /* Fortify */
         App\Providers\FortifyServiceProvider::class,
-
+        Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*
@@ -246,7 +246,7 @@ return [
         /* Barcode */
         'DNS1DFacade' => Milon\Barcode\Facades\DNS1DFacade::class,
         'DNS2DFacade' => Milon\Barcode\Facades\DNS2DFacade::class,
-
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];
