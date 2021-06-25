@@ -10,7 +10,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                    <h2><i class="fa fa-gears bg-orange"></i> Video mới nhất <small class="hidden-xs-down hidden-sm-down">Nulla felis eros, varius sit amet volutpat non. </small></h2>
+                    <h2><i class="fa fa-gears bg-orange"></i> Video mới nhất <small class="hidden-xs-down hidden-sm-down"></small></h2>
                 </div><!-- end col -->
                 <div class="col-lg-4 col-md-4 col-sm-12 hidden-xs-down hidden-sm-down">
                     <ol class="breadcrumb">
@@ -35,7 +35,7 @@
                                 <div class="tag-cloud-single">
                                     <span>Chuyên mục</span>
                                     @foreach($header as $key => $row)
-                                    <small><a href="#" title="">{{$row->tenchuyenmuc}}</a></small>
+                                    <small><a href="#" title="">{{$row->tenchuyenmuc}}</a></small>&nbsp&nbsp&nbsp|
                                     @endforeach
                                 </div>
                                 @foreach($tinvideo as $key => $row)

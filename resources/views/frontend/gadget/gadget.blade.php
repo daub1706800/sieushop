@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 
 @section('title')
-    <title>Sản phẩm</title>
+    <title>Sản phẩm mới nhất</title>
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                    <h2><i class="fa fa-gears bg-orange"></i> Sản phẩm <small class="hidden-xs-down hidden-sm-down">Nulla felis eros, varius sit amet volutpat non. </small></h2>
+                    <h2><i class="fa fa-gears bg-orange"></i> Sản phẩm mới nhất<small class="hidden-xs-down hidden-sm-down"></small></h2>
                 </div><!-- end col -->
                 <div class="col-lg-4 col-md-4 col-sm-12 hidden-xs-down hidden-sm-down">
                     <ol class="breadcrumb">
@@ -25,31 +25,35 @@
     <section class="section">
         <div class="container">
             <div class="row">
+                
                 @include('frontend.partials.content-sidebar')
 
                 <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
                     <div class="page-wrapper">
                         <div class="blog-grid-system">
                             <div class="row">
+                                <div class="tag-cloud-single">
+                                    <span>Loại sản phẩm</span>
+                                    @foreach($loaisanpham as $key => $row)
+                                    <small><a href="#" title="">{{$row->tenloaisanpham}}</a></small>&nbsp&nbsp&nbsp|
+                                    @endforeach
+                                </div>
 
                                 @foreach($gadget as $key => $row)
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="blog-box">
                                             <div class="post-media">
-                                                <a href="tech-single.html" title="">
-                                                    <img src="{{$row->hinhanhsanpham}}" style="width:800px;height:460px" alt="" class="img-fluid">
+                                                <a href="{{route('detailsanpham',['id'=>$row->id])}}" title=""">
+                                                    <img src="{{$row->hinhanhsanpham}}" style="height:230px" alt="" class="img-fluid">
                                                     <div class="hovereffect">
                                                         <span></span>
                                                     </div><!-- end hover -->
                                                 </a>
                                             </div><!-- end media -->
                                             <div class="blog-meta big-meta">
-                                                <span class="color-orange"><a href="tech-category-01.html" title="">{{$row->tenloaisanpham}}</a></span>
-                                                <h4><a href="tech-single.html" title="">{{$row->tensanpham}}</a></h4>
-                                                <p>{!! Str::limit($row->thongtinsanpham, 50) !!}</p>
-                                                <!-- <small><a href="tech-single.html" title="">14 July, 2017</a></small> -->
-                                                <small><a href="tech-author.html" title="">by {{$row->tencongty}}</a></small>
-                                                <small><a href="tech-single.html" title=""><i class="fa fa-eye"></i> 2887</a></small>
+                                                <h4><a href="{{route('detailsanpham',['id'=>$row->id])}}" title="">{{Str::limit($row->tensanpham,23)}}</a></h4>
+                                                <span style="color:red; font-size:29px; font-family:bold">{{$row->dongiasanpham}} đ</span>
+                                                <p>Xuất xứ: {!! Str::limit($row->xuatxu, 60) !!}</p>
                                             </div><!-- end meta -->
                                         </div><!-- end blog-box -->
                                     </div><!-- end col -->

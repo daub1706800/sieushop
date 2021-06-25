@@ -44,6 +44,10 @@ Route::prefix('/')->group(function () {
         'as' => 'detailvideo',
         'uses' => 'App\Http\Controllers\GiaoDienController@detailvideo'
     ]);
+    Route::get('detailsanpham/{id}', [
+        'as' => 'detailsanpham',
+        'uses' => 'App\Http\Controllers\GiaoDienController@detailsanpham'
+    ]);
     Route::get('tinchuyenmuc/{id}', [
         'as' => 'tinchuyenmuc',
         'uses' => 'App\Http\Controllers\GiaoDienController@tinchuyenmuc'

@@ -103,13 +103,16 @@ class GiaoDienController extends Controller{
                     ->limit(3)
                     ->get();
 
+        $loaisanpham = DB::table('loaisanpham')
+                            ->orderBy('tenloaisanpham')
+                            ->get();
 
         $gadget = DB::table('sanpham')
                     ->orderBy('id', 'desc')
                     ->join('congty', 'sanpham.idcongty', '=', 'congty.id')
                     ->join('loaisanpham', 'sanpham.idloaisanpham', '=', 'loaisanpham.id')
                     ->select('sanpham.*', 'loaisanpham.tenloaisanpham', 'congty.tencongty')
-                    ->Paginate(10);
+                    ->Paginate(30);
 
         $videotintuc = DB::table('videotintuc')
                         ->orderBy('id', 'desc')
@@ -137,7 +140,7 @@ class GiaoDienController extends Controller{
                     ->limit(5)
                     ->get();
 
-        return view('frontend.gadget.gadget', compact('header','sidebar','gadget','hinhanhheader','videotintuc','quangcaodoc','quangcaongang','quangcaovuong'));
+        return view('frontend.gadget.gadget', compact('header','sidebar','loaisanpham','gadget','hinhanhheader','videotintuc','quangcaodoc','quangcaongang','quangcaovuong'));
     }
     
     public function contact()
@@ -404,5 +407,75 @@ class GiaoDienController extends Controller{
                     ->get();
                     
         return view('frontend.detail.detailvideo',compact('header','hinhanhheader','detailvideo','videotintuc','detailvideolienquan','quangcaodoc','quangcaongang','quangcaovuong'));
+    }
+
+    public function detailsanpham(Request $request){
+
+        $id = $request->id;
+
+
+        $header = DB::table('chuyenmuc')
+                    ->orderBy('tenchuyenmuc')
+                    ->get();
+    
+        $hinhanhheader = DB::table('tintuc')
+                            ->orderBy('id', 'desc')
+                            ->where('xuatbantintuc', 1)
+                            ->where('loaitintuc', 1)
+                            ->limit(5)  
+                            ->get();
+        
+        $loaisanpham = DB::table('loaisanpham')
+                        ->orderBy('tenloaisanpham')
+                        ->get();
+
+        $detailsanpham = DB::table('sanpham')
+                        ->where('sanpham.id',$id)
+                        ->orderBy('id', 'desc')
+                        ->join('congty', 'sanpham.idcongty', '=', 'congty.id')
+                        ->join('loaisanpham', 'sanpham.idloaisanpham', '=', 'loaisanpham.id')
+                        ->select('sanpham.*','loaisanpham.tenloaisanpham', 'congty.tencongty')
+                        ->first();
+        
+        $hinhanhsanpham = DB::table('hinhanh')
+                            ->where('hinhanh.idsanpham', $detailsanpham->id)
+                            ->get();
+        
+        $detailsanphamlienquan = DB::table('sanpham')
+                                ->orderBy('sanpham.id', 'desc')
+                                ->where('idloaisanpham', $detailsanpham->idloaisanpham)
+                                ->join('congty', 'sanpham.idcongty', '=', 'congty.id')
+                                ->join('loaisanpham', 'sanpham.idloaisanpham', '=', 'loaisanpham.id')
+                                ->select('sanpham.*', 'loaisanpham.tenloaisanpham', 'congty.tencongty')
+                                ->limit(12)
+                                ->get();
+
+        $videotintuc = DB::table('videotintuc')
+                        ->orderBy('id', 'desc')
+                        ->where('xuatbanvideotintuc', 1)
+                        ->where('loaivideotintuc', 1)
+                        ->Join('chuyenmuc', 'videotintuc.idchuyenmuc', '=', 'chuyenmuc.id')
+                        ->Join('thongtin', 'videotintuc.idtaikhoan', '=', 'thongtin.idtaikhoan')
+                        ->select('videotintuc.*','chuyenmuc.tenchuyenmuc','thongtin.hothanhvien','thongtin.tenthanhvien')
+                        ->limit(3)
+                        ->get();
+
+        $quangcaodoc = DB::table('hinhanhquangcao')
+                    ->orderBy('id', 'desc')
+                    ->where('loaibanner', 0)
+                    ->limit(5)
+                    ->get();
+        $quangcaongang = DB::table('hinhanhquangcao')
+                    ->orderBy('id', 'desc')
+                    ->where('loaibanner', 1)
+                    ->limit(5)
+                    ->get();
+        $quangcaovuong = DB::table('hinhanhquangcao')
+                    ->orderBy('id', 'desc')
+                    ->where('loaibanner', 2)
+                    ->limit(5)
+                    ->get();
+
+        return view('frontend.detail.detailsanpham',compact('header','hinhanhheader','detailsanpham','hinhanhsanpham','videotintuc','detailsanphamlienquan','quangcaodoc','quangcaongang','quangcaovuong'));
     }
 }
