@@ -1,6 +1,5 @@
 @extends('frontend.layouts.master')
 
-
 <!DOCTYPE html>
 <html lang="vi">
 	<head>
@@ -41,7 +40,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-12">
-						<br>abc
+						<br><br>
 					</div>
 				</div>
 			</div>
@@ -59,60 +58,21 @@
 								
 									<div class="large-image">
 
-										<!-- <a href="//bizweb.dktcdn.net/thumb/1024x1024/100/308/325/products/kf57fd708888943c073792a327aeb5.jpg?v=1524537033277" data-rel="prettyPhoto[product-gallery]">
-											<img id="zoom_01" src="//bizweb.dktcdn.net/thumb/1024x1024/100/308/325/products/kf57fd708888943c073792a327aeb5.jpg?v=1524537033277" alt="Vải thiều loại to">
-										</a> -->
 										<a href="{{$detailsanpham->hinhanhsanpham}}" data-rel="prettyPhoto[product-gallery]">
-											<img id="zoom_01" src="{{$detailsanpham->hinhanhsanpham}}" alt="{{$detailsanpham->tensanpham}}">
+											<img id="zoom_01" src="{{$detailsanpham->hinhanhsanpham}}" alt="">
 										</a>
 										
-										<div class="hidden">
-											
-											@foreach ($hinhanhsanpham as $key => $row)
-												<div class="item">
-													<a href="{{$detailsanpham->hinhanhsanpham}}" data-image="{{$detailsanpham->hinhanhsanpham}}" data-zoom-image="{{$detailsanpham->hinhanhsanpham}}" data-rel="prettyPhoto[product-gallery]">
-													</a>
-												</div>
-											@endforeach
-
-											<div class="item">
-												<a href="https://bizweb.dktcdn.net/100/308/325/products/kf57fd708888943c073792a327aeb5.jpg?v=1524537033277" data-image="https://bizweb.dktcdn.net/100/308/325/products/kf57fd708888943c073792a327aeb5.jpg?v=1524537033277" data-zoom-image="https://bizweb.dktcdn.net/100/308/325/products/kf57fd708888943c073792a327aeb5.jpg?v=1524537033277" data-rel="prettyPhoto[product-gallery]">
-												</a>
-											</div>
-											
-											
-											
-											
-											<div class="item">
-												<a href="https://bizweb.dktcdn.net/100/308/325/products/938af814889594d58a3df06cc26ab1.jpg?v=1524537033277" data-image="https://bizweb.dktcdn.net/100/308/325/products/938af814889594d58a3df06cc26ab1.jpg?v=1524537033277" data-zoom-image="https://bizweb.dktcdn.net/100/308/325/products/938af814889594d58a3df06cc26ab1.jpg?v=1524537033277" data-rel="prettyPhoto[product-gallery]">
-												</a>
-											</div>
-											
-										</div>
 									</div>
 									
 									<div id="gallery_01" class="fixborder   thumbnail-product" style="visibility: hidden;" data-md-items="4" data-sm-items="4" 					 data-xs-items="4" data-xss-items="2" data-margin="10" data-nav="true">
 										@foreach($hinhanhsanpham as $key => $row)
 											<div class="item">
-												<a class="clearfix" href="#" data-image="{{$detailsanpham->hinhanhsanpham}}" data-zoom-image="{{$detailsanpham->hinhanhsanpham}}">
-													<img  src="{{$row->dulieuhinh}}" alt="{{$detailsanpham->tensanpham}}">
+												<a class="clearfix" href="#" data-image="{{$row->dulieuhinh}}" data-zoom-image="{{$row->dulieuhinh}}">
+													<img  src="{{$row->dulieuhinh}}" alt="">
 												</a>
 											</div>
 										@endforeach
 
-										<div class="item">
-											<a class="clearfix" href="#" data-image="https://bizweb.dktcdn.net/100/308/325/products/kf57fd708888943c073792a327aeb5.jpg?v=1524537033277" data-zoom-image="//bizweb.dktcdn.net/thumb/1024x1024/100/308/325/products/kf57fd708888943c073792a327aeb5.jpg?v=1524537033277">
-												<img  src="//bizweb.dktcdn.net/thumb/medium/100/308/325/products/kf57fd708888943c073792a327aeb5.jpg?v=1524537033277" alt="Vải thiều loại to">
-											</a>
-										</div>
-										
-										<div class="item">
-											<a class="clearfix" href="#" data-image="https://bizweb.dktcdn.net/100/308/325/products/938af814889594d58a3df06cc26ab1.jpg?v=1524537033277" data-zoom-image="//bizweb.dktcdn.net/thumb/1024x1024/100/308/325/products/938af814889594d58a3df06cc26ab1.jpg?v=1524537033277">
-												<img  src="//bizweb.dktcdn.net/thumb/medium/100/308/325/products/938af814889594d58a3df06cc26ab1.jpg?v=1524537033277" alt="Vải thiều loại to">
-											</a>
-										</div>
-										
-										
 									</div>
 									
 								</div>
