@@ -454,12 +454,14 @@ class GiaoDienController extends Controller{
                     ->where('trangthaidanhgia',1)
                     ->get();
         $sao = 0;
+        $saotb = 0;
+        $saotb1 = 0;
         foreach($danhgia2 as $key => $row){
             $sao = $sao + $row->saodanhgia;
         }
-        $saotb1 = round($sao/count($danhgia2), 1);
-        $saotb = $sao/count($danhgia2);
-        if($saotb<1) $saotb = 1;
+        if($sao!=0)  $saotb1 = round($sao/count($danhgia2), 1);
+        if($sao!=0)  $saotb = $sao/count($danhgia2);
+        if($saotb>0 && $saotb<1) $saotb = 1;
         if($saotb>1 && $saotb<2.5) $saotb = 2;
         if($saotb>=2.5 && $saotb<3.5) $saotb = 3;
         if($saotb>3.5 && $saotb<4.5) $saotb = 4;

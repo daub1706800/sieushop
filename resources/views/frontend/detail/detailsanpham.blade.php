@@ -85,7 +85,12 @@
 									</div>
 
 									<?php
-										echo "Đánh giá: $saotb1/5.0";
+										if($saotb1!=0){
+											echo "Đánh giá: $saotb1/5.0";
+										}
+										if($saotb1==0){
+											echo "Đánh giá: $saotb1/5.0	Không có đánh giá";
+										}	
 										for($i=0;$i<$saotb;$i++){
 											echo'
 												<img src="/storage/product/images/ngoisaodanhgia.jpg" width="30px" height="30px">
