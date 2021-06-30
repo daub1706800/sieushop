@@ -85,8 +85,8 @@
 									</div>
 
 									<?php
-										echo "Đánh giá:";
-										for($i=0;$i<$sao;$i++){
+										echo "Đánh giá: $saotb1/5.0";
+										for($i=0;$i<$saotb;$i++){
 											echo'
 												<img src="/storage/product/images/ngoisaodanhgia.jpg" width="30px" height="30px">
 											';
@@ -98,6 +98,8 @@
 											
 											<?php
 												echo $detailsanpham->mavachsanpham;
+											?>
+											<?php
 												echo $detailsanpham->qrcode;
 											?>
 																				
@@ -188,9 +190,20 @@
 											</video>
 										</div>
 										
-										<div class="tab-3 tab-content">
-											noidung danh gia
-										</div>
+										<h3>Người dùng đánh giá:</h3>
+										@foreach ($danhgia as $key => $row)
+											@for($i=0;$i<$row->saodanhgia;$i++)
+												<img src="/storage/product/images/ngoisaodanhgia.jpg" width="10px" height="10px">
+											@endfor
+											&nbsp;&nbsp;&nbsp;&nbsp;{{$row->thoigiandanhgia}}<br>
+											Bởi: {{$row->hothanhvien}} {{$row->tenthanhvien}}<br>
+											{{$row->noidungdanhgia}}<br><Br>
+											
+										@endforeach
+										<p style="text-align:reght;">
+											{{$danhgia->links()}}
+										</p>
+										
 													
 									</div>
 																					

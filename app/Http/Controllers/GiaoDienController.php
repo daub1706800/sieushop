@@ -440,6 +440,29 @@ class GiaoDienController extends Controller{
         $hinhanhsanpham = DB::table('hinhanh')
                             ->where('hinhanh.idsanpham', $detailsanpham->id)
                             ->get();
+
+        $danhgia = DB::table('danhgia')
+                    ->orderBy('danhgia.id','desc')
+                    ->where('idsanpham',$id)
+                    ->where('trangthaidanhgia',1)
+                    ->join('thongtin', 'danhgia.idtaikhoan', '=', 'thongtin.idtaikhoan')
+                    ->select('danhgia.*','thongtin.hothanhvien','thongtin.tenthanhvien')
+                    ->paginate(10);
+        $danhgia2 = DB::table('danhgia')
+                    ->orderBy('id','desc')
+                    ->where('idsanpham',$id)
+                    ->where('trangthaidanhgia',1)
+                    ->get();
+        $sao = 0;
+        foreach($danhgia2 as $key => $row){
+            $sao = $sao + $row->saodanhgia;
+        }
+        $saotb1 = round($sao/count($danhgia2), 1);
+        $saotb = $sao/count($danhgia2);
+        if($saotb<1) $saotb = 1;
+        if($saotb>1 && $saotb<2.5) $saotb = 2;
+        if($saotb>=2.5 && $saotb<3.5) $saotb = 3;
+        if($saotb>3.5 && $saotb<4.5) $saotb = 4;
         
         $detailsanphamlienquan = DB::table('sanpham')
                                 ->orderBy('sanpham.id', 'desc')
@@ -476,6 +499,6 @@ class GiaoDienController extends Controller{
                     ->limit(5)
                     ->get();
 
-        return view('frontend.detail.detailsanpham',compact('header','hinhanhheader','detailsanpham','hinhanhsanpham','sao','videotintuc','detailsanphamlienquan','quangcaodoc','quangcaongang','quangcaovuong'));
+        return view('frontend.detail.detailsanpham',compact('header','hinhanhheader','detailsanpham','hinhanhsanpham','danhgia','saotb','saotb1','videotintuc','detailsanphamlienquan','quangcaodoc','quangcaongang','quangcaovuong'));
     }
 }
