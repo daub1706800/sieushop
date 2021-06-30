@@ -412,7 +412,7 @@ class GiaoDienController extends Controller{
     public function detailsanpham(Request $request){
 
         $id = $request->id;
-
+        $sao = 5;
 
         $header = DB::table('chuyenmuc')
                     ->orderBy('tenchuyenmuc')
@@ -476,6 +476,6 @@ class GiaoDienController extends Controller{
                     ->limit(5)
                     ->get();
 
-        return view('frontend.detail.detailsanpham',compact('header','hinhanhheader','detailsanpham','hinhanhsanpham','videotintuc','detailsanphamlienquan','quangcaodoc','quangcaongang','quangcaovuong'));
+        return view('frontend.detail.detailsanpham',compact('header','hinhanhheader','detailsanpham','hinhanhsanpham','sao','videotintuc','detailsanphamlienquan','quangcaodoc','quangcaongang','quangcaovuong'));
     }
 }

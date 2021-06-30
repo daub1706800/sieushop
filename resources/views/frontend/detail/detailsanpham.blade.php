@@ -81,14 +81,26 @@
 									<h1 class="title-head">{{$detailsanpham->tensanpham}}</h1>
 
 									<div class="price-box clearfix">								
-										<div class="special-price"><span class="price product-price" >{{$detailsanpham->dongiasanpham}} ₫</span> </div> <!-- Giá -->	
+										<div class="special-price"><span class="price product-price" >{{$detailsanpham->dongiasanpham}} ₫</span> </div>	
 									</div>
+
+									<?php
+										echo "Đánh giá:";
+										for($i=0;$i<$sao;$i++){
+											echo'
+												<img src="/storage/product/images/ngoisaodanhgia.jpg" width="30px" height="30px">
+											';
+										}
+									?>
 
 									<div class="product-summary product_description margin-bottom-15">
 										<div class="rte description">
 											
-											{!!$detailsanpham->thongtinsanpham!!}
-											
+											<?php
+												echo $detailsanpham->mavachsanpham;
+												echo $detailsanpham->qrcode;
+											?>
+																				
 										</div>
 									</div>
 									
@@ -152,27 +164,28 @@
 										<ul class="tabs tabs-title clearfix">
 											
 											<li class="tab-link" data-tab="tab-1">
-												<h3><span>Mô tả</span></h3>
-											</li>
-											
-											<li class="tab-link" data-tab="tab-2">
 												<h3><span>Thông tin</span></h3>
 											</li>
-											
-											<li class="tab-link" data-tab="tab-3">
-												<h3><span>Đánh giá</span></h3>
+											<li class="tab-link" data-tab="tab-2">
+												<h3><span>Video sản phẩm</span></h3>
 											</li>
 											
 										</ul>
 										
 										<div  class="tab-1 tab-content">
 											<div class="rte">
-												Giá trị dinh dưỡng: &nbsp; Nho tươi cung cấp các chất dinh dưỡng, làm giảm mệt nhọc ngay lập tức. Các nghiên cứu cho thấy Nho tươi có chứa vitamin A, C, Calcium và sắt giúp duy trì sức khỏe, tốt cho tim mạch, ngăn ngừa tiến trình bệnh tiểu đường. &nbsp; Cũng như Táo, Nho của Mỹ, Úc… đều được bảo quản trong môi trường lạnh đặc biệt từ khi hái, không chất bảo quản và các chất gây hại cho sức khỏe. &nbsp;<br data-mce-bogus="1">
+												{{$detailsanpham->thongtinsanpham}}<br data-mce-bogus="1">
+												Xuất xứ: {{$detailsanpham->xuatxu}}<br data-mce-bogus="1">
+												Chủng loại: {{$detailsanpham->chungloaisanpham}}<br data-mce-bogus="1">
+												Khối lượng: {{$detailsanpham->khoiluongsanpham}}<br data-mce-bogus="1">
+												Đơn vị tính: {{$detailsanpham->donvitinhsanpham}}<br data-mce-bogus="1">
 											</div>
 										</div>
 										
 										<div  class="tab-2 tab-content">
-											Nội dung tùy chỉnh viết ở đây
+											<video width="720px" height="405px" controls>
+												<source src="{{$detailsanpham->videosanpham}}" type="video/mp4">
+											</video>
 										</div>
 										
 										<div class="tab-3 tab-content">
@@ -310,7 +323,3 @@
 			
 		</body>
 	</html>
-
-
-
-
