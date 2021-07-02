@@ -475,6 +475,10 @@ class GiaoDienController extends Controller{
                                 ->limit(12)
                                 ->get();
 
+        $congty = DB::table('congty')
+                    ->where('id',$detailsanpham->idcongty)
+                    ->first();
+
         $videotintuc = DB::table('videotintuc')
                         ->orderBy('id', 'desc')
                         ->where('xuatbanvideotintuc', 1)
@@ -501,6 +505,6 @@ class GiaoDienController extends Controller{
                     ->limit(5)
                     ->get();
 
-        return view('frontend.detail.detailsanpham',compact('header','hinhanhheader','detailsanpham','hinhanhsanpham','danhgia','saotb','saotb1','videotintuc','detailsanphamlienquan','quangcaodoc','quangcaongang','quangcaovuong'));
+        return view('frontend.detail.detailsanpham',compact('header','hinhanhheader','detailsanpham','hinhanhsanpham','danhgia','saotb','saotb1','videotintuc','detailsanphamlienquan','congty','quangcaodoc','quangcaongang','quangcaovuong'));
     }
 }

@@ -1,0 +1,490 @@
+<aside class="dqdt-sidebar sidebar right left-content col-lg-3 ">
+					
+<aside class="aside-item sidebar-category collection-category">
+	<div class="aside-title">
+		<h2 class="title-head margin-top-0"><span>Danh mục</span></h2>
+	</div>
+	<div class="aside-content">
+		<nav class="nav-category navbar-toggleable-md">
+			<ul class="nav navbar-pills">
+				
+				
+				<li class="nav-item">
+					<i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+					<a title="Trang chủ" class="nav-link" href="/">Trang chủ</a></li>
+				
+				
+				
+				<li class="nav-item">
+					<i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+					<a title="Sản phẩm" href="/collections/all" class="nav-link">Sản phẩm</a>
+					<i class="fa fa-angle-down"></i>
+					<ul class="dropdown-menu">
+						
+						
+						<li class="dropdown-submenu nav-item">
+							
+							<a title="Rau củ" class="nav-link" href="/collections/all">Rau củ</a>
+							<i class="fa fa-angle-down"></i>
+							<ul class="dropdown-menu">
+								
+								
+								<li class="nav-item">
+									
+									<a title="Rau tươi class=" nav-link"="" href="/collections/all">Rau tươi</a>
+								</li>
+								
+								
+								
+								<li class="nav-item">
+									
+									<a title="Rau vườn class=" nav-link"="" href="/collections/all">Rau vườn</a>
+								</li>
+								
+								
+								
+								<li class="nav-item">
+									
+									<a title="Rau sạch class=" nav-link"="" href="/collections/all">Rau sạch</a>
+								</li>
+								
+								
+								
+								<li class="nav-item">
+									
+									<a title="Củ nhập khẩu class=" nav-link"="" href="/collections/all">Củ nhập khẩu</a>
+								</li>
+								
+								
+							</ul>                      
+						</li>
+						
+						
+						
+						<li class="dropdown-submenu nav-item">
+							
+							<a title="Hoa quả" class="nav-link" href="/collections/all">Hoa quả</a>
+							<i class="fa fa-angle-down"></i>
+							<ul class="dropdown-menu">
+								
+								
+								<li class="nav-item">
+									
+									<a title="Trái cây tươi class=" nav-link"="" href="/collections/all">Trái cây tươi</a>
+								</li>
+								
+								
+								
+								<li class="nav-item">
+									
+									<a title="Hoa quả sạch class=" nav-link"="" href="/collections/all">Hoa quả sạch</a>
+								</li>
+								
+								
+								
+								<li class="nav-item">
+									
+									<a title="Hoa quả nhập khẩu class=" nav-link"="" href="/collections/all">Hoa quả nhập khẩu</a>
+								</li>
+								
+								
+								
+								<li class="nav-item">
+									
+									<a title="Hoa quả tươi class=" nav-link"="" href="/">Hoa quả tươi</a>
+								</li>
+								
+								
+							</ul>                      
+						</li>
+						
+						
+						
+						<li class="dropdown-submenu nav-item">
+							
+							<a title="Thịt" class="nav-link" href="/collections/all">Thịt</a>
+							<i class="fa fa-angle-down"></i>
+							<ul class="dropdown-menu">
+								
+								
+								<li class="nav-item">
+									
+									<a title="Thị gà class=" nav-link"="" href="/collections/all">Thị gà</a>
+								</li>
+								
+								
+								
+								<li class="nav-item">
+									
+									<a title="Thịt lượn class=" nav-link"="" href="/collections/all">Thịt lượn</a>
+								</li>
+								
+								
+								
+								<li class="nav-item">
+									
+									<a title="Thịt bò class=" nav-link"="" href="/collections/all">Thịt bò</a>
+								</li>
+								
+								
+								
+								<li class="nav-item">
+									
+									<a title="Thịt vịt class=" nav-link"="" href="/collections/all">Thịt vịt</a>
+								</li>
+								
+								
+							</ul>                      
+						</li>
+						
+						
+						
+						<li class="dropdown-submenu nav-item">
+							
+							<a title="Hải sản" class="nav-link" href="/collections/all">Hải sản</a>
+							<i class="fa fa-angle-down"></i>
+							<ul class="dropdown-menu">
+								
+								
+								<li class="nav-item">
+									
+									<a title="Ngao class=" nav-link"="" href="/collections/all">Ngao</a>
+								</li>
+								
+								
+								
+								<li class="nav-item">
+									
+									<a title="Sò huyết class=" nav-link"="" href="/collections/all">Sò huyết</a>
+								</li>
+								
+								
+								
+								<li class="nav-item">
+									
+									<a title="Cua class=" nav-link"="" href="/collections/all">Cua</a>
+								</li>
+								
+								
+								
+								<li class="nav-item">
+									
+									<a title="Tôm class=" nav-link"="" href="/collections/all">Tôm</a>
+								</li>
+								
+								
+							</ul>                      
+						</li>
+						
+						
+					</ul>
+				</li>
+				
+				
+				
+				<li class="nav-item">
+					<i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+					<a title="Giới thiệu" class="nav-link" href="/gioi-thieu">Giới thiệu</a></li>
+				
+				
+				
+				<li class="nav-item">
+					<i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+					<a title="Tin tức" href="/tin-tuc" class="nav-link">Tin tức</a>
+					<i class="fa fa-angle-down"></i>
+					<ul class="dropdown-menu">
+						
+						
+						<li class="nav-item">
+							
+							<a class="nav-link" href="/collections/all">Tin mới</a>
+						</li>
+						
+						
+						
+						<li class="nav-item">
+							
+							<a class="nav-link" href="/collections/all">Tin quốc tế</a>
+						</li>
+						
+						
+						
+						<li class="nav-item">
+							
+							<a class="nav-link" href="/collections/all">Tin trong nước</a>
+						</li>
+						
+						
+					</ul>
+				</li>
+				
+				
+				
+				<li class="nav-item">
+					<i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+					<a title="Liên hệ" class="nav-link" href="/lien-he">Liên hệ</a></li>
+				
+				
+				
+				<li class="nav-item">
+					<i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+					<a title="Chỉ đường" class="nav-link" href="/chi-duong">Chỉ đường</a></li>
+				
+				
+			</ul>
+		</nav>
+	</div>
+</aside>
+
+
+	
+
+
+<div class="aside-item aside-mini-list-product mb-5">
+	<div>
+		<div class="aside-title">
+			<h2 class="title-head">
+				<a href="/san-pham-noi-bat" title="Sản phẩm nổi bật">Sản phẩm nổi bật</a>
+			</h2>
+		</div>
+		<div class="aside-content related-product">
+			<div class="product-mini-lists">											
+				<div class="products">					
+					 					
+					<div class="row row-noGutter">						
+						<div class="col-sm-12">
+							
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="product-mini-item clearfix  ">
+	<div class="product-img relative">
+		<a href="/collections/all/products/cherry-do-canada-loai-to">
+
+
+			
+
+			
+			
+			<img src="//bizweb.dktcdn.net/thumb/compact/100/308/325/products/kf57fd708888943c073792a327aeb5.jpg?v=1524537033277" alt="Vải thiều loại to">
+			
+		</a>
+
+	</div>
+
+	<div class="product-info">
+
+		<h3><a href="/collections/all/products/cherry-do-canada-loai-to" title="Vải thiều loại to" class="product-name">Vải thiều loại to</a></h3>
+
+		<div class="price-box">
+			
+
+			
+		
+		<div class="special-price"><span class="price product-price">80.000₫</span> </div> <!-- Giá -->
+		
+		
+		
+
+	</div>
+
+</div>
+</div>																
+						</div>
+					</div>
+					 					
+					<div class="row row-noGutter">						
+						<div class="col-sm-12">
+							
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="product-mini-item clearfix  ">
+	<div class="product-img relative">
+		<a href="/collections/all/products/cherry-do-canada-loai-to-1">
+
+
+			
+
+			
+			
+			<img src="//bizweb.dktcdn.net/thumb/compact/100/308/325/products/x.jpg?v=1524537031717" alt="Hồng đỏ Mỹ">
+			
+		</a>
+
+	</div>
+
+	<div class="product-info">
+
+		<h3><a href="/collections/all/products/cherry-do-canada-loai-to-1" title="Hồng đỏ Mỹ" class="product-name">Hồng đỏ Mỹ</a></h3>
+
+		<div class="price-box">
+			
+
+			
+		
+		<div class="special-price"><span class="price product-price">150.000₫</span> </div> <!-- Giá -->
+		
+		
+		
+
+	</div>
+
+</div>
+</div>																
+						</div>
+					</div>
+					 					
+					<div class="row row-noGutter">						
+						<div class="col-sm-12">
+							
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="product-mini-item clearfix  ">
+	<div class="product-img relative">
+		<a href="/collections/all/products/cherry-do-canada-loai-to-10">
+
+
+			
+
+			
+			
+			<img src="//bizweb.dktcdn.net/thumb/compact/100/308/325/products/43350e0a3ce5e4aa54ddaf90d33728.jpg?v=1524537029390" alt="Dưa leo Đà Lạt">
+			
+		</a>
+
+	</div>
+
+	<div class="product-info">
+
+		<h3><a href="/collections/all/products/cherry-do-canada-loai-to-10" title="Dưa leo Đà Lạt" class="product-name">Dưa leo Đà Lạt</a></h3>
+
+		<div class="price-box">
+			
+
+			
+		
+		<div class="special-price"><span class="price product-price">65.000₫</span> </div> <!-- Giá -->
+		
+		
+		
+
+	</div>
+
+</div>
+</div>																
+						</div>
+					</div>
+					 					
+					<div class="row row-noGutter">						
+						<div class="col-sm-12">
+							
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="product-mini-item clearfix   on-sale">
+	<div class="product-img relative">
+		<a href="/collections/all/products/cherry-do-canada-loai-to-11">
+
+
+			
+
+			
+			
+			<img src="//bizweb.dktcdn.net/thumb/compact/100/308/325/products/sss.jpg?v=1524537027550" alt="Cà chua Đà Lạt">
+			
+		</a>
+
+	</div>
+
+	<div class="product-info">
+
+		<h3><a href="/collections/all/products/cherry-do-canada-loai-to-11" title="Cà chua Đà Lạt" class="product-name">Cà chua Đà Lạt</a></h3>
+
+		<div class="price-box">
+			
+
+			
+		
+		<span class="price"><span class="price product-price">30.000₫</span> </span> <!-- Giá Khuyến mại -->
+
+		<span class="old-price"><del class="sale-price">45.000₫</del> </span> <!-- Giá gốc -->
+		
+		
+		
+
+	</div>
+
+</div>
+</div>																
+						</div>
+					</div>
+						
+					
+				</div><!-- /.products -->
+				
+			</div>
+		</div>
+	</div>
+</div>
+			
+			</aside>

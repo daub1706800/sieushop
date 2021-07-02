@@ -1,5 +1,51 @@
 @extends('frontend.layouts.master')
+@section('thongtincongty')
+	<aside class="dqdt-sidebar sidebar right left-content">
+		<div class="aside-item aside-mini-list-product mb-5">
 
+			<div class="aside-title">
+				<h2 class="title-head">
+					<a href="" title="Thông tin công ty">Thông tin công ty</a>
+				</h2>
+			</div>
+
+			<div class="aside-content related-product">
+				<div class="product-mini-lists">											
+					<div class="products">					
+						<div class="row row-noGutter">						
+							<div class="col-sm-12">
+							
+
+								<div class="product-mini-item clearfix  ">
+									<!-- <div class="product-img relative">
+										<a href="/collections/all/products/cherry-do-canada-loai-to">
+											<img src="//bizweb.dktcdn.net/thumb/compact/100/308/325/products/kf57fd708888943c073792a327aeb5.jpg?v=1524537033277" alt="Vải thiều loại to">
+										</a>
+									</div>
+									<div class="product-info">
+										<h3><a href="/collections/all/products/cherry-do-canada-loai-to" title="Vải thiều loại to" class="product-name">Vải thiều loại to</a></h3>
+										<div class="price-box">
+										<div class="special-price"><span class="price product-price">80.000₫</span> </div>	
+									</div> -->
+									<h3 style="text-align:center; font-weight:bold;">{{$congty->tencongty}}</h3>
+									<h4 style="text-align:left; font-weight:normal;">Địa chỉ: {{$congty->diachicongty}}</h4>
+									<h4 style="text-align:left; font-weight:normal;">Email: {{$congty->emailcongty}}</h4>
+									<h4 style="text-align:left; font-weight:normal;">Liên hệ: {{$congty->dienthoaicongty}}</h4>
+									<h4 style="text-align:left; font-weight:normal;">Website: <a href="{{$congty->webcongty}}">{{$congty->webcongty}}</a></h4>
+									
+								</div>
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+
+		</div>
+	</aside>
+@endsection
 <!DOCTYPE html>
 <html lang="vi">
 	<head>
@@ -50,6 +96,7 @@
 			
 			<div class="container">
 				<div class="row">
+					
 
 					<div class="col-lg-9 ">
 						<div class="details-product">
@@ -219,9 +266,11 @@
 						</div>
 
 					</div>
+					@include('frontend.partials.content-sidebar')
+					
 
 				</div>
-
+				
 			</div>
 				
 			<section class="section featured-product wow fadeInUp mb-4">
