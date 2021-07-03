@@ -128,7 +128,11 @@
 									<h1 class="title-head">{{$detailsanpham->tensanpham}}</h1>
 
 									<div class="price-box clearfix">								
-										<div class="special-price"><span class="price product-price" >{{$detailsanpham->dongiasanpham}} ₫</span> </div>	
+										<div class="special-price">
+											<span class="price product-price" >
+												<?php	echo number_format("$detailsanpham->dongiasanpham",0,",","."); echo " ₫"?>
+											</span>
+										</div>	
 									</div>
 
 									<?php
